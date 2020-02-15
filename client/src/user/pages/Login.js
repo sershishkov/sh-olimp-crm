@@ -1,4 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login } from '../../store/actions/auth';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -30,8 +35,27 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = () => {
+const Login = ({ login, isAuthenticated }) => {
   const classes = useStyles();
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+
+  const { email, password } = formData;
+
+  const onChange = e =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onSubmit = async e => {
+    e.preventDefault();
+    login(email, password);
+  };
+
+  if (isAuthenticated) {
+    return <Redirect to='/dashboard' />;
+  }
 
   return (
     <Container maxWidth='sm'>
@@ -43,17 +67,20 @@ const Login = () => {
         <Typography component='h1' variant='h5'>
           Вход
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={e => onSubmit(e)}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 variant='outlined'
+                type='email'
                 required
                 fullWidth
                 id='email'
                 label='Электронная почта'
                 name='email'
                 autoComplete='email'
+                value={email}
+                onChange={e => onChange(e)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -66,6 +93,8 @@ const Login = () => {
                 type='password'
                 id='password'
                 autoComplete='current-password'
+                value={password}
+                onChange={e => onChange(e)}
               />
             </Grid>
           </Grid>
@@ -90,5 +119,13 @@ const Login = () => {
     </Container>
   );
 };
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+};
 
-export default Login;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { login })(Login);

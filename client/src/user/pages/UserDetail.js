@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { setAlert } from '../../store/actions/alert';
-import { register } from '../../store/actions/auth';
+import {
+  updatedetails,
+  updatepassword,
+  logout
+} from '../../store/actions/auth';
+
+import Spinner from '../../shared/spinner/Spinner';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -12,7 +16,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
+
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -37,36 +41,42 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Register = ({ setAlert, register, isAuthenticated }) => {
+const UserDetail = ({ user, updatedetails, updatepassword, logout }) => {
   const classes = useStyles();
 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: '',
-    password2: ''
+    currentPassword: '',
+    newPassword: ''
   });
 
-  const { name, email, password, password2 } = formData;
+  const { name, email, currentPassword, newPassword } = formData;
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = async e => {
+  const changeDetailsHandler = async e => {
     e.preventDefault();
-
-    if (password !== password2) {
-      setAlert('Password do not match', 'error');
-    } else {
-      register({ name, email, password });
-    }
+    updatedetails(name, email);
+    logout();
   };
 
-  if (isAuthenticated) {
-    return <Redirect to='/dashboard' />;
-  }
+  const changePasswordHandler = async e => {
+    e.preventDefault();
+    updatepassword(currentPassword, newPassword);
+    logout();
+  };
 
-  return (
+  useEffect(() => {
+    if (user) {
+      setFormData({ ...formData, name: user.name, email: user.email });
+    }
+  }, [user, formData]);
+
+  return !user ? (
+    <Spinner />
+  ) : (
     <Container component='main' maxWidth='sm'>
       <CssBaseline />
       <div className={classes.paper}>
@@ -74,9 +84,9 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Регистрация
+          Моя страничка
         </Typography>
-        <form className={classes.form} noValidate onSubmit={e => onSubmit(e)}>
+        <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -87,13 +97,12 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 required
                 fullWidth
                 id='firstName'
-                label='Ваше Имя'
+                label='Новое Имя'
                 autoFocus
                 value={name}
                 onChange={e => onChange(e)}
               />
             </Grid>
-
             <Grid item xs={12}>
               <TextField
                 variant='outlined'
@@ -101,38 +110,10 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 required
                 fullWidth
                 id='email'
-                label='Электронная почта'
+                label='Новая Электронная почта'
                 name='email'
                 autoComplete='email'
                 value={email}
-                onChange={e => onChange(e)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant='outlined'
-                required
-                fullWidth
-                name='password'
-                label='пароль'
-                type='password'
-                id='password'
-                autoComplete='current-password'
-                value={password}
-                onChange={e => onChange(e)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant='outlined'
-                required
-                fullWidth
-                name='password2'
-                label='повторите пароль'
-                type='password'
-                id='password2'
-                autoComplete='current-password'
-                value={password2}
                 onChange={e => onChange(e)}
               />
             </Grid>
@@ -143,30 +124,72 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             variant='contained'
             color='primary'
             className={classes.submit}
+            onClick={e => changeDetailsHandler(e)}
           >
-            ЗАРЕГЕСТРИРОВАТСЯ
+            Изменить детали
           </Button>
-          <Grid container justify='flex-end'>
-            <Grid item>
-              <Link href='/login' variant='body2'>
-                Уже зарегестрированы? Войти
-              </Link>
+        </form>
+
+        <form className={classes.form} noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant='outlined'
+                required
+                fullWidth
+                name='currentPassword'
+                label='текуший пароль'
+                type='password'
+                id='currentPassword'
+                autoComplete='current-password'
+                value={currentPassword}
+                onChange={e => onChange(e)}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant='outlined'
+                required
+                fullWidth
+                name='newPassword'
+                label='новый пароль'
+                type='password'
+                id='newPassword'
+                autoComplete='current-password'
+                value={newPassword}
+                onChange={e => onChange(e)}
+              />
             </Grid>
           </Grid>
+          <Button
+            type='submit'
+            fullWidth
+            variant='contained'
+            color='primary'
+            className={classes.submit}
+            onClick={e => changePasswordHandler(e)}
+          >
+            Изменить пароль
+          </Button>
         </form>
       </div>
     </Container>
   );
 };
 
-Register.propTypes = {
-  setAlert: PropTypes.func.isRequired,
-  register: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+UserDetail.propTypes = {
+  logout: PropTypes.func.isRequired,
+  updatedetails: PropTypes.func.isRequired,
+  updatepassword: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
 };
-
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  user: state.auth.user
 });
 
-export default connect(mapStateToProps, { setAlert, register })(Register);
+export default connect(mapStateToProps, {
+  updatedetails,
+  updatepassword,
+  logout
+})(UserDetail);
