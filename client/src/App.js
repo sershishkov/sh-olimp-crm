@@ -9,6 +9,9 @@ import setAuthToken from './utils/setAuthToken';
 import Container from '@material-ui/core/Container';
 
 import Navbar from './shared/navbar/Navbar';
+
+import { makeStyles } from '@material-ui/core/styles';
+
 import Landing from './shared/landing/Landing';
 import Footer from './shared/footer/Footer';
 import Alert from './shared/alert/Alert';
@@ -19,11 +22,18 @@ import PrivateRoute from './routing/PrivateRoute';
 import Dashboard from './dashboard/Dashboard';
 import UserDetail from './user/pages/UserDetail';
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    marginTop: 70
+  }
+}));
+
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
 function App() {
+  const classes = useStyles();
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
@@ -32,8 +42,8 @@ function App() {
     <Provider store={store}>
       <Router>
         <Navbar />
-        <Route exact path='/' component={Landing} />
-        <Container maxWidth='md'>
+        <Container maxWidth='md' className={classes.root}>
+          <Route exact path='/' component={Landing} />
           <Alert />
           <Switch>
             <Route exact path='/register' component={Register} />

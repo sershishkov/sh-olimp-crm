@@ -38,6 +38,11 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  spinner: {
+    dosplay: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 }));
 
@@ -75,7 +80,9 @@ const UserDetail = ({ user, updatedetails, updatepassword, logout }) => {
   }, [user, formData]);
 
   return !user ? (
-    <Spinner />
+    <div className={classes.spinner}>
+      <Spinner />
+    </div>
   ) : (
     <Container component='main' maxWidth='sm'>
       <CssBaseline />
