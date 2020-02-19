@@ -18,6 +18,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -27,13 +28,19 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
   },
+  displayNone: {
+    display: 'none'
+  },
+  displayBlock: {
+    display: 'block'
+  },
 
   drawerPaper: {
     width: drawerWidth
   }
 }));
 
-const ResponsiveDrawer = ({ isAuthenticated, logout, user }) => {
+const ResponsiveDrawer = ({ isAuthenticated, logout, user, pageName }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -51,7 +58,7 @@ const ResponsiveDrawer = ({ isAuthenticated, logout, user }) => {
     if (user) {
       setUserName(user.name);
     }
-  }, [user]);
+  }, [user, setUserName]);
 
   const drawer = (
     <div className={classes.toolbar}>
@@ -124,42 +131,62 @@ const ResponsiveDrawer = ({ isAuthenticated, logout, user }) => {
             </Grid>
             <Grid container item xs={4} justify='center' spacing={2}>
               <Grid item xs={12}>
-                {isAuthenticated && (
-                  <Button color='inherit' href='/dashboard'>
-                    Рабочий стол
-                  </Button>
-                )}
+                <Typography
+                  color='inherit'
+                  component='h4'
+                  variant='h5'
+                  align='center'
+                >
+                  {pageName}
+                </Typography>
               </Grid>
             </Grid>
-            <Grid container item xs={4} justify='space-between' spacing={2}>
-              <Grid item xs={3}>
-                {!isAuthenticated && (
-                  <Button color='inherit' href='/login'>
-                    Вход
-                  </Button>
-                )}
+            <Grid container item xs={4} justify='flex-end' spacing={2}>
+              <Grid
+                item
+                xs={3}
+                className={
+                  !isAuthenticated ? classes.displayBlock : classes.displayNone
+                }
+              >
+                <Button color='inherit' href='/login'>
+                  Вход
+                </Button>
               </Grid>
-              <Grid item xs={3}>
-                {!isAuthenticated && (
-                  <Button color='inherit' href='/register'>
-                    Регистрация
-                  </Button>
-                )}
+
+              <Grid
+                item
+                xs={3}
+                className={
+                  !isAuthenticated ? classes.displayBlock : classes.displayNone
+                }
+              >
+                <Button color='inherit' href='/register'>
+                  Регистрация
+                </Button>
               </Grid>
-              <Grid item xs={3}>
-                {isAuthenticated && (
-                  <Button color='inherit' href='/user-detail'>
-                    {' '}
-                    {userName}
-                  </Button>
-                )}
+              <Grid
+                item
+                xs={3}
+                className={
+                  isAuthenticated ? classes.displayBlock : classes.displayNone
+                }
+              >
+                <Button color='inherit' href='/user-detail'>
+                  {' '}
+                  {userName}
+                </Button>
               </Grid>
-              <Grid item xs={3}>
-                {isAuthenticated && (
-                  <Button color='inherit' onClick={logoutHandler}>
-                    Выход
-                  </Button>
-                )}
+              <Grid
+                item
+                xs={3}
+                className={
+                  isAuthenticated ? classes.displayBlock : classes.displayNone
+                }
+              >
+                <Button color='inherit' onClick={logoutHandler}>
+                  Выход
+                </Button>
               </Grid>
             </Grid>
           </Grid>
@@ -173,6 +200,7 @@ const ResponsiveDrawer = ({ isAuthenticated, logout, user }) => {
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
             open={mobileOpen}
             onClose={handleDrawerToggle}
+            onClick={handleDrawerToggle}
             classes={{
               paper: classes.drawerPaper
             }}
@@ -191,11 +219,13 @@ const ResponsiveDrawer = ({ isAuthenticated, logout, user }) => {
 ResponsiveDrawer.propTypes = {
   isAuthenticated: PropTypes.bool,
   logout: PropTypes.func.isRequired,
-  user: PropTypes.object
+  user: PropTypes.object,
+  pageName: PropTypes.string
 };
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
-  user: state.auth.user
+  user: state.auth.user,
+  pageName: state.nameOfPage.pageName
 });
 
 export default connect(mapStateToProps, { logout })(ResponsiveDrawer);

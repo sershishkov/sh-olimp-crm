@@ -9,3 +9,5 @@ export const LOGOUT = 'LOGOUT';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const USER_LOADED = 'USER_LOADED';
 export const AUTH_ERROR = 'AUTH_ERROR';
+
+export const NAME_OF_PAGE = 'NAME_OF_PAGE';

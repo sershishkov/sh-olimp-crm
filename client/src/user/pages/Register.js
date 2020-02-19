@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { setAlert } from '../../store/actions/alert';
 import { register } from '../../store/actions/auth';
+import { setNameOfPage } from '../../store/actions/nameOfPage';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -37,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Register = ({ setAlert, register, isAuthenticated }) => {
+const Register = ({ setAlert, register, isAuthenticated, setNameOfPage }) => {
   const classes = useStyles();
 
   const [formData, setFormData] = useState({
@@ -61,6 +62,10 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
       register({ name, email, password });
     }
   };
+
+  useEffect(() => {
+    setNameOfPage('Регистрация');
+  }, [setNameOfPage]);
 
   if (isAuthenticated) {
     return <Redirect to='/dashboard' />;
@@ -162,6 +167,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
+  setNameOfPage: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
 };
 
@@ -169,4 +175,6 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { setAlert, register })(Register);
+export default connect(mapStateToProps, { setAlert, register, setNameOfPage })(
+  Register
+);

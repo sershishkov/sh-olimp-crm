@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../store/actions/auth';
+import { setNameOfPage } from '../../store/actions/nameOfPage';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -35,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated, setNameOfPage }) => {
   const classes = useStyles();
 
   const [formData, setFormData] = useState({
@@ -51,7 +52,12 @@ const Login = ({ login, isAuthenticated }) => {
   const onSubmit = async e => {
     e.preventDefault();
     login(email, password);
+    return <Redirect to='/' />;
   };
+
+  useEffect(() => {
+    setNameOfPage('Страница входа');
+  }, [setNameOfPage]);
 
   if (isAuthenticated) {
     return <Redirect to='/dashboard' />;
@@ -121,6 +127,7 @@ const Login = ({ login, isAuthenticated }) => {
 };
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  setNameOfPage: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
 };
 
@@ -128,4 +135,4 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login, setNameOfPage })(Login);
