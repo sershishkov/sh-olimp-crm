@@ -11,7 +11,7 @@ const hpp = require('hpp');
 const cors = require('cors');
 
 const colors = require('colors');
-const fileUpload = require('express-fileupload');
+// const fileUpload = require('express-fileupload');
 const errorHandler = require('./middleware/error');
 
 const connectDB = require('./config/db');
@@ -62,10 +62,12 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 //File uploading
-app.use(fileUpload());
+// app.use(fileUpload());
 
 //Set static folder
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'uploads')));
+// app.use('/uploads', express.static(path.join('uploads')));
+app.use('/uploads', express.static('uploads'));
 
 //Mount routes
 

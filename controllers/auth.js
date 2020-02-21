@@ -1,4 +1,7 @@
 const crypto = require('crypto');
+const multer = require('multer');
+const sharp = require('sharp');
+
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const User = require('../models/User');
@@ -110,6 +113,62 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
 
   sendTokenResponse(user, 200, res);
 });
+
+///////////UPDATE AVATAR//////////////////
+
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(
+      new ErrorResponse('Not an image! Please upload only images.', 400),
+      false
+    );
+  }
+};
+
+const upload = multer({
+  limits: 50000,
+  storage: multerStorage,
+  fileFilter: multerFilter
+});
+
+exports.uploadUserPhoto = upload.single('myAvatar');
+
+exports.resizeUserPhoto = asyncHandler(async (req, res, next) => {
+  if (!req.file) return next();
+
+  req.file.filename = `avatar-${req.user.id}.jpeg`;
+
+  await sharp(req.file.buffer)
+    .resize(500, 500)
+    .toFormat('jpeg')
+    .jpeg({ quality: 50 })
+    .toFile(`uploads/${req.file.filename}`);
+
+  next();
+});
+
+//@desc   Update avatar
+//@route  PUT /api/v1/auth/updateavatar
+//@access Private
+exports.updateAvatar = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+
+  //Check if avatar exists
+  if (!req.file) {
+    return next(new ErrorResponse('New avatar does not exist', 400));
+  }
+
+  user.myAvatar = `/uploads/${req.file.filename}`;
+  await user.save();
+
+  sendTokenResponse(user, 200, res);
+});
+
+////////////////////////////////////////////////////////////////////
 
 //@desc   Forgot password
 //@route  POST /api/v1/auth/forgotpassword

@@ -144,3 +144,26 @@ export const updatepassword = (
     }
   }
 };
+
+//changeAvatar
+export const changeAvatar = file => async dispatch => {
+  const photoFormData = new FormData();
+  photoFormData.append('myAvatar', file);
+  // console.log(file);
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data'
+    }
+  };
+
+  try {
+    await axios.put('/api/v1/auth/updateavatar', photoFormData, config);
+    dispatch(loadUser());
+  } catch (err) {
+    const error = err.response.data.error;
+    if (error) {
+      dispatch(setAlert(error, 'error', 2500));
+    }
+  }
+};

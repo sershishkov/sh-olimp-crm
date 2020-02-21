@@ -7,7 +7,10 @@ const {
   forgotPassword,
   resetPassword,
   updateDetails,
-  updatePassword
+  updatePassword,
+  uploadUserPhoto,
+  resizeUserPhoto,
+  updateAvatar
 } = require('../controllers/auth');
 const { protect } = require('../middleware/auth');
 
@@ -19,6 +22,13 @@ router.get('/logout', logout);
 router.get('/me', protect, getMe);
 router.put('/updatedetails', protect, updateDetails);
 router.put('/updatepassword', protect, updatePassword);
+router.put(
+  '/updateavatar',
+  protect,
+  uploadUserPhoto,
+  resizeUserPhoto,
+  updateAvatar
+);
 router.post('/forgotpassword', forgotPassword);
 router.put('/resetpassword/:resettoken', resetPassword);
 

@@ -19,8 +19,13 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'admin', 'manager_low', 'manager_middle', 'manager_high'],
+    enum: ['user', 'manager_low', 'manager_middle', 'manager_high', 'admin'],
     default: 'user'
+  },
+  myAvatar: {
+    type: String,
+    required: true,
+    default: '/uploads/default_user.jpg'
   },
   password: {
     type: String,

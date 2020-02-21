@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+
 import { connect } from 'react-redux';
 import { logout } from '../../store/actions/auth';
 
-import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
+import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
@@ -37,6 +39,9 @@ const useStyles = makeStyles(theme => ({
 
   drawerPaper: {
     width: drawerWidth
+  },
+  avatar: {
+    marginRight: '1rem'
   }
 }));
 
@@ -141,7 +146,14 @@ const ResponsiveDrawer = ({ isAuthenticated, logout, user, pageName }) => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container item xs={4} justify='flex-end' spacing={2}>
+            <Grid
+              container
+              item
+              xs={4}
+              justify='space-around'
+              spacing={2}
+              alignItems='center'
+            >
               <Grid
                 item
                 xs={3}
@@ -173,7 +185,10 @@ const ResponsiveDrawer = ({ isAuthenticated, logout, user, pageName }) => {
                 }
               >
                 <Button color='inherit' href='/user-detail'>
-                  {' '}
+                  {user && (
+                    <Avatar className={classes.avatar} src={user.myAvatar} />
+                  )}
+
                   {userName}
                 </Button>
               </Grid>

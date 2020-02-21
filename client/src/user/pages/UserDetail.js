@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {
   updatedetails,
   updatepassword,
+  changeAvatar,
   logout
 } from '../../store/actions/auth';
 
@@ -46,17 +47,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UserDetail = ({ user, updatedetails, updatepassword, logout }) => {
+const UserDetail = ({
+  user,
+  updatedetails,
+  updatepassword,
+  changeAvatar,
+  logout
+}) => {
   const classes = useStyles();
 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     currentPassword: '',
-    newPassword: ''
+    newPassword: '',
+    myAvatar: ''
   });
 
-  const { name, email, currentPassword, newPassword } = formData;
+  const { name, email, currentPassword, newPassword, myAvatar } = formData;
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -73,11 +81,22 @@ const UserDetail = ({ user, updatedetails, updatepassword, logout }) => {
     logout();
   };
 
+  const pickedHandler = e => {
+    e.preventDefault();
+    setFormData({ ...formData, myAvatar: e.target.files[0] });
+  };
+
+  const changeAvatarHandler = e => {
+    e.preventDefault();
+    console.log(myAvatar);
+    changeAvatar(myAvatar);
+  };
+
   useEffect(() => {
     if (user) {
       setFormData({ ...formData, name: user.name, email: user.email });
     }
-  }, [user, formData]);
+  }, [user, setFormData]);
 
   return !user ? (
     <div className={classes.spinner}>
@@ -180,6 +199,44 @@ const UserDetail = ({ user, updatedetails, updatepassword, logout }) => {
             Изменить пароль
           </Button>
         </form>
+        <form>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                name='myAvatar'
+                accept='image/*'
+                type='file'
+                id='raised-button-file'
+                style={{ display: 'none' }}
+                onChange={e => pickedHandler(e)}
+              />
+              <label htmlFor='raised-button-file'>
+                <Button
+                  variant='contained'
+                  component='span'
+                  color='primary'
+                  fullWidth
+                  className={classes.button}
+                >
+                  Выбрать новое фото
+                </Button>
+              </label>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Button
+                type='submit'
+                fullWidth
+                variant='contained'
+                color='primary'
+                className={classes.submit}
+                onClick={changeAvatarHandler}
+              >
+                Сохранить новое фото
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
       </div>
     </Container>
   );
@@ -189,7 +246,8 @@ UserDetail.propTypes = {
   logout: PropTypes.func.isRequired,
   updatedetails: PropTypes.func.isRequired,
   updatepassword: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
+  changeAvatar: PropTypes.func.isRequired,
+  user: PropTypes.object
 };
 const mapStateToProps = state => ({
   user: state.auth.user
@@ -198,5 +256,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   updatedetails,
   updatepassword,
+  changeAvatar,
   logout
 })(UserDetail);
