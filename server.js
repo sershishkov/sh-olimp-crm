@@ -55,6 +55,7 @@ app.use(cors());
 //Route file
 const auth = require('./routes/auth');
 const users = require('./routes/users');
+const photoWorks = require('./routes/photoWorks');
 
 //Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
@@ -73,6 +74,7 @@ app.use('/uploads', express.static('uploads'));
 
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/users', users);
+app.use('/api/v1/photo', photoWorks);
 
 app.use(errorHandler);
 
