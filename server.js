@@ -55,7 +55,14 @@ app.use(cors());
 //Route file
 const auth = require('./routes/auth');
 const users = require('./routes/users');
-const photoWorks = require('./routes/photoWorks');
+const photoWorksAsfalt = require('./routes/photoWorksAsfalt');
+const photoWorksEmergencyWork = require('./routes/photoWorksEmergencyWork');
+const photoWorksFasad = require('./routes/photoWorksFasad');
+const photoWorksInsideWork = require('./routes/photoWorksInsideWork');
+const photoWorksMetall_Constr = require('./routes/photoWorksMetall_Constr');
+const photoWorksRoof = require('./routes/photoWorksRoof');
+const photoWorksSanteh = require('./routes/photoWorksSanteh');
+const photoWorksWindowsPl = require('./routes/photoWorksWindowsPl');
 
 //Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
@@ -74,7 +81,14 @@ app.use('/uploads', express.static('uploads'));
 
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/users', users);
-app.use('/api/v1/photo', photoWorks);
+app.use('/api/v1/photo/asfalt', photoWorksAsfalt);
+app.use('/api/v1/photo/emergencywork', photoWorksEmergencyWork);
+app.use('/api/v1/photo/fasad', photoWorksFasad);
+app.use('/api/v1/photo/insidework', photoWorksInsideWork);
+app.use('/api/v1/photo/metallconstr', photoWorksMetall_Constr);
+app.use('/api/v1/photo/roof', photoWorksRoof);
+app.use('/api/v1/photo/santeh', photoWorksSanteh);
+app.use('/api/v1/photo/windowpl', photoWorksWindowsPl);
 
 app.use(errorHandler);
 

@@ -3,13 +3,13 @@ const router = express.Router();
 const { protect, authorize } = require('../middleware/auth');
 
 const {
-  uploadWorkPhoto,
-  resizeWorkPhoto,
+  uploadPhoto,
+  resizePhoto,
   addPhoto,
   getAllPhotos,
   getOnePhoto,
   deletePhoto
-} = require('../controllers/photoWorks');
+} = require('../controllers/photoWorksRoof');
 
 router
   .route('/')
@@ -17,8 +17,8 @@ router
   .post(
     protect,
     authorize('engineer', 'accountant', 'boss', 'admin'),
-    uploadWorkPhoto,
-    resizeWorkPhoto,
+    uploadPhoto,
+    resizePhoto,
     addPhoto
   );
 

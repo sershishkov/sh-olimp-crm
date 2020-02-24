@@ -4,7 +4,7 @@ const sharp = require('sharp');
 
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
-const PhotoOfWork = require('../models/PhotoOfWork');
+const PhotoOf_Asfalt = require('../models/PhotoOf_Asfalt');
 
 const multerStorage = multer.memoryStorage();
 
@@ -25,9 +25,9 @@ const upload = multer({
   fileFilter: multerFilter
 });
 
-exports.uploadWorkPhoto = upload.single('photoWork');
+exports.uploadPhoto = upload.single('photoWork');
 
-exports.resizeWorkPhoto = asyncHandler(async (req, res, next) => {
+exports.resizePhoto = asyncHandler(async (req, res, next) => {
   if (!req.file) return next();
 
   req.file.filename = `${req.user.id}-${Date.now()}.jpeg`;
@@ -42,14 +42,14 @@ exports.resizeWorkPhoto = asyncHandler(async (req, res, next) => {
 });
 
 //@desc   Add photo
-//@route  POST /api/v1/photo
+//@route  POST /api/v1/photo/asfalt
 //@access Private
 exports.addPhoto = asyncHandler(async (req, res, next) => {
   //Check if photo exists
   if (!req.file) {
     return next(new ErrorResponse('New photo does not exist', 400));
   }
-  const image = new PhotoOfWork({ image: `/uploads/${req.file.filename}` });
+  const image = new PhotoOf_Asfalt({ image: `/uploads/${req.file.filename}` });
 
   await image.save();
 
@@ -60,10 +60,10 @@ exports.addPhoto = asyncHandler(async (req, res, next) => {
 });
 
 //@desc   Get all photos
-//@route  GET /api/v1/photo
+//@route  GET /api/v1/photo/asfalt
 //@access Private
 exports.getAllPhotos = asyncHandler(async (req, res, next) => {
-  const allPhoto = await PhotoOfWork.find();
+  const allPhoto = await PhotoOf_Asfalt.find();
   //Check if photo exists
   if (!allPhoto) {
     return next(new ErrorResponse('На данный момент нет фото в галлерее', 400));
@@ -76,10 +76,10 @@ exports.getAllPhotos = asyncHandler(async (req, res, next) => {
 });
 
 //@desc   Get one photo
-//@route  GET /api/v1/photo/:id
+//@route  GET /api/v1/photo//asfalt/:id
 //@access Private
 exports.getOnePhoto = asyncHandler(async (req, res, next) => {
-  const onePhoto = await PhotoOfWork.findById(req.params.id);
+  const onePhoto = await PhotoOf_Asfalt.findById(req.params.id);
   //Check if photo exists
   if (!onePhoto) {
     return next(new ErrorResponse('Нет этого фото в галлерее', 400));
@@ -92,10 +92,10 @@ exports.getOnePhoto = asyncHandler(async (req, res, next) => {
 });
 
 //@desc   DELETE one photo
-//@route  DELETE /api/v1/photo/:id
+//@route  DELETE /api/v1/photo//asfalt/:id
 //@access Private
 exports.deletePhoto = asyncHandler(async (req, res, next) => {
-  const onePhoto = await PhotoOfWork.findByIdAndDelete(req.params.id);
+  const onePhoto = await PhotoOf_Asfalt.findByIdAndDelete(req.params.id);
 
   //Check if photo exists
   if (!onePhoto) {
