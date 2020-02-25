@@ -1,7 +1,7 @@
 import { NAME_OF_PAGE } from '../actions/types';
 
 const initialState = {
-  pageName: 'Добрый день дорогой гость'
+  pageName: ''
 };
 
 export default function(state = initialState, action) {

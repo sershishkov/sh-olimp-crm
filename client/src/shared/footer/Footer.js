@@ -24,7 +24,7 @@ const Footer = props => {
           ОЛИМП-ДС
         </Typography>
       </Grid>
-      <Grid item xs={4} container flexDirextion='column'>
+      <Grid item xs={4} container flexdirextion='column'>
         <Grid item xs={12}>
           <Typography component='h4' variant='h5' align='center'>
             +38 098 310 47 99

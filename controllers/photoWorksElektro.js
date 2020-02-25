@@ -4,7 +4,7 @@ const sharp = require('sharp');
 
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
-const PhotoOf_Metall_Constr = require('../models/PhotoOf_Metall_Constr');
+const PhotoOf_Elektro = require('../models/PhotoOf_Elektro');
 
 const multerStorage = multer.memoryStorage();
 
@@ -42,14 +42,14 @@ exports.resizePhoto = asyncHandler(async (req, res, next) => {
 });
 
 //@desc   Add photo
-//@route  POST /api/v1/photo/metallconstr
+//@route  POST /api/v1/photo/elektro
 //@access Private
 exports.addPhoto = asyncHandler(async (req, res, next) => {
   //Check if photo exists
   if (!req.file) {
     return next(new ErrorResponse('New photo does not exist', 400));
   }
-  const image = new PhotoOf_Metall_Constr({
+  const image = new PhotoOf_Elektro({
     image: `/uploads/${req.file.filename}`
   });
 
@@ -62,10 +62,10 @@ exports.addPhoto = asyncHandler(async (req, res, next) => {
 });
 
 //@desc   Get all photos
-//@route  GET /api/v1/photo/metallconstr
+//@route  GET /api/v1/photo/elektro
 //@access Private
 exports.getAllPhotos = asyncHandler(async (req, res, next) => {
-  const allPhoto = await PhotoOf_Metall_Constr.find();
+  const allPhoto = await PhotoOf_Elektro.find();
   //Check if photo exists
   if (!allPhoto) {
     return next(new ErrorResponse('На данный момент нет фото в галлерее', 400));
@@ -78,10 +78,10 @@ exports.getAllPhotos = asyncHandler(async (req, res, next) => {
 });
 
 //@desc   Get one photo
-//@route  GET /api/v1/photo//metallconstr/:id
+//@route  GET /api/v1/photo//elektro/:id
 //@access Private
 exports.getOnePhoto = asyncHandler(async (req, res, next) => {
-  const onePhoto = await PhotoOf_Metall_Constr.findById(req.params.id);
+  const onePhoto = await PhotoOf_Elektro.findById(req.params.id);
   //Check if photo exists
   if (!onePhoto) {
     return next(new ErrorResponse('Нет этого фото в галлерее', 400));
@@ -94,10 +94,10 @@ exports.getOnePhoto = asyncHandler(async (req, res, next) => {
 });
 
 //@desc   DELETE one photo
-//@route  DELETE /api/v1/photo//metallconstr/:id
+//@route  DELETE /api/v1/photo//elektro/:id
 //@access Private
 exports.deletePhoto = asyncHandler(async (req, res, next) => {
-  const onePhoto = await PhotoOf_Metall_Constr.findByIdAndDelete(req.params.id);
+  const onePhoto = await PhotoOf_Elektro.findByIdAndDelete(req.params.id);
 
   //Check if photo exists
   if (!onePhoto) {

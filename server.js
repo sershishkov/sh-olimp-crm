@@ -63,6 +63,7 @@ const photoWorksMetall_Constr = require('./routes/photoWorksMetall_Constr');
 const photoWorksRoof = require('./routes/photoWorksRoof');
 const photoWorksSanteh = require('./routes/photoWorksSanteh');
 const photoWorksWindowsPl = require('./routes/photoWorksWindowsPl');
+const photoWorksElektro = require('./routes/photoWorksElektro');
 
 //Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
@@ -82,6 +83,7 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/users', users);
 app.use('/api/v1/photo/asfalt', photoWorksAsfalt);
+app.use('/api/v1/photo/elektro', photoWorksElektro);
 app.use('/api/v1/photo/emergencywork', photoWorksEmergencyWork);
 app.use('/api/v1/photo/fasad', photoWorksFasad);
 app.use('/api/v1/photo/insidework', photoWorksInsideWork);

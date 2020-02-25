@@ -42,7 +42,7 @@ exports.resizePhoto = asyncHandler(async (req, res, next) => {
 });
 
 //@desc   Add photo
-//@route  POST /api/v1/photo/asfalt
+//@route  POST /api/v1/photo/santeh
 //@access Private
 exports.addPhoto = asyncHandler(async (req, res, next) => {
   //Check if photo exists
@@ -60,7 +60,7 @@ exports.addPhoto = asyncHandler(async (req, res, next) => {
 });
 
 //@desc   Get all photos
-//@route  GET /api/v1/photo/asfalt
+//@route  GET /api/v1/photo/santeh
 //@access Private
 exports.getAllPhotos = asyncHandler(async (req, res, next) => {
   const allPhoto = await PhotoOf_Santeh.find();
@@ -76,7 +76,7 @@ exports.getAllPhotos = asyncHandler(async (req, res, next) => {
 });
 
 //@desc   Get one photo
-//@route  GET /api/v1/photo//asfalt/:id
+//@route  GET /api/v1/photo//santeh/:id
 //@access Private
 exports.getOnePhoto = asyncHandler(async (req, res, next) => {
   const onePhoto = await PhotoOf_Santeh.findById(req.params.id);
@@ -92,7 +92,7 @@ exports.getOnePhoto = asyncHandler(async (req, res, next) => {
 });
 
 //@desc   DELETE one photo
-//@route  DELETE /api/v1/photo//asfalt/:id
+//@route  DELETE /api/v1/photo//santeh/:id
 //@access Private
 exports.deletePhoto = asyncHandler(async (req, res, next) => {
   const onePhoto = await PhotoOf_Santeh.findByIdAndDelete(req.params.id);

@@ -13,6 +13,7 @@ import Navbar from './shared/navbar/Navbar';
 import { makeStyles } from '@material-ui/core/styles';
 
 import AboutUs from './shared/landing/AboutUs';
+import Landing from './shared/landing/Landing';
 import Footer from './shared/footer/Footer';
 import Alert from './shared/alert/Alert';
 
@@ -43,11 +44,12 @@ function App() {
       <Router>
         <Navbar />
         <Container maxWidth='md' className={classes.root}>
-          <Route exact path='/' component={AboutUs} />
+          <Route exact path='/' component={Landing} />
           <Alert />
           <Switch>
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
+            <Route exact path='/aboutus' component={AboutUs} />
             <PrivateRoute exact path='/dashboard' component={Dashboard} />
             <PrivateRoute exact path='/user-detail' component={UserDetail} />
           </Switch>

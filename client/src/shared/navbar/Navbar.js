@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
@@ -46,6 +47,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ResponsiveDrawer = ({ isAuthenticated, logout, user, pageName }) => {
+  let history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -69,13 +71,13 @@ const ResponsiveDrawer = ({ isAuthenticated, logout, user, pageName }) => {
     <div className={classes.toolbar}>
       <Divider />
       <List>
-        <ListItem button>
+        <ListItem button onClick={() => history.push('/aboutus')}>
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
           <ListItemText>О нас</ListItemText>
         </ListItem>
-        <ListItem button>
+        <ListItem button button onClick={() => history.push('/')}>
           <ListItemIcon>
             <MailIcon />
           </ListItemIcon>
