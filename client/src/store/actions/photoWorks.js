@@ -132,7 +132,7 @@ export const getOnePhotoWork = (imageId, typeOfImage) => async dispatch => {
   }
 };
 
-export const setPhotoWork = (file, typeOfImage) => async dispatch => {
+export const addPhotoWork = (typeOfImage, file) => async dispatch => {
   const photoFormData = new FormData();
   photoFormData.append('photoWork', file);
   // console.log(file);

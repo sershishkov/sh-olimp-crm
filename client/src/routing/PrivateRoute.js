@@ -4,18 +4,28 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 const PrivateRoute = ({
   component: Component,
-  auth: { isAuthenticated, loading },
+  auth: { isAuthenticated, loading, user },
   ...rest
 }) => (
   <Route
     {...rest}
-    render={props =>
-      !isAuthenticated && !loading ? (
+    render={props => {
+      // let authorized = false;
+      // console.log(rest.roles);
+
+      // if (user) {
+      //   authorized =
+      //     isAuthenticated && loading && rest.roles.includes(user.role);
+      //   // console.log(authorized);
+      // }
+
+      // return !authorized ? <Redirect to='/' /> : <Component {...props} />;
+      return !isAuthenticated && !loading ? (
         <Redirect to='/' />
       ) : (
         <Component {...props} />
-      )
-    }
+      );
+    }}
   />
 );
 
@@ -28,3 +38,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(PrivateRoute);
+// && !rest.roles.includes(user.role)

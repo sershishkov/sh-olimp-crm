@@ -68,7 +68,7 @@ const Register = ({ setAlert, register, isAuthenticated, setNameOfPage }) => {
   }, [setNameOfPage]);
 
   if (isAuthenticated) {
-    return <Redirect to='/dashboard' />;
+    return <Redirect to='/' />;
   }
 
   return (

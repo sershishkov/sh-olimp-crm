@@ -20,7 +20,7 @@ import Alert from './shared/alert/Alert';
 import Login from './user/pages/Login';
 import Register from './user/pages/Register';
 import PrivateRoute from './routing/PrivateRoute';
-import Dashboard from './dashboard/Dashboard';
+import EditPhoto from './editPhoto/EditPhoto';
 import UserDetail from './user/pages/UserDetail';
 
 const useStyles = makeStyles(theme => ({
@@ -50,7 +50,12 @@ function App() {
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/aboutus' component={AboutUs} />
-            <PrivateRoute exact path='/dashboard' component={Dashboard} />
+            <PrivateRoute
+              roles='boss admin'
+              exact
+              path='/editphoto'
+              component={EditPhoto}
+            />
             <PrivateRoute exact path='/user-detail' component={UserDetail} />
           </Switch>
         </Container>

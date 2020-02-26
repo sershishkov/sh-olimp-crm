@@ -37,6 +37,9 @@ const useStyles = makeStyles(theme => ({
   displayBlock: {
     display: 'block'
   },
+  displayFlex: {
+    display: 'flex'
+  },
 
   drawerPaper: {
     width: drawerWidth
@@ -71,13 +74,51 @@ const ResponsiveDrawer = ({ isAuthenticated, logout, user, pageName }) => {
     <div className={classes.toolbar}>
       <Divider />
       <List>
+        <ListItem
+          button
+          onClick={() => history.push('/register')}
+          className={
+            !isAuthenticated ? classes.displayFlex : classes.displayNone
+          }
+        >
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText>регистрация</ListItemText>
+        </ListItem>
+
+        <ListItem
+          button
+          onClick={() => history.push('/login')}
+          className={
+            !isAuthenticated ? classes.displayFlex : classes.displayNone
+          }
+        >
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText>Вход</ListItemText>
+        </ListItem>
+        <ListItem
+          button
+          onClick={logoutHandler}
+          className={
+            isAuthenticated ? classes.displayFlex : classes.displayNone
+          }
+        >
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText>Выход</ListItemText>
+        </ListItem>
+
         <ListItem button onClick={() => history.push('/aboutus')}>
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
           <ListItemText>О нас</ListItemText>
         </ListItem>
-        <ListItem button button onClick={() => history.push('/')}>
+        <ListItem button onClick={() => history.push('/')}>
           <ListItemIcon>
             <MailIcon />
           </ListItemIcon>
@@ -85,6 +126,20 @@ const ResponsiveDrawer = ({ isAuthenticated, logout, user, pageName }) => {
         </ListItem>
       </List>
       <Divider />
+      <ListItem
+        button
+        onClick={() => history.push('/editphoto')}
+        className={
+          isAuthenticated && (user.role === 'boss' || user.role === 'admin')
+            ? classes.displayFlex
+            : classes.displayNone
+        }
+      >
+        <ListItemIcon>
+          <MailIcon />
+        </ListItemIcon>
+        <ListItemText>РедактФото</ListItemText>
+      </ListItem>
       <List>
         <ListItem button>
           <ListItemIcon>

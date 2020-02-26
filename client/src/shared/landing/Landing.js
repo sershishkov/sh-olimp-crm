@@ -1,63 +1,66 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-// import 'react-awesome-slider/dist/styles.css';
-
 import { setNameOfPage } from '../../store/actions/nameOfPage';
-import { getAllPhotoWork } from '../../store/actions/photoWorks';
+import { getAllPhotoWork, addPhotoWork } from '../../store/actions/photoWorks';
 import PropTypes from 'prop-types';
 
 import MySlider from './Components/MySlider';
+import Typography from '@material-ui/core/Typography';
 
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
-  },
-  slider: {
-    marginBottom: '4rem'
-    // border: '1px solid red'
   }
 }));
 
 const Landing = ({ setNameOfPage, getAllPhotoWork, photoWorks }) => {
   const classes = useStyles();
-  const [asfaltPhotos, setAsfaltPhotos] = useState();
 
   useEffect(() => {
     setNameOfPage('Добрый день');
-    getAllPhotoWork('asfalt');
-    getAllPhotoWork('elektro');
-    getAllPhotoWork('emergencywork');
-    getAllPhotoWork('fasad');
-    getAllPhotoWork('insidework');
-    getAllPhotoWork('metallconstr');
-    getAllPhotoWork('roof');
-    getAllPhotoWork('santeh');
-    getAllPhotoWork('windowpl');
+    if (photoWorks.photoAsfalt) {
+      getAllPhotoWork('asfalt');
+    }
+
+    if (photoWorks.photoElektro) {
+      getAllPhotoWork('elektro');
+    }
+
+    // getAllPhotoWork('emergencywork');
+    // getAllPhotoWork('fasad');
+    // getAllPhotoWork('insidework');
+    // getAllPhotoWork('metallconstr');
+    // getAllPhotoWork('roof');
+    // getAllPhotoWork('santeh');
+    // getAllPhotoWork('windowpl');
   }, [setNameOfPage, getAllPhotoWork]);
   // console.log(photoWorks.photoAsfalt);
 
-  // useCallback(() => {
-  //   if (photoWorks.photoAsfalt) {
-  //     setAsfaltPhotos(photoWorks.photoAsfalt);
-  //     console.log(photoWorks.photoAsfalt);
-  //   }
-  // }, [photoWorks.photoAsfalt]);
-
   return (
     <div>
-      <h2>Наши работы </h2>
+      <Typography component='h1' variant='h5' align='center'>
+        Асфальтные работы
+      </Typography>
+
       <MySlider arrPhoto={photoWorks.photoAsfalt} />
-      <MySlider arrPhoto={photoWorks.photoEmergencyWork} />
+
+      <Typography component='h1' variant='h5' align='center'>
+        Электроработы работы
+      </Typography>
+
+      <MySlider arrPhoto={photoWorks.photoElektro} />
+
+      {/* <MySlider arrPhoto={photoWorks.photoEmergencyWork} />
       <MySlider arrPhoto={photoWorks.photoFasad} />
       <MySlider arrPhoto={photoWorks.photoInsideWork} />
       <MySlider arrPhoto={photoWorks.photoMetallConstr} />
       <MySlider arrPhoto={photoWorks.photoRoof} />
       <MySlider arrPhoto={photoWorks.photoSantex} />
       <MySlider arrPhoto={photoWorks.photoWindowsPl} />
-      <MySlider arrPhoto={photoWorks.photoElektro} />
+       */}
     </div>
   );
 };
@@ -72,6 +75,8 @@ const mapStateToProps = state => ({
   photoWorks: state.photoWorks
 });
 
-export default connect(mapStateToProps, { setNameOfPage, getAllPhotoWork })(
-  Landing
-);
+export default connect(mapStateToProps, {
+  setNameOfPage,
+  getAllPhotoWork,
+  addPhotoWork
+})(Landing);
