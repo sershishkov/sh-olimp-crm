@@ -3,32 +3,28 @@ const router = express.Router();
 const { protect, authorize } = require('../middleware/auth');
 
 const {
-  uploadPhoto,
-  resizePhoto,
-  addPhoto,
-  getAllPhotos,
-  getOnePhoto,
-  deletePhoto
-} = require('../controllers/photoWorksAsfalt');
+  addImageType,
+  getAllImageTypes,
+  getOneImageType,
+  deleteImageType
+} = require('../controllers/typeOfImage');
 
 router
   .route('/')
-  .get(getAllPhotos)
+  .get(getAllImageTypes)
   .post(
     protect,
     authorize('engineer', 'accountant', 'boss', 'admin'),
-    uploadPhoto,
-    resizePhoto,
-    addPhoto
+    addImageType
   );
 
 router
   .route('/:id')
-  .get(getOnePhoto)
+  .get(getOneImageType)
   .delete(
     protect,
     authorize('engineer', 'accountant', 'boss', 'admin'),
-    deletePhoto
+    deleteImageType
   );
 
 module.exports = router;

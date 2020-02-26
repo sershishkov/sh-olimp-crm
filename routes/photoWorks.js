@@ -9,7 +9,7 @@ const {
   getAllPhotos,
   getOnePhoto,
   deletePhoto
-} = require('../controllers/photoWorksRoof');
+} = require('../controllers/photoWorks');
 
 router
   .route('/')

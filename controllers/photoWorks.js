@@ -4,7 +4,7 @@ const sharp = require('sharp');
 
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
-const PhotoOf_Asfalt = require('../models/PhotoOf_Asfalt');
+const photoWork = require('../models/photoWork');
 
 const multerStorage = multer.memoryStorage();
 
@@ -49,13 +49,17 @@ exports.addPhoto = asyncHandler(async (req, res, next) => {
   if (!req.file) {
     return next(new ErrorResponse('New photo does not exist', 400));
   }
-  const image = new PhotoOf_Asfalt({ image: `/uploads/${req.file.filename}` });
+  const newPhoto = new photoWork({
+    imageUrl: `/uploads/${req.file.filename}`,
+    typeOfImage: req.body.typeOfImage,
+    description: req.body.description
+  });
 
-  await image.save();
+  await newPhoto.save();
 
   res.status(200).json({
     success: true,
-    data: image
+    data: newPhoto
   });
 });
 
@@ -63,7 +67,7 @@ exports.addPhoto = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/photo/asfalt
 //@access Private
 exports.getAllPhotos = asyncHandler(async (req, res, next) => {
-  const allPhoto = await PhotoOf_Asfalt.find();
+  const allPhoto = await photoWork.find();
   //Check if photo exists
   if (!allPhoto) {
     return next(new ErrorResponse('На данный момент нет фото в галлерее', 400));
@@ -79,7 +83,7 @@ exports.getAllPhotos = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/photo//asfalt/:id
 //@access Private
 exports.getOnePhoto = asyncHandler(async (req, res, next) => {
-  const onePhoto = await PhotoOf_Asfalt.findById(req.params.id);
+  const onePhoto = await photoWork.findById(req.params.id);
   //Check if photo exists
   if (!onePhoto) {
     return next(new ErrorResponse('Нет этого фото в галлерее', 400));
@@ -95,14 +99,14 @@ exports.getOnePhoto = asyncHandler(async (req, res, next) => {
 //@route  DELETE /api/v1/photo//asfalt/:id
 //@access Private
 exports.deletePhoto = asyncHandler(async (req, res, next) => {
-  const onePhoto = await PhotoOf_Asfalt.findByIdAndDelete(req.params.id);
+  const onePhoto = await photoWork.findByIdAndDelete(req.params.id);
 
   //Check if photo exists
   if (!onePhoto) {
     return next(new ErrorResponse('Нет этого фото в галлерее', 400));
   }
 
-  fs.unlink(`.${onePhoto.image}`, err => {
+  fs.unlink(`.${onePhoto.imageUrl}`, err => {
     console.log(err);
   });
 
