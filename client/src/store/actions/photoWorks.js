@@ -2,80 +2,16 @@ import axios from 'axios';
 import { setAlert } from './alert';
 
 import {
-  SET_PHOTO_OF_ASFALT,
-  SET_PHOTO_OF_ELEKTRO,
-  SET_PHOTO_OF_EMERGENCY_WORK,
-  SET_PHOTO_OF_FASAD,
-  SET_PHOTO_OF_INSIDE_WORK,
-  SET_PHOTO_OF_METALL_CONSTR,
-  SET_PHOTO_OF_ROOF,
-  SET_PHOTO_OF_SANTEH,
-  SET_PHOTO_OF_WINDOW_PL,
-  GET_ALL_PHOTO_OF_ASFALT,
-  GET_ALL_PHOTO_OF_ELEKTRO,
-  GET_ALL_PHOTO_OF_EMERGENCY_WORK,
-  GET_ALL_PHOTO_OF_FASAD,
-  GET_ALL_PHOTO_OF_INSIDE_WORK,
-  GET_ALL_PHOTO_OF_METALL_CONSTR,
-  GET_ALL_PHOTO_OF_ROOF,
-  GET_ALL_PHOTO_OF_SANTEH,
-  GET_ALL_PHOTO_OF_WINDOW_PL,
-  GET_ONE_PHOTO_OF_ASFALT,
-  GET_ONE_PHOTO_OF_ELEKTRO,
-  GET_ONE_PHOTO_OF_EMERGENCY_WORK,
-  GET_ONE_PHOTO_OF_FASAD,
-  GET_ONE_PHOTO_OF_INSIDE_WORK,
-  GET_ONE_PHOTO_OF_METALL_CONSTR,
-  GET_ONE_PHOTO_OF_ROOF,
-  GET_ONE_PHOTO_OF_SANTEH,
-  GET_ONE_PHOTO_OF_WINDOW_PL,
-  DELETE_PHOTO_OF_ASFALT,
-  DELETE_PHOTO_OF_ELEKTRO,
-  DELETE_PHOTO_OF_EMERGENCY_WORK,
-  DELETE_PHOTO_OF_FASAD,
-  DELETE_PHOTO_OF_INSIDE_WORK,
-  DELETE_PHOTO_OF_METALL_CONSTR,
-  DELETE_PHOTO_OF_ROOF,
-  DELETE_PHOTO_OF_SANTEH,
-  DELETE_PHOTO_OF_WINDOW_PL
+  SET_PHOTO,
+  GET_ALL_PHOTOS,
+  GET_ONE_PHOTO,
+  DELETE_PHOTO
 } from './types';
 
-export const getAllPhotoWork = typeOfImage => async dispatch => {
-  let typeReducer;
-  switch (typeOfImage) {
-    case 'asfalt':
-      typeReducer = GET_ALL_PHOTO_OF_ASFALT;
-      break;
-    case 'elektro':
-      typeReducer = GET_ALL_PHOTO_OF_ELEKTRO;
-      break;
-    case 'emergencywork':
-      typeReducer = GET_ALL_PHOTO_OF_EMERGENCY_WORK;
-      break;
-    case 'fasad':
-      typeReducer = GET_ALL_PHOTO_OF_FASAD;
-      break;
-    case 'insidework':
-      typeReducer = GET_ALL_PHOTO_OF_INSIDE_WORK;
-      break;
-    case 'metallconstr':
-      typeReducer = GET_ALL_PHOTO_OF_METALL_CONSTR;
-      break;
-    case 'roof':
-      typeReducer = GET_ALL_PHOTO_OF_ROOF;
-      break;
-    case 'santeh':
-      typeReducer = GET_ALL_PHOTO_OF_SANTEH;
-      break;
-    case 'windowpl':
-      typeReducer = GET_ALL_PHOTO_OF_WINDOW_PL;
-      break;
-    default:
-      return '';
-  }
+export const getAllPhotoWork = () => async dispatch => {
   try {
-    const result = await axios.get(`/api/v1/photo/${typeOfImage}`);
-    dispatch({ type: typeReducer, payload: result.data.data });
+    const result = await axios.get(`/api/v1/photo`);
+    dispatch({ type: GET_ALL_PHOTOS, payload: result.data.data });
   } catch (err) {
     const error = err.response.data.error;
     if (error) {
@@ -84,45 +20,12 @@ export const getAllPhotoWork = typeOfImage => async dispatch => {
   }
 };
 
-export const getOnePhotoWork = (imageId, typeOfImage) => async dispatch => {
-  let typeReducer;
-  switch (typeOfImage) {
-    case 'asfalt':
-      typeReducer = GET_ONE_PHOTO_OF_ASFALT;
-      break;
-    case 'elektro':
-      typeReducer = GET_ONE_PHOTO_OF_ELEKTRO;
-      break;
-    case 'emergencywork':
-      typeReducer = GET_ONE_PHOTO_OF_EMERGENCY_WORK;
-      break;
-    case 'fasad':
-      typeReducer = GET_ONE_PHOTO_OF_FASAD;
-      break;
-    case 'insidework':
-      typeReducer = GET_ONE_PHOTO_OF_INSIDE_WORK;
-      break;
-    case 'metallconstr':
-      typeReducer = GET_ONE_PHOTO_OF_METALL_CONSTR;
-      break;
-    case 'roof':
-      typeReducer = GET_ONE_PHOTO_OF_ROOF;
-      break;
-    case 'santeh':
-      typeReducer = GET_ONE_PHOTO_OF_SANTEH;
-      break;
-    case 'windowpl':
-      typeReducer = GET_ONE_PHOTO_OF_WINDOW_PL;
-      break;
-    default:
-      return '';
-  }
-
+export const getOnePhotoWork = imageId => async dispatch => {
   try {
-    const onePhoto = await axios.get(`/api/v1/photo/${typeOfImage}/${imageId}`);
+    const onePhoto = await axios.get(`/api/v1/photo/${imageId}`);
     dispatch({
-      type: typeReducer,
-      payload: onePhoto.data
+      type: GET_ONE_PHOTO,
+      payload: onePhoto.data.data
     });
   } catch (err) {
     const error = err.response.data.error;
@@ -132,9 +35,15 @@ export const getOnePhotoWork = (imageId, typeOfImage) => async dispatch => {
   }
 };
 
-export const addPhotoWork = (typeOfImage, file) => async dispatch => {
+export const addPhotoWork = (
+  typeOfImageID,
+  description,
+  file
+) => async dispatch => {
   const photoFormData = new FormData();
   photoFormData.append('photoWork', file);
+  photoFormData.append('typeOfImage', typeOfImageID);
+  photoFormData.append('description', description);
   // console.log(file);
   const config = {
     headers: {
@@ -142,100 +51,32 @@ export const addPhotoWork = (typeOfImage, file) => async dispatch => {
       'Content-Type': 'multipart/form-data'
     }
   };
-  let photo;
+
   try {
-    photo = await axios.post(
-      `/api/v1/photo/${typeOfImage}`,
-      photoFormData,
-      config
-    );
-    dispatch(getAllPhotoWork(typeOfImage));
+    const photo = await axios.post(`/api/v1/photo`, photoFormData, config);
+
+    dispatch({
+      type: SET_PHOTO,
+      payload: photo.data.data
+    });
+
+    dispatch(getAllPhotoWork());
   } catch (err) {
     const error = err.response.data.error;
     if (error) {
       dispatch(setAlert(error, 'error', 2500));
     }
   }
-
-  let typeReducer;
-  switch (typeOfImage) {
-    case 'asfalt':
-      typeReducer = SET_PHOTO_OF_ASFALT;
-      break;
-    case 'elektro':
-      typeReducer = SET_PHOTO_OF_ELEKTRO;
-      break;
-    case 'emergencywork':
-      typeReducer = SET_PHOTO_OF_EMERGENCY_WORK;
-      break;
-    case 'fasad':
-      typeReducer = SET_PHOTO_OF_FASAD;
-      break;
-    case 'insidework':
-      typeReducer = SET_PHOTO_OF_INSIDE_WORK;
-      break;
-    case 'metallconstr':
-      typeReducer = SET_PHOTO_OF_METALL_CONSTR;
-      break;
-    case 'roof':
-      typeReducer = SET_PHOTO_OF_ROOF;
-      break;
-    case 'santeh':
-      typeReducer = SET_PHOTO_OF_SANTEH;
-      break;
-    case 'windowpl':
-      typeReducer = SET_PHOTO_OF_WINDOW_PL;
-      break;
-    default:
-      return '';
-  }
-
-  dispatch({
-    type: typeReducer,
-    payload: photo.data
-  });
 };
 
-export const deletePhotoWork = (imageId, typeOfImage) => async dispatch => {
-  let typeReducer;
-  switch (typeOfImage) {
-    case 'asfalt':
-      typeReducer = DELETE_PHOTO_OF_ASFALT;
-      break;
-    case 'elektro':
-      typeReducer = DELETE_PHOTO_OF_ELEKTRO;
-      break;
-    case 'emergencywork':
-      typeReducer = DELETE_PHOTO_OF_EMERGENCY_WORK;
-      break;
-    case 'fasad':
-      typeReducer = DELETE_PHOTO_OF_FASAD;
-      break;
-    case 'insidework':
-      typeReducer = DELETE_PHOTO_OF_INSIDE_WORK;
-      break;
-    case 'metallconstr':
-      typeReducer = DELETE_PHOTO_OF_METALL_CONSTR;
-      break;
-    case 'roof':
-      typeReducer = DELETE_PHOTO_OF_ROOF;
-      break;
-    case 'santeh':
-      typeReducer = DELETE_PHOTO_OF_SANTEH;
-      break;
-    case 'windowpl':
-      typeReducer = DELETE_PHOTO_OF_WINDOW_PL;
-      break;
-    default:
-      return '';
-  }
-
+export const deletePhotoWork = imageId => async dispatch => {
   try {
-    await axios.delete(`/api/v1/photo/${typeOfImage}/${imageId}`);
+    await axios.delete(`/api/v1/photo/${imageId}`);
     dispatch({
-      type: typeReducer,
+      type: DELETE_PHOTO,
       payload: imageId
     });
+    dispatch(getAllPhotoWork());
   } catch (err) {
     const error = err.response.data.error;
     if (error) {

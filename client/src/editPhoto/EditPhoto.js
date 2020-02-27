@@ -4,11 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setNameOfPage } from '../store/actions/nameOfPage';
 
-import {
-  getAllPhotoWork,
-  addPhotoWork,
-  deletePhotoWork
-} from '../store/actions/photoWorks';
+import { addPhotoWork, getAllPhotoWork } from '../store/actions/photoWorks';
 
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
@@ -40,22 +36,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const EditPhoto = ({
-  setNameOfPage,
-  getAllPhotoWork,
-  addPhotoWork,
-  deletePhotoWork,
-  photoWorks
-}) => {
+const EditPhoto = ({ setNameOfPage, photoWorks, addPhotoWork }) => {
   const classes = useStyles();
-  let history = useHistory();
 
   const [thisPhoto, setThisPhoto] = useState('');
+  const [typeOfImage, setTipeOfImage] = useState('');
+  const [description, setDescription] = useState('');
+
+  //TODO Создать редюсер для imageType - который должен грузиться в select
 
   useEffect(() => {
-    setNameOfPage('Редактировать фото');
-    if (photoWorks.photoAsfalt) {
-      getAllPhotoWork('asfalt');
+    setNameOfPage('Добавить фото');
+    if (photoWorks) {
+      getAllPhotoWork();
     }
   }, [setNameOfPage, getAllPhotoWork]);
   // console.log(photoWorks.photoAsfalt);
@@ -67,12 +60,10 @@ const EditPhoto = ({
 
   const addPhotoHandler = typeOfImage => {
     addPhotoWork(typeOfImage, thisPhoto);
-    history.push('/editphoto');
   };
 
   const deleteImage = (itemId, typeOfImage) => {
-    deletePhotoWork(itemId, typeOfImage);
-    history.push('/editphoto');
+    // deletePhotoWork(itemId, typeOfImage);
   };
 
   return (
@@ -80,7 +71,7 @@ const EditPhoto = ({
       <Grid item container>
         <Grid item xs={12}>
           <Typography component='h1' variant='h5' align='center'>
-            Асфальтные работы
+            Добавляем фото
           </Typography>
         </Grid>
 
@@ -97,7 +88,7 @@ const EditPhoto = ({
                   <Button
                     color='secondary'
                     variant='contained'
-                    onClick={() => deleteImage(item._id, 'asfalt')}
+                    onClick={() => deleteImage(item._id)}
                     className={classes.buttonDelete}
                   >
                     Удалить фото
@@ -149,7 +140,7 @@ EditPhoto.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAllPhotoWork: PropTypes.func.isRequired,
   addPhotoWork: PropTypes.func.isRequired,
-  deletePhotoWork: PropTypes.func.isRequired,
+
   photoWorks: PropTypes.object.isRequired
 };
 
@@ -160,6 +151,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAllPhotoWork,
-  addPhotoWork,
-  deletePhotoWork
+  addPhotoWork
+  // deletePhotoWork
 })(EditPhoto);

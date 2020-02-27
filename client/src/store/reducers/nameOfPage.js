@@ -1,7 +1,8 @@
 import { NAME_OF_PAGE } from '../actions/types';
 
 const initialState = {
-  pageName: ''
+  pageName: '',
+  loading: true
 };
 
 export default function(state = initialState, action) {
@@ -11,7 +12,8 @@ export default function(state = initialState, action) {
     case NAME_OF_PAGE:
       return {
         ...state,
-        pageName: payload
+        pageName: payload,
+        loading: false
       };
 
     default:

@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
+import Spinner from '../spinner/Spinner';
+
 import { setNameOfPage } from '../../store/actions/nameOfPage';
 import { getAllPhotoWork, addPhotoWork } from '../../store/actions/photoWorks';
+import ListOfPhotos from './Components/ListOfPhotos';
 import PropTypes from 'prop-types';
 
-import MySlider from './Components/MySlider';
 import Typography from '@material-ui/core/Typography';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,51 +18,101 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Landing = ({ setNameOfPage, getAllPhotoWork, photoWorks }) => {
+const Landing = ({
+  setNameOfPage,
+  getAllPhotoWork,
+  photoWorks: { photoWorks, loading }
+}) => {
   const classes = useStyles();
 
   useEffect(() => {
     setNameOfPage('Добрый день');
-    if (photoWorks.photoAsfalt) {
-      getAllPhotoWork('asfalt');
-    }
-
-    if (photoWorks.photoElektro) {
-      getAllPhotoWork('elektro');
-    }
-
-    // getAllPhotoWork('emergencywork');
-    // getAllPhotoWork('fasad');
-    // getAllPhotoWork('insidework');
-    // getAllPhotoWork('metallconstr');
-    // getAllPhotoWork('roof');
-    // getAllPhotoWork('santeh');
-    // getAllPhotoWork('windowpl');
+    getAllPhotoWork();
   }, [setNameOfPage, getAllPhotoWork]);
-  // console.log(photoWorks.photoAsfalt);
 
-  return (
+  const arrAsf = photoWorks.filter(
+    item => item.typeOfImage.imageType === 'asfalt'
+  );
+
+  const arrElectro = photoWorks.filter(
+    item => item.typeOfImage.imageType === 'electro'
+  );
+
+  const arrEmergency = photoWorks.filter(
+    item => item.typeOfImage.imageType === 'emergencywork'
+  );
+
+  const arrFasad = photoWorks.filter(
+    item => item.typeOfImage.imageType === 'fasad'
+  );
+
+  const arrInsideWork = photoWorks.filter(
+    item => item.typeOfImage.imageType === 'insidework'
+  );
+
+  const arrMetallConstr = photoWorks.filter(
+    item => item.typeOfImage.imageType === 'metallconstr'
+  );
+
+  const arrSantex = photoWorks.filter(
+    item => item.typeOfImage.imageType === 'santeh'
+  );
+
+  const arrWindowPl = photoWorks.filter(
+    item => item.typeOfImage.imageType === 'windowpl'
+  );
+
+  return loading ? (
+    <Spinner />
+  ) : (
     <div>
       <Typography component='h1' variant='h5' align='center'>
         Асфальтные работы
       </Typography>
 
-      <MySlider arrPhoto={photoWorks.photoAsfalt} />
+      <ListOfPhotos arr={arrAsf} />
 
       <Typography component='h1' variant='h5' align='center'>
         Электроработы работы
       </Typography>
 
-      <MySlider arrPhoto={photoWorks.photoElektro} />
+      <ListOfPhotos arr={arrElectro} />
 
-      {/* <MySlider arrPhoto={photoWorks.photoEmergencyWork} />
-      <MySlider arrPhoto={photoWorks.photoFasad} />
-      <MySlider arrPhoto={photoWorks.photoInsideWork} />
-      <MySlider arrPhoto={photoWorks.photoMetallConstr} />
-      <MySlider arrPhoto={photoWorks.photoRoof} />
-      <MySlider arrPhoto={photoWorks.photoSantex} />
-      <MySlider arrPhoto={photoWorks.photoWindowsPl} />
-       */}
+      <Typography component='h1' variant='h5' align='center'>
+        Аварийные работы
+      </Typography>
+
+      <ListOfPhotos arr={arrEmergency} />
+
+      <Typography component='h1' variant='h5' align='center'>
+        Фасадные работы
+      </Typography>
+
+      <ListOfPhotos arr={arrFasad} />
+
+      <Typography component='h1' variant='h5' align='center'>
+        Внутренние работы
+      </Typography>
+
+      <ListOfPhotos arr={arrInsideWork} />
+
+      <Typography component='h1' variant='h5' align='center'>
+        Металлоконструкции
+      </Typography>
+
+      <ListOfPhotos arr={arrMetallConstr} />
+
+      <Typography component='h1' variant='h5' align='center'>
+        Сантехнические работы
+      </Typography>
+
+      <ListOfPhotos arr={arrSantex} />
+
+      <Typography component='h1' variant='h5' align='center'>
+        Монтаж и изготовление металлопластиковых изделий
+      </Typography>
+
+      <ListOfPhotos arr={arrWindowPl} />
     </div>
   );
 };

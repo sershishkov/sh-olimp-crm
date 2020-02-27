@@ -67,7 +67,7 @@ exports.addPhoto = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/photo/asfalt
 //@access Private
 exports.getAllPhotos = asyncHandler(async (req, res, next) => {
-  const allPhoto = await photoWork.find();
+  const allPhoto = await photoWork.find().populate('typeOfImage', 'imageType');
   //Check if photo exists
   if (!allPhoto) {
     return next(new ErrorResponse('На данный момент нет фото в галлерее', 400));

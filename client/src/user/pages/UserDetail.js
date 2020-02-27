@@ -6,7 +6,8 @@ import {
   updatedetails,
   updatepassword,
   changeAvatar,
-  logout
+  logout,
+  loadUser
 } from '../../store/actions/auth';
 
 import Spinner from '../../shared/spinner/Spinner';
@@ -48,11 +49,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UserDetail = ({
-  user,
   updatedetails,
   updatepassword,
   changeAvatar,
-  logout
+  logout,
+  loadUser
 }) => {
   const classes = useStyles();
 
@@ -88,21 +89,14 @@ const UserDetail = ({
 
   const changeAvatarHandler = e => {
     e.preventDefault();
-    console.log(myAvatar);
+    // console.log(myAvatar);
     changeAvatar(myAvatar);
   };
 
   useEffect(() => {
-    if (user) {
-      setFormData({ ...formData, name: user.name, email: user.email });
-    }
-  }, [user, setFormData]);
-
-  return !user ? (
-    <div className={classes.spinner}>
-      <Spinner />
-    </div>
-  ) : (
+    loadUser();
+  }, [loadUser]);
+  return (
     <Container component='main' maxWidth='sm'>
       <CssBaseline />
       <div className={classes.paper}>
@@ -247,7 +241,7 @@ UserDetail.propTypes = {
   updatedetails: PropTypes.func.isRequired,
   updatepassword: PropTypes.func.isRequired,
   changeAvatar: PropTypes.func.isRequired,
-  user: PropTypes.object
+  loadUser: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   user: state.auth.user
@@ -257,5 +251,6 @@ export default connect(mapStateToProps, {
   updatedetails,
   updatepassword,
   changeAvatar,
-  logout
+  logout,
+  loadUser
 })(UserDetail);

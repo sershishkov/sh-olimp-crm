@@ -21,6 +21,8 @@ import Login from './user/pages/Login';
 import Register from './user/pages/Register';
 import PrivateRoute from './routing/PrivateRoute';
 import EditPhoto from './editPhoto/EditPhoto';
+import TypeOfImage from './editPhoto/TypeOfImage';
+import TypeOfImageEdit from './editPhoto/TypeOfImageEdit';
 import UserDetail from './user/pages/UserDetail';
 
 const useStyles = makeStyles(theme => ({
@@ -50,13 +52,14 @@ function App() {
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/aboutus' component={AboutUs} />
-            <PrivateRoute
-              roles='boss admin'
-              exact
-              path='/editphoto'
-              component={EditPhoto}
-            />
+            <PrivateRoute exact path='/editphoto' component={EditPhoto} />
             <PrivateRoute exact path='/user-detail' component={UserDetail} />
+            <PrivateRoute exact path='/type-of-image' component={TypeOfImage} />
+            <PrivateRoute
+              exact
+              path='/type-of-image/:id'
+              component={TypeOfImageEdit}
+            />
           </Switch>
         </Container>
         <Footer />

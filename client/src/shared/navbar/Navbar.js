@@ -23,6 +23,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
@@ -74,6 +75,18 @@ const ResponsiveDrawer = ({ isAuthenticated, logout, user, pageName }) => {
     <div className={classes.toolbar}>
       <Divider />
       <List>
+        <ListItem
+          button
+          onClick={() => history.push('/user-detail')}
+          className={
+            isAuthenticated ? classes.displayFlex : classes.displayNone
+          }
+        >
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText>Моя страница</ListItemText>
+        </ListItem>
         <ListItem
           button
           onClick={() => history.push('/register')}
@@ -140,6 +153,20 @@ const ResponsiveDrawer = ({ isAuthenticated, logout, user, pageName }) => {
         </ListItemIcon>
         <ListItemText>РедактФото</ListItemText>
       </ListItem>
+      <ListItem
+        button
+        onClick={() => history.push('/type-of-image')}
+        className={
+          isAuthenticated && (user.role === 'boss' || user.role === 'admin')
+            ? classes.displayFlex
+            : classes.displayNone
+        }
+      >
+        <ListItemIcon>
+          <MailIcon />
+        </ListItemIcon>
+        <ListItemText>РедактГруппыФото</ListItemText>
+      </ListItem>
       <List>
         <ListItem button>
           <ListItemIcon>
@@ -185,82 +212,92 @@ const ResponsiveDrawer = ({ isAuthenticated, logout, user, pageName }) => {
                   <MenuIcon />
                 </IconButton>
               </Grid>
-              <Grid item xs={10}>
-                <Button color='inherit' href='/'>
-                  ОЛИМП-ДС
-                </Button>
-              </Grid>
+              <Hidden smDown>
+                <Grid item xs={10}>
+                  <Button color='inherit' href='/'>
+                    ОЛИМП-ДС
+                  </Button>
+                </Grid>
+              </Hidden>
             </Grid>
-            <Grid container item xs={4} justify='center' spacing={2}>
-              <Grid item xs={12}>
-                <Typography
-                  color='inherit'
-                  component='h4'
-                  variant='h5'
-                  align='center'
+            <Hidden smDown>
+              <Grid container item xs={4} justify='center' spacing={2}>
+                <Grid item xs={12}>
+                  <Typography
+                    color='inherit'
+                    component='h4'
+                    variant='h5'
+                    align='center'
+                  >
+                    {pageName}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Hidden>
+            <Hidden smDown>
+              <Grid
+                container
+                item
+                xs={4}
+                justify='space-around'
+                spacing={2}
+                alignItems='center'
+              >
+                <Grid
+                  item
+                  xs={3}
+                  className={
+                    !isAuthenticated
+                      ? classes.displayBlock
+                      : classes.displayNone
+                  }
                 >
-                  {pageName}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              item
-              xs={4}
-              justify='space-around'
-              spacing={2}
-              alignItems='center'
-            >
-              <Grid
-                item
-                xs={3}
-                className={
-                  !isAuthenticated ? classes.displayBlock : classes.displayNone
-                }
-              >
-                <Button color='inherit' href='/login'>
-                  Вход
-                </Button>
-              </Grid>
+                  <Button color='inherit' href='/login'>
+                    Вход
+                  </Button>
+                </Grid>
 
-              <Grid
-                item
-                xs={3}
-                className={
-                  !isAuthenticated ? classes.displayBlock : classes.displayNone
-                }
-              >
-                <Button color='inherit' href='/register'>
-                  Регистрация
-                </Button>
-              </Grid>
-              <Grid
-                item
-                xs={3}
-                className={
-                  isAuthenticated ? classes.displayBlock : classes.displayNone
-                }
-              >
-                <Button color='inherit' href='/user-detail'>
-                  {user && (
-                    <Avatar className={classes.avatar} src={user.myAvatar} />
-                  )}
+                <Grid
+                  item
+                  xs={3}
+                  className={
+                    !isAuthenticated
+                      ? classes.displayBlock
+                      : classes.displayNone
+                  }
+                >
+                  <Button color='inherit' href='/register'>
+                    Регистрация
+                  </Button>
+                </Grid>
+                <Grid
+                  item
+                  xs={3}
+                  className={
+                    isAuthenticated ? classes.displayBlock : classes.displayNone
+                  }
+                >
+                  <Button color='inherit' href='/user-detail'>
+                    {user && (
+                      <Avatar className={classes.avatar} src={user.myAvatar} />
+                    )}
 
-                  {userName}
-                </Button>
+                    {userName}
+                  </Button>
+                </Grid>
+                <Grid
+                  item
+                  xs={3}
+                  className={
+                    isAuthenticated ? classes.displayBlock : classes.displayNone
+                  }
+                >
+                  <Button color='inherit' onClick={logoutHandler}>
+                    Выход
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid
-                item
-                xs={3}
-                className={
-                  isAuthenticated ? classes.displayBlock : classes.displayNone
-                }
-              >
-                <Button color='inherit' onClick={logoutHandler}>
-                  Выход
-                </Button>
-              </Grid>
-            </Grid>
+            </Hidden>
           </Grid>
         </Toolbar>
       </AppBar>
