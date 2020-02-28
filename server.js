@@ -57,7 +57,7 @@ const auth = require('./routes/auth');
 const users = require('./routes/users');
 
 const photoWorks = require('./routes//photoWorks');
-const typeOfImage = require('./routes/typeOfImage');
+const groupOfImage = require('./routes/groupOfImage');
 
 //Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
@@ -78,7 +78,7 @@ app.use('/api/v1/auth', auth);
 app.use('/api/v1/users', users);
 
 app.use('/api/v1/photo', photoWorks);
-app.use('/api/v1/imagetype', typeOfImage);
+app.use('/api/v1/imagegroup', groupOfImage);
 
 app.use(errorHandler);
 

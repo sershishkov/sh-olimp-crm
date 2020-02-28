@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const PhotoWork = new mongoose.Schema({
   imageUrl: String,
-  typeOfImage: {
+  imageGroup: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'TypeOfImage'
+    ref: 'GroupOfImage'
   },
   description: String
 });

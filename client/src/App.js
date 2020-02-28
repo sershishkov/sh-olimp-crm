@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import { Provider } from 'react-redux';
 import store from './store/store';
 import { loadUser } from './store/actions/auth';
@@ -21,8 +22,8 @@ import Login from './user/pages/Login';
 import Register from './user/pages/Register';
 import PrivateRoute from './routing/PrivateRoute';
 import EditPhoto from './editPhoto/EditPhoto';
-import TypeOfImage from './editPhoto/TypeOfImage';
-import TypeOfImageEdit from './editPhoto/TypeOfImageEdit';
+import GroupOfImage from './editPhoto/GroupOfImage';
+import GroupOfImageEdit from './editPhoto/GroupOfImageEdit';
 import UserDetail from './user/pages/UserDetail';
 
 const useStyles = makeStyles(theme => ({
@@ -37,6 +38,7 @@ if (localStorage.token) {
 
 function App() {
   const classes = useStyles();
+
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
@@ -46,19 +48,24 @@ function App() {
       <Router>
         <Navbar />
         <Container maxWidth='md' className={classes.root}>
-          <Route exact path='/' component={Landing} />
           <Alert />
           <Switch>
+            <Route exact path='/' component={Landing} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/aboutus' component={AboutUs} />
-            <PrivateRoute exact path='/editphoto' component={EditPhoto} />
+
             <PrivateRoute exact path='/user-detail' component={UserDetail} />
-            <PrivateRoute exact path='/type-of-image' component={TypeOfImage} />
+            <PrivateRoute exact path='/editphoto' component={EditPhoto} />
             <PrivateRoute
               exact
-              path='/type-of-image/:id'
-              component={TypeOfImageEdit}
+              path='/group-of-image'
+              component={GroupOfImage}
+            />
+            <PrivateRoute
+              exact
+              path='/group-of-image/:id'
+              component={GroupOfImageEdit}
             />
           </Switch>
         </Container>

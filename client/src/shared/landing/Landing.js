@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import Spinner from '../spinner/Spinner';
 
 import { setNameOfPage } from '../../store/actions/nameOfPage';
-import { getAllPhotoWork, addPhotoWork } from '../../store/actions/photoWorks';
+import { getAllPhotoWork } from '../../store/actions/photoWorks';
+import { getAllGroupOfImage } from '../../store/actions/groupOfImage';
 import ListOfPhotos from './Components/ListOfPhotos';
 import PropTypes from 'prop-types';
 
@@ -21,114 +22,54 @@ const useStyles = makeStyles(theme => ({
 const Landing = ({
   setNameOfPage,
   getAllPhotoWork,
-  photoWorks: { photoWorks, loading }
+  photoWorks: { photoWorks, loading },
+  getAllGroupOfImage,
+  groupOfImage: { imageGroups }
 }) => {
   const classes = useStyles();
 
   useEffect(() => {
     setNameOfPage('Добрый день');
     getAllPhotoWork();
-  }, [setNameOfPage, getAllPhotoWork]);
+    getAllGroupOfImage();
+  }, [setNameOfPage, getAllPhotoWork, getAllGroupOfImage]);
 
-  const arrAsf = photoWorks.filter(
-    item => item.typeOfImage.imageType === 'asfalt'
+  const viewImages = (
+    <Fragment>
+      {imageGroups.map(group => {
+        const newArr = photoWorks.filter(
+          photo => group.imageGroup === photo.imageGroup.imageGroup
+        );
+        return (
+          <Fragment>
+            <Typography component='h1' variant='h5' align='center'>
+              {group.imageGroup}
+            </Typography>
+            <ListOfPhotos arr={newArr} />
+          </Fragment>
+        );
+      })}
+    </Fragment>
   );
 
-  const arrElectro = photoWorks.filter(
-    item => item.typeOfImage.imageType === 'electro'
-  );
-
-  const arrEmergency = photoWorks.filter(
-    item => item.typeOfImage.imageType === 'emergencywork'
-  );
-
-  const arrFasad = photoWorks.filter(
-    item => item.typeOfImage.imageType === 'fasad'
-  );
-
-  const arrInsideWork = photoWorks.filter(
-    item => item.typeOfImage.imageType === 'insidework'
-  );
-
-  const arrMetallConstr = photoWorks.filter(
-    item => item.typeOfImage.imageType === 'metallconstr'
-  );
-
-  const arrSantex = photoWorks.filter(
-    item => item.typeOfImage.imageType === 'santeh'
-  );
-
-  const arrWindowPl = photoWorks.filter(
-    item => item.typeOfImage.imageType === 'windowpl'
-  );
-
-  return loading ? (
-    <Spinner />
-  ) : (
-    <div>
-      <Typography component='h1' variant='h5' align='center'>
-        Асфальтные работы
-      </Typography>
-
-      <ListOfPhotos arr={arrAsf} />
-
-      <Typography component='h1' variant='h5' align='center'>
-        Электроработы работы
-      </Typography>
-
-      <ListOfPhotos arr={arrElectro} />
-
-      <Typography component='h1' variant='h5' align='center'>
-        Аварийные работы
-      </Typography>
-
-      <ListOfPhotos arr={arrEmergency} />
-
-      <Typography component='h1' variant='h5' align='center'>
-        Фасадные работы
-      </Typography>
-
-      <ListOfPhotos arr={arrFasad} />
-
-      <Typography component='h1' variant='h5' align='center'>
-        Внутренние работы
-      </Typography>
-
-      <ListOfPhotos arr={arrInsideWork} />
-
-      <Typography component='h1' variant='h5' align='center'>
-        Металлоконструкции
-      </Typography>
-
-      <ListOfPhotos arr={arrMetallConstr} />
-
-      <Typography component='h1' variant='h5' align='center'>
-        Сантехнические работы
-      </Typography>
-
-      <ListOfPhotos arr={arrSantex} />
-
-      <Typography component='h1' variant='h5' align='center'>
-        Монтаж и изготовление металлопластиковых изделий
-      </Typography>
-
-      <ListOfPhotos arr={arrWindowPl} />
-    </div>
-  );
+  return loading ? <Spinner /> : <div>{viewImages}</div>;
 };
 
 Landing.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAllPhotoWork: PropTypes.func.isRequired,
-  photoWorks: PropTypes.object.isRequired
+  getAllGroupOfImage: PropTypes.func.isRequired,
+  photoWorks: PropTypes.object.isRequired,
+  groupOfImage: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  photoWorks: state.photoWorks
+  photoWorks: state.photoWorks,
+  groupOfImage: state.groupOfImage
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAllPhotoWork,
-  addPhotoWork
+  getAllGroupOfImage
 })(Landing);

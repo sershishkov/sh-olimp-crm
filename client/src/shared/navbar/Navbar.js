@@ -155,7 +155,7 @@ const ResponsiveDrawer = ({ isAuthenticated, logout, user, pageName }) => {
       </ListItem>
       <ListItem
         button
-        onClick={() => history.push('/type-of-image')}
+        onClick={() => history.push('/group-of-image')}
         className={
           isAuthenticated && (user.role === 'boss' || user.role === 'admin')
             ? classes.displayFlex
@@ -168,13 +168,33 @@ const ResponsiveDrawer = ({ isAuthenticated, logout, user, pageName }) => {
         <ListItemText>РедактГруппыФото</ListItemText>
       </ListItem>
       <List>
-        <ListItem button>
+        <ListItem
+          button
+          className={
+            isAuthenticated &&
+            (user.role === 'boss' ||
+              user.role === 'admin' ||
+              user.role === 'engineer')
+              ? classes.displayFlex
+              : classes.displayNone
+          }
+        >
           <ListItemIcon>
             <MailIcon />
           </ListItemIcon>
           <ListItemText>Расчеты</ListItemText>
         </ListItem>
-        <ListItem button>
+        <ListItem
+          button
+          className={
+            isAuthenticated &&
+            (user.role === 'boss' ||
+              user.role === 'admin' ||
+              user.role === 'accountant')
+              ? classes.displayFlex
+              : classes.displayNone
+          }
+        >
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
