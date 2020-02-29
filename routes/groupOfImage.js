@@ -4,6 +4,7 @@ const { protect, authorize } = require('../middleware/auth');
 
 const {
   addImageGroup,
+  updateImageGroup,
   getAllImageGroups,
   getOneImageGroup,
   deleteImageGroup
@@ -21,6 +22,11 @@ router
 router
   .route('/:id')
   .get(getOneImageGroup)
+  .put(
+    protect,
+    authorize('engineer', 'accountant', 'boss', 'admin'),
+    updateImageGroup
+  )
   .delete(
     protect,
     authorize('engineer', 'accountant', 'boss', 'admin'),

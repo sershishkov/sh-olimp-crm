@@ -22,11 +22,14 @@ export default function(state = initialState, action) {
         imageGroups: [payload, ...state.imageGroups],
         loading: false
       };
-    //TODO
-    // case UPDATE_IMAGE_GROUP:
-    // return {
-    //
-    // };
+
+    case UPDATE_IMAGE_GROUP:
+      return {
+        imageGroups: state.imageGroups.map(group =>
+          group._id === payload._id ? payload : group
+        ),
+        loading: false
+      };
 
     case GET_ALL_IMAGE_GROUPS:
       return {

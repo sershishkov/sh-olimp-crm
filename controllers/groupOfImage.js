@@ -22,6 +22,33 @@ exports.addImageGroup = asyncHandler(async (req, res, next) => {
   });
 });
 
+//@desc   Update a group
+//@route  PUT /api/v1/imagegroup/:id
+//@access Private
+exports.updateImageGroup = asyncHandler(async (req, res, next) => {
+  //Check if group exists
+  if (!req.body) {
+    return next(new ErrorResponse('Не переданы значения', 400));
+  }
+  const newNameOfGroup = {
+    imageGroup: req.body.imageGroup
+  };
+
+  const newNameGroup = await GroupOfImage.findByIdAndUpdate(
+    req.params.id,
+    newNameOfGroup,
+    {
+      new: true,
+      runValidators: true
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+    data: newNameGroup
+  });
+});
+
 //@desc   Get all groups
 //@route  GET /api/v1/imagegroup
 //@access Private

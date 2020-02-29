@@ -26,7 +26,7 @@ const Landing = ({
   getAllGroupOfImage,
   groupOfImage: { imageGroups }
 }) => {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   useEffect(() => {
     setNameOfPage('Добрый день');
@@ -41,7 +41,7 @@ const Landing = ({
           photo => group.imageGroup === photo.imageGroup.imageGroup
         );
         return (
-          <Fragment>
+          <Fragment key={group._id}>
             <Typography component='h1' variant='h5' align='center'>
               {group.imageGroup}
             </Typography>

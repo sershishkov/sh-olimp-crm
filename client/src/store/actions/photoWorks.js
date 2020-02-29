@@ -36,13 +36,13 @@ export const getOnePhotoWork = imageId => async dispatch => {
 };
 
 export const addPhotoWork = (
-  typeOfImageID,
-  description,
-  file
+  file,
+  groupOfImageID,
+  description
 ) => async dispatch => {
   const photoFormData = new FormData();
   photoFormData.append('photoWork', file);
-  photoFormData.append('typeOfImage', typeOfImageID);
+  photoFormData.append('imageGroup', groupOfImageID);
   photoFormData.append('description', description);
   // console.log(file);
   const config = {

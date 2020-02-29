@@ -36,21 +36,51 @@ export const getOneGroupOfImage = imageId => async dispatch => {
   }
 };
 
-export const addGroupOfImage = typeOfImage => async dispatch => {
+export const addGroupOfImage = groupOfImage => async dispatch => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
     }
   };
 
-  const body = JSON.stringify(typeOfImage);
+  const body = JSON.stringify({ imageGroup: groupOfImage });
 
   try {
-    const typeImage = await axios.post(`/api/v1/imagegroup`, body, config);
+    const groupImage = await axios.post(`/api/v1/imagegroup`, body, config);
 
     dispatch({
       type: SET_IMAGE_GROUP,
-      payload: typeImage.data.data
+      payload: groupImage.data.data
+    });
+
+    dispatch(getAllGroupOfImage());
+  } catch (err) {
+    const error = err.response.data.error;
+    if (error) {
+      dispatch(setAlert(error, 'error', 2500));
+    }
+  }
+};
+
+export const updateGroupOfImage = (groupId, groupOfImage) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  const body = JSON.stringify({ imageGroup: groupOfImage });
+
+  try {
+    const groupImage = await axios.put(
+      `/api/v1/imagegroup/${groupId}`,
+      body,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_IMAGE_GROUP,
+      payload: groupImage.data.data
     });
 
     dispatch(getAllGroupOfImage());

@@ -16,21 +16,21 @@ const Footer = props => {
   return (
     <Grid container spacing={2} className={classes.root}>
       <Hidden smDown>
-        <Grid item xs={4}>
+        <Grid item md={4}>
           <Typography component='h1' variant='h5' align='center'>
             компания
           </Typography>
         </Grid>
       </Hidden>
 
-      <Grid item xs={4}>
+      <Grid item sm={12} md={4} xm={12}>
         <Typography component='h1' variant='h5' align='center'>
           ОЛИМП-ДС
         </Typography>
       </Grid>
 
       <Hidden smDown>
-        <Grid item xs={4} container flexdirextion='column'>
+        <Grid item md={4} container flexdirextion='column'>
           <Grid item xs={12}>
             <Typography component='h4' variant='h5' align='center'>
               +38 098 310 47 99

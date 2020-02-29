@@ -50,7 +50,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ResponsiveDrawer = ({ isAuthenticated, logout, user, pageName }) => {
+const ResponsiveDrawer = ({
+  auth: { isAuthenticated, user, loading },
+  logout,
+  pageName
+}) => {
   let history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
@@ -346,14 +350,12 @@ const ResponsiveDrawer = ({ isAuthenticated, logout, user, pageName }) => {
 };
 
 ResponsiveDrawer.propTypes = {
-  isAuthenticated: PropTypes.bool,
+  auth: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
-  user: PropTypes.object,
   pageName: PropTypes.string
 };
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  user: state.auth.user,
+  auth: state.auth,
   pageName: state.nameOfPage.pageName
 });
 

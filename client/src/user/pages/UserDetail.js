@@ -10,7 +10,7 @@ import {
   loadUser
 } from '../../store/actions/auth';
 
-import Spinner from '../../shared/spinner/Spinner';
+// import Spinner from '../../shared/spinner/Spinner';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -89,7 +89,6 @@ const UserDetail = ({
 
   const changeAvatarHandler = e => {
     e.preventDefault();
-    // console.log(myAvatar);
     changeAvatar(myAvatar);
   };
 

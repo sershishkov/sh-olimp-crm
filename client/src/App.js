@@ -21,7 +21,8 @@ import Alert from './shared/alert/Alert';
 import Login from './user/pages/Login';
 import Register from './user/pages/Register';
 import PrivateRoute from './routing/PrivateRoute';
-import EditPhoto from './editPhoto/EditPhoto';
+import EditPhotoList from './editPhoto/EditPhotoList';
+import EditPhotoItem from './editPhoto/EditPhotoItem';
 import GroupOfImage from './editPhoto/GroupOfImage';
 import GroupOfImageEdit from './editPhoto/GroupOfImageEdit';
 import UserDetail from './user/pages/UserDetail';
@@ -56,7 +57,12 @@ function App() {
             <Route exact path='/aboutus' component={AboutUs} />
 
             <PrivateRoute exact path='/user-detail' component={UserDetail} />
-            <PrivateRoute exact path='/editphoto' component={EditPhoto} />
+            <PrivateRoute exact path='/editphoto' component={EditPhotoList} />
+            <PrivateRoute
+              exact
+              path='/editphoto/:id'
+              component={EditPhotoItem}
+            />
             <PrivateRoute
               exact
               path='/group-of-image'
