@@ -13,7 +13,7 @@ const ListOfPhotos = ({ arr }) => {
     }
   }, [setNewArr, arr]);
   return (
-    <GridList cellHeight={400} cols={2}>
+    <GridList cellHeight={300} cols={3} spacing={5}>
       {newArr.length > 0 &&
         newArr.map(item => (
           <GridListTile key={item._id}>

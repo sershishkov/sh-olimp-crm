@@ -10,12 +10,13 @@ import ListOfPhotos from './Components/ListOfPhotos';
 import PropTypes from 'prop-types';
 
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex'
+    marginBottom: '1rem'
   }
 }));
 
@@ -26,7 +27,7 @@ const Landing = ({
   getAllGroupOfImage,
   groupOfImage: { imageGroups }
 }) => {
-  // const classes = useStyles();
+  const classes = useStyles();
 
   useEffect(() => {
     setNameOfPage('Добрый день');
@@ -35,7 +36,7 @@ const Landing = ({
   }, [setNameOfPage, getAllPhotoWork, getAllGroupOfImage]);
 
   const viewImages = (
-    <Fragment>
+    <Grid className={classes.root}>
       {imageGroups.map(group => {
         const newArr = photoWorks.filter(
           photo => group.imageGroup === photo.imageGroup.imageGroup
@@ -49,7 +50,7 @@ const Landing = ({
           </Fragment>
         );
       })}
-    </Fragment>
+    </Grid>
   );
 
   return loading ? <Spinner /> : <div>{viewImages}</div>;

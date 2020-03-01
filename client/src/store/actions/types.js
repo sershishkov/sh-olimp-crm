@@ -13,6 +13,7 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const NAME_OF_PAGE = 'NAME_OF_PAGE';
 
 export const SET_PHOTO = 'SET_PHOTO';
+export const UPDATE_PHOTO = 'UPDATE_PHOTO';
 export const GET_ALL_PHOTOS = 'GET_ALL_PHOTOS';
 export const GET_ONE_PHOTO = 'GET_ONE_PHOTO';
 export const DELETE_PHOTO = 'DELETE_PHOTO';

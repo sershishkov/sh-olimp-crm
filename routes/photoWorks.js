@@ -6,6 +6,7 @@ const {
   uploadPhoto,
   resizePhoto,
   addPhoto,
+  updatePhoto,
   getAllPhotos,
   getOnePhoto,
   deletePhoto
@@ -25,6 +26,11 @@ router
 router
   .route('/:id')
   .get(getOnePhoto)
+  .put(
+    protect,
+    authorize('engineer', 'accountant', 'boss', 'admin'),
+    updatePhoto
+  )
   .delete(
     protect,
     authorize('engineer', 'accountant', 'boss', 'admin'),

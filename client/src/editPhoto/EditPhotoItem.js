@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setNameOfPage } from '../store/actions/nameOfPage';
-import { getOnePhotoWork } from '../store/actions/photoWorks';
+import { getOnePhotoWork, updatePhotoWork } from '../store/actions/photoWorks';
 import { getAllGroupOfImage } from '../store/actions/groupOfImage';
 
 import Button from '@material-ui/core/Button';
@@ -11,13 +11,19 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex'
+    display: 'flex',
+    marginBottom: '1rem'
+  },
+  header: {
+    marginBottom: '1rem'
+  },
+  gridItem: {
+    padding: '1rem'
   },
   list: {},
   listItem: {},
@@ -30,10 +36,11 @@ const useStyles = makeStyles(theme => ({
 
 const EditPhotoItem = ({
   photoWorks,
-  groupOfImage: { imageGroups },
+  groupOfImage,
   setNameOfPage,
   getOnePhotoWork,
-  getAllGroupOfImage
+  getAllGroupOfImage,
+  updatePhotoWork
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -54,18 +61,19 @@ const EditPhotoItem = ({
   };
 
   const updateImageHandler = () => {
+    updatePhotoWork(id, selectedGroup, description);
     history.push('/editphoto');
   };
 
   useEffect(() => {
-    setNameOfPage('Добавить фото');
+    setNameOfPage('Редактируем фото');
     getOnePhotoWork(id);
     getAllGroupOfImage();
-    if (photoWorks.onePhoto) {
+    if (photoWorks.onePhoto.description) {
       setDescription(photoWorks.onePhoto.description);
     }
 
-    if (imageGroups) {
+    if (photoWorks.onePhoto.imageGroup) {
       setSelectedGroup(photoWorks.onePhoto.imageGroup);
     }
   }, [
@@ -73,22 +81,21 @@ const EditPhotoItem = ({
     getOnePhotoWork,
     getAllGroupOfImage,
     setDescription,
-    setSelectedGroup
+    setSelectedGroup,
+    photoWorks.onePhoto.description,
+    photoWorks.onePhoto.imageGroup
   ]);
 
-  console.log('description:', description);
-  console.log('selectedGroup:', selectedGroup);
-  console.log(photoWorks.onePhoto.imageGroup);
   return (
     <Grid container className={classes.root}>
-      <Grid item xs={12}>
+      <Grid item xs={12} className={classes.header}>
         <Typography component='h1' variant='h5' align='center'>
-          Редактируем фото
+          Редактируем описание либо группу
         </Typography>
       </Grid>
       <Grid item xs={12} container alignItems='center' spacing={3}>
         <Grid container className={classes.root}>
-          <Grid item xs={2}>
+          <Grid item xs={2} container justify='center'>
             <img
               src={photoWorks.onePhoto.imageUrl}
               alt={photoWorks.onePhoto.imageUrl}
@@ -96,7 +103,14 @@ const EditPhotoItem = ({
             />
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid
+            item
+            xs={4}
+            container
+            justify='center'
+            alignItems='center'
+            className={classes.gridItem}
+          >
             <TextField
               variant='outlined'
               type='text'
@@ -108,7 +122,7 @@ const EditPhotoItem = ({
             />
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item xs={4} container justify='center' alignItems='center'>
             <Select
               labelId='demo-simple-select-label'
               id='demo-simple-select'
@@ -116,7 +130,7 @@ const EditPhotoItem = ({
               value={selectedGroup}
               onChange={selectChangeHandle}
             >
-              {imageGroups.map(item => (
+              {groupOfImage.imageGroups.map(item => (
                 <MenuItem
                   key={item._id}
                   value={item._id}
@@ -128,7 +142,7 @@ const EditPhotoItem = ({
             </Select>
           </Grid>
 
-          <Grid item xs={2}>
+          <Grid item xs={2} container justify='center' alignItems='center'>
             <Button
               color='primary'
               variant='contained'
@@ -148,6 +162,7 @@ EditPhotoItem.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getOnePhotoWork: PropTypes.func.isRequired,
   getAllGroupOfImage: PropTypes.func.isRequired,
+  updatePhotoWork: PropTypes.func.isRequired,
   photoWorks: PropTypes.object.isRequired,
   groupOfImage: PropTypes.object.isRequired
 };
@@ -160,5 +175,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   setNameOfPage,
   getOnePhotoWork,
-  getAllGroupOfImage
+  getAllGroupOfImage,
+  updatePhotoWork
 })(EditPhotoItem);

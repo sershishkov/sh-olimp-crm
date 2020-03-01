@@ -3,6 +3,7 @@ import { setAlert } from './alert';
 
 import {
   SET_PHOTO,
+  UPDATE_PHOTO,
   GET_ALL_PHOTOS,
   GET_ONE_PHOTO,
   DELETE_PHOTO
@@ -58,6 +59,43 @@ export const addPhotoWork = (
     dispatch({
       type: SET_PHOTO,
       payload: photo.data.data
+    });
+
+    dispatch(getAllPhotoWork());
+  } catch (err) {
+    const error = err.response.data.error;
+    if (error) {
+      dispatch(setAlert(error, 'error', 2500));
+    }
+  }
+};
+
+export const updatePhotoWork = (
+  photoId,
+  groupID,
+  description
+) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  const body = JSON.stringify({
+    imageGroup: groupID,
+    description: description
+  });
+
+  try {
+    const updatedPhoto = await axios.put(
+      `/api/v1/photo/${photoId}`,
+      body,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_PHOTO,
+      payload: updatedPhoto.data.data
     });
 
     dispatch(getAllPhotoWork());

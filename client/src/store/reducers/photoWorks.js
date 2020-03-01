@@ -1,5 +1,6 @@
 import {
   SET_PHOTO,
+  UPDATE_PHOTO,
   GET_ALL_PHOTOS,
   GET_ONE_PHOTO,
   DELETE_PHOTO
@@ -19,6 +20,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         photoWorks: state.photoWorks.push(payload),
+        loading: false
+      };
+    case UPDATE_PHOTO:
+      return {
+        ...state,
+        photoWorks: state.photoWorks.map(photo =>
+          photo._id === payload.id ? payload : photo
+        ),
         loading: false
       };
 

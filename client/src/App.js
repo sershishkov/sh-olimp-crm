@@ -13,6 +13,16 @@ import Navbar from './shared/navbar/Navbar';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import DescriptionAsfalt from './descriptionOfWorks/DescriptionAsfalt';
+import DescriptionFasad from './descriptionOfWorks/DescriptionFasad';
+import DescriptionInsideWorks from './descriptionOfWorks/DescriptionInsideWorks';
+import DescriptionRoof from './descriptionOfWorks/DescriptionRoof';
+import DescriptionWindowPl from './descriptionOfWorks/DescriptionWindowPl';
+import DescriptionMetalloconstr from './descriptionOfWorks/DescriptionMetalloconstr';
+import DescriptionSanteh from './descriptionOfWorks/DescriptionSanteh';
+import DescriptionEmergency from './descriptionOfWorks/DescriptionEmergency';
+import DescriptionElectro from './descriptionOfWorks/DescriptionElectro';
+
 import AboutUs from './shared/landing/AboutUs';
 import Landing from './shared/landing/Landing';
 import Footer from './shared/footer/Footer';
@@ -55,6 +65,47 @@ function App() {
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/aboutus' component={AboutUs} />
+            <Route
+              exact
+              path='/description-asfalt'
+              component={DescriptionAsfalt}
+            />
+            <Route
+              exact
+              path='/description-fasad'
+              component={DescriptionFasad}
+            />
+            <Route
+              exact
+              path='/description-inside-works'
+              component={DescriptionInsideWorks}
+            />
+            <Route exact path='/description-roof' component={DescriptionRoof} />
+            <Route
+              exact
+              path='/description-windowpl'
+              component={DescriptionWindowPl}
+            />
+            <Route
+              exact
+              path='/description-metall-constr'
+              component={DescriptionMetalloconstr}
+            />
+            <Route
+              exact
+              path='/description-santeh'
+              component={DescriptionSanteh}
+            />
+            <Route
+              exact
+              path='/description-emergency'
+              component={DescriptionEmergency}
+            />
+            <Route
+              exact
+              path='/description-electro'
+              component={DescriptionElectro}
+            />
 
             <PrivateRoute exact path='/user-detail' component={UserDetail} />
             <PrivateRoute exact path='/editphoto' component={EditPhotoList} />

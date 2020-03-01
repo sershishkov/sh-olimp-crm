@@ -34,7 +34,7 @@ exports.updateImageGroup = asyncHandler(async (req, res, next) => {
     imageGroup: req.body.imageGroup
   };
 
-  const newNameGroup = await GroupOfImage.findByIdAndUpdate(
+  const updatedNameGroup = await GroupOfImage.findByIdAndUpdate(
     req.params.id,
     newNameOfGroup,
     {
@@ -45,7 +45,7 @@ exports.updateImageGroup = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: newNameGroup
+    data: updatedNameGroup
   });
 });
 
