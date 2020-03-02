@@ -27,59 +27,167 @@ const AboutUs = ({ setNameOfPage }) => {
 
   return (
     <Grid className={classes.root}>
-      <Typography variant='h3'>
+      <Typography variant='h3' align='center'>
         Компания "Олимп-ДС" предлагает следующие виды работ:
       </Typography>
 
       <List>
         <ListItem>
-          <Button color='inherit' href='/description-asfalt'>
-            <Typography variant='h6'>Асфальтные работы</Typography>
-          </Button>
+          <Grid container justify='space-between'>
+            <Grid item xs={10}>
+              <Typography variant='h6'>Асфальтные работы</Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Button
+                color='primary'
+                size='small'
+                variant='contained'
+                href='/description-asfalt'
+              >
+                подробнее
+              </Button>
+            </Grid>
+          </Grid>
         </ListItem>
         <ListItem>
-          <Button color='inherit' href='/description-fasad'>
-            <Typography variant='h6'>Фасадные работы</Typography>
-          </Button>
+          <Grid container justify='space-between'>
+            <Grid item xs={10}>
+              <Typography variant='h6'>Фасадные работы</Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Button
+                color='primary'
+                size='small'
+                variant='contained'
+                href='/description-fasad'
+              >
+                подробнее
+              </Button>
+            </Grid>
+          </Grid>
         </ListItem>
         <ListItem>
-          <Button color='inherit' href='/description-inside-works'>
-            <Typography variant='h6'>Внутренние работы</Typography>
-          </Button>
+          <Grid container justify='space-between'>
+            <Grid item xs={10}>
+              <Typography variant='h6'>Внутренние работы</Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Button
+                color='primary'
+                size='small'
+                variant='contained'
+                href='/description-inside-works'
+              >
+                подробнее
+              </Button>
+            </Grid>
+          </Grid>
         </ListItem>
         <ListItem>
-          <Button color='inherit' href='/description-roof'>
-            <Typography variant='h6'>Кровельные работы</Typography>
-          </Button>
+          <Grid container justify='space-between'>
+            <Grid item xs={10}>
+              <Typography variant='h6'>Кровельные работы</Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Button
+                color='primary'
+                size='small'
+                variant='contained'
+                href='/description-roof'
+              >
+                подробнее
+              </Button>
+            </Grid>
+          </Grid>
         </ListItem>
         <ListItem>
-          <Button color='inherit' href='/description-windowpl'>
-            <Typography variant='h6'>
-              Установка и замена металлопластиковых окон и дверей
-            </Typography>
-          </Button>
+          <Grid container justify='space-between'>
+            <Grid item xs={10}>
+              <Typography variant='h6'>
+                Металлопластиковые окна и двери
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Button
+                color='primary'
+                size='small'
+                variant='contained'
+                href='/description-windowpl'
+              >
+                подробнее
+              </Button>
+            </Grid>
+          </Grid>
         </ListItem>
         <ListItem>
-          <Button color='inherit' href='/description-metall-constr'>
-            <Typography variant='h6'>
-              Изготовление металлоконструкций
-            </Typography>
-          </Button>
+          <Grid container justify='space-between'>
+            <Grid item xs={10}>
+              <Typography variant='h6'>
+                Изготовление металлоконструкций
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Button
+                color='primary'
+                size='small'
+                variant='contained'
+                href='/description-metall-constr'
+              >
+                подробнее
+              </Button>
+            </Grid>
+          </Grid>
         </ListItem>
         <ListItem>
-          <Button color='inherit' href='/description-santeh'>
-            <Typography variant='h6'>Сантехнические работы</Typography>
-          </Button>
+          <Grid container justify='space-between'>
+            <Grid item xs={10}>
+              <Typography variant='h6'>Сантехнические работы</Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Button
+                color='primary'
+                size='small'
+                variant='contained'
+                href='/description-santeh'
+              >
+                подробнее
+              </Button>
+            </Grid>
+          </Grid>
         </ListItem>
         <ListItem>
-          <Button color='inherit' href='/description-emergency'>
-            <Typography variant='h6'>Аварийно-ремонтные работы</Typography>
-          </Button>
+          <Grid container justify='space-between'>
+            <Grid item xs={10}>
+              <Typography variant='h6'>Аварийно-ремонтные работы</Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Button
+                color='primary'
+                size='small'
+                variant='contained'
+                href='/description-emergency'
+              >
+                подробнее
+              </Button>
+            </Grid>
+          </Grid>
         </ListItem>
         <ListItem>
-          <Button color='inherit' href='/description-electro'>
-            <Typography variant='h6'>Электро работы</Typography>
-          </Button>
+          <Grid container justify='space-between'>
+            <Grid item xs={10}>
+              <Typography variant='h6'>Электро работы</Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Button
+                color='primary'
+                size='small'
+                variant='contained'
+                href='/description-electro'
+              >
+                подробнее
+              </Button>
+            </Grid>
+          </Grid>
         </ListItem>
       </List>
     </Grid>

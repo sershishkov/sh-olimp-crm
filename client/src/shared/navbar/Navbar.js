@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ResponsiveDrawer = ({
-  auth: { isAuthenticated, user, loading },
+  auth: { isAuthenticated, user },
   logout,
   pageName
 }) => {
@@ -226,20 +226,29 @@ const ResponsiveDrawer = ({
               justify='flex-start'
               alignItems='center'
             >
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <IconButton
                   color='inherit'
                   aria-label='open drawer'
                   onClick={handleDrawerToggle}
                   className={classes.menuButton}
                 >
-                  <MenuIcon />
+                  {/* <MenuIcon className={classes.menuIcon} /> */}
+                  <Typography
+                    color='inherit'
+                    component='h6'
+                    variant='h5'
+                    align='center'
+                    className={classes.menuText}
+                  >
+                    меню
+                  </Typography>
                 </IconButton>
               </Grid>
               <Hidden smDown>
-                <Grid item xs={10}>
+                <Grid item xs={9}>
                   <Button color='inherit' href='/'>
-                    ОЛИМП-ДС
+                    Наш логотип
                   </Button>
                 </Grid>
               </Hidden>

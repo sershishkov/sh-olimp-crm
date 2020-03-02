@@ -6,11 +6,10 @@ import {
   updatedetails,
   updatepassword,
   changeAvatar,
-  logout,
-  loadUser
+  logout
 } from '../../store/actions/auth';
 
-// import Spinner from '../../shared/spinner/Spinner';
+import Spinner from '../../shared/spinner/Spinner';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -53,7 +52,7 @@ const UserDetail = ({
   updatepassword,
   changeAvatar,
   logout,
-  loadUser
+  auth: { user, loading }
 }) => {
   const classes = useStyles();
 
@@ -93,9 +92,20 @@ const UserDetail = ({
   };
 
   useEffect(() => {
-    loadUser();
-  }, [loadUser]);
-  return (
+    if (user) {
+      setFormData({
+        ...formData,
+        name: user.name ? user.name : '',
+        email: user.email ? user.email : ''
+      });
+    }
+  }, [setFormData, user]);
+
+  console.log(user);
+
+  return loading ? (
+    <Spinner />
+  ) : (
     <Container component='main' maxWidth='sm'>
       <CssBaseline />
       <div className={classes.paper}>
@@ -240,16 +250,15 @@ UserDetail.propTypes = {
   updatedetails: PropTypes.func.isRequired,
   updatepassword: PropTypes.func.isRequired,
   changeAvatar: PropTypes.func.isRequired,
-  loadUser: PropTypes.func.isRequired
+  auth: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  user: state.auth.user
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, {
   updatedetails,
   updatepassword,
   changeAvatar,
-  logout,
-  loadUser
+  logout
 })(UserDetail);
