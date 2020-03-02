@@ -7,7 +7,8 @@ import Hidden from '@material-ui/core/Hidden';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: '#e0e0e0'
+    backgroundColor: '#e0e0e0',
+    marginTop: '1rem'
   }
 }));
 

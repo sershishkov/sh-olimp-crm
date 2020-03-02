@@ -23,3 +23,9 @@ export const UPDATE_IMAGE_GROUP = 'UPDATE_IMAGE_GROUP';
 export const GET_ALL_IMAGE_GROUPS = 'GET_ALL_IMAGE_GROUPS';
 export const GET_ONE_IMAGE_GROUP = 'GET_ONE_IMAGE_GROUP';
 export const DELETE_IMAGE_GROUP = 'DELETE_IMAGE_GROUP';
+
+export const SET_USER = 'SET_USER';
+export const UPDATE_USER = 'UPDATE_USER';
+export const GET_ALL_USERS = 'GET_ALL_USERS';
+export const GET_ONE_USER = 'GET_ONE_USER';
+export const DELETE_USER = 'DELETE_USER';
