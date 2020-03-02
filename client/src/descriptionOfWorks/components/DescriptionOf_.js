@@ -34,7 +34,7 @@ const DescriptionAsfalt = ({
   useEffect(() => {
     setNameOfPage(pageName);
     getAllPhotoWork();
-  }, [setNameOfPage, getAllPhotoWork]);
+  }, [setNameOfPage, getAllPhotoWork, pageName]);
 
   const filteredArr = photoWorks.filter(
     photo => photo.imageGroup._id === groupId

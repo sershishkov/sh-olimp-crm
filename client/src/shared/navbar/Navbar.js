@@ -139,10 +139,24 @@ const ResponsiveDrawer = ({
           <ListItemIcon>
             <MailIcon />
           </ListItemIcon>
-          <ListItemText>Наши работы</ListItemText>
+          <ListItemText>Главная</ListItemText>
         </ListItem>
       </List>
       <Divider />
+      <ListItem
+        button
+        onClick={() => history.push('/user-admin')}
+        className={
+          isAuthenticated && user.role === 'admin'
+            ? classes.displayFlex
+            : classes.displayNone
+        }
+      >
+        <ListItemIcon>
+          <MailIcon />
+        </ListItemIcon>
+        <ListItemText>Админка</ListItemText>
+      </ListItem>
       <ListItem
         button
         onClick={() => history.push('/editphoto')}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { GridList, GridListTile, GridListTileBar } from '@material-ui/core';
+import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -8,20 +9,11 @@ const useStyles = makeStyles(theme => ({
   root: {
     marginBottom: '1rem'
   }
-  // gridList: {
-  //   [theme.breakpoints.down('sm')]: {
-  //     // display: 'none'
-  //   }
-  // },
-  // gridListTile: {
-  //   [theme.breakpoints.down('sm')]: {
-  //     cellHeight: 150
-  //   }
-  // }
 }));
 
-const ListOfPhotos = ({ arr }) => {
+const ListOfPhotos = ({ arr, width }) => {
   const [newArr, setNewArr] = useState([]);
+
   const classes = useStyles();
 
   useEffect(() => {
@@ -29,22 +21,48 @@ const ListOfPhotos = ({ arr }) => {
       setNewArr(arr);
     }
   }, [setNewArr, arr]);
-  return (
-    <GridList
-      cellHeight={300}
-      cols={3}
-      spacing={5}
-      className={classes.gridList}
-    >
-      {newArr.length > 0 &&
-        newArr.map(item => (
-          <GridListTile key={item._id} className={classes.gridListTile}>
-            <img src={item.imageUrl} alt={item.description} />
-            <GridListTileBar title={item.description} />
-          </GridListTile>
-        ))}
-    </GridList>
-  );
+
+  if (isWidthUp('md', width)) {
+    return (
+      <GridList cellHeight={300} cols={3} className={classes.gridList}>
+        {newArr.length > 0 &&
+          newArr.map(item => (
+            <GridListTile key={item._id} className={classes.gridListTile}>
+              <img src={item.imageUrl} alt={item.description} />
+              <GridListTileBar title={item.description} />
+            </GridListTile>
+          ))}
+      </GridList>
+    );
+  }
+
+  if (isWidthDown('md', width)) {
+    return (
+      <GridList cellHeight={250} cols={2} className={classes.gridList}>
+        {newArr.length > 0 &&
+          newArr.map(item => (
+            <GridListTile key={item._id} className={classes.gridListTile}>
+              <img src={item.imageUrl} alt={item.description} />
+              <GridListTileBar title={item.description} />
+            </GridListTile>
+          ))}
+      </GridList>
+    );
+  }
+
+  if (isWidthDown('sm', width)) {
+    return (
+      <GridList cellHeight={100} cols={1} className={classes.gridList}>
+        {newArr.length > 0 &&
+          newArr.map(item => (
+            <GridListTile key={item._id} className={classes.gridListTile}>
+              <img src={item.imageUrl} alt={item.description} />
+              <GridListTileBar title={item.description} />
+            </GridListTile>
+          ))}
+      </GridList>
+    );
+  }
 };
 
-export default ListOfPhotos;
+export default withWidth()(ListOfPhotos);

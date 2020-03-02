@@ -8,7 +8,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { makeStyles } from '@material-ui/core/styles';
 
-import DescriptionOf_ from './components/DescriptionOf_';
+import DescriptionOf from './components/DescriptionOf_';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,7 +42,7 @@ const DescriptionFasad = () => {
       >
         назад
       </Button>
-      <DescriptionOf_
+      <DescriptionOf
         pageName='Фасадные работы'
         groupId='5e592a5f2b1bc913154c526b'
       />
