@@ -101,7 +101,7 @@ const UserDetail = ({
     }
   }, [setFormData, user]);
 
-  console.log(user);
+  // console.log(user);
 
   return loading ? (
     <Spinner />

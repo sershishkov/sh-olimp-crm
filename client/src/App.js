@@ -37,7 +37,7 @@ import GroupOfImage from './editPhoto/GroupOfImage';
 import GroupOfImageEdit from './editPhoto/GroupOfImageEdit';
 import UserDetail from './user/pages/UserDetail';
 import UserAdmin from './user/pages/admin/UserAdmin';
-// import UserCreate from './user/pages/admin/UserCreate';
+import UserCreate from './user/pages/admin/UserCreate';
 import UserEdit from './user/pages/admin/UserEdit';
 
 const useStyles = makeStyles(theme => ({
@@ -113,11 +113,11 @@ function App() {
             <PrivateRoute exact path='/user-detail' component={UserDetail} />
             <PrivateRoute exact path='/user-admin' component={UserAdmin} />
             <PrivateRoute exact path='/user-admin/:id' component={UserEdit} />
-            {/* <PrivateRoute
+            <PrivateRoute
               exact
               path='/user-admin-create'
               component={UserCreate}
-            /> */}
+            />
             <PrivateRoute exact path='/editphoto' component={EditPhotoList} />
             <PrivateRoute
               exact

@@ -26,6 +26,7 @@ const useStyles = makeStyles(theme => ({
 const UserCreate = ({ addUser }) => {
   const classes = useStyles();
   let history = useHistory();
+  const [disabledForm, setDisabledForm] = useState(true);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -46,9 +47,10 @@ const UserCreate = ({ addUser }) => {
     addUser({ name, email, role, password });
     history.push('/user-admin');
   };
-  const onChange = e =>
+  const onChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  const roles = ['user', 'osbb', 'engineer', 'accountant', 'boss', 'admin'];
+    setDisabledForm(!(name && email && role && password));
+  };
 
   return (
     <Grid container direction='column' className={classes.root}>
@@ -80,14 +82,15 @@ const UserCreate = ({ addUser }) => {
         <Select
           labelId='user-role-label'
           fullWidth
+          name='role'
           value={role}
           onChange={e => onChange(e)}
         >
-          <MenuItem value={roles[0]}>Пользователь</MenuItem>
-          <MenuItem value={roles[1]}>ОСББ</MenuItem>
-          <MenuItem value={roles[2]}>Инженер</MenuItem>
-          <MenuItem value={roles[3]}>Бухгалтер</MenuItem>
-          <MenuItem value={roles[4]}>Босс</MenuItem>
+          <MenuItem value='user'>Пользователь</MenuItem>
+          <MenuItem value='osbb'>ОСББ</MenuItem>
+          <MenuItem value='engineer'>Инженер</MenuItem>
+          <MenuItem value='accountant'>Бухгалтер</MenuItem>
+          <MenuItem value='boss'>Босс</MenuItem>
         </Select>
       </Grid>
       <Grid item xs={12}>
@@ -107,9 +110,10 @@ const UserCreate = ({ addUser }) => {
           variant='contained'
           fullWidth
           color='primary'
+          disabled={disabledForm}
           onClick={addUserHandler}
         >
-          Добавить
+          Добавить пользователя
         </Button>
       </Grid>
     </Grid>
