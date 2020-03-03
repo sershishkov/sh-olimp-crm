@@ -83,7 +83,8 @@ const EditPhotoItem = ({
     setDescription,
     setSelectedGroup,
     photoWorks.onePhoto.description,
-    photoWorks.onePhoto.imageGroup
+    photoWorks.onePhoto.imageGroup,
+    id
   ]);
 
   return (

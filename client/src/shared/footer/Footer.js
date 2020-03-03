@@ -4,11 +4,18 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
+import Button from '@material-ui/core/Button';
+import ourLogo from '../img/LogotipDS.PNG';
 
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#e0e0e0',
     marginTop: '1rem'
+  },
+  logotip: {
+    width: '175px',
+    margin: 'auto',
+    display: 'block'
   }
 }));
 
@@ -17,17 +24,29 @@ const Footer = props => {
   return (
     <Grid container spacing={2} className={classes.root}>
       <Hidden smDown>
-        <Grid item md={4}>
-          <Typography component='h1' variant='h5' align='center'>
-            компания
-          </Typography>
+        <Grid item md={4} container flexdirextion='column'>
+          <Grid item xs={12}>
+            <Typography component='h4' variant='h5' align='center'>
+              Быстро
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography component='h4' variant='h5' align='center'>
+              Надежно
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography component='h4' variant='h5' align='center'>
+              Качественно
+            </Typography>
+          </Grid>
         </Grid>
       </Hidden>
 
       <Grid item sm={12} md={4} xm={12}>
-        <Typography component='h1' variant='h5' align='center'>
-          ОЛИМП-ДС
-        </Typography>
+        <Button color='inherit' href='/' className={classes.logotip}>
+          <img src={ourLogo} className={classes.logotip} alt='Loading' />
+        </Button>
       </Grid>
 
       <Hidden smDown>

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { logout } from '../../store/actions/auth';
+import ourLogo from '../img/LogotipDS.PNG';
 
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
@@ -12,14 +13,12 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
-import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -47,6 +46,9 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     marginRight: '1rem'
+  },
+  logotip: {
+    width: '75px'
   }
 }));
 
@@ -133,7 +135,7 @@ const ResponsiveDrawer = ({
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
-          <ListItemText>О нас</ListItemText>
+          <ListItemText>Наши работы</ListItemText>
         </ListItem>
         <ListItem button onClick={() => history.push('/')}>
           <ListItemIcon>
@@ -241,28 +243,22 @@ const ResponsiveDrawer = ({
               alignItems='center'
             >
               <Grid item xs={3}>
-                <IconButton
+                <Button
                   color='inherit'
                   aria-label='open drawer'
                   onClick={handleDrawerToggle}
-                  className={classes.menuButton}
                 >
-                  {/* <MenuIcon className={classes.menuIcon} /> */}
-                  <Typography
-                    color='inherit'
-                    component='h6'
-                    variant='h5'
-                    align='center'
-                    className={classes.menuText}
-                  >
-                    меню
-                  </Typography>
-                </IconButton>
+                  меню
+                </Button>
               </Grid>
               <Hidden smDown>
                 <Grid item xs={9}>
-                  <Button color='inherit' href='/'>
-                    Наш логотип
+                  <Button color='inherit' href='/' className={classes.logotip}>
+                    <img
+                      src={ourLogo}
+                      className={classes.logotip}
+                      alt='Loading'
+                    />
                   </Button>
                 </Grid>
               </Hidden>

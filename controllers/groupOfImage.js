@@ -10,8 +10,10 @@ exports.addImageGroup = asyncHandler(async (req, res, next) => {
   if (!req.body) {
     return next(new ErrorResponse('Не переданы значения', 400));
   }
+  const { imageGroup, descriptions } = req.body;
   const newGroup = new GroupOfImage({
-    imageGroup: req.body.imageGroup
+    imageGroup,
+    descriptions: descriptions.trim().split(',')
   });
 
   await newGroup.save();
@@ -31,7 +33,8 @@ exports.updateImageGroup = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse('Не переданы значения', 400));
   }
   const newNameOfGroup = {
-    imageGroup: req.body.imageGroup
+    imageGroup: req.body.imageGroup,
+    descriptions: req.body.descriptions.trim().split(',')
   };
 
   const updatedNameGroup = await GroupOfImage.findByIdAndUpdate(

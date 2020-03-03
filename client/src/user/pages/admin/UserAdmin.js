@@ -12,22 +12,21 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
-    position: 'relative'
+    display: 'flex'
   },
   btnAdd: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
+    position: 'fixed',
+    top: 50,
+    left: 50,
     zIndex: 5
   },
   btnAddIcon: {
@@ -40,11 +39,6 @@ const useStyles = makeStyles(theme => ({
     width: 100,
     height: 100,
     objectFit: 'cover'
-  },
-  contUserDetail: {
-    flexDirection: 'column',
-    justifyItems: 'space-between',
-    alignItems: 'center'
   }
 }));
 
@@ -91,7 +85,7 @@ const UserAdmin = ({
                   />
                 </Grid>
 
-                <Grid item xs={8} container className={classes.contUserDetail}>
+                <Grid item xs={8} container flexdirextion='column'>
                   <Grid item xs={12}>
                     <Typography component='h6' variant='h5' align='center'>
                       {item.name}

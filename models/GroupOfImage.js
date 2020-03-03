@@ -5,7 +5,8 @@ const GroupOfImage = new mongoose.Schema({
     type: String,
     required: true,
     unique: true
-  }
+  },
+  descriptions: [String]
 });
 
 module.exports = mongoose.model('GroupOfImage', GroupOfImage);

@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setNameOfPage } from '../../store/actions/nameOfPage';
+import { getAllGroupOfImage } from '../../store/actions/groupOfImage';
 import PropTypes from 'prop-types';
+
+import Spinner from '../spinner/Spinner';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -10,6 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
 import { makeStyles } from '@material-ui/core/styles';
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -19,183 +23,60 @@ const useStyles = makeStyles(theme => ({
   listItem: {}
 }));
 
-const AboutUs = ({ setNameOfPage }) => {
+const AboutUs = ({
+  setNameOfPage,
+  getAllGroupOfImage,
+  groupOfImage: { imageGroups, loading }
+}) => {
   const classes = useStyles();
-  useEffect(() => {
-    setNameOfPage('О нас');
-  });
 
-  return (
+  useEffect(() => {
+    setNameOfPage('Наши работы');
+    getAllGroupOfImage();
+  }, [setNameOfPage, getAllGroupOfImage]);
+
+  return loading ? (
+    <Spinner />
+  ) : (
     <Grid className={classes.root}>
       <Typography variant='h3' align='center'>
         Компания "Олимп-ДС" предлагает следующие виды работ:
       </Typography>
 
       <List>
-        <ListItem>
-          <Grid container justify='space-between'>
-            <Grid item xs={10}>
-              <Typography variant='h6'>Асфальтные работы</Typography>
+        {imageGroups.map(item => (
+          <ListItem key={item._id}>
+            <Grid container justify='space-between'>
+              <Grid item xs={10}>
+                <Typography variant='h6'>{item.imageGroup}</Typography>
+              </Grid>
+              <Grid item xs={2}>
+                <Button
+                  color='primary'
+                  size='small'
+                  variant='contained'
+                  href={`/description/${item._id}`}
+                >
+                  подробнее
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={2}>
-              <Button
-                color='primary'
-                size='small'
-                variant='contained'
-                href='/description-asfalt'
-              >
-                подробнее
-              </Button>
-            </Grid>
-          </Grid>
-        </ListItem>
-        <ListItem>
-          <Grid container justify='space-between'>
-            <Grid item xs={10}>
-              <Typography variant='h6'>Фасадные работы</Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Button
-                color='primary'
-                size='small'
-                variant='contained'
-                href='/description-fasad'
-              >
-                подробнее
-              </Button>
-            </Grid>
-          </Grid>
-        </ListItem>
-        <ListItem>
-          <Grid container justify='space-between'>
-            <Grid item xs={10}>
-              <Typography variant='h6'>Внутренние работы</Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Button
-                color='primary'
-                size='small'
-                variant='contained'
-                href='/description-inside-works'
-              >
-                подробнее
-              </Button>
-            </Grid>
-          </Grid>
-        </ListItem>
-        <ListItem>
-          <Grid container justify='space-between'>
-            <Grid item xs={10}>
-              <Typography variant='h6'>Кровельные работы</Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Button
-                color='primary'
-                size='small'
-                variant='contained'
-                href='/description-roof'
-              >
-                подробнее
-              </Button>
-            </Grid>
-          </Grid>
-        </ListItem>
-        <ListItem>
-          <Grid container justify='space-between'>
-            <Grid item xs={10}>
-              <Typography variant='h6'>
-                Металлопластиковые окна и двери
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Button
-                color='primary'
-                size='small'
-                variant='contained'
-                href='/description-windowpl'
-              >
-                подробнее
-              </Button>
-            </Grid>
-          </Grid>
-        </ListItem>
-        <ListItem>
-          <Grid container justify='space-between'>
-            <Grid item xs={10}>
-              <Typography variant='h6'>
-                Изготовление металлоконструкций
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Button
-                color='primary'
-                size='small'
-                variant='contained'
-                href='/description-metall-constr'
-              >
-                подробнее
-              </Button>
-            </Grid>
-          </Grid>
-        </ListItem>
-        <ListItem>
-          <Grid container justify='space-between'>
-            <Grid item xs={10}>
-              <Typography variant='h6'>Сантехнические работы</Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Button
-                color='primary'
-                size='small'
-                variant='contained'
-                href='/description-santeh'
-              >
-                подробнее
-              </Button>
-            </Grid>
-          </Grid>
-        </ListItem>
-        <ListItem>
-          <Grid container justify='space-between'>
-            <Grid item xs={10}>
-              <Typography variant='h6'>Аварийно-ремонтные работы</Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Button
-                color='primary'
-                size='small'
-                variant='contained'
-                href='/description-emergency'
-              >
-                подробнее
-              </Button>
-            </Grid>
-          </Grid>
-        </ListItem>
-        <ListItem>
-          <Grid container justify='space-between'>
-            <Grid item xs={10}>
-              <Typography variant='h6'>Электро работы</Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Button
-                color='primary'
-                size='small'
-                variant='contained'
-                href='/description-electro'
-              >
-                подробнее
-              </Button>
-            </Grid>
-          </Grid>
-        </ListItem>
+          </ListItem>
+        ))}
       </List>
     </Grid>
   );
 };
 
 AboutUs.propTypes = {
-  setNameOfPage: PropTypes.func.isRequired
+  setNameOfPage: PropTypes.func.isRequired,
+  getAllGroupOfImage: PropTypes.func.isRequired,
+  groupOfImage: PropTypes.object.isRequired
 };
+const mapStateToProps = state => ({
+  groupOfImage: state.groupOfImage
+});
 
-export default connect(null, { setNameOfPage })(AboutUs);
+export default connect(mapStateToProps, { setNameOfPage, getAllGroupOfImage })(
+  AboutUs
+);

@@ -24,9 +24,15 @@ export const getAllGroupOfImage = () => async dispatch => {
 export const getOneGroupOfImage = imageId => async dispatch => {
   try {
     const oneImage = await axios.get(`/api/v1/imagegroup/${imageId}`);
+    const onedGroup = oneImage.data.data;
+    const changedGroup = {
+      imageGroup: onedGroup.imageGroup,
+      descriptions: onedGroup.descriptions,
+      descriptionsSTR: onedGroup.descriptions.join(',')
+    };
     dispatch({
       type: GET_ONE_IMAGE_GROUP,
-      payload: oneImage.data.data
+      payload: changedGroup
     });
   } catch (err) {
     const error = err.response.data.error;
@@ -36,14 +42,14 @@ export const getOneGroupOfImage = imageId => async dispatch => {
   }
 };
 
-export const addGroupOfImage = groupOfImage => async dispatch => {
+export const addGroupOfImage = (imageGroup, descriptions) => async dispatch => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
     }
   };
 
-  const body = JSON.stringify({ imageGroup: groupOfImage });
+  const body = JSON.stringify({ imageGroup, descriptions });
 
   try {
     const groupImage = await axios.post(`/api/v1/imagegroup`, body, config);
@@ -62,14 +68,18 @@ export const addGroupOfImage = groupOfImage => async dispatch => {
   }
 };
 
-export const updateGroupOfImage = (groupId, groupOfImage) => async dispatch => {
+export const updateGroupOfImage = (
+  groupId,
+  imageGroup,
+  descriptions
+) => async dispatch => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
     }
   };
 
-  const body = JSON.stringify({ imageGroup: groupOfImage });
+  const body = JSON.stringify({ imageGroup, descriptions });
 
   try {
     const groupImage = await axios.put(

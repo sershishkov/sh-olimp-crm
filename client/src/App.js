@@ -13,15 +13,16 @@ import Navbar from './shared/navbar/Navbar';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import DescriptionAsfalt from './descriptionOfWorks/DescriptionAsfalt';
-import DescriptionFasad from './descriptionOfWorks/DescriptionFasad';
-import DescriptionInsideWorks from './descriptionOfWorks/DescriptionInsideWorks';
-import DescriptionRoof from './descriptionOfWorks/DescriptionRoof';
-import DescriptionWindowPl from './descriptionOfWorks/DescriptionWindowPl';
-import DescriptionMetalloconstr from './descriptionOfWorks/DescriptionMetalloconstr';
-import DescriptionSanteh from './descriptionOfWorks/DescriptionSanteh';
-import DescriptionEmergency from './descriptionOfWorks/DescriptionEmergency';
-import DescriptionElectro from './descriptionOfWorks/DescriptionElectro';
+// import DescriptionAsfalt from './descriptionOfWorks/DescriptionAsfalt';
+// import DescriptionFasad from './descriptionOfWorks/DescriptionFasad';
+// import DescriptionInsideWorks from './descriptionOfWorks/DescriptionInsideWorks';
+// import DescriptionRoof from './descriptionOfWorks/DescriptionRoof';
+// import DescriptionWindowPl from './descriptionOfWorks/DescriptionWindowPl';
+// import DescriptionMetalloconstr from './descriptionOfWorks/DescriptionMetalloconstr';
+// import DescriptionSanteh from './descriptionOfWorks/DescriptionSanteh';
+// import DescriptionEmergency from './descriptionOfWorks/DescriptionEmergency';
+// import DescriptionElectro from './descriptionOfWorks/DescriptionElectro';
+import DescriptionOf_Works from './descriptionOfWorks/DescriptionOf_Works';
 
 import AboutUs from './shared/landing/AboutUs';
 import Landing from './shared/landing/Landing';
@@ -34,6 +35,7 @@ import PrivateRoute from './routing/PrivateRoute';
 import EditPhotoList from './editPhoto/EditPhotoList';
 import EditPhotoItem from './editPhoto/EditPhotoItem';
 import GroupOfImage from './editPhoto/GroupOfImage';
+import AddGroupOfImage from './editPhoto/AddGroupOfImage';
 import GroupOfImageEdit from './editPhoto/GroupOfImageEdit';
 import UserDetail from './user/pages/UserDetail';
 import UserAdmin from './user/pages/admin/UserAdmin';
@@ -69,6 +71,11 @@ function App() {
             <Route exact path='/login' component={Login} />
             <Route exact path='/aboutus' component={AboutUs} />
             <Route
+              exact
+              path='/description/:id'
+              component={DescriptionOf_Works}
+            />
+            {/* <Route
               exact
               path='/description-asfalt'
               component={DescriptionAsfalt}
@@ -108,7 +115,7 @@ function App() {
               exact
               path='/description-electro'
               component={DescriptionElectro}
-            />
+            /> */}
 
             <PrivateRoute exact path='/user-detail' component={UserDetail} />
             <PrivateRoute exact path='/user-admin' component={UserAdmin} />
@@ -128,6 +135,11 @@ function App() {
               exact
               path='/group-of-image'
               component={GroupOfImage}
+            />
+            <PrivateRoute
+              exact
+              path='/group-of-image-add'
+              component={AddGroupOfImage}
             />
             <PrivateRoute
               exact

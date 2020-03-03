@@ -35,10 +35,7 @@ const UserEdit = ({ getOneUser, updateUser, users: { oneUser, loading } }) => {
   });
 
   const { name, email, role, password } = formData;
-  console.log(role);
-  console.log(email);
-  console.log(name);
-  console.log(password);
+
   useEffect(() => {
     setNameOfPage('Создаем пользователя');
     getOneUser(id);
@@ -50,7 +47,14 @@ const UserEdit = ({ getOneUser, updateUser, users: { oneUser, loading } }) => {
         role: oneUser.role
       });
     }
-  }, [setNameOfPage, getOneUser, oneUser.name, oneUser.email, oneUser.role]);
+  }, [
+    setNameOfPage,
+    getOneUser,
+    oneUser.name,
+    oneUser.email,
+    oneUser.role,
+    id
+  ]);
 
   const apdateUserHandler = () => {
     updateUser(id, { name, email, role, password });

@@ -13,8 +13,6 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import Spinner from '../../../shared/spinner/Spinner';
-
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -35,13 +33,10 @@ const UserCreate = ({ addUser }) => {
   });
 
   const { name, email, role, password } = formData;
-  console.log(role);
-  console.log(email);
-  console.log(name);
-  console.log(password);
+
   useEffect(() => {
     setNameOfPage('Создаем пользователя');
-  }, [setNameOfPage]);
+  }, []);
 
   const addUserHandler = () => {
     addUser({ name, email, role, password });

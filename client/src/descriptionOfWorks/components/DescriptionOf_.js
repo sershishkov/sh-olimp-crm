@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Spinner from '../../shared/spinner/Spinner';
-import { setNameOfPage } from '../../store/actions/nameOfPage';
 import { getAllPhotoWork } from '../../store/actions/photoWorks';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
@@ -24,7 +23,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const DescriptionAsfalt = ({
-  pageName,
   groupId,
   setNameOfPage,
   getAllPhotoWork,
@@ -32,9 +30,8 @@ const DescriptionAsfalt = ({
 }) => {
   const classes = useStyles();
   useEffect(() => {
-    setNameOfPage(pageName);
     getAllPhotoWork();
-  }, [setNameOfPage, getAllPhotoWork, pageName]);
+  }, [getAllPhotoWork]);
 
   const filteredArr = photoWorks.filter(
     photo => photo.imageGroup._id === groupId
@@ -61,7 +58,6 @@ const DescriptionAsfalt = ({
 };
 
 DescriptionAsfalt.propTypes = {
-  setNameOfPage: PropTypes.func.isRequired,
   getAllPhotoWork: PropTypes.func.isRequired,
   photoWorks: PropTypes.object.isRequired
 };
@@ -70,6 +66,4 @@ const mapStateToProps = state => ({
   photoWorks: state.photoWorks
 });
 
-export default connect(mapStateToProps, { setNameOfPage, getAllPhotoWork })(
-  DescriptionAsfalt
-);
+export default connect(mapStateToProps, { getAllPhotoWork })(DescriptionAsfalt);
