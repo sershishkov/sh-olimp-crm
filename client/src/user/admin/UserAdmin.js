@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getAllUsers, deleteUser } from '../../../store/actions/users';
-import { setNameOfPage } from '../../../store/actions/nameOfPage';
+import { getAllUsers, deleteUser } from '../../store/actions/users';
+import { setNameOfPage } from '../../store/actions/nameOfPage';
 
-import Spinner from '../../../shared/spinner/Spinner';
+import Spinner from '../../shared/spinner/Spinner';
 
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
