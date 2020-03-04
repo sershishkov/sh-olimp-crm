@@ -44,6 +44,15 @@ const useStyles = makeStyles(theme => ({
     dosplay: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  wrapImg: {
+    height: 100,
+    marginBottom: '2rem'
+  },
+  img: {
+    width: 100,
+    height: 100,
+    objectFit: 'cover'
   }
 }));
 
@@ -63,6 +72,7 @@ const UserDetail = ({
     newPassword: '',
     myAvatar: ''
   });
+  const [previewUrl, setPreviewUrl] = useState('');
 
   const { name, email, currentPassword, newPassword, myAvatar } = formData;
 
@@ -99,7 +109,15 @@ const UserDetail = ({
         email: user.email ? user.email : ''
       });
     }
-  }, [setFormData, user]);
+    if (myAvatar) {
+      const fileReader = new FileReader();
+
+      fileReader.onload = () => {
+        setPreviewUrl(fileReader.result);
+      };
+      fileReader.readAsDataURL(myAvatar);
+    }
+  }, [setFormData, user, myAvatar]);
 
   // console.log(user);
 
@@ -204,6 +222,23 @@ const UserDetail = ({
         </form>
         <form>
           <Grid container spacing={2}>
+            <Grid
+              item
+              container
+              xs={12}
+              className={classes.wrapImg}
+              alignItems='center'
+              justify='center'
+            >
+              {previewUrl && (
+                <img src={previewUrl} alt='Preview' className={classes.img} />
+              )}
+              {!previewUrl && (
+                <Typography component='h1' variant='h5' align='center'>
+                  Пожалуйста выбирите фото
+                </Typography>
+              )}
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 name='myAvatar'

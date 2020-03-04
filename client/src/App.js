@@ -32,6 +32,7 @@ import Alert from './shared/alert/Alert';
 import Login from './user/pages/Login';
 import Register from './user/pages/Register';
 import PrivateRoute from './routing/PrivateRoute';
+import AddPhoto from './editPhoto/AddPhoto';
 import EditPhotoList from './editPhoto/EditPhotoList';
 import EditPhotoItem from './editPhoto/EditPhotoItem';
 import GroupOfImage from './editPhoto/GroupOfImage';
@@ -75,47 +76,6 @@ function App() {
               path='/description/:id'
               component={DescriptionOf_Works}
             />
-            {/* <Route
-              exact
-              path='/description-asfalt'
-              component={DescriptionAsfalt}
-            />
-            <Route
-              exact
-              path='/description-fasad'
-              component={DescriptionFasad}
-            />
-            <Route
-              exact
-              path='/description-inside-works'
-              component={DescriptionInsideWorks}
-            />
-            <Route exact path='/description-roof' component={DescriptionRoof} />
-            <Route
-              exact
-              path='/description-windowpl'
-              component={DescriptionWindowPl}
-            />
-            <Route
-              exact
-              path='/description-metall-constr'
-              component={DescriptionMetalloconstr}
-            />
-            <Route
-              exact
-              path='/description-santeh'
-              component={DescriptionSanteh}
-            />
-            <Route
-              exact
-              path='/description-emergency'
-              component={DescriptionEmergency}
-            />
-            <Route
-              exact
-              path='/description-electro'
-              component={DescriptionElectro}
-            /> */}
 
             <PrivateRoute exact path='/user-detail' component={UserDetail} />
             <PrivateRoute exact path='/user-admin' component={UserAdmin} />
@@ -125,6 +85,7 @@ function App() {
               path='/user-admin-create'
               component={UserCreate}
             />
+            <PrivateRoute exact path='/addphoto' component={AddPhoto} />
             <PrivateRoute exact path='/editphoto' component={EditPhotoList} />
             <PrivateRoute
               exact
