@@ -13,15 +13,6 @@ import Navbar from './shared/navbar/Navbar';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-// import DescriptionAsfalt from './descriptionOfWorks/DescriptionAsfalt';
-// import DescriptionFasad from './descriptionOfWorks/DescriptionFasad';
-// import DescriptionInsideWorks from './descriptionOfWorks/DescriptionInsideWorks';
-// import DescriptionRoof from './descriptionOfWorks/DescriptionRoof';
-// import DescriptionWindowPl from './descriptionOfWorks/DescriptionWindowPl';
-// import DescriptionMetalloconstr from './descriptionOfWorks/DescriptionMetalloconstr';
-// import DescriptionSanteh from './descriptionOfWorks/DescriptionSanteh';
-// import DescriptionEmergency from './descriptionOfWorks/DescriptionEmergency';
-// import DescriptionElectro from './descriptionOfWorks/DescriptionElectro';
 import DescriptionOf_Works from './descriptionOfWorks/DescriptionOf_Works';
 
 import AboutUs from './shared/landing/AboutUs';
@@ -29,8 +20,9 @@ import Landing from './shared/landing/Landing';
 import Footer from './shared/footer/Footer';
 import Alert from './shared/alert/Alert';
 
-import Login from './user/pages/Login';
-import Register from './user/pages/Register';
+import Login from './user/auth/Login';
+import Register from './user/auth/Register';
+import UserDetail from './user/auth/UserDetail';
 import PrivateRoute from './routing/PrivateRoute';
 import AddPhoto from './editPhoto/AddPhoto';
 import EditPhotoList from './editPhoto/EditPhotoList';
@@ -38,10 +30,9 @@ import EditPhotoItem from './editPhoto/EditPhotoItem';
 import GroupOfImage from './editPhoto/GroupOfImage';
 import AddGroupOfImage from './editPhoto/AddGroupOfImage';
 import GroupOfImageEdit from './editPhoto/GroupOfImageEdit';
-import UserDetail from './user/pages/UserDetail';
-import UserAdmin from './user/pages/admin/UserAdmin';
-import UserCreate from './user/pages/admin/UserCreate';
-import UserEdit from './user/pages/admin/UserEdit';
+import UserAdmin from './user/admin/UserAdmin';
+import UserCreate from './user/admin/UserCreate';
+import UserEdit from './user/admin/UserEdit';
 
 const useStyles = makeStyles(theme => ({
   root: {

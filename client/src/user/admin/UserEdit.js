@@ -3,8 +3,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getOneUser, updateUser } from '../../../store/actions/users';
-import { setNameOfPage } from '../../../store/actions/nameOfPage';
+import { getOneUser, updateUser } from '../../store/actions/users';
+import { setNameOfPage } from '../../store/actions/nameOfPage';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import Spinner from '../../../shared/spinner/Spinner';
+import Spinner from '../../shared/spinner/Spinner';
 
 import { makeStyles } from '@material-ui/core/styles';
 
