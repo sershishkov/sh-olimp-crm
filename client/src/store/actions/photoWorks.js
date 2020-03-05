@@ -63,6 +63,7 @@ export const addPhotoWork = (
 
     dispatch(getAllPhotoWork());
   } catch (err) {
+    console.log(err);
     const error = err.response.data.error;
     if (error) {
       dispatch(setAlert(error, 'error', 2500));

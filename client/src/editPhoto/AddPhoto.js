@@ -82,6 +82,7 @@ const AddPhoto = ({
   const addPhotoHandler = () => {
     addPhotoWork(newPhoto, selectedGroup, description);
     history.push('/editphoto');
+    // window.location.reload();
   };
   const onChange = e => {
     setDescription(e.target.value);
