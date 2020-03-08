@@ -59,6 +59,11 @@ const users = require('./routes/users');
 const photoWorks = require('./routes//photoWorks');
 const groupOfImage = require('./routes/groupOfImage');
 
+//////   ACCOUNTANT     /////////
+//   REFERENCE DATA //
+const bankName = require('./routes/accountant/referenceData/bankName');
+//   MAIN DATA      //
+
 //Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -79,6 +84,11 @@ app.use('/api/v1/users', users);
 
 app.use('/api/v1/photo', photoWorks);
 app.use('/api/v1/imagegroup', groupOfImage);
+
+//////   ACCOUNTANT     /////////
+//   REFERENCE DATA //
+app.use('/api/v1/accountant/bankname', bankName);
+//   MAIN DATA      //
 
 app.use(errorHandler);
 
