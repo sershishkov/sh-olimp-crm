@@ -62,6 +62,9 @@ const groupOfImage = require('./routes/groupOfImage');
 //////   ACCOUNTANT     /////////
 //   REFERENCE DATA //
 const bankName = require('./routes/accountant/referenceData/bankName');
+const firstPersonPosition = require('./routes/accountant/referenceData/firstPersonPosition');
+const groupOf_Product = require('./routes/accountant/referenceData/groupOf_Product');
+
 //   MAIN DATA      //
 
 //Dev logging middleware
@@ -88,6 +91,9 @@ app.use('/api/v1/imagegroup', groupOfImage);
 //////   ACCOUNTANT     /////////
 //   REFERENCE DATA //
 app.use('/api/v1/accountant/bankname', bankName);
+app.use('/api/v1/accountant/personposition', firstPersonPosition);
+app.use('/api/v1/accountant/group-of-product', groupOf_Product);
+
 //   MAIN DATA      //
 
 app.use(errorHandler);

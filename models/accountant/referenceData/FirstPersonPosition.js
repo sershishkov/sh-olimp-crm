@@ -3,7 +3,12 @@ const mongoose = require('mongoose');
 const FirstPersonPosition = new mongoose.Schema({
   position: {
     type: String,
-    required: [true, 'Введите должность'],
+    required: [true, 'Введите должность в именительном падеже'],
+    unique: true
+  },
+  positionRoditPadej: {
+    type: String,
+    required: [true, 'Введите должность в родительном падеже'],
     unique: true
   }
 });
