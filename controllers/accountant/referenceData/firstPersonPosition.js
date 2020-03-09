@@ -56,7 +56,9 @@ exports.updateFirstPersonPosition = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/accountant/personposition
 //@access Private
 exports.getAllFirstPersonPositions = asyncHandler(async (req, res, next) => {
-  const allPersonPositions = await FirstPersonPosition.find();
+  const allPersonPositions = await FirstPersonPosition.find().sort({
+    position: 1
+  });
   //Check if  exists response
   if (!allPersonPositions) {
     return next(new ErrorResponse('На данный момент ничего в базе нет ', 400));

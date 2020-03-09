@@ -54,7 +54,9 @@ exports.updateGroupOf_Product = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/accountant/group-of-product
 //@access Private
 exports.getAllGroupOf_Products = asyncHandler(async (req, res, next) => {
-  const allGroupOf_Products = await GroupOf_Product.find();
+  const allGroupOf_Products = await GroupOf_Product.find().sort({
+    productGroup: 1
+  });
   //Check if  exists response
   if (!allGroupOf_Products) {
     return next(new ErrorResponse('На данный момент ничего в базе нет ', 400));

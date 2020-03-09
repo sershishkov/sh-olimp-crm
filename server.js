@@ -64,6 +64,10 @@ const groupOfImage = require('./routes/groupOfImage');
 const bankName = require('./routes/accountant/referenceData/bankName');
 const firstPersonPosition = require('./routes/accountant/referenceData/firstPersonPosition');
 const groupOf_Product = require('./routes/accountant/referenceData/groupOf_Product');
+const groupOf_ServiceJob = require('./routes/accountant/referenceData/groupOf_ServiceJob');
+const phoneOperator = require('./routes/accountant/referenceData/phoneOperator');
+const typeOf_ActsOnBasisOf = require('./routes/accountant/referenceData/typeOf_ActsOnBasisOf');
+const typeOf_Firm = require('./routes/accountant/referenceData/typeOf_Firm');
 
 //   MAIN DATA      //
 
@@ -93,6 +97,10 @@ app.use('/api/v1/imagegroup', groupOfImage);
 app.use('/api/v1/accountant/bankname', bankName);
 app.use('/api/v1/accountant/personposition', firstPersonPosition);
 app.use('/api/v1/accountant/group-of-product', groupOf_Product);
+app.use('/api/v1/accountant/group-of-servicejob', groupOf_ServiceJob);
+app.use('/api/v1/accountant/phone-operator', phoneOperator);
+app.use('/api/v1/accountant/type-of-acts-on-basis-of', typeOf_ActsOnBasisOf);
+app.use('/api/v1/accountant/type-of-firm', typeOf_Firm);
 
 //   MAIN DATA      //
 

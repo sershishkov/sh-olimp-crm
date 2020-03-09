@@ -56,7 +56,7 @@ exports.updateBankName = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/accountant/bankname
 //@access Private
 exports.getAllBankNames = asyncHandler(async (req, res, next) => {
-  const allBankNames = await BankName.find();
+  const allBankNames = await BankName.find().sort({ bankName: 1 });
   //Check if  exists response
   if (!allBankNames) {
     return next(new ErrorResponse('На данный момент ничего в базе нет ', 400));
