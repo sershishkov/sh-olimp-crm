@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const PhoneOperator = new mongoose.Schema({
   operatorCode: {
-    type: Number,
-    required: [true, 'Введите код(коды) телефонного оператора'],
+    type: String,
+    required: [true, 'Введите код телефонного оператора'],
     unique: true
   }
 });

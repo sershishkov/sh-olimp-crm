@@ -73,6 +73,7 @@ const typeOf_Street = require('./routes/accountant/referenceData/typeOf_Street')
 const typeOf_TaxPayerOn = require('./routes/accountant/referenceData/typeOf_TaxPayerOn');
 const typeOf_Unit = require('./routes/accountant/referenceData/typeOf_Unit');
 const unit = require('./routes/accountant/referenceData/unit');
+const client = require('./routes/accountant/referenceData/client');
 
 //   MAIN DATA      //
 
@@ -111,6 +112,7 @@ app.use('/api/v1/accountant/type-of-street', typeOf_Street);
 app.use('/api/v1/accountant/type-of-tax-payer-on', typeOf_TaxPayerOn);
 app.use('/api/v1/accountant/type-of-unit', typeOf_Unit);
 app.use('/api/v1/accountant/unit', unit);
+app.use('/api/v1/accountant/client', client);
 
 //   MAIN DATA      //
 

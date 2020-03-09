@@ -10,7 +10,7 @@ const BankName = new mongoose.Schema({
     type: Number,
     required: [true, 'Введите МФО Банка'],
     unique: true,
-    min: 6
+    match: [/\b\d{6}\b/, 'Пожалуйста введите 6 цифр']
   }
 });
 

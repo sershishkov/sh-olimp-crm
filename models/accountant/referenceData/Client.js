@@ -12,10 +12,9 @@ const Client = new mongoose.Schema({
     required: [true, 'Необходимо выбрать форму собственности ']
   },
   postCode: {
-    type: Number,
+    type: String,
     required: [true, 'Введите почтовый индекс '],
-    min: 5,
-    max: 5
+    match: [/\b\d{5}\b/, 'Пожалуйста введите 5 цифр']
   },
   typeOf_settlement: {
     type: mongoose.Schema.Types.ObjectId,
@@ -43,21 +42,20 @@ const Client = new mongoose.Schema({
     type: String
   },
   EDRPOU: {
-    type: Number,
+    type: String,
     required: [true, 'Введите корректный ЄДРПОУ '],
-    min: 8,
-    max: 10
+    unique: true,
+    match: [/\b\d{8,10}\b/, 'Пожалуйста введите 8 или 10 цифр']
   },
-  iban: {
-    type: Number,
+  ibanOwn: {
+    type: String,
     required: [true, 'Введите корректный IBAN '],
-    min: 27,
-    max: 27
+    match: [/\b\d{27}\b/, 'Пожалуйста введите 27 цифр']
   },
-  bankName: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'BankName',
-    required: [true, 'Выберите банк ']
+  ibanGazBank: {
+    type: String,
+    // required: [true, 'Введите корректный IBAN '],
+    match: [/\b\d{27}\b/, 'Пожалуйста введите 27 цифр']
   },
   firstPersonPosition: {
     type: mongoose.Schema.Types.ObjectId,
@@ -66,16 +64,30 @@ const Client = new mongoose.Schema({
   },
   firstPersonSurname: {
     type: String,
-    required: [true, 'Фамилия? ']
+    required: [true, 'Впишите фамилию в именительном падеже ']
   },
   firstPersonName: {
     type: String,
-    required: [true, 'Имя? ']
+    required: [true, 'Впишите имя в именительном падеже ']
   },
   firstPersonMiddleName: {
     type: String,
-    required: [true, 'Отчество? ']
+    required: [true, 'Впишите отчество в именительном падеже ']
   },
+
+  firstPersonSurnameRoditelPadej: {
+    type: String,
+    required: [true, 'Впишите фамилию в родительном падеже ']
+  },
+  firstPersonNameRoditelPadej: {
+    type: String,
+    required: [true, 'Впишите имя в родительном падеже ']
+  },
+  firstPersonMiddleNameRoditelPadej: {
+    type: String,
+    required: [true, 'Впишите отчество в родительном падеже ']
+  },
+
   shortName: {
     type: String,
     required: [true, 'Введите Сокращенное ФИО ']
@@ -94,7 +106,7 @@ const Client = new mongoose.Schema({
   email: {
     type: String,
     required: [true, 'Введите email'],
-    unique: true,
+    // unique: true,
     match: [
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
       'Пожалуйста введите корректный email'
@@ -108,13 +120,7 @@ const Client = new mongoose.Schema({
   phoneNumber: {
     type: String,
     required: [true, 'Введите номер телефона'],
-    min: 7,
-    max: 7
-  },
-  owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+    match: [/\b\d{7}\b/, 'Пожалуйста введите 7 цифр']
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,

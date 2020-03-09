@@ -14,10 +14,9 @@ const Worker = new mongoose.Schema({
     required: [true, 'Отчество? ']
   },
   postCode: {
-    type: Number,
+    type: String,
     // required: [true, 'Введите почтовый индекс '],
-    min: 5,
-    max: 5
+    match: [/\b\d{5}\b/, 'Пожалуйста введите 5 цифр']
   },
   typeOf_settlement: {
     type: mongoose.Schema.Types.ObjectId,
@@ -46,10 +45,9 @@ const Worker = new mongoose.Schema({
     // required: [true, 'Номер квартиры? ']
   },
   individualTaxNumber: {
-    type: Number,
+    type: String,
     // required: [true, 'Введите  ЄДРПОУ '],
-    min: [10, 'Должно быть десять цифр'],
-    max: [10, 'Должно быть десять цифр']
+    match: [/\b\d{10}\b/, 'Пожалуйста введите 10 цифр']
   },
 
   operatorCode: {
@@ -58,10 +56,9 @@ const Worker = new mongoose.Schema({
     required: [true, 'Выберите код вашего оператора']
   },
   phoneNumber: {
-    type: Number,
+    type: String,
     required: [true, 'Введите номер телефона'],
-    min: 7,
-    max: 7
+    match: [/\b\d{7}\b/, 'Пожалуйста введите 7 цифр']
   }
 });
 
