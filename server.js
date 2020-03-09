@@ -68,6 +68,11 @@ const groupOf_ServiceJob = require('./routes/accountant/referenceData/groupOf_Se
 const phoneOperator = require('./routes/accountant/referenceData/phoneOperator');
 const typeOf_ActsOnBasisOf = require('./routes/accountant/referenceData/typeOf_ActsOnBasisOf');
 const typeOf_Firm = require('./routes/accountant/referenceData/typeOf_Firm');
+const typeOf_Settlement = require('./routes/accountant/referenceData/typeOf_Settlement');
+const typeOf_Street = require('./routes/accountant/referenceData/typeOf_Street');
+const typeOf_TaxPayerOn = require('./routes/accountant/referenceData/typeOf_TaxPayerOn');
+const typeOf_Unit = require('./routes/accountant/referenceData/typeOf_Unit');
+const unit = require('./routes/accountant/referenceData/unit');
 
 //   MAIN DATA      //
 
@@ -101,6 +106,11 @@ app.use('/api/v1/accountant/group-of-servicejob', groupOf_ServiceJob);
 app.use('/api/v1/accountant/phone-operator', phoneOperator);
 app.use('/api/v1/accountant/type-of-acts-on-basis-of', typeOf_ActsOnBasisOf);
 app.use('/api/v1/accountant/type-of-firm', typeOf_Firm);
+app.use('/api/v1/accountant/type-of-settlement', typeOf_Settlement);
+app.use('/api/v1/accountant/type-of-street', typeOf_Street);
+app.use('/api/v1/accountant/type-of-tax-payer-on', typeOf_TaxPayerOn);
+app.use('/api/v1/accountant/type-of-unit', typeOf_Unit);
+app.use('/api/v1/accountant/unit', unit);
 
 //   MAIN DATA      //
 

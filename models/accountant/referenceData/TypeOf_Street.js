@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const TypeOf_Street = new mongoose.Schema({
-  typeLong: {
+  typeOf_StreetLong: {
     type: String,
     required: [true, 'Введите полное название типа улицы'],
     unique: true
   },
-  typeShort: {
+  typeOf_StreetShort: {
     type: String,
     required: [true, 'Введите сокращенное название типа улицы'],
     unique: true

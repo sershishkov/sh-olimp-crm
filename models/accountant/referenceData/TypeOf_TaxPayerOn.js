@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const TypeOf_TaxPayerOn = new mongoose.Schema({
-  taxPayerOn: {
+  typeOf_TaxPayerOn: {
     type: String,
     required: [true, 'Введите основание налогооблажения'],
     unique: true

@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const TypeOf_Settlement = new mongoose.Schema({
-  typeLong: {
+  typeOf_SettlementLong: {
     type: String,
     required: [true, 'Введите полное название типа населенного пункта'],
     unique: true
   },
-  typeShort: {
+  typeOf_SettlementShort: {
     type: String,
     required: [true, 'Введите сокращенное название типа населенного пункта'],
     unique: true

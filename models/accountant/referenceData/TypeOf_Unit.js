@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const TypeOf_Unit = new mongoose.Schema({
-  unitType: {
+  typeOf_Unit: {
     type: String,
     required: [true, 'Введите группу единиц измерения'],
     unique: true
