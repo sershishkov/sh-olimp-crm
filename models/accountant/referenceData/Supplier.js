@@ -34,6 +34,7 @@ const Supplier = new mongoose.Schema({
     type: String,
     required: [true, 'Улица? ']
   },
+
   numberOf_house: {
     type: String,
     required: [true, 'Номер дома? ']
@@ -41,19 +42,6 @@ const Supplier = new mongoose.Schema({
   numberOf_app: {
     type: String
   },
-  phoneNumbers: [
-    {
-      phoneCode: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'PhoneOperator'
-      },
-      phoneNumber: {
-        type: String,
-        required: [true, 'Введите номер телефона'],
-        match: [/\b\d{7}\b/, 'Пожалуйста введите 7 цифр']
-      }
-    }
-  ],
   EDRPOU: {
     type: String,
     required: [true, 'Введите корректный ЄДРПОУ '],
@@ -81,6 +69,20 @@ const Supplier = new mongoose.Schema({
     type: String,
     required: [true, 'Отчество? ']
   },
+
+  firstPersonSurnameRoditelPadej: {
+    type: String
+    // required: [true, 'Впишите фамилию в родительном падеже ']
+  },
+  firstPersonNameRoditelPadej: {
+    type: String
+    // required: [true, 'Впишите имя в родительном падеже ']
+  },
+  firstPersonMiddleNameRoditelPadej: {
+    type: String
+    // required: [true, 'Впишите отчество в родительном падеже ']
+  },
+
   shortName: {
     type: String,
     required: [true, 'Введите Сокращенное ФИО ']
@@ -105,6 +107,19 @@ const Supplier = new mongoose.Schema({
       'Пожалуйста введите корректный email'
     ]
   },
+  phoneNumbers: [
+    {
+      phoneCode: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'PhoneOperator'
+      },
+      phoneNumber: {
+        type: String,
+        required: [true, 'Введите номер телефона'],
+        match: [/\b\d{7}\b/, 'Пожалуйста введите 7 цифр']
+      }
+    }
+  ],
 
   groupOf_product: [
     {
