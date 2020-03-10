@@ -13,6 +13,9 @@ const Worker = new mongoose.Schema({
     type: String,
     required: [true, 'Отчество? ']
   },
+  dateOf_Birth: {
+    type: Date
+  },
   postCode: {
     type: String,
     // required: [true, 'Введите почтовый индекс '],
@@ -59,6 +62,10 @@ const Worker = new mongoose.Schema({
     type: String,
     required: [true, 'Введите номер телефона'],
     match: [/\b\d{7}\b/, 'Пожалуйста введите 7 цифр']
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 });
 

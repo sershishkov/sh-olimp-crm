@@ -74,6 +74,7 @@ const typeOf_TaxPayerOn = require('./routes/accountant/referenceData/typeOf_TaxP
 const typeOf_Unit = require('./routes/accountant/referenceData/typeOf_Unit');
 const unit = require('./routes/accountant/referenceData/unit');
 const client = require('./routes/accountant/referenceData/client');
+const worker = require('./routes/accountant/referenceData/worker');
 
 //   MAIN DATA      //
 
@@ -113,6 +114,7 @@ app.use('/api/v1/accountant/type-of-tax-payer-on', typeOf_TaxPayerOn);
 app.use('/api/v1/accountant/type-of-unit', typeOf_Unit);
 app.use('/api/v1/accountant/unit', unit);
 app.use('/api/v1/accountant/client', client);
+app.use('/api/v1/accountant/worker', worker);
 
 //   MAIN DATA      //
 
