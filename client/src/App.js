@@ -15,7 +15,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import DescriptionOf_Works from './descriptionOfWorks/DescriptionOf_Works';
 
-import AboutUs from './shared/landing/AboutUs';
+import ForOSBB from './shared/landing/ForOSBB';
+import ForIndividuals from './shared/landing/ForIndividuals';
+import ListOfClientsRequests from './requestFromClient/ListOfClientsRequests';
+import AddNewClientRequest from './requestFromClient/AddNewClientRequest';
+import EditNewClientRequest from './requestFromClient/EditNewClientRequest';
 import Landing from './shared/landing/Landing';
 import Footer from './shared/footer/Footer';
 import Alert from './shared/alert/Alert';
@@ -55,13 +59,25 @@ function App() {
     <Provider store={store}>
       <Router>
         <Navbar />
-        <Container maxWidth='md' className={classes.root}>
+        <Container maxWidth='lg' className={classes.root}>
           <Alert />
           <Switch>
             <Route exact path='/' component={Landing} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
-            <Route exact path='/aboutus' component={AboutUs} />
+            <Route exact path='/for-osbb' component={ForOSBB} />
+            <Route exact path='/for-individuals' component={ForIndividuals} />
+
+            <Route
+              exact
+              path='/request-from-client'
+              component={ListOfClientsRequests}
+            />
+            <Route
+              exact
+              path='/request-from-client-add'
+              component={AddNewClientRequest}
+            />
             <Route
               exact
               path='/description/:id'
@@ -69,6 +85,11 @@ function App() {
             />
 
             <PrivateRoute exact path='/user-detail' component={UserDetail} />
+            <PrivateRoute
+              exact
+              path='/request-from-client-edit/:id'
+              component={EditNewClientRequest}
+            />
             <PrivateRoute exact path='/user-admin' component={UserAdmin} />
             <PrivateRoute exact path='/user-admin/:id' component={UserEdit} />
             <PrivateRoute

@@ -10,10 +10,11 @@ exports.addImageGroup = asyncHandler(async (req, res, next) => {
   if (!req.body) {
     return next(new ErrorResponse('Не переданы значения', 400));
   }
-  const { imageGroup, descriptions } = req.body;
+  const { imageGroup, descriptions, categoryGroupOf_image } = req.body;
   const newGroup = new GroupOfImage({
     imageGroup,
-    descriptions: descriptions.trim().split(',')
+    descriptions: descriptions.trim().split(','),
+    categoryGroupOf_image
   });
 
   await newGroup.save();
@@ -34,6 +35,7 @@ exports.updateImageGroup = asyncHandler(async (req, res, next) => {
   }
   const newNameOfGroup = {
     imageGroup: req.body.imageGroup,
+    categoryGroupOf_image: req.body.categoryGroupOf_image,
     descriptions: req.body.descriptions.trim().split(',')
   };
 
@@ -74,7 +76,10 @@ exports.getAllImageGroups = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/imagegroup/:id
 //@access Private
 exports.getOneImageGroup = asyncHandler(async (req, res, next) => {
-  const oneImageGroup = await GroupOfImage.findById(req.params.id);
+  const oneImageGroup = await GroupOfImage.findById(req.params.id).populate({
+    path: 'categoryGroupOf_image',
+    select: 'categoryOf_Group'
+  });
   //Check if ImageType exists
   if (!oneImageGroup) {
     return next(new ErrorResponse('Нет этой группы фото', 400));

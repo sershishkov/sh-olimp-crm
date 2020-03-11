@@ -44,11 +44,18 @@ const useStyles = makeStyles(theme => ({
   drawerPaper: {
     width: drawerWidth
   },
-  avatar: {
+  myAvatar: {
+    width: 30,
+    height: 30,
     marginRight: '1rem'
   },
   logotip: {
     width: '75px'
+  },
+  nameOfPage: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    }
   }
 }));
 
@@ -88,10 +95,14 @@ const ResponsiveDrawer = ({
             isAuthenticated ? classes.displayFlex : classes.displayNone
           }
         >
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText>Моя страница</ListItemText>
+          {user && (
+            <Avatar
+              className={classes.avatar}
+              src={user.myAvatar}
+              className={classes.myAvatar}
+            />
+          )}
+          <ListItemText>{userName}</ListItemText>
         </ListItem>
         <ListItem
           button
@@ -131,11 +142,23 @@ const ResponsiveDrawer = ({
           <ListItemText>Выход</ListItemText>
         </ListItem>
 
-        <ListItem button onClick={() => history.push('/aboutus')}>
+        <ListItem button onClick={() => history.push('/for-osbb')}>
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
-          <ListItemText>Наши работы</ListItemText>
+          <ListItemText>Для ОСББ</ListItemText>
+        </ListItem>
+        <ListItem button onClick={() => history.push('/for-individuals')}>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText>Для физ.лиц</ListItemText>
+        </ListItem>
+        <ListItem button onClick={() => history.push('/request-from-client')}>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText>Оставить заявку</ListItemText>
         </ListItem>
         <ListItem button onClick={() => history.push('/')}>
           <ListItemIcon>
@@ -251,96 +274,73 @@ const ResponsiveDrawer = ({
                   меню
                 </Button>
               </Grid>
-              <Hidden smDown>
-                <Grid item xs={9}>
-                  <Button color='inherit' href='/' className={classes.logotip}>
-                    <img
-                      src={ourLogo}
-                      className={classes.logotip}
-                      alt='Loading'
-                    />
-                  </Button>
-                </Grid>
-              </Hidden>
+
+              <Grid item xs={9}>
+                <Button color='inherit' href='/' className={classes.logotip}>
+                  <img
+                    src={ourLogo}
+                    className={classes.logotip}
+                    alt='Logotip'
+                  />
+                </Button>
+              </Grid>
             </Grid>
-            <Hidden smDown>
-              <Grid container item xs={4} justify='center' spacing={2}>
+
+            <Grid
+              container
+              item
+              xs={4}
+              justify='center'
+              spacing={2}
+              className={classes.nameOfPage}
+            >
+              <Grid item xs={12}>
+                <Typography
+                  color='inherit'
+                  component='h4'
+                  variant='h5'
+                  align='center'
+                >
+                  {pageName}
+                </Typography>
+              </Grid>
+            </Grid>
+
+            <Grid
+              container
+              item
+              md={4}
+              sm={8}
+              xm={8}
+              justify='space-around'
+              spacing={2}
+              alignItems='center'
+            >
+              <Grid item xs={6} container flexdirextion='column'>
                 <Grid item xs={12}>
-                  <Typography
-                    color='inherit'
-                    component='h4'
-                    variant='h5'
-                    align='center'
-                  >
-                    {pageName}
+                  <Typography variant='body1' align='center'>
+                    +38 098 310 47 99
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant='body1' align='center'>
+                    +38 067 618 30 60
                   </Typography>
                 </Grid>
               </Grid>
-            </Hidden>
-            <Hidden smDown>
-              <Grid
-                container
-                item
-                xs={4}
-                justify='space-around'
-                spacing={2}
-                alignItems='center'
-              >
-                <Grid
-                  item
-                  xs={3}
-                  className={
-                    !isAuthenticated
-                      ? classes.displayBlock
-                      : classes.displayNone
-                  }
-                >
-                  <Button color='inherit' href='/login'>
-                    Вход
-                  </Button>
+              <Grid item xs={6} container flexdirextion='column'>
+                <Grid item xs={12}>
+                  <Typography variant='body1' align='center'>
+                    +38 099 180 98 04
+                  </Typography>
                 </Grid>
-
-                <Grid
-                  item
-                  xs={3}
-                  className={
-                    !isAuthenticated
-                      ? classes.displayBlock
-                      : classes.displayNone
-                  }
-                >
-                  <Button color='inherit' href='/register'>
-                    Регистрация
-                  </Button>
-                </Grid>
-                <Grid
-                  item
-                  xs={3}
-                  className={
-                    isAuthenticated ? classes.displayBlock : classes.displayNone
-                  }
-                >
-                  <Button color='inherit' href='/user-detail'>
-                    {user && (
-                      <Avatar className={classes.avatar} src={user.myAvatar} />
-                    )}
-
-                    {userName}
-                  </Button>
-                </Grid>
-                <Grid
-                  item
-                  xs={3}
-                  className={
-                    isAuthenticated ? classes.displayBlock : classes.displayNone
-                  }
-                >
-                  <Button color='inherit' onClick={logoutHandler}>
-                    Выход
-                  </Button>
+                <Grid item xs={12}>
+                  <Typography variant='body1' align='center'>
+                    +38 050 227 96 50
+                  </Typography>
                 </Grid>
               </Grid>
-            </Hidden>
+            </Grid>
           </Grid>
         </Toolbar>
       </AppBar>

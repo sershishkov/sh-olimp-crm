@@ -52,7 +52,8 @@ exports.addPhoto = asyncHandler(async (req, res, next) => {
   const newPhoto = new PhotoWork({
     imageUrl: `/uploads/${req.file.filename}`,
     imageGroup: req.body.imageGroup,
-    description: req.body.description
+    description: req.body.description,
+    categoryGroupOf_image: req.body.categoryGroupOf_image
   });
 
   await newPhoto.save();
@@ -73,7 +74,8 @@ exports.updatePhoto = asyncHandler(async (req, res, next) => {
   }
   const newPhoto = {
     imageGroup: req.body.imageGroup,
-    description: req.body.description
+    description: req.body.description,
+    categoryGroupOf_image: req.body.categoryGroupOf_image
   };
 
   const updatedPhoto = await PhotoWork.findByIdAndUpdate(
@@ -95,7 +97,13 @@ exports.updatePhoto = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/photo
 //@access Private
 exports.getAllPhotos = asyncHandler(async (req, res, next) => {
-  const allPhoto = await PhotoWork.find().populate('imageGroup', 'imageGroup');
+  let param = {};
+  if (req.query.categoryGroupOf_image) {
+    param.categoryGroupOf_image = req.query.categoryGroupOf_image;
+  }
+  const allPhoto = await PhotoWork.find(param)
+    .populate({ path: 'imageGroup', select: 'imageGroup' })
+    .populate({ path: 'categoryGroupOf_image', select: 'categoryOf_Group' });
   //Check if photo exists
   if (!allPhoto) {
     return next(new ErrorResponse('На данный момент нет фото в галлерее', 400));
@@ -111,7 +119,10 @@ exports.getAllPhotos = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/photo/:id
 //@access Private
 exports.getOnePhoto = asyncHandler(async (req, res, next) => {
-  const onePhoto = await PhotoWork.findById(req.params.id);
+  const onePhoto = await PhotoWork.findById(req.params.id).populate({
+    path: 'categoryGroupOf_image',
+    select: 'categoryOf_Group'
+  });
   //Check if photo exists
   if (!onePhoto) {
     return next(new ErrorResponse('Нет этого фото в галлерее', 400));

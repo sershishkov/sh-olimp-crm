@@ -35,25 +35,45 @@ const Landing = ({
     getAllGroupOfImage();
   }, [setNameOfPage, getAllPhotoWork, getAllGroupOfImage]);
 
+  // const viewImages = (
+  //   <Grid className={classes.root}>
+  //     {imageGroups.map(group => {
+  //       const newArr = photoWorks.filter(
+  //         photo => group.imageGroup === photo.imageGroup.imageGroup
+  //       );
+  //       return (
+  //         <Fragment key={group._id}>
+  //           <Typography component='h1' variant='h5' align='center'>
+  //             {group.imageGroup}
+  //           </Typography>
+  //           <ListOfPhotos arr={newArr} />
+  //         </Fragment>
+  //       );
+  //     })}
+  //   </Grid>
+
   const viewImages = (
-    <Grid className={classes.root}>
-      {imageGroups.map(group => {
-        const newArr = photoWorks.filter(
-          photo => group.imageGroup === photo.imageGroup.imageGroup
-        );
-        return (
-          <Fragment key={group._id}>
-            <Typography component='h1' variant='h5' align='center'>
-              {group.imageGroup}
-            </Typography>
-            <ListOfPhotos arr={newArr} />
-          </Fragment>
-        );
-      })}
+    <Grid>
+      <ListOfPhotos arr={photoWorks} />
     </Grid>
   );
 
-  return loading ? <Spinner /> : <div>{viewImages}</div>;
+  return loading ? (
+    <Spinner />
+  ) : (
+    <Grid className={classes.root}>
+      <Grid item>
+        <Typography variant='h2' align='center'>
+          Компания ОЛИМП-ДС предоставляет услуги для ОСББ и физических лиц
+        </Typography>
+        <Typography variant='h4' align='center'>
+          Наши работы:
+        </Typography>
+      </Grid>
+      <Grid item></Grid>
+      {viewImages}
+    </Grid>
+  );
 };
 
 Landing.propTypes = {

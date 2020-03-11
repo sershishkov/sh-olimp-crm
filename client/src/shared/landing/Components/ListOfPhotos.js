@@ -24,7 +24,7 @@ const ListOfPhotos = ({ arr, width }) => {
 
   if (isWidthUp('md', width)) {
     return (
-      <GridList cellHeight={300} cols={3} className={classes.gridList}>
+      <GridList cellHeight={300} cols={4} className={classes.gridList}>
         {newArr.length > 0 &&
           newArr.map(item => (
             <GridListTile key={item._id} className={classes.gridListTile}>
@@ -36,9 +36,9 @@ const ListOfPhotos = ({ arr, width }) => {
     );
   }
 
-  if (isWidthDown('md', width)) {
+  if (isWidthUp('sm', width)) {
     return (
-      <GridList cellHeight={250} cols={2} className={classes.gridList}>
+      <GridList cellHeight={250} cols={3} className={classes.gridList}>
         {newArr.length > 0 &&
           newArr.map(item => (
             <GridListTile key={item._id} className={classes.gridListTile}>
@@ -52,7 +52,7 @@ const ListOfPhotos = ({ arr, width }) => {
 
   if (isWidthDown('sm', width)) {
     return (
-      <GridList cellHeight={100} cols={1} className={classes.gridList}>
+      <GridList cellHeight={150} cols={2} className={classes.gridList}>
         {newArr.length > 0 &&
           newArr.map(item => (
             <GridListTile key={item._id} className={classes.gridListTile}>

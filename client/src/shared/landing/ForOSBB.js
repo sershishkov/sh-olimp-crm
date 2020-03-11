@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   listItem: {}
 }));
 
-const AboutUs = ({
+const ForOSBB = ({
   setNameOfPage,
   getAllGroupOfImage,
   groupOfImage: { imageGroups, loading }
@@ -68,7 +68,7 @@ const AboutUs = ({
   );
 };
 
-AboutUs.propTypes = {
+ForOSBB.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAllGroupOfImage: PropTypes.func.isRequired,
   groupOfImage: PropTypes.object.isRequired
@@ -78,5 +78,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, { setNameOfPage, getAllGroupOfImage })(
-  AboutUs
+  ForOSBB
 );

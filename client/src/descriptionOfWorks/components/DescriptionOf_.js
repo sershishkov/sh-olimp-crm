@@ -24,7 +24,6 @@ const useStyles = makeStyles(theme => ({
 
 const DescriptionAsfalt = ({
   groupId,
-  setNameOfPage,
   getAllPhotoWork,
   photoWorks: { photoWorks, loading }
 }) => {

@@ -58,6 +58,8 @@ const users = require('./routes/users');
 
 const photoWorks = require('./routes//photoWorks');
 const groupOfImage = require('./routes/groupOfImage');
+const categoryGroupOfImage = require('./routes/categoryGroupOfImage');
+const requestFromClient = require('./routes/requestFromClient');
 
 //////   ACCOUNTANT     /////////
 //   REFERENCE DATA //
@@ -99,6 +101,8 @@ app.use('/api/v1/users', users);
 
 app.use('/api/v1/photo', photoWorks);
 app.use('/api/v1/imagegroup', groupOfImage);
+app.use('/api/v1/category-imagegroup', categoryGroupOfImage);
+app.use('/api/v1/request-from-client', requestFromClient);
 
 //////   ACCOUNTANT     /////////
 //   REFERENCE DATA //

@@ -9,9 +9,13 @@ import {
   DELETE_PHOTO
 } from './types';
 
-export const getAllPhotoWork = () => async dispatch => {
+export const getAllPhotoWork = filterId => async dispatch => {
+  let query = '';
+  if (filterId) {
+    query = `?categoryGroupOf_image=${filterId}`;
+  }
   try {
-    const result = await axios.get(`/api/v1/photo`);
+    const result = await axios.get(`/api/v1/photo${query}`);
     dispatch({ type: GET_ALL_PHOTOS, payload: result.data.data });
   } catch (err) {
     const error = err.response.data.error;
