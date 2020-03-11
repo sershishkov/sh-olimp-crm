@@ -27,7 +27,7 @@ const Supplier = new mongoose.Schema({
   },
   typeOf_street: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'TypeOf_Settlement',
+    ref: 'TypeOf_Street',
     required: [true, 'Тип улицы? ']
   },
   street: {
