@@ -27,6 +27,23 @@ const useStyles = makeStyles(theme => ({
     position: 'fixed',
     top: '5rem',
     left: '2rem'
+  },
+  list: {
+    width: '100%'
+    // border: '1px solid red'
+  },
+  listItem: {
+    width: '100%'
+    // border: '1px solid green'
+  },
+  displayFlex: {
+    display: 'flex'
+  },
+  displayBlock: {
+    display: 'block'
+  },
+  displayNone: {
+    display: 'none'
   }
 }));
 
@@ -59,37 +76,96 @@ const ListOfClientsRequests = ({
         Оставить заявку
       </Button>
 
-      <List>
+      <List className={classes.list}>
         {clientRequests.map(item => (
-          <ListItem key={item._id}>
-            <Grid container>
-              <Grid item xs={12} container justify='space-between'>
+          <ListItem key={item._id} className={classes.listItem}>
+            <Grid
+              container
+              flexdirextion='column'
+              justify='flex-start'
+              alignItems='center'
+            >
+              <Grid
+                item
+                xs={12}
+                container
+                justify='space-between'
+                alignItems='center'
+              >
                 <Grid item xs={6}>
-                  <Typography variant='h6'>{item.clientName}</Typography>
+                  <Typography variant='h6' align='left'>
+                    {item.clientName}
+                  </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography variant='h6'>
+                  <Typography variant='h6' align='right'>
                     {' '}
                     <Moment format='DD/MM/YYYY'>{item.createdAt}</Moment>{' '}
                   </Typography>
                 </Grid>
               </Grid>
+
               <Grid item xs={12} container>
-                <Grid item xs={8}>
+                <Grid item xs={12}>
                   <Typography variant='body1'>
                     {item.requestFromClient}
                   </Typography>
                 </Grid>
-                <Grid item xs={2}>
+              </Grid>
+
+              <Grid
+                item
+                xs={12}
+                container
+                className={
+                  user && (user._id === item.creator || user.role === 'admin')
+                    ? classes.displayFlex
+                    : classes.displayNone
+                }
+              >
+                <Grid item xs={6}>
+                  <Typography variant='h6' align='center'>
+                    тел: {item.operatorCode.operatorCode} {item.phoneNumber}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant='h6' align='center'>
+                    email : {item.email}
+                  </Typography>
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12} container>
+                <Grid
+                  item
+                  xs={6}
+                  className={
+                    user && (user._id === item.creator || user.role === 'admin')
+                      ? classes.displayFlex
+                      : classes.displayNone
+                  }
+                >
                   <Button
+                    variant='contained'
+                    fullWidth
                     color='secondary'
                     onClick={() => deleteBtnHandler(item._id)}
                   >
                     Удалить
                   </Button>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid
+                  item
+                  xs={6}
+                  className={
+                    user && (user._id === item.creator || user.role === 'admin')
+                      ? classes.displayFlex
+                      : classes.displayNone
+                  }
+                >
                   <Button
+                    variant='contained'
+                    fullWidth
                     color='primary'
                     href={`/request-from-client-edit/${item._id}`}
                   >
