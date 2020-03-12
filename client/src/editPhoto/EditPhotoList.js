@@ -60,10 +60,67 @@ const EditPhotoList = ({
     deletePhotoWork(itemId);
     window.location.reload();
   };
+  console.log(photoWorks);
+  const listOfPhoto = (
+    <List className={classes.list}>
+      {loading ? (
+        <Spinner />
+      ) : (
+        photoWorks.map(item => (
+          <ListItem key={item._id} className={classes.listItem}>
+            <Grid container className={classes.root}>
+              <Grid item xs={2}>
+                <img
+                  src={item.imageUrl}
+                  alt={item.imageUrl}
+                  className={classes.img}
+                />
+              </Grid>
 
-  return loading ? (
-    <Spinner />
-  ) : (
+              <Grid item xs={3}>
+                <Typography align='center'>{item.description}</Typography>
+              </Grid>
+
+              <Grid item xs={4}>
+                <Typography align='center'>
+                  {item.imageGroup.imageGroup}
+                </Typography>
+              </Grid>
+              <Grid item xs={1}>
+                <Typography align='center'>
+                  {/* {item.categoryGroupOf_image.categoryOf_Group} */}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={1}>
+                <IconButton
+                  color='secondary'
+                  variant='contained'
+                  onClick={() => deleteImage(item._id)}
+                  className={classes.buttonDelete}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Grid>
+
+              <Grid item xs={1}>
+                <IconButton
+                  color='primary'
+                  variant='contained'
+                  href={`/editphoto/${item._id}`}
+                  className={classes.buttonDelete}
+                >
+                  <EditIcon />
+                </IconButton>
+              </Grid>
+            </Grid>
+          </ListItem>
+        ))
+      )}
+    </List>
+  );
+
+  return (
     <Grid container className={classes.root}>
       <IconButton
         variant='contained'
@@ -74,53 +131,7 @@ const EditPhotoList = ({
         <PlusOneIcon className={classes.btnAddIcon} />
       </IconButton>
       <Grid item xs={12}>
-        <List className={classes.list}>
-          {photoWorks &&
-            photoWorks.map(item => (
-              <ListItem key={item._id} className={classes.listItem}>
-                <Grid container className={classes.root}>
-                  <Grid item xs={2}>
-                    <img
-                      src={item.imageUrl}
-                      alt={item.imageUrl}
-                      className={classes.img}
-                    />
-                  </Grid>
-
-                  <Grid item xs={4}>
-                    <Typography align='center'>{item.description}</Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography align='center'>
-                      {item.imageGroup.imageGroup}
-                    </Typography>
-                  </Grid>
-
-                  <Grid item xs={1}>
-                    <IconButton
-                      color='secondary'
-                      variant='contained'
-                      onClick={() => deleteImage(item._id)}
-                      className={classes.buttonDelete}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Grid>
-
-                  <Grid item xs={1}>
-                    <IconButton
-                      color='primary'
-                      variant='contained'
-                      href={`/editphoto/${item._id}`}
-                      className={classes.buttonDelete}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                  </Grid>
-                </Grid>
-              </ListItem>
-            ))}
-        </List>
+        {listOfPhoto}
       </Grid>
     </Grid>
   );

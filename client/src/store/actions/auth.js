@@ -75,15 +75,15 @@ export const login = (email, password) => async dispatch => {
 
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data
+      payload: res.data.data
     });
     dispatch(loadUser());
   } catch (err) {
-    console.log(err);
-    const error = err.response.data.error;
-    if (error) {
-      dispatch(setAlert(error, 'error', 2500));
-    }
+    // console.log(err);
+    // const error = err.response.data.error;
+    // if (error) {
+    //   dispatch(setAlert(error, 'error', 2500));
+    // }
     dispatch({
       type: LOGIN_FAIL
     });

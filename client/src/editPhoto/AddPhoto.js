@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { addPhotoWork } from '../store/actions/photoWorks';
 import { getAllGroupOfImage } from '../store/actions/groupOfImage';
 import { setNameOfPage } from '../store/actions/nameOfPage';
+import { getAllCategoryOfClient } from '../store/actions/categoryOf_Client';
 import Spinner from '../shared/spinner/Spinner';
 
 import Button from '@material-ui/core/Button';
@@ -42,13 +43,16 @@ const useStyles = makeStyles(theme => ({
 const AddPhoto = ({
   addPhotoWork,
   getAllGroupOfImage,
+  getAllCategoryOfClient,
   setNameOfPage,
-  groupOfImage: { imageGroups, loading }
+  groupOfImage: { imageGroups, loading },
+  clientCategory: { clientCategorys }
 }) => {
   const classes = useStyles();
   const history = useHistory();
   const [newPhoto, setNewPhoto] = useState('');
   const [selectedGroup, setSelectedGroup] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [description, setDescription] = useState('');
   const [disabledForm, setDisabledForm] = useState(true);
   const [previewUrl, setPreviewUrl] = useState('');
@@ -56,6 +60,7 @@ const AddPhoto = ({
   useEffect(() => {
     setNameOfPage('Добавить фото');
     getAllGroupOfImage();
+    getAllCategoryOfClient();
 
     if (newPhoto) {
       const fileReader = new FileReader();
@@ -65,28 +70,47 @@ const AddPhoto = ({
       };
       fileReader.readAsDataURL(newPhoto);
     }
-  }, [setNameOfPage, getAllGroupOfImage, newPhoto]);
+  }, [setNameOfPage, getAllGroupOfImage, newPhoto, getAllCategoryOfClient]);
 
   const selectChangeHandle = e => {
     setSelectedGroup(e.target.value);
-    setDisabledForm(!(newPhoto && selectedGroup && description));
+    setDisabledForm(
+      !(newPhoto && selectedGroup && description && selectedCategory)
+    );
+  };
+
+  const selectCategoryHandle = e => {
+    setSelectedCategory(e.target.value);
+    setDisabledForm(
+      !(newPhoto && selectedGroup && description && selectedCategory)
+    );
   };
 
   const pickedHandler = e => {
     // e.preventDefault();
     setNewPhoto(e.target.files[0]);
 
-    setDisabledForm(!(newPhoto && selectedGroup && description));
+    setDisabledForm(
+      !(newPhoto && selectedGroup && description && selectedCategory)
+    );
   };
 
   const addPhotoHandler = () => {
-    addPhotoWork(newPhoto, selectedGroup, description);
-    history.push('/editphoto');
+    addPhotoWork(newPhoto, selectedGroup, description, selectedCategory);
+    // history.push('/editphoto');
     // window.location.reload();
+    setNewPhoto('');
+    setSelectedGroup('');
+    setSelectedCategory('');
+    setDescription('');
+    setDisabledForm(true);
+    setPreviewUrl('');
   };
   const onChange = e => {
     setDescription(e.target.value);
-    setDisabledForm(!(newPhoto && selectedGroup && description));
+    setDisabledForm(
+      !(newPhoto && selectedGroup && description && selectedCategory)
+    );
   };
 
   return loading ? (
@@ -126,7 +150,8 @@ const AddPhoto = ({
             </Button>
           </label>
         </Grid>
-        <Grid item xs={6}>
+
+        <Grid item xs={3}>
           <InputLabel
             id='add-select-label'
             className={
@@ -139,11 +164,36 @@ const AddPhoto = ({
             labelId='add-select-label'
             fullWidth
             value={selectedGroup}
+            name='selectedGroup'
             onChange={selectChangeHandle}
           >
             {imageGroups.map(item => (
               <MenuItem key={item._id} value={item._id}>
                 {item.imageGroup}
+              </MenuItem>
+            ))}
+          </Select>
+        </Grid>
+
+        <Grid item xs={3}>
+          <InputLabel
+            id='add-select-category'
+            className={
+              selectedCategory ? classes.displayNone : classes.displayFlex
+            }
+          >
+            Выбрать категорию
+          </InputLabel>
+          <Select
+            labelId='add-select-category'
+            fullWidth
+            value={selectedCategory}
+            name='selectedCategory'
+            onChange={selectCategoryHandle}
+          >
+            {clientCategorys.map(item => (
+              <MenuItem key={item._id} value={item._id}>
+                {item.categoryOf_Group}
               </MenuItem>
             ))}
           </Select>
@@ -182,15 +232,19 @@ AddPhoto.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAllGroupOfImage: PropTypes.func.isRequired,
   addPhotoWork: PropTypes.func.isRequired,
-  groupOfImage: PropTypes.object.isRequired
+  getAllCategoryOfClient: PropTypes.func.isRequired,
+  groupOfImage: PropTypes.object.isRequired,
+  clientCategory: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  groupOfImage: state.groupOfImage
+  groupOfImage: state.groupOfImage,
+  clientCategory: state.clientCategory
 });
 
 export default connect(mapStateToProps, {
   addPhotoWork,
   getAllGroupOfImage,
-  setNameOfPage
+  setNameOfPage,
+  getAllCategoryOfClient
 })(AddPhoto);

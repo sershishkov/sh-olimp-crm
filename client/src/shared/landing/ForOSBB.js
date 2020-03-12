@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setNameOfPage } from '../../store/actions/nameOfPage';
-import { getAllGroupOfImage } from '../../store/actions/groupOfImage';
+import { getAllPhotoWork } from '../../store/actions/photoWorks';
 import PropTypes from 'prop-types';
 
 import Spinner from '../spinner/Spinner';
@@ -10,7 +10,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -25,40 +26,47 @@ const useStyles = makeStyles(theme => ({
 
 const ForOSBB = ({
   setNameOfPage,
-  getAllGroupOfImage,
-  groupOfImage: { imageGroups, loading }
+  getAllPhotoWork,
+  photoWorks: { photoWorks, loading }
 }) => {
   const classes = useStyles();
 
   useEffect(() => {
     setNameOfPage('Наши работы');
-    getAllGroupOfImage();
-  }, [setNameOfPage, getAllGroupOfImage]);
+    getAllPhotoWork('5e68eb5c78dad518abff49b9');
+  }, [setNameOfPage, getAllPhotoWork]);
+  // 5e68eb4b78dad518abff49b8 физлица
+  // 5e68eb5c78dad518abff49b9 осбб
+  const objGroup = {};
+
+  photoWorks.forEach(item => {
+    objGroup[item.imageGroup._id] = item.imageGroup.imageGroup;
+  });
 
   return loading ? (
     <Spinner />
   ) : (
     <Grid className={classes.root}>
       <Typography variant='h3' align='center'>
-        Компания "Олимп-ДС" предлагает следующие виды работ:
+        Компания "Олимп-ДС" предлагает следующие виды работ для осбб:
       </Typography>
 
       <List>
-        {imageGroups.map(item => (
-          <ListItem key={item._id}>
+        {Object.keys(objGroup).map(key => (
+          <ListItem key={key}>
             <Grid container justify='space-between'>
-              <Grid item xs={10}>
-                <Typography variant='h6'>{item.imageGroup}</Typography>
+              <Grid item xs={11}>
+                <Typography variant='h6'>{objGroup[key]}</Typography>
               </Grid>
-              <Grid item xs={2}>
-                <Button
+              <Grid item xs={1}>
+                <IconButton
                   color='primary'
                   size='small'
                   variant='contained'
-                  href={`/description/${item._id}`}
+                  href={`/description/${key}`}
                 >
-                  подробнее
-                </Button>
+                  <MoreHorizIcon />
+                </IconButton>
               </Grid>
             </Grid>
           </ListItem>
@@ -70,13 +78,14 @@ const ForOSBB = ({
 
 ForOSBB.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  getAllGroupOfImage: PropTypes.func.isRequired,
-  groupOfImage: PropTypes.object.isRequired
+  getAllPhotoWork: PropTypes.func.isRequired,
+  photoWorks: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  groupOfImage: state.groupOfImage
+  photoWorks: state.photoWorks
 });
 
-export default connect(mapStateToProps, { setNameOfPage, getAllGroupOfImage })(
-  ForOSBB
-);
+export default connect(mapStateToProps, {
+  setNameOfPage,
+  getAllPhotoWork
+})(ForOSBB);

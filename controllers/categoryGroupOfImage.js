@@ -55,7 +55,7 @@ exports.updateCategoryGroupOfImage = asyncHandler(async (req, res, next) => {
 //@access Private
 exports.getAllCategoryGroupOfImages = asyncHandler(async (req, res, next) => {
   const allCategoryGroupOfImages = await CategoryGroupOfImage.find().sort({
-    CategoryGroupOfImage: 1
+    categoryOf_Group: 1
   });
   //Check if  exists response
   if (!allCategoryGroupOfImages) {

@@ -42,7 +42,7 @@ const DescriptionOf_Works = ({
   const { id } = useParams();
 
   const buttonBackHandler = () => {
-    history.push('/aboutus');
+    history.push('/for-osbb');
   };
 
   useEffect(() => {

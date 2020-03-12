@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 
@@ -58,6 +58,7 @@ const ListOfClientsRequests = ({
 
   const deleteBtnHandler = id => {
     deleteClientRequest(id);
+    window.location.reload();
   };
 
   useEffect(() => {

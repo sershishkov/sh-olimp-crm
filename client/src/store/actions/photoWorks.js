@@ -16,6 +16,7 @@ export const getAllPhotoWork = filterId => async dispatch => {
   }
   try {
     const result = await axios.get(`/api/v1/photo${query}`);
+    // console.log(result);
     dispatch({ type: GET_ALL_PHOTOS, payload: result.data.data });
   } catch (err) {
     const error = err.response.data.error;
@@ -43,12 +44,14 @@ export const getOnePhotoWork = imageId => async dispatch => {
 export const addPhotoWork = (
   file,
   groupOfImageID,
-  description
+  description,
+  selectedCategory
 ) => async dispatch => {
   const photoFormData = new FormData();
   photoFormData.append('photoWork', file);
   photoFormData.append('imageGroup', groupOfImageID);
   photoFormData.append('description', description);
+  photoFormData.append('categoryGroupOf_image', selectedCategory);
   // console.log(file);
   const config = {
     headers: {
@@ -65,9 +68,9 @@ export const addPhotoWork = (
       payload: photo.data.data
     });
 
-    dispatch(getAllPhotoWork());
+    // dispatch(getAllPhotoWork());
   } catch (err) {
-    console.log(err);
+    // console.dir(err);
     const error = err.response.data.error;
     if (error) {
       dispatch(setAlert(error, 'error', 2500));
@@ -78,7 +81,8 @@ export const addPhotoWork = (
 export const updatePhotoWork = (
   photoId,
   groupID,
-  description
+  description,
+  selectedCategory
 ) => async dispatch => {
   const config = {
     headers: {
@@ -88,7 +92,8 @@ export const updatePhotoWork = (
 
   const body = JSON.stringify({
     imageGroup: groupID,
-    description: description
+    description: description,
+    selectedCategory
   });
 
   try {
@@ -103,7 +108,7 @@ export const updatePhotoWork = (
       payload: updatedPhoto.data.data
     });
 
-    dispatch(getAllPhotoWork());
+    // dispatch(getAllPhotoWork());
   } catch (err) {
     const error = err.response.data.error;
     if (error) {
@@ -119,7 +124,7 @@ export const deletePhotoWork = imageId => async dispatch => {
       type: DELETE_PHOTO,
       payload: imageId
     });
-    dispatch(getAllPhotoWork());
+    // dispatch(getAllPhotoWork());
   } catch (err) {
     const error = err.response.data.error;
     if (error) {

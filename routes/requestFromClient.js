@@ -14,8 +14,8 @@ router
   .route('/')
   .get(getAllRequestFromClients)
   .post(
-    protect,
-    authorize('engineer', 'accountant', 'boss', 'admin'),
+    // protect,
+    // authorize('engineer', 'accountant', 'boss', 'admin'),
     addRequestFromClient
   );
 
@@ -24,7 +24,7 @@ router
   .get(getOneRequestFromClient)
   .put(
     protect,
-    authorize('engineer', 'accountant', 'boss', 'admin'),
+    // authorize('engineer', 'accountant', 'boss', 'admin'),
     updateRequestFromClient
   )
   .delete(
