@@ -7,7 +7,9 @@ const Product = new mongoose.Schema({
     unique: true
   },
   productImage: {
-    type: String
+    type: String,
+    required: true,
+    default: '/uploads/default_product.jpg'
   },
   unit: {
     type: mongoose.Schema.Types.ObjectId,
