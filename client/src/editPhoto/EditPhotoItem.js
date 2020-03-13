@@ -120,7 +120,7 @@ const EditPhotoItem = ({
     if (photoWorks.onePhoto) {
       setDescription(photoWorks.onePhoto.description);
       setSelectedGroup(photoWorks.onePhoto.imageGroup);
-      // setSelectedCategory(photoWorks.onePhoto.categoryGroupOf_image._id);
+      setSelectedCategory(photoWorks.onePhoto.categoryGroupOf_image);
     }
   }, [setDescription, setSelectedGroup, photoWorks]);
 

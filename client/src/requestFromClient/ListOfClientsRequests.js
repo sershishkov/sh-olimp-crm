@@ -21,7 +21,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex'
+    display: 'flex',
+    marginTop: '7rem'
   },
   btnAddRequest: {
     position: 'fixed',
@@ -72,6 +73,7 @@ const ListOfClientsRequests = ({
       <Button
         href='/request-from-client-add'
         color='secondary'
+        variant='contained'
         className={classes.btnAddRequest}
       >
         Оставить заявку
@@ -100,8 +102,7 @@ const ListOfClientsRequests = ({
                 </Grid>
                 <Grid item xs={6}>
                   <Typography variant='h6' align='right'>
-                    {' '}
-                    <Moment format='DD/MM/YYYY'>{item.createdAt}</Moment>{' '}
+                    <Moment format='DD/MM/YYYY/hh:mm'>{item.createdAt}</Moment>{' '}
                   </Typography>
                 </Grid>
               </Grid>

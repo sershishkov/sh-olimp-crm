@@ -82,9 +82,8 @@ exports.getAllRequestFromClients = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/request-from-client/:id
 //@access Private
 exports.getOneRequestFromClient = asyncHandler(async (req, res, next) => {
-  const oneRequestFromClient = await RequestFromClient.findById(
-    req.params.id
-  ).populate({ path: 'operatorCode', select: 'operatorCode' });
+  const oneRequestFromClient = await RequestFromClient.findById(req.params.id);
+  // .populate({ path: 'operatorCode', select: 'operatorCode' });
   //Check if  exists response
   if (!oneRequestFromClient) {
     return next(new ErrorResponse('Нет  объекта с данным id', 400));

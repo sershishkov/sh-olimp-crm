@@ -20,7 +20,8 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex'
+    display: 'flex',
+    marginTop: '7rem'
   },
   buttonBack: {
     position: 'fixed',
@@ -108,6 +109,7 @@ const AddNewClientRequest = ({
     <Grid container className={classes.root} spacing={3}>
       <Button
         onClick={buttonBackHandler}
+        variant='contained'
         className={classes.buttonBack}
         color='primary'
       >

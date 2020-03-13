@@ -23,7 +23,8 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex'
+    display: 'flex',
+    marginTop: '7rem'
   },
   buttonBack: {
     position: 'fixed',
@@ -89,13 +90,13 @@ const EditNewClientRequest = ({
   }, [setNameOfPage, getAllOperatorCode, getOneClientRequest, id]);
 
   useLayoutEffect(() => {
-    // console.log(oneClientRequest);
+    console.log(oneClientRequest.operatorCode);
     if (oneClientRequest) {
       setPageForm({
         ...pageForm,
         clientName: oneClientRequest.clientName,
         requestFromClient: oneClientRequest.requestFromClient,
-        // operatorCod: oneClientRequest.operatorCode._id,
+        operatorCod: oneClientRequest.operatorCode,
         phoneNumber: oneClientRequest.phoneNumber,
         email: oneClientRequest.email
       });
@@ -132,6 +133,7 @@ const EditNewClientRequest = ({
     <Grid container className={classes.root} spacing={3}>
       <Button
         onClick={buttonBackHandler}
+        variant='contained'
         className={classes.buttonBack}
         color='primary'
       >

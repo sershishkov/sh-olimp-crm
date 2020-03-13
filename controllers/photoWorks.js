@@ -119,10 +119,11 @@ exports.getAllPhotos = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/photo/:id
 //@access Private
 exports.getOnePhoto = asyncHandler(async (req, res, next) => {
-  const onePhoto = await PhotoWork.findById(req.params.id).populate({
-    path: 'categoryGroupOf_image',
-    select: 'categoryOf_Group'
-  });
+  const onePhoto = await PhotoWork.findById(req.params.id);
+  // .populate({
+  //   path: 'categoryGroupOf_image',
+  //   select: 'categoryOf_Group'
+  // });
   //Check if photo exists
   if (!onePhoto) {
     return next(new ErrorResponse('Нет этого фото в галлерее', 400));

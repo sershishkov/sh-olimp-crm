@@ -60,7 +60,7 @@ const EditPhotoList = ({
     deletePhotoWork(itemId);
     window.location.reload();
   };
-  console.log(photoWorks);
+  // console.log(photoWorks);
   const listOfPhoto = (
     <List className={classes.list}>
       {loading ? (
