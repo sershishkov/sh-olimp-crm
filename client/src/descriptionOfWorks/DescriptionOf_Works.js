@@ -8,6 +8,8 @@ import Spinner from '../shared/spinner/Spinner';
 
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -23,8 +25,8 @@ const useStyles = makeStyles(theme => ({
     position: 'relative'
   },
   buttonBack: {
-    position: 'absolute',
-    top: 0,
+    position: 'fixed',
+    top: '4rem',
     left: 0
   },
   slider: {
@@ -57,13 +59,13 @@ const DescriptionOf_Works = ({
     <Spinner />
   ) : (
     <Grid className={classes.root}>
-      <Button
+      <IconButton
         onClick={buttonBackHandler}
         className={classes.buttonBack}
         color='primary'
       >
-        назад
-      </Button>
+        <ArrowBackIcon />
+      </IconButton>
       <DescriptionOf groupId={id} />
 
       <List>

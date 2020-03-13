@@ -21,6 +21,7 @@ import ListOfClientsRequests from './requestFromClient/ListOfClientsRequests';
 import AddNewClientRequest from './requestFromClient/AddNewClientRequest';
 import EditNewClientRequest from './requestFromClient/EditNewClientRequest';
 import Landing from './shared/landing/Landing';
+import AboutUs from './shared/landing/AboutUs';
 import Footer from './shared/footer/Footer';
 import Alert from './shared/alert/Alert';
 
@@ -64,6 +65,7 @@ function App() {
           <Alert />
           <Switch>
             <Route exact path='/' component={Landing} />
+            <Route exact path='/aboutus' component={AboutUs} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/for-osbb' component={ForOSBB} />

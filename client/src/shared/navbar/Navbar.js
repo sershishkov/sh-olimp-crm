@@ -31,6 +31,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
   },
+  appBar: {},
   displayNone: {
     display: 'none'
   },
@@ -49,12 +50,32 @@ const useStyles = makeStyles(theme => ({
     height: 30,
     marginRight: '1rem'
   },
+  wrapMenuLogo: {
+    // border: '1px solid red'
+  },
   logotip: {
     width: '75px'
   },
   nameOfPage: {
+    // border: '1px solid green',
     [theme.breakpoints.down('sm')]: {
       display: 'none'
+    }
+  },
+  wrapPhonesCont1: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    }
+  },
+  wrapPhonesCont2: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    }
+  },
+  phones: {
+    fontSize: '0.9rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.9rem'
     }
   }
 }));
@@ -140,6 +161,12 @@ const ResponsiveDrawer = ({
             <InboxIcon />
           </ListItemIcon>
           <ListItemText>Выход</ListItemText>
+        </ListItem>
+        <ListItem button onClick={() => history.push('/aboutus')}>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText>О нас (контакты)</ListItemText>
         </ListItem>
 
         <ListItem button onClick={() => history.push('/for-osbb')}>
@@ -248,7 +275,7 @@ const ResponsiveDrawer = ({
   );
 
   return (
-    <div className={classes.root}>
+    <Grid className={classes.root}>
       <CssBaseline />
       <AppBar position='fixed' className={classes.appBar} color='default'>
         <Toolbar>
@@ -261,11 +288,13 @@ const ResponsiveDrawer = ({
             <Grid
               container
               item
-              xs={4}
-              justify='flex-start'
+              md={4}
+              sm={6}
+              justify='space-between'
               alignItems='center'
+              className={classes.wrapMenuLogo}
             >
-              <Grid item xs={3}>
+              <Grid item xs={6}>
                 <Button
                   color='inherit'
                   aria-label='open drawer'
@@ -275,7 +304,7 @@ const ResponsiveDrawer = ({
                 </Button>
               </Grid>
 
-              <Grid item xs={9}>
+              <Grid item xs={6}>
                 <Button color='inherit' href='/' className={classes.logotip}>
                   <img
                     src={ourLogo}
@@ -289,7 +318,7 @@ const ResponsiveDrawer = ({
             <Grid
               container
               item
-              xs={4}
+              md={4}
               justify='center'
               spacing={2}
               className={classes.nameOfPage}
@@ -308,34 +337,63 @@ const ResponsiveDrawer = ({
 
             <Grid
               container
-              item
+              items
               md={4}
-              sm={8}
-              xm={8}
+              sm={6}
               justify='space-around'
               spacing={2}
               alignItems='center'
+              className={classes.wrapPhones}
             >
-              <Grid item xs={6} container flexdirextion='column'>
+              <Grid
+                item
+                xs={6}
+                container
+                flexdirextion='column'
+                className={classes.wrapPhonesCont1}
+              >
                 <Grid item xs={12}>
-                  <Typography variant='body1' align='center'>
+                  <Typography
+                    variant='body1'
+                    align='center'
+                    className={classes.phones}
+                  >
                     +38 098 310 47 99
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography variant='body1' align='center'>
+                  <Typography
+                    variant='body1'
+                    align='center'
+                    className={classes.phones}
+                  >
                     +38 067 618 30 60
                   </Typography>
                 </Grid>
               </Grid>
-              <Grid item xs={6} container flexdirextion='column'>
+
+              <Grid
+                item
+                xs={6}
+                container
+                flexdirextion='column'
+                className={classes.wrapPhonesCont2}
+              >
                 <Grid item xs={12}>
-                  <Typography variant='body1' align='center'>
+                  <Typography
+                    variant='body1'
+                    align='center'
+                    className={classes.phones}
+                  >
                     +38 099 180 98 04
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography variant='body1' align='center'>
+                  <Typography
+                    variant='body1'
+                    align='center'
+                    className={classes.phones}
+                  >
                     +38 050 227 96 50
                   </Typography>
                 </Grid>
@@ -364,7 +422,7 @@ const ResponsiveDrawer = ({
           </Drawer>
         </Hidden>
       </nav>
-    </div>
+    </Grid>
   );
 };
 
