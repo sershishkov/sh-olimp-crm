@@ -27,7 +27,7 @@ const OurFirm = new mongoose.Schema({
   },
   typeOf_street: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'TypeOf_Settlement',
+    ref: 'TypeOf_Street',
     required: [true, 'Тип улицы? ']
   },
   street: {
@@ -51,6 +51,7 @@ const OurFirm = new mongoose.Schema({
     required: [true, 'Введите корректный IBAN '],
     match: [/\b\d{27}\b/, 'Пожалуйста введите 27 цифр']
   },
+
   firstPersonPosition: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'FirstPersonPosition',
@@ -68,10 +69,23 @@ const OurFirm = new mongoose.Schema({
     type: String,
     required: [true, 'Отчество? ']
   },
+  firstPersonSurnameRoditelPadej: {
+    type: String,
+    required: [true, 'Впишите фамилию в родительном падеже ']
+  },
+  firstPersonNameRoditelPadej: {
+    type: String,
+    required: [true, 'Впишите имя в родительном падеже ']
+  },
+  firstPersonMiddleNameRoditelPadej: {
+    type: String,
+    required: [true, 'Впишите отчество в родительном падеже ']
+  },
   shortName: {
     type: String,
     required: [true, 'Введите Сокращенное ФИО ']
   },
+
   actsOnBasisOf: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'TypeOf_ActsOnBasisOf'
