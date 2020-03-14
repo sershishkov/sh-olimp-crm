@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const SalesInvoiceNakladnaya = new mongoose.Schema({
+const Our_SalesInvoiceNakladnaya = new mongoose.Schema({
   naklNumber: {
     type: String,
     required: [true, 'Введите номер накладной'],
@@ -37,10 +37,15 @@ const SalesInvoiceNakladnaya = new mongoose.Schema({
         required: [true, 'Введите цену']
       }
     }
-  ]
+  ],
+  active: {
+    type: Boolean,
+    required: true,
+    default: true
+  }
 });
 
 module.exports = mongoose.model(
-  'SalesInvoiceNakladnaya',
-  SalesInvoiceNakladnaya
+  'Our_SalesInvoiceNakladnaya',
+  Our_SalesInvoiceNakladnaya
 );

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const CertificateOf_Completion = new mongoose.Schema({
+const Our_CertificateOf_Completion = new mongoose.Schema({
   certificatNumber: {
     type: String,
     required: [true, 'Введите номер акта'],
@@ -35,10 +35,15 @@ const CertificateOf_Completion = new mongoose.Schema({
         required: [true, 'Введите цену']
       }
     }
-  ]
+  ],
+  active: {
+    type: Boolean,
+    required: true,
+    default: true
+  }
 });
 
 module.exports = mongoose.model(
-  'CertificateOf_Completion',
-  CertificateOf_Completion
+  'Our_CertificateOf_Completion',
+  Our_CertificateOf_Completion
 );

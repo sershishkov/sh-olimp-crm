@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const InvoiceProduct = new mongoose.Schema({
+const Our_InvoiceProduct = new mongoose.Schema({
   invoceProductNumber: {
     type: String,
     required: [true, 'Введите номер счета'],
@@ -37,7 +37,12 @@ const InvoiceProduct = new mongoose.Schema({
         required: [true, 'Введите цену']
       }
     }
-  ]
+  ],
+  active: {
+    type: Boolean,
+    required: true,
+    default: true
+  }
 });
 
-module.exports = mongoose.model('InvoiceProduct', InvoiceProduct);
+module.exports = mongoose.model('Our_InvoiceProduct', Our_InvoiceProduct);
