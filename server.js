@@ -80,6 +80,7 @@ const worker = require('./routes/accountant/referenceData/worker');
 const supplier = require('./routes/accountant/referenceData/supplier');
 const ourFirm = require('./routes/accountant/referenceData/ourFirm');
 const product = require('./routes/accountant/referenceData/product');
+const serviceJob = require('./routes/accountant/referenceData/serviceJob');
 
 //   MAIN DATA      //
 
@@ -125,6 +126,7 @@ app.use('/api/v1/accountant/worker', worker);
 app.use('/api/v1/accountant/supplier', supplier);
 app.use('/api/v1/accountant/our-firm', ourFirm);
 app.use('/api/v1/accountant/product', product);
+app.use('/api/v1/accountant/service-job', serviceJob);
 
 //   MAIN DATA      //
 
