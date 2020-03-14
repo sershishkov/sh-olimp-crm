@@ -6,9 +6,10 @@ const Our_SalesInvoiceNakladnaya = new mongoose.Schema({
     required: [true, 'Введите номер накладной'],
     unique: true
   },
+
   naclDate: {
     type: Date,
-    required: [true, 'Введите дату накладной'],
+    // required: [true, 'Введите дату накладной'],
     default: Date.now
   },
   ourFirm: {
