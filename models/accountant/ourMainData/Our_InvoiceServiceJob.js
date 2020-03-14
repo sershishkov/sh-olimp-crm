@@ -8,7 +8,7 @@ const Our_InvoiceServiceJob = new mongoose.Schema({
   },
   invoiceServiceJobDate: {
     type: Date,
-    required: [true, 'Введите дату счета'],
+    // required: [true, 'Введите дату счета'],
     default: Date.now
   },
   ourFirm: {
@@ -21,6 +21,7 @@ const Our_InvoiceServiceJob = new mongoose.Schema({
     ref: 'Client',
     required: [true, 'Выберите фирму Заказчика']
   },
+
   serviceJobs: [
     {
       serviceJob: {

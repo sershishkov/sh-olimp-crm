@@ -8,7 +8,7 @@ const Our_InvoiceMixed = new mongoose.Schema({
   },
   invoiceDate: {
     type: Date,
-    required: [true, 'Введите дату счета'],
+    // required: [true, 'Введите дату счета'],
     default: Date.now
   },
   ourFirm: {

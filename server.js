@@ -84,6 +84,10 @@ const serviceJob = require('./routes/accountant/referenceData/serviceJob');
 
 // OUR  MAIN DATA      //
 const our_SalesInvoiceNakladnaya = require('./routes/accountant/ourMainData/our_SalesInvoiceNakladnaya');
+const our_Payments = require('./routes/accountant/ourMainData/our_Payments');
+const our_InvoiceServiceJob = require('./routes/accountant/ourMainData/our_InvoiceServiceJob');
+const our_InvoiceProduct = require('./routes/accountant/ourMainData/our_InvoiceProduct');
+const our_InvoiceMixed = require('./routes/accountant/ourMainData/our_InvoiceMixed');
 
 // ENTERTED  MAIN DATA      //
 
@@ -136,6 +140,10 @@ app.use(
   '/api/v1/accountant/our-service-invoice-nakl',
   our_SalesInvoiceNakladnaya
 );
+app.use('/api/v1/accountant/our-payments', our_Payments);
+app.use('/api/v1/accountant/our-invoice-service-job', our_InvoiceServiceJob);
+app.use('/api/v1/accountant/our-invoice-product', our_InvoiceProduct);
+app.use('/api/v1/accountant/our-invoice-mixed', our_InvoiceMixed);
 
 // ENTERTED  MAIN DATA      //
 

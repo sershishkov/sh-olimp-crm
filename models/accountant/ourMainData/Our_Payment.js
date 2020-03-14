@@ -1,9 +1,15 @@
 const mongoose = require('mongoose');
 
 const Our_Payment = new mongoose.Schema({
+  paymentNumber: {
+    type: String,
+    required: [true, 'Введите номер платежки'],
+    unique: true
+  },
   dateOf_payment: {
     type: Date,
     required: [true, 'Введите дату прихода']
+    // default: Date.now
   },
   client: {
     type: mongoose.Schema.Types.ObjectId,

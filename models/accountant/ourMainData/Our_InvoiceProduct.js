@@ -8,7 +8,7 @@ const Our_InvoiceProduct = new mongoose.Schema({
   },
   invoceProductDate: {
     type: Date,
-    required: [true, 'Введите дату счета'],
+    // required: [true, 'Введите дату счета'],
     default: Date.now
   },
   ourFirm: {
