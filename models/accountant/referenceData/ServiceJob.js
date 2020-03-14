@@ -6,12 +6,13 @@ const ServiceJob = new mongoose.Schema({
     required: [true, 'Введите название материала'],
     unique: true
   },
-  serviceImage: {
-    type: String
-  },
   unit: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Unit'
+  },
+  serviceJobGroup: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'GroupOf_ServiceJob'
   }
 });
 

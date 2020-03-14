@@ -29,6 +29,8 @@ router
   .put(
     protect,
     authorize('engineer', 'accountant', 'boss', 'admin'),
+    uploadPhoto,
+    resizePhoto,
     updatePhoto
   )
   .delete(

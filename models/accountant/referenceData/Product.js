@@ -15,6 +15,10 @@ const Product = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Unit'
   },
+  productGroup: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'GroupOf_Product'
+  },
   amountInPackage: {
     type: Number,
     default: 1,

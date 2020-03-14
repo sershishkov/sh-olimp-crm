@@ -72,11 +72,20 @@ exports.updatePhoto = asyncHandler(async (req, res, next) => {
   if (!req.body || !req.params.id) {
     return next(new ErrorResponse('Параметры не переданы', 400));
   }
+
   const newPhoto = {
     imageGroup: req.body.imageGroup,
     description: req.body.description,
     categoryGroupOf_image: req.body.categoryGroupOf_image
   };
+
+  if (req.file) {
+    const oldObj = await PhotoWork.findById(req.params.id);
+    fs.unlink(`.${oldObj.imageUrl}`, err => {
+      console.log(err);
+    });
+    newPhoto.imageUrl = `/uploads/${req.file.filename}`;
+  }
 
   const updatedPhoto = await PhotoWork.findByIdAndUpdate(
     req.params.id,

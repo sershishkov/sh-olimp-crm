@@ -57,6 +57,7 @@ exports.addProduct = asyncHandler(async (req, res, next) => {
     productName: req.body.productName,
     productImage: `/uploads/${req.file.filename}`,
     amountInPackage: req.body.amountInPackage,
+    productGroup: req.body.productGroup,
     price: req.body.price,
     suppliers: req.body.suppliers,
     ratePerUnit: req.body.ratePerUnit,
@@ -78,9 +79,6 @@ exports.addProduct = asyncHandler(async (req, res, next) => {
 //@route  PUT /api/v1/accountant/our-firm/:id
 //@access Private
 exports.updateProduct = asyncHandler(async (req, res, next) => {
-  if (!req.file) {
-    return next(new ErrorResponse('New photo does not exist', 400));
-  }
   //Check if  exists something in body
   if (!req.body) {
     return next(new ErrorResponse('Не переданы значения', 400));
@@ -89,6 +87,7 @@ exports.updateProduct = asyncHandler(async (req, res, next) => {
   const newProduct = {
     productName: req.body.productName,
     amountInPackage: req.body.amountInPackage,
+    productGroup: req.body.productGroup,
     price: req.body.price,
     suppliers: req.body.suppliers,
     ratePerUnit: req.body.ratePerUnit,
@@ -125,7 +124,7 @@ exports.updateProduct = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/accountant/our-firm
 //@access Private
 exports.getAllProducts = asyncHandler(async (req, res, next) => {
-  const allProducts = await Product.find({}, 'productName productImage').sort({
+  const allProducts = await Product.find({}, 'productName ').sort({
     productName: 1
   });
   //Check if  exists response
@@ -148,6 +147,7 @@ exports.getOneProduct = asyncHandler(async (req, res, next) => {
       path: 'unit',
       select: 'unitNameLong unitNameShort'
     })
+    .populate({ path: 'productGroup', select: 'productGroup' })
     .populate({ path: 'suppliers', select: 'supplierName' });
   //Check if  exists response
   if (!oneProduct) {
