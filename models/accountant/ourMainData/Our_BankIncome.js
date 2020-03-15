@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const Our_BankIncome = new mongoose.Schema({
+  bankIncomeNumber: {
+    type: String,
+    required: [true, 'Введите номер накладной'],
+    unique: true
+  },
   dateOf_income: {
     type: Date,
     required: [true, 'Введите дату прихода']

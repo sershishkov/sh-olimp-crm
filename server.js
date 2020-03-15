@@ -89,6 +89,7 @@ const our_InvoiceServiceJob = require('./routes/accountant/ourMainData/our_Invoi
 const our_InvoiceProduct = require('./routes/accountant/ourMainData/our_InvoiceProduct');
 const our_InvoiceMixed = require('./routes/accountant/ourMainData/our_InvoiceMixed');
 const our_CertificateOf_Completion = require('./routes/accountant/ourMainData/our_CertificateOf_Completion');
+const our_BankIncome = require('./routes/accountant/ourMainData/our_BankIncome');
 
 // ENTERTED  MAIN DATA      //
 
@@ -149,6 +150,7 @@ app.use(
   '/api/v1/accountant/our-certificate-of-completion',
   our_CertificateOf_Completion
 );
+app.use('/api/v1/accountant/our-bank-income', our_BankIncome);
 
 // ENTERTED  MAIN DATA      //
 
