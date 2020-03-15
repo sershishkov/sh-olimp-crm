@@ -99,7 +99,7 @@ const useStyles = makeStyles(theme => ({
     left: '2rem',
     width: 50,
     height: 50,
-
+    display: 'none',
     '& img': {
       width: '100%',
       objectFit: 'cover'
