@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import Spinner from '../shared/spinner/Spinner';
 
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';

@@ -6,6 +6,9 @@ import { connect } from 'react-redux';
 import { logout } from '../../store/actions/auth';
 import ourLogo from '../img/LogotipDS.PNG';
 
+import myGif from '../img/Обсуждаем.gif';
+import myGif2 from '../img/kladka_kirpich.gif';
+
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -76,6 +79,30 @@ const useStyles = makeStyles(theme => ({
     fontSize: '0.9rem',
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.9rem'
+    }
+  },
+  myGif: {
+    position: 'fixed',
+    top: '4rem',
+    right: '2rem',
+    width: 50,
+    height: 50,
+
+    '& img': {
+      width: '100%',
+      objectFit: 'cover'
+    }
+  },
+  myGif2: {
+    position: 'fixed',
+    top: '4rem',
+    left: '2rem',
+    width: 50,
+    height: 50,
+
+    '& img': {
+      width: '100%',
+      objectFit: 'cover'
     }
   }
 }));
@@ -279,6 +306,12 @@ const ResponsiveDrawer = ({
       <CssBaseline />
       <AppBar position='fixed' className={classes.appBar} color='default'>
         <Toolbar>
+          <div className={classes.myGif}>
+            <img src={myGif} alt='myGif' />
+          </div>
+          <div className={classes.myGif2}>
+            <img src={myGif2} alt='myGif2' />
+          </div>
           <Grid
             container
             justify='space-between'

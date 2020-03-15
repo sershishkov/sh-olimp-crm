@@ -9,8 +9,6 @@ import 'react-awesome-slider/dist/styles.css';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-// import List from '@material-ui/core/List';
-// import ListItem from '@material-ui/core/ListItem';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
