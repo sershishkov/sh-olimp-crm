@@ -24,8 +24,13 @@ const Our_BankIncome = new mongoose.Schema({
   },
   active: {
     type: Boolean,
-    required: true,
+    // required: true,
     default: true
+  },
+  cashPayment: {
+    type: Boolean,
+    // required: true,
+    default: false
   }
 });
 

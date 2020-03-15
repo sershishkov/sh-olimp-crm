@@ -92,6 +92,11 @@ const our_CertificateOf_Completion = require('./routes/accountant/ourMainData/ou
 const our_BankIncome = require('./routes/accountant/ourMainData/our_BankIncome');
 
 // ENTERTED  MAIN DATA      //
+const entered_SalesInvoiceNakladnaya = require('./routes/accountant/enteredMainData/entered_SalesInvoiceNakladnaya');
+const entered_InvoiceServiceJob = require('./routes/accountant/enteredMainData/entered_InvoiceServiceJob');
+const entered_InvoiceProduct = require('./routes/accountant/enteredMainData/entered_InvoiceProduct');
+const entered_InvoiceMixed = require('./routes/accountant/enteredMainData/entered_InvoiceMixed');
+const entered_CertificateOf_Completion = require('./routes/accountant/enteredMainData/entered_CertificateOf_Completion');
 
 //Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
@@ -153,6 +158,20 @@ app.use(
 app.use('/api/v1/accountant/our-bank-income', our_BankIncome);
 
 // ENTERTED  MAIN DATA      //
+app.use(
+  '/api/v1/accountant/entered-service-invoice-nakl',
+  entered_SalesInvoiceNakladnaya
+);
+app.use(
+  '/api/v1/accountant/entered-invoice-service-job',
+  entered_InvoiceServiceJob
+);
+app.use('/api/v1/accountant/entered-invoice-product', entered_InvoiceProduct);
+app.use('/api/v1/accountant/entered-invoice-mixed', entered_InvoiceMixed);
+app.use(
+  '/api/v1/accountant/entered-certificate-of-completion',
+  entered_CertificateOf_Completion
+);
 
 app.use(errorHandler);
 

@@ -17,7 +17,8 @@ exports.addOur_BankIncome = asyncHandler(async (req, res, next) => {
     ourFirm: req.body.ourFirm,
     client: req.body.client,
     sum: req.body.sum,
-    active: req.body.active
+    active: req.body.active,
+    cashPayment: req.body.cashPayment
   });
 
   await newOur_BankIncome.save();
@@ -42,7 +43,8 @@ exports.updateOur_BankIncome = asyncHandler(async (req, res, next) => {
     ourFirm: req.body.ourFirm,
     client: req.body.client,
     sum: req.body.sum,
-    active: req.body.active
+    active: req.body.active,
+    cashPayment: req.body.cashPayment
   };
 
   const updatedOur_BankIncome = await Our_BankIncome.findByIdAndUpdate(

@@ -17,7 +17,8 @@ exports.addOur_SalesInvoiceNakladnaya = asyncHandler(async (req, res, next) => {
     ourFirm: req.body.ourFirm,
     client: req.body.client,
     products: req.body.products,
-    active: req.body.active
+    active: req.body.active,
+    cashPayment: req.body.cashPayment
   });
 
   await newOur_SalesInvoiceNakladnaya.save();
@@ -43,7 +44,8 @@ exports.updateOur_SalesInvoiceNakladnaya = asyncHandler(
       ourFirm: req.body.ourFirm,
       client: req.body.client,
       products: req.body.products,
-      active: req.body.active
+      active: req.body.active,
+      cashPayment: req.body.cashPayment
     };
 
     const updatedOur_SalesInvoiceNakladnaya = await Our_SalesInvoiceNakladnaya.findByIdAndUpdate(

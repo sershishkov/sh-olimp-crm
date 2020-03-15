@@ -8,7 +8,7 @@ const Entered_InvoiceServiceJob = new mongoose.Schema({
   },
   invoiceServiceJobDate: {
     type: Date,
-    required: [true, 'Введите дату счета'],
+    // required: [true, 'Введите дату счета'],
     default: Date.now
   },
   ourFirm: {
@@ -40,8 +40,13 @@ const Entered_InvoiceServiceJob = new mongoose.Schema({
   ],
   active: {
     type: Boolean,
-    required: true,
+    // required: true,
     default: true
+  },
+  cashPayment: {
+    type: Boolean,
+    // required: true,
+    default: false
   }
 });
 

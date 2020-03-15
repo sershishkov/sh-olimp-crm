@@ -18,7 +18,8 @@ exports.addOur_InvoiceMixed = asyncHandler(async (req, res, next) => {
     client: req.body.client,
     products: req.body.products,
     serviceJobs: req.body.serviceJobs,
-    active: req.body.active
+    active: req.body.active,
+    cashPayment: req.body.cashPayment
   });
 
   await newOur_InvoiceMixed.save();
@@ -44,7 +45,8 @@ exports.updateOur_InvoiceMixed = asyncHandler(async (req, res, next) => {
     client: req.body.client,
     products: req.body.products,
     serviceJobs: req.body.serviceJobs,
-    active: req.body.active
+    active: req.body.active,
+    cashPayment: req.body.cashPayment
   };
 
   const updatedOur_InvoiceMixed = await Our_InvoiceMixed.findByIdAndUpdate(

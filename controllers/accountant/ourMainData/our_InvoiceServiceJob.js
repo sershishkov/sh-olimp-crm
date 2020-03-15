@@ -17,7 +17,8 @@ exports.addOur_InvoiceServiceJob = asyncHandler(async (req, res, next) => {
     ourFirm: req.body.ourFirm,
     client: req.body.client,
     serviceJobs: req.body.serviceJobs,
-    active: req.body.active
+    active: req.body.active,
+    cashPayment: req.body.cashPayment
   });
 
   await newOur_InvoiceServiceJob.save();
@@ -42,7 +43,8 @@ exports.updateOur_InvoiceServiceJob = asyncHandler(async (req, res, next) => {
     ourFirm: req.body.ourFirm,
     client: req.body.client,
     serviceJobs: req.body.serviceJobs,
-    active: req.body.active
+    active: req.body.active,
+    cashPayment: req.body.cashPayment
   };
 
   const updatedOur_InvoiceServiceJob = await Our_InvoiceServiceJob.findByIdAndUpdate(

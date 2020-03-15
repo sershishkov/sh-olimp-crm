@@ -8,7 +8,7 @@ const Entered_SalesInvoiceNakladnaya = new mongoose.Schema({
   },
   naclDate: {
     type: Date,
-    required: [true, 'Введите дату накладной'],
+    // required: [true, 'Введите дату накладной'],
     default: Date.now
   },
   ourFirm: {
@@ -40,8 +40,13 @@ const Entered_SalesInvoiceNakladnaya = new mongoose.Schema({
   ],
   active: {
     type: Boolean,
-    required: true,
+    // required: true,
     default: true
+  },
+  cashPayment: {
+    type: Boolean,
+    // required: true,
+    default: false
   }
 });
 

@@ -18,7 +18,8 @@ exports.addOur_CertificateOf_Completion = asyncHandler(
       ourFirm: req.body.ourFirm,
       client: req.body.client,
       serviceJobs: req.body.serviceJobs,
-      active: req.body.active
+      active: req.body.active,
+      cashPayment: req.body.cashPayment
     });
 
     await newOur_CertificateOf_Completion.save();
@@ -45,7 +46,8 @@ exports.updateOur_CertificateOf_Completion = asyncHandler(
       ourFirm: req.body.ourFirm,
       client: req.body.client,
       serviceJobs: req.body.serviceJobs,
-      active: req.body.active
+      active: req.body.active,
+      cashPayment: req.body.cashPayment
     };
 
     const updatedOur_CertificateOf_Completion = await Our_CertificateOf_Completion.findByIdAndUpdate(
