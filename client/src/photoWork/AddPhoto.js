@@ -24,7 +24,9 @@ const useStyles = makeStyles(theme => ({
     display: 'flex'
   },
   displayFlex: {
-    display: 'flex'
+    display: 'flex',
+    position: 'absolute',
+    top: 15
   },
   displayNone: {
     display: 'none'
@@ -37,6 +39,12 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height: '100%',
     objectFit: 'cover'
+  },
+  wrapSelect: {
+    position: 'relative'
+  },
+  select: {
+    height: 40
   }
 }));
 
@@ -125,7 +133,7 @@ const AddPhoto = ({
         )}
       </Grid>
 
-      <Grid item xs={12} container>
+      <Grid item xs={12} container spacing={1} alignItems='center'>
         <Grid item xs={6}>
           <TextField
             name='newPhoto'
@@ -148,7 +156,7 @@ const AddPhoto = ({
           </label>
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item xs={3} className={classes.wrapSelect}>
           <InputLabel
             id='add-select-label'
             className={
@@ -159,10 +167,12 @@ const AddPhoto = ({
           </InputLabel>
           <Select
             labelId='add-select-label'
+            variant='outlined'
             fullWidth
             value={selectedGroup}
             name='selectedGroup'
             onChange={selectChangeHandle}
+            className={classes.select}
           >
             {imageGroups.map(item => (
               <MenuItem key={item._id} value={item._id}>
@@ -172,7 +182,7 @@ const AddPhoto = ({
           </Select>
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item xs={3} className={classes.wrapSelect}>
           <InputLabel
             id='add-select-category'
             className={
@@ -184,9 +194,11 @@ const AddPhoto = ({
           <Select
             labelId='add-select-category'
             fullWidth
+            variant='outlined'
             value={selectedCategory}
             name='selectedCategory'
             onChange={selectCategoryHandle}
+            className={classes.select}
           >
             {clientCategorys.map(item => (
               <MenuItem key={item._id} value={item._id}>

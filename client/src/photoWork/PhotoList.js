@@ -88,7 +88,7 @@ const EditPhotoList = ({
               </Grid>
               <Grid item xs={1}>
                 <Typography align='center'>
-                  {/* {item.categoryGroupOf_image.categoryOf_Group} */}
+                  {item.categoryGroupOf_image.categoryOf_Group}
                 </Typography>
               </Grid>
 

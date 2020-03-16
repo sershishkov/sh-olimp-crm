@@ -2,7 +2,10 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getAllGroupOfImage } from '../store/actions/groupOfImage';
+import {
+  getAllGroupOfImage,
+  deleteGroupOfImage
+} from '../store/actions/groupOfImage';
 import { setNameOfPage } from '../store/actions/nameOfPage';
 
 import Spinner from '../shared/spinner/Spinner';
@@ -10,8 +13,11 @@ import Spinner from '../shared/spinner/Spinner';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import Grid from '@material-ui/core/Grid';
+
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 
 import ListItemText from '@material-ui/core/ListItemText';
@@ -30,13 +36,22 @@ const useStyles = makeStyles(theme => ({
   btnAddIcon: {
     width: 50,
     height: 50
+  },
+  list: {
+    width: '100%'
+    // border: '1px solid red'
+  },
+  listItem: {
+    width: '100%'
+    // border: '1px solid blue'
   }
 }));
 
 const TypeOfImage = ({
   setNameOfPage,
   getAllGroupOfImage,
-  groupOfImage: { imageGroups, loading }
+  groupOfImage: { imageGroups, loading },
+  deleteGroupOfImage
 }) => {
   const classes = useStyles();
 
@@ -44,6 +59,11 @@ const TypeOfImage = ({
     setNameOfPage('Группы фотографий');
     getAllGroupOfImage();
   }, [setNameOfPage, getAllGroupOfImage]);
+
+  const onDeleteHandler = itemId => {
+    deleteGroupOfImage(itemId);
+    window.location.reload();
+  };
 
   return loading ? (
     <Spinner />
@@ -57,19 +77,31 @@ const TypeOfImage = ({
       >
         <PlusOneIcon className={classes.btnAddIcon} />
       </IconButton>
-      <Grid item xs={12}>
-        <List>
+      <Grid item xs={12} container spacing={1}>
+        <List className={classes.list}>
           {imageGroups.map(item => (
-            <ListItem key={item._id}>
-              <ListItemText>{item.imageGroup}</ListItemText>
-
-              <Button
-                variant='contained'
-                color='primary'
-                href={`/group-of-image/${item._id}`}
-              >
-                Редактировать
-              </Button>
+            <ListItem key={item._id} className={classes.listItem}>
+              <Grid item xs={10}>
+                <ListItemText>{item.imageGroup}</ListItemText>
+              </Grid>
+              <Grid item xs={1}>
+                <IconButton
+                  variant='contained'
+                  color='secondary'
+                  onClick={() => onDeleteHandler(item.id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Grid>
+              <Grid item xs={1}>
+                <IconButton
+                  variant='contained'
+                  color='primary'
+                  href={`/group-of-image/${item._id}`}
+                >
+                  <EditIcon />
+                </IconButton>
+              </Grid>
             </ListItem>
           ))}
         </List>
@@ -80,6 +112,7 @@ const TypeOfImage = ({
 
 TypeOfImage.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
+  deleteGroupOfImage: PropTypes.func.isRequired,
   getAllGroupOfImage: PropTypes.func.isRequired,
   groupOfImage: PropTypes.object.isRequired
 };
@@ -90,5 +123,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   setNameOfPage,
-  getAllGroupOfImage
+  getAllGroupOfImage,
+  deleteGroupOfImage
 })(TypeOfImage);

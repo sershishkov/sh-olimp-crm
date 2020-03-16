@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -9,6 +9,7 @@ import { setNameOfPage } from '../../store/actions/nameOfPage';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -19,6 +20,16 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
+  },
+  displayNone: {
+    display: 'none'
+  },
+
+  wrapSelect: {
+    position: 'relative'
+  },
+  select: {
+    height: 55
   }
 }));
 
@@ -44,7 +55,10 @@ const UserEdit = ({
   useEffect(() => {
     setNameOfPage('Создаем пользователя');
     getOneUser(id);
-    if (oneUser.name && oneUser.email && oneUser.role) {
+  }, [setNameOfPage, getOneUser, id]);
+
+  useLayoutEffect(() => {
+    if (oneUser) {
       setFormData({
         ...formData,
         name: oneUser.name,
@@ -52,14 +66,7 @@ const UserEdit = ({
         role: oneUser.role
       });
     }
-  }, [
-    setNameOfPage,
-    getOneUser,
-    oneUser.name,
-    oneUser.email,
-    oneUser.role,
-    id
-  ]);
+  }, [oneUser]);
 
   const apdateUserHandler = () => {
     updateUser(id, { name, email, role, password });
@@ -81,7 +88,7 @@ const UserEdit = ({
           fullWidth
           placeholder='Введите новое имя'
           name='name'
-          value={name}
+          value={name ? name : ''}
           onChange={e => onChange(e)}
         />
       </Grid>
@@ -92,17 +99,18 @@ const UserEdit = ({
           fullWidth
           placeholder='Введите новый email'
           name='email'
-          value={email}
+          value={email ? email : ''}
           onChange={e => onChange(e)}
         />
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12} className={classes.wrapSelect}>
         <Select
-          // labelId='user-role-label'
+          labelId='user-role-label'
           fullWidth
+          variant='outlined'
           name='role'
-          value={role}
+          value={role ? role : ''}
           onChange={e => onChange(e)}
         >
           <MenuItem value='user'>Пользователь</MenuItem>

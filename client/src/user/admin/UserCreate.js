@@ -18,6 +18,22 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
+  },
+  displayFlex: {
+    display: 'flex',
+    position: 'absolute',
+    top: 20,
+    left: 15
+  },
+  displayNone: {
+    display: 'none'
+  },
+
+  wrapSelect: {
+    position: 'relative'
+  },
+  select: {
+    height: 55
   }
 }));
 
@@ -72,11 +88,17 @@ const UserCreate = ({ addUser }) => {
         />
       </Grid>
 
-      <Grid item xs={12}>
-        <InputLabel id='user-role-label'>Выбрать роль</InputLabel>
+      <Grid item xs={12} className={classes.wrapSelect}>
+        <InputLabel
+          id='user-role-label'
+          className={role ? classes.displayNone : classes.displayFlex}
+        >
+          Выбрать роль
+        </InputLabel>
         <Select
           labelId='user-role-label'
           fullWidth
+          variant='outlined'
           name='role'
           value={role}
           onChange={e => onChange(e)}
