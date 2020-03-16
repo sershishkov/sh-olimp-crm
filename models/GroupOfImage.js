@@ -6,7 +6,11 @@ const GroupOfImage = new mongoose.Schema({
     required: true,
     unique: true
   },
-  descriptions: [String]
+  descriptions: [String],
+  categoryGroupOf_image: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'CategoryGroupOfImage'
+  }
 });
 
 module.exports = mongoose.model('GroupOfImage', GroupOfImage);

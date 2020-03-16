@@ -1,6 +1,8 @@
+const fs = require('fs');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const GroupOfImage = require('../models/GroupOfImage');
+const PhotoWork = require('../models/PhotoWork');
 
 //@desc   Add a group
 //@route  POST /api/v1/imagegroup
@@ -101,6 +103,16 @@ exports.deleteImageGroup = asyncHandler(async (req, res, next) => {
   if (!oneGroup) {
     return next(new ErrorResponse('Нет этой группы фото', 400));
   }
+
+  const deletedArrOfPhoto = await PhotoWork.find({ imageGroup: req.params.id });
+
+  deletedArrOfPhoto.forEach(item => {
+    fs.unlink(`.${item.imageUrl}`, err => {
+      console.log(err);
+    });
+  });
+
+  await PhotoWork.deleteMany({ imageGroup: req.params.id });
 
   res.status(200).json({
     success: true,
