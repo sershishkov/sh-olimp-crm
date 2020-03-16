@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { setNameOfPage } from '../store/actions/nameOfPage';
-import { getAllOperatorCode } from '../store/actions/operatorCode';
+import { getAllOperatorCode } from '../store/actions/accountant/referenceData/phoneOperator';
 import {
   getOneClientRequest,
   updateClientRequest
@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const EditNewClientRequest = ({
-  operatorCode: { operatorCodes, loading },
+  phoneOperator: { operatorCodes, loading },
   clientRequests: { oneClientRequest },
   setNameOfPage,
   getOneClientRequest,
@@ -90,7 +90,6 @@ const EditNewClientRequest = ({
   }, [setNameOfPage, getAllOperatorCode, getOneClientRequest, id]);
 
   useLayoutEffect(() => {
-    console.log(oneClientRequest.operatorCode);
     if (oneClientRequest) {
       setPageForm({
         ...pageForm,
@@ -264,11 +263,11 @@ EditNewClientRequest.propTypes = {
   getAllOperatorCode: PropTypes.func.isRequired,
   getOneClientRequest: PropTypes.func.isRequired,
   updateClientRequest: PropTypes.func.isRequired,
-  operatorCode: PropTypes.object.isRequired
+  phoneOperator: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  operatorCode: state.operatorCode,
+  phoneOperator: state.phoneOperator,
   clientRequests: state.clientRequests
 });
 

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { setNameOfPage } from '../store/actions/nameOfPage';
-import { getAllOperatorCode } from '../store/actions/operatorCode';
+import { getAllOperatorCode } from '../store/actions/accountant/referenceData/phoneOperator';
 import { addClientRequest } from '../store/actions/clientRequests';
 
 import Spinner from '../shared/spinner/Spinner';
@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const AddNewClientRequest = ({
-  operatorCode: { operatorCodes, loading },
+  phoneOperator: { operatorCodes, loading },
   setNameOfPage,
   getAllOperatorCode,
   addClientRequest
@@ -63,7 +63,7 @@ const AddNewClientRequest = ({
   const [pageForm, setPageForm] = useState({
     clientName: '',
     requestFromClient: '',
-    operatorCode: '',
+    phoneOperator: '',
     phoneNumber: '',
     email: ''
   });
@@ -72,7 +72,7 @@ const AddNewClientRequest = ({
   const {
     clientName,
     requestFromClient,
-    operatorCode,
+    phoneOperator,
     phoneNumber,
     email
   } = pageForm;
@@ -89,7 +89,7 @@ const AddNewClientRequest = ({
       !(
         clientName &&
         requestFromClient &&
-        ((operatorCode && phoneNumber) || email)
+        ((phoneOperator && phoneNumber) || email)
       )
     );
   };
@@ -98,7 +98,7 @@ const AddNewClientRequest = ({
     addClientRequest(
       clientName,
       requestFromClient,
-      operatorCode,
+      phoneOperator,
       phoneNumber,
       email
     );
@@ -148,7 +148,7 @@ const AddNewClientRequest = ({
             <InputLabel
               id='add-select-label'
               className={
-                operatorCode ? classes.displayNone : classes.displayFlex
+                phoneOperator ? classes.displayNone : classes.displayFlex
               }
             >
               код оператора
@@ -157,8 +157,8 @@ const AddNewClientRequest = ({
               variant='outlined'
               labelId='add-select-label'
               fullWidth
-              value={operatorCode}
-              name='operatorCode'
+              value={phoneOperator}
+              name='phoneOperator'
               onChange={e => onChangeHandler(e)}
               className={classes.select}
             >
@@ -247,11 +247,11 @@ AddNewClientRequest.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAllOperatorCode: PropTypes.func.isRequired,
   addClientRequest: PropTypes.func.isRequired,
-  operatorCode: PropTypes.object.isRequired
+  phoneOperator: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  operatorCode: state.operatorCode
+  phoneOperator: state.phoneOperator
 });
 
 export default connect(mapStateToProps, {
