@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
@@ -618,7 +617,5 @@ const AboutUs = props => {
     </Grid>
   );
 };
-
-AboutUs.propTypes = {};
 
 export default AboutUs;

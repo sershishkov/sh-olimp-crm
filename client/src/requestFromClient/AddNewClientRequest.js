@@ -176,6 +176,8 @@ const AddNewClientRequest = ({
             variant='outlined'
             type='number'
             fullWidth
+            min='1000000'
+            max='9999999'
             placeholder='номер телефона 7 цифр'
             name='phoneNumber'
             value={phoneNumber}

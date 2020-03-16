@@ -78,29 +78,46 @@ const EditPhotoItem = ({
   const history = useHistory();
   const { id } = useParams();
 
+  const [newPhoto, setNewPhoto] = useState('');
   const [description, setDescription] = useState('');
   const [selectedGroup, setSelectedGroup] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [disabledForm, setDisabledForm] = useState(true);
+  const [previewUrl, setPreviewUrl] = useState('');
 
   const selectChangeHandle = e => {
     setSelectedGroup(e.target.value);
-    setDisabledForm(!(selectedGroup && description && selectedCategory));
+    setDisabledForm(
+      !(newPhoto && selectedGroup && description && selectedCategory)
+    );
   };
 
   const selectCategoryHandle = e => {
     setSelectedCategory(e.target.value);
-    setDisabledForm(!(selectedGroup && description && selectedCategory));
+    setDisabledForm(
+      !(newPhoto && selectedGroup && description && selectedCategory)
+    );
+  };
+
+  const pickedHandler = e => {
+    // e.preventDefault();
+    setNewPhoto(e.target.files[0]);
+
+    setDisabledForm(
+      !(newPhoto && selectedGroup && description && selectedCategory)
+    );
+  };
+
+  const updateImageHandler = () => {
+    updatePhotoWork(id, newPhoto, selectedGroup, description, selectedCategory);
+    history.push('/editphoto');
   };
 
   const onChange = e => {
     setDescription(e.target.value);
-    setDisabledForm(!(selectedGroup && description && selectedCategory));
-  };
-
-  const updateImageHandler = () => {
-    updatePhotoWork(id, selectedGroup, description);
-    history.push('/editphoto');
+    setDisabledForm(
+      !(newPhoto && selectedGroup && description && selectedCategory)
+    );
   };
 
   useEffect(() => {
@@ -108,12 +125,22 @@ const EditPhotoItem = ({
     getOnePhotoWork(id);
     getAllGroupOfImage();
     getAllCategoryOfClient();
+
+    if (newPhoto) {
+      const fileReader = new FileReader();
+
+      fileReader.onload = () => {
+        setPreviewUrl(fileReader.result);
+      };
+      fileReader.readAsDataURL(newPhoto);
+    }
   }, [
     setNameOfPage,
     getOnePhotoWork,
     getAllGroupOfImage,
     getAllCategoryOfClient,
-    id
+    id,
+    newPhoto
   ]);
 
   useLayoutEffect(() => {
@@ -121,8 +148,16 @@ const EditPhotoItem = ({
       setDescription(photoWorks.onePhoto.description);
       setSelectedGroup(photoWorks.onePhoto.imageGroup);
       setSelectedCategory(photoWorks.onePhoto.categoryGroupOf_image);
+      // setPreviewUrl(photoWorks.onePhoto.imageUrl);
+      // setNewPhoto(photoWorks.onePhoto.imageUrl);
     }
-  }, [setDescription, setSelectedGroup, photoWorks]);
+  }, [
+    setDescription,
+    setSelectedGroup,
+    photoWorks,
+    setPreviewUrl,
+    setNewPhoto
+  ]);
 
   return (
     <Grid container className={classes.root}>
@@ -130,6 +165,37 @@ const EditPhotoItem = ({
         <Typography component='h1' variant='h5' align='center'>
           Редактируем
         </Typography>
+      </Grid>
+      <Grid item xs={12} className={classes.wrapImg}>
+        {previewUrl && (
+          <img src={previewUrl} alt='Preview' className={classes.img} />
+        )}
+        {!previewUrl && (
+          <Typography component='h1' variant='h5' align='center'>
+            Пожалуйста выбирите фото
+          </Typography>
+        )}
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          name='newPhoto'
+          accept='image/*'
+          type='file'
+          id='raised-new-photo'
+          style={{ display: 'none' }}
+          onChange={e => pickedHandler(e)}
+        />
+        <label htmlFor='raised-new-photo'>
+          <Button
+            variant='contained'
+            component='span'
+            color='primary'
+            fullWidth
+            className={classes.button}
+          >
+            Выбрать новое фото
+          </Button>
+        </label>
       </Grid>
 
       <Grid

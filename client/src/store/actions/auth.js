@@ -49,7 +49,6 @@ export const register = ({ name, email, password }) => async dispatch => {
 
     dispatch(loadUser());
   } catch (err) {
-    // console.log(err.response.data);
     const error = err.response.data.error;
     if (error) {
       dispatch(setAlert(error, 'error', 2500));
@@ -71,14 +70,13 @@ export const login = (email, password) => async dispatch => {
 
   try {
     const res = await axios.post('/api/v1/auth/login', body, config);
-    console.log(res.data);
+    // console.log(res.data);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data
     });
     dispatch(loadUser());
   } catch (err) {
-    console.log(err);
     const error = err.response.data.error;
     if (error) {
       dispatch(setAlert(error, 'error', 2500));

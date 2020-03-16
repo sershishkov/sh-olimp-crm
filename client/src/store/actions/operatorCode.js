@@ -62,7 +62,7 @@ export const addOperatorCode = operatorCode => async dispatch => {
       payload: createdItem.data.data
     });
 
-    // dispatch(getAllOperatorCode());
+    dispatch(getAllOperatorCode());
   } catch (err) {
     const error = err.response.data.error;
     if (error) {
@@ -94,7 +94,7 @@ export const updateOperatorCode = (itemId, operatorCode) => async dispatch => {
       payload: updatedItem.data.data
     });
 
-    // dispatch(getAllOperatorCode());
+    dispatch(getAllOperatorCode());
   } catch (err) {
     const error = err.response.data.error;
     if (error) {
@@ -110,7 +110,7 @@ export const deleteOperatorCode = itemId => async dispatch => {
       type: DELETE_OPERATOR_CODE,
       payload: itemId
     });
-    // dispatch(getAllOperatorCode());
+    dispatch(getAllOperatorCode());
   } catch (err) {
     const error = err.response.data.error;
     if (error) {

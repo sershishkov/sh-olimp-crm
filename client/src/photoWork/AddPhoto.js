@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -49,7 +49,6 @@ const AddPhoto = ({
   clientCategory: { clientCategorys }
 }) => {
   const classes = useStyles();
-  const history = useHistory();
   const [newPhoto, setNewPhoto] = useState('');
   const [selectedGroup, setSelectedGroup] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -97,8 +96,6 @@ const AddPhoto = ({
 
   const addPhotoHandler = () => {
     addPhotoWork(newPhoto, selectedGroup, description, selectedCategory);
-    // history.push('/editphoto');
-    // window.location.reload();
     setNewPhoto('');
     setSelectedGroup('');
     setSelectedCategory('');

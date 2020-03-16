@@ -68,9 +68,8 @@ export const addPhotoWork = (
       payload: photo.data.data
     });
 
-    // dispatch(getAllPhotoWork());
+    dispatch(getAllPhotoWork());
   } catch (err) {
-    // console.dir(err);
     const error = err.response.data.error;
     if (error) {
       dispatch(setAlert(error, 'error', 2500));
@@ -80,26 +79,26 @@ export const addPhotoWork = (
 
 export const updatePhotoWork = (
   photoId,
-  groupID,
+  file,
+  groupOfImageID,
   description,
   selectedCategory
 ) => async dispatch => {
+  const photoFormData = new FormData();
+  photoFormData.append('photoWork', file);
+  photoFormData.append('imageGroup', groupOfImageID);
+  photoFormData.append('description', description);
+  photoFormData.append('categoryGroupOf_image', selectedCategory);
   const config = {
     headers: {
       'Content-Type': 'application/json'
     }
   };
 
-  const body = JSON.stringify({
-    imageGroup: groupID,
-    description: description,
-    selectedCategory
-  });
-
   try {
     const updatedPhoto = await axios.put(
       `/api/v1/photo/${photoId}`,
-      body,
+      photoFormData,
       config
     );
 
@@ -108,7 +107,7 @@ export const updatePhotoWork = (
       payload: updatedPhoto.data.data
     });
 
-    // dispatch(getAllPhotoWork());
+    dispatch(getAllPhotoWork());
   } catch (err) {
     const error = err.response.data.error;
     if (error) {
@@ -124,7 +123,7 @@ export const deletePhotoWork = imageId => async dispatch => {
       type: DELETE_PHOTO,
       payload: imageId
     });
-    // dispatch(getAllPhotoWork());
+    dispatch(getAllPhotoWork());
   } catch (err) {
     const error = err.response.data.error;
     if (error) {

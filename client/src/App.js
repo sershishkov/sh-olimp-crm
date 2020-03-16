@@ -39,7 +39,7 @@ const EditNewClientRequest = React.lazy(() =>
 );
 const UserDetail = React.lazy(() => import('./user/auth/UserDetail'));
 const AddPhoto = React.lazy(() => import('./photoWork/AddPhoto'));
-const EditPhotoList = React.lazy(() => import('./photoWork/EditPhotoList'));
+const EditPhotoList = React.lazy(() => import('./photoWork/PhotoList'));
 const EditPhotoItem = React.lazy(() => import('./photoWork/EditPhotoItem'));
 const GroupOfImage = React.lazy(() => import('./groupOfImage/GroupOfImage'));
 const AddGroupOfImage = React.lazy(() =>

@@ -143,13 +143,7 @@ const ResponsiveDrawer = ({
             isAuthenticated ? classes.displayFlex : classes.displayNone
           }
         >
-          {user && (
-            <Avatar
-              className={classes.avatar}
-              src={user.myAvatar}
-              className={classes.myAvatar}
-            />
-          )}
+          {user && <Avatar src={user.myAvatar} className={classes.myAvatar} />}
           <ListItemText>{userName}</ListItemText>
         </ListItem>
         <ListItem
@@ -370,7 +364,7 @@ const ResponsiveDrawer = ({
 
             <Grid
               container
-              items
+              item
               md={4}
               sm={6}
               justify='space-around'

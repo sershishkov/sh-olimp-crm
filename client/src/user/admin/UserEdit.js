@@ -22,7 +22,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UserEdit = ({ getOneUser, updateUser, users: { oneUser, loading } }) => {
+const UserEdit = ({
+  getOneUser,
+  updateUser,
+  users: { oneUser, loading },
+  setNameOfPage
+}) => {
   const classes = useStyles();
   let history = useHistory();
   const { id } = useParams();
@@ -136,6 +141,7 @@ const UserEdit = ({ getOneUser, updateUser, users: { oneUser, loading } }) => {
 
 UserEdit.propTypes = {
   getOneUser: PropTypes.func.isRequired,
+  setNameOfPage: PropTypes.func.isRequired,
   updateUser: PropTypes.func.isRequired,
   users: PropTypes.object.isRequired
 };
@@ -145,5 +151,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   getOneUser,
-  updateUser
+  updateUser,
+  setNameOfPage
 })(UserEdit);

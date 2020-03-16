@@ -58,7 +58,7 @@ export const addCategoryOfClient = categoryOf_Group => async dispatch => {
       payload: result.data.data
     });
 
-    // dispatch(getAllCategoryOfClient());
+    dispatch(getAllCategoryOfClient());
   } catch (err) {
     const error = err.response.data.error;
     if (error) {
@@ -91,7 +91,7 @@ export const updateCategoryOfClient = (
       payload: updatedResult.data.data
     });
 
-    // dispatch(getAllCategoryOfClient());
+    dispatch(getAllCategoryOfClient());
   } catch (err) {
     const error = err.response.data.error;
     if (error) {
@@ -107,7 +107,7 @@ export const deleteCategoryOfClient = itemId => async dispatch => {
       type: DELETE_CATEGORY_OF_CLIENT,
       payload: itemId
     });
-    // dispatch(getAllCategoryOfClient());
+    dispatch(getAllCategoryOfClient());
   } catch (err) {
     const error = err.response.data.error;
     if (error) {
