@@ -25,6 +25,11 @@ import MailIcon from '@material-ui/icons/Mail';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Collapse from '@material-ui/core/Collapse';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import StarBorder from '@material-ui/icons/StarBorder';
+import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -104,6 +109,20 @@ const useStyles = makeStyles(theme => ({
       width: '100%',
       objectFit: 'cover'
     }
+  },
+  nestedListLevel1: {
+    // border: '1px solid red',
+    paddingLeft: 10
+  },
+  nestedListItemLevel1: {
+    // border: '1px solid green'
+  },
+  nestedListLevel2: {
+    // border: '1px solid blue',
+    paddingLeft: 10
+  },
+  nestedListItemLevel2: {
+    // border: '1px solid black'
   }
 }));
 
@@ -118,8 +137,34 @@ const ResponsiveDrawer = ({
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userName, setUserName] = useState(null);
 
+  const [openAccountant, setOpenAccountant] = useState(false);
+  const [openEnteredMainData, setOpenEnteredMainData] = useState(false);
+  const [openOurMainData, setOpenOurMainData] = useState(false);
+  const [openReferenceData, setOpenReferenceData] = useState(false);
+  const [openReports, setOpenReports] = useState(false);
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const openAccountantHandler = () => {
+    setOpenAccountant(!openAccountant);
+  };
+
+  const openEnteredMainDataHandler = () => {
+    setOpenEnteredMainData(!openEnteredMainData);
+  };
+
+  const openOurMainDataHandler = () => {
+    setOpenOurMainData(!openOurMainData);
+  };
+
+  const openReferenceDataHandler = () => {
+    setOpenReferenceData(!openReferenceData);
+  };
+
+  const openReportsHandler = () => {
+    setOpenReports(!openReports);
   };
 
   const logoutHandler = () => {
@@ -138,7 +183,10 @@ const ResponsiveDrawer = ({
       <List>
         <ListItem
           button
-          onClick={() => history.push('/user-detail')}
+          onClick={() => {
+            history.push('/user-detail');
+            setMobileOpen(!mobileOpen);
+          }}
           className={
             isAuthenticated ? classes.displayFlex : classes.displayNone
           }
@@ -148,7 +196,10 @@ const ResponsiveDrawer = ({
         </ListItem>
         <ListItem
           button
-          onClick={() => history.push('/register')}
+          onClick={() => {
+            history.push('/register');
+            setMobileOpen(!mobileOpen);
+          }}
           className={
             !isAuthenticated ? classes.displayFlex : classes.displayNone
           }
@@ -161,7 +212,10 @@ const ResponsiveDrawer = ({
 
         <ListItem
           button
-          onClick={() => history.push('/login')}
+          onClick={() => {
+            history.push('/login');
+            setMobileOpen(!mobileOpen);
+          }}
           className={
             !isAuthenticated ? classes.displayFlex : classes.displayNone
           }
@@ -173,7 +227,10 @@ const ResponsiveDrawer = ({
         </ListItem>
         <ListItem
           button
-          onClick={logoutHandler}
+          onClick={() => {
+            logoutHandler();
+            setMobileOpen(!mobileOpen);
+          }}
           className={
             isAuthenticated ? classes.displayFlex : classes.displayNone
           }
@@ -183,32 +240,62 @@ const ResponsiveDrawer = ({
           </ListItemIcon>
           <ListItemText>Выход</ListItemText>
         </ListItem>
-        <ListItem button onClick={() => history.push('/aboutus')}>
+        <ListItem
+          button
+          onClick={() => {
+            history.push('/aboutus');
+            setMobileOpen(!mobileOpen);
+          }}
+        >
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
           <ListItemText>О нас (контакты)</ListItemText>
         </ListItem>
 
-        <ListItem button onClick={() => history.push('/for-osbb')}>
+        <ListItem
+          button
+          onClick={() => {
+            history.push('/for-osbb');
+            setMobileOpen(!mobileOpen);
+          }}
+        >
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
           <ListItemText>Для ОСББ</ListItemText>
         </ListItem>
-        <ListItem button onClick={() => history.push('/for-individuals')}>
+        <ListItem
+          button
+          onClick={() => {
+            history.push('/for-individuals');
+            setMobileOpen(!mobileOpen);
+          }}
+        >
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
           <ListItemText>Для физ.лиц</ListItemText>
         </ListItem>
-        <ListItem button onClick={() => history.push('/request-from-client')}>
+        <ListItem
+          button
+          onClick={() => {
+            history.push('/request-from-client');
+            setMobileOpen(!mobileOpen);
+          }}
+        >
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
           <ListItemText>Оставить заявку</ListItemText>
         </ListItem>
-        <ListItem button onClick={() => history.push('/')}>
+        <ListItem
+          button
+          onClick={() => {
+            history.push('/');
+            setMobileOpen(!mobileOpen);
+          }}
+        >
           <ListItemIcon>
             <MailIcon />
           </ListItemIcon>
@@ -218,7 +305,10 @@ const ResponsiveDrawer = ({
       <Divider />
       <ListItem
         button
-        onClick={() => history.push('/user-admin')}
+        onClick={() => {
+          history.push('/user-admin');
+          setMobileOpen(!mobileOpen);
+        }}
         className={
           isAuthenticated && user.role === 'admin'
             ? classes.displayFlex
@@ -232,7 +322,10 @@ const ResponsiveDrawer = ({
       </ListItem>
       <ListItem
         button
-        onClick={() => history.push('/editphoto')}
+        onClick={() => {
+          history.push('/editphoto');
+          setMobileOpen(!mobileOpen);
+        }}
         className={
           isAuthenticated && (user.role === 'boss' || user.role === 'admin')
             ? classes.displayFlex
@@ -246,7 +339,10 @@ const ResponsiveDrawer = ({
       </ListItem>
       <ListItem
         button
-        onClick={() => history.push('/group-of-image')}
+        onClick={() => {
+          history.push('/group-of-image');
+          setMobileOpen(!mobileOpen);
+        }}
         className={
           isAuthenticated && (user.role === 'boss' || user.role === 'admin')
             ? classes.displayFlex
@@ -285,12 +381,308 @@ const ResponsiveDrawer = ({
               ? classes.displayFlex
               : classes.displayNone
           }
+          onClick={openAccountantHandler}
         >
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
           <ListItemText>Бухгалтерия</ListItemText>
+          {openAccountant ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
+        <Collapse in={openAccountant} timeout='auto' unmountOnExit>
+          <List className={classes.nestedListLevel1}>
+            <ListItem
+              button
+              className={classes.nestedListItemLevel1}
+              onClick={openEnteredMainDataHandler}
+            >
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText>Входящие</ListItemText>
+              {openEnteredMainData ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={openEnteredMainData} timeout='auto' unmountOnExit>
+              <List className={classes.nestedListLevel2}>
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>АктВыпРабот</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Счет Общий</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Счет работы</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Счет товар</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Накладная</ListItemText>
+                </ListItem>
+              </List>
+            </Collapse>
+            <ListItem
+              button
+              className={classes.nestedListItemLevel1}
+              onClick={openOurMainDataHandler}
+            >
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText>Исходящие</ListItemText>
+              {openOurMainData ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={openOurMainData} timeout='auto' unmountOnExit>
+              <List className={classes.nestedListLevel2}>
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>АктВыпРабот</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Счет Общий</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Счет товары</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Счет работы</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Накладная</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>ПриходыБанк</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Платежи</ListItemText>
+                </ListItem>
+              </List>
+            </Collapse>
+
+            <ListItem
+              button
+              className={classes.nestedListItemLevel1}
+              onClick={openReferenceDataHandler}
+            >
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText>Справочники</ListItemText>
+              {openReferenceData ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={openReferenceData} timeout='auto' unmountOnExit>
+              <List className={classes.nestedListLevel2}>
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Банки</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Клиенты</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Должности</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Группы товаров</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Группы работ</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Наши фирмы</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>ТелОператор</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Товары</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Работы</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Поставщики</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>ДейстНаОсновании</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>ТипыФирм</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>ТипНасПункта</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>ТипУлицы</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Налогооблажение</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>ТипЕдИзмерения</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>ЕдиницыИзмерения</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Работники</ListItemText>
+                </ListItem>
+              </List>
+            </Collapse>
+
+            <ListItem
+              button
+              className={classes.nestedListItemLevel1}
+              onClick={openReportsHandler}
+            >
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText>Отчеты</ListItemText>
+              {openReports ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+
+            <Collapse in={openReports} timeout='auto' unmountOnExit>
+              <List className={classes.nestedListLevel2}>
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Отчет1</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Отчет2</ListItemText>
+                </ListItem>
+
+                <ListItem button className={classes.nestedListItemLevel2}>
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Отчет3</ListItemText>
+                </ListItem>
+              </List>
+            </Collapse>
+          </List>
+        </Collapse>
       </List>
     </div>
   );
@@ -437,7 +829,7 @@ const ResponsiveDrawer = ({
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
             open={mobileOpen}
             onClose={handleDrawerToggle}
-            onClick={handleDrawerToggle}
+            // onClick={handleDrawerToggle}
             classes={{
               paper: classes.drawerPaper
             }}
