@@ -38,6 +38,10 @@ const Entered_InvoiceProduct = new mongoose.Schema({
       }
     }
   ],
+  purposeOf_payment: {
+    type: String,
+    required: [true, 'Введите назначение платежа']
+  },
   active: {
     type: Boolean,
     // required: true,

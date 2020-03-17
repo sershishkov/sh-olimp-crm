@@ -55,6 +55,10 @@ const Entered_InvoiceMixed = new mongoose.Schema({
       }
     }
   ],
+  purposeOf_payment: {
+    type: String,
+    required: [true, 'Введите назначение платежа']
+  },
   active: {
     type: Boolean,
     // required: true,
