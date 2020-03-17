@@ -52,6 +52,17 @@ const UserAdmin = React.lazy(() => import('./user/admin/UserAdmin'));
 const UserCreate = React.lazy(() => import('./user/admin/UserCreate'));
 const UserEdit = React.lazy(() => import('./user/admin/UserEdit'));
 
+/////////////////accountant referenceData ////////////////////
+const Unit_List = React.lazy(() =>
+  import('./accountant/referenceData/unit/Unit_List')
+);
+const Unit_Edit = React.lazy(() =>
+  import('./accountant/referenceData/unit/Unit_Edit')
+);
+const Unit_Add = React.lazy(() =>
+  import('./accountant/referenceData/unit/Unit_Add')
+);
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: 70
@@ -135,6 +146,21 @@ function App() {
                 exact
                 path='/group-of-image/:id'
                 component={GroupOfImageEdit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/unit'
+                component={Unit_List}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/unit/add'
+                component={Unit_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/unit/:id'
+                component={Unit_Edit}
               />
             </Switch>
           </Suspense>

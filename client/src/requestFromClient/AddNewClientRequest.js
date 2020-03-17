@@ -102,7 +102,7 @@ const AddNewClientRequest = ({
       phoneNumber,
       email
     );
-    history.push('request-from-client');
+    history.push('/request-from-client');
   };
 
   return (

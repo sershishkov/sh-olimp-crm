@@ -629,7 +629,14 @@ const ResponsiveDrawer = ({
                   <ListItemText>ТипЕдИзмерения</ListItemText>
                 </ListItem>
 
-                <ListItem button className={classes.nestedListItemLevel2}>
+                <ListItem
+                  button
+                  className={classes.nestedListItemLevel2}
+                  onClick={() => {
+                    history.push('accountant/unit');
+                    setMobileOpen(!mobileOpen);
+                  }}
+                >
                   <ListItemIcon>
                     <SubdirectoryArrowRightIcon />
                   </ListItemIcon>
