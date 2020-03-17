@@ -13,7 +13,8 @@ const Product = new mongoose.Schema({
   },
   unit: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Unit'
+    ref: 'Unit',
+    required: [true, 'Введите единицы измерения']
   },
   productGroup: {
     type: mongoose.Schema.Types.ObjectId,
@@ -26,7 +27,7 @@ const Product = new mongoose.Schema({
   },
   price: {
     type: Number,
-    required: true
+    required: [true, 'Введите цену']
   },
   suppliers: [
     {

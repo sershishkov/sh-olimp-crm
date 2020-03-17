@@ -71,16 +71,16 @@ const Supplier = new mongoose.Schema({
   },
 
   firstPersonSurnameRoditelPadej: {
-    type: String
-    // required: [true, 'Впишите фамилию в родительном падеже ']
+    type: String,
+    required: [true, 'Впишите фамилию в родительном падеже ']
   },
   firstPersonNameRoditelPadej: {
-    type: String
-    // required: [true, 'Впишите имя в родительном падеже ']
+    type: String,
+    required: [true, 'Впишите имя в родительном падеже ']
   },
   firstPersonMiddleNameRoditelPadej: {
-    type: String
-    // required: [true, 'Впишите отчество в родительном падеже ']
+    type: String,
+    required: [true, 'Впишите отчество в родительном падеже ']
   },
 
   shortName: {
