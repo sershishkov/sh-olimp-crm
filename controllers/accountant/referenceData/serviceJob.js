@@ -79,9 +79,9 @@ exports.getAllServiceJobs = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/accountant/service-job/:id
 //@access Private
 exports.getOneServiceJob = asyncHandler(async (req, res, next) => {
-  const oneServiceJob = await ServiceJob.findById(req.params.id)
-    .populate({ path: 'unit', select: 'unitNameShort' })
-    .populate({ path: 'serviceJobGroup', select: 'serviceJobGroup' });
+  const oneServiceJob = await ServiceJob.findById(req.params.id);
+  // .populate({ path: 'unit', select: 'unitNameShort' })
+  // .populate({ path: 'serviceJobGroup', select: 'serviceJobGroup' })
   //Check if  exists response
   if (!oneServiceJob) {
     return next(new ErrorResponse('Нет  объекта с данным id', 400));

@@ -25,10 +25,6 @@ const Product = new mongoose.Schema({
     default: 1,
     required: [true, 'Введите количество в упаковке']
   },
-  price: {
-    type: Number,
-    required: [true, 'Введите цену']
-  },
   suppliers: [
     {
       type: mongoose.Schema.Types.ObjectId,

@@ -113,6 +113,32 @@ const TypeOf_Firm_List = React.lazy(() =>
   import('./accountant/referenceData/typeOf_Firm/TypeOf_Firm_List')
 );
 
+const TypeOf_ActsOnBasisOf_Add = React.lazy(() =>
+  import(
+    './accountant/referenceData/typeOf_ActsOnBasisOf/TypeOf_ActsOnBasisOf_Add'
+  )
+);
+const TypeOf_ActsOnBasisOf_Edit = React.lazy(() =>
+  import(
+    './accountant/referenceData/typeOf_ActsOnBasisOf/TypeOf_ActsOnBasisOf_Edit'
+  )
+);
+const TypeOf_ActsOnBasisOf_List = React.lazy(() =>
+  import(
+    './accountant/referenceData/typeOf_ActsOnBasisOf/TypeOf_ActsOnBasisOf_List'
+  )
+);
+
+const ServiceJob_Add = React.lazy(() =>
+  import('./accountant/referenceData/serviceJob/ServiceJob_Add')
+);
+const ServiceJob_Edit = React.lazy(() =>
+  import('./accountant/referenceData/serviceJob/ServiceJob_Edit')
+);
+const ServiceJob_List = React.lazy(() =>
+  import('./accountant/referenceData/serviceJob/ServiceJob_List')
+);
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: 70
@@ -292,6 +318,38 @@ function App() {
                 exact
                 path='/accountant/type-of-firm'
                 component={TypeOf_Firm_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-acts-on-basis-of/add'
+                component={TypeOf_ActsOnBasisOf_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-acts-on-basis-of/:id'
+                component={TypeOf_ActsOnBasisOf_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-acts-on-basis-of'
+                component={TypeOf_ActsOnBasisOf_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/service-job/add'
+                component={ServiceJob_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/service-job/:id'
+                component={ServiceJob_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/service-job'
+                component={ServiceJob_List}
               />
             </Switch>
           </Suspense>
