@@ -139,6 +139,16 @@ const ServiceJob_List = React.lazy(() =>
   import('./accountant/referenceData/serviceJob/ServiceJob_List')
 );
 
+const PhoneOperator_Add = React.lazy(() =>
+  import('./accountant/referenceData/phoneOperator/PhoneOperator_Add')
+);
+const PhoneOperator_Edit = React.lazy(() =>
+  import('./accountant/referenceData/phoneOperator/PhoneOperator_Edit')
+);
+const PhoneOperator_List = React.lazy(() =>
+  import('./accountant/referenceData/phoneOperator/PhoneOperator_List')
+);
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: 70
@@ -350,6 +360,22 @@ function App() {
                 exact
                 path='/accountant/service-job'
                 component={ServiceJob_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/phone-operator/add'
+                component={PhoneOperator_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/phone-operator/:id'
+                component={PhoneOperator_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/phone-operator'
+                component={PhoneOperator_List}
               />
             </Switch>
           </Suspense>
