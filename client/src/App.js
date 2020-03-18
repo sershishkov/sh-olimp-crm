@@ -63,6 +63,56 @@ const Unit_Add = React.lazy(() =>
   import('./accountant/referenceData/unit/Unit_Add')
 );
 
+const TypeOf_Unit_Add = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_Unit/TypeOf_Unit_Add')
+);
+const TypeOf_Unit_Edit = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_Unit/TypeOf_Unit_Edit')
+);
+const TypeOf_Unit_List = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_Unit/TypeOf_Unit_List')
+);
+
+const TypeOf_TaxPayerOn_Add = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_TaxPayerOn/TypeOf_TaxPayerOn_Add')
+);
+const TypeOf_TaxPayerOn_Edit = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_TaxPayerOn/TypeOf_TaxPayerOn_Edit')
+);
+const TypeOf_TaxPayerOn_List = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_TaxPayerOn/TypeOf_TaxPayerOn_List')
+);
+
+const TypeOf_Street_Add = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_Street/TypeOf_Street_Add')
+);
+const TypeOf_Street_Edit = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_Street/TypeOf_Street_Edit')
+);
+const TypeOf_Street_List = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_Street/TypeOf_Street_List')
+);
+
+const TypeOf_Settlement_Add = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_Settlement/TypeOf_Settlement_Add')
+);
+const TypeOf_Settlement_Edit = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_Settlement/TypeOf_Settlement_Edit')
+);
+const TypeOf_Settlement_List = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_Settlement/TypeOf_Settlement_List')
+);
+
+const TypeOf_Firm_Add = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_Firm/TypeOf_Firm_Add')
+);
+const TypeOf_Firm_Edit = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_Firm/TypeOf_Firm_Edit')
+);
+const TypeOf_Firm_List = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_Firm/TypeOf_Firm_List')
+);
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: 70
@@ -147,6 +197,7 @@ function App() {
                 path='/group-of-image/:id'
                 component={GroupOfImageEdit}
               />
+
               <PrivateRoute
                 exact
                 path='/accountant/unit'
@@ -161,6 +212,86 @@ function App() {
                 exact
                 path='/accountant/unit/:id'
                 component={Unit_Edit}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-unit/add'
+                component={TypeOf_Unit_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-unit/:id'
+                component={TypeOf_Unit_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-unit'
+                component={TypeOf_Unit_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-tax-payer-on/add'
+                component={TypeOf_TaxPayerOn_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-tax-payer-on/:id'
+                component={TypeOf_TaxPayerOn_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-tax-payer-on'
+                component={TypeOf_TaxPayerOn_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-street/add'
+                component={TypeOf_Street_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-street/:id'
+                component={TypeOf_Street_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-street'
+                component={TypeOf_Street_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-settlement/add'
+                component={TypeOf_Settlement_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-settlement/:id'
+                component={TypeOf_Settlement_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-settlement'
+                component={TypeOf_Settlement_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-firm/add'
+                component={TypeOf_Firm_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-firm/:id'
+                component={TypeOf_Firm_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-firm'
+                component={TypeOf_Firm_List}
               />
             </Switch>
           </Suspense>
