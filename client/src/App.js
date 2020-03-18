@@ -163,6 +163,16 @@ const GroupOf_ServiceJob_List = React.lazy(() =>
   )
 );
 
+const GroupOf_Product_Add = React.lazy(() =>
+  import('./accountant/referenceData/groupOf_Product/GroupOf_Product_Add')
+);
+const GroupOf_Product_Edit = React.lazy(() =>
+  import('./accountant/referenceData/groupOf_Product/GroupOf_Product_Edit')
+);
+const GroupOf_Product_List = React.lazy(() =>
+  import('./accountant/referenceData/groupOf_Product/GroupOf_Product_List')
+);
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: 70
@@ -406,6 +416,22 @@ function App() {
                 exact
                 path='/accountant/group-of-servicejob'
                 component={GroupOf_ServiceJob_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/group-of-product/add'
+                component={GroupOf_Product_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/group-of-product/:id'
+                component={GroupOf_Product_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/group-of-product'
+                component={GroupOf_Product_List}
               />
             </Switch>
           </Suspense>
