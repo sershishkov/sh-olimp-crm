@@ -29,7 +29,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TypeOf_ActsOnBasisOf_Add = ({ add_TYPE_OF_ACTS_ON_BASIS_OF }) => {
+const TypeOf_ActsOnBasisOf_Add = ({
+  setNameOfPage,
+  add_TYPE_OF_ACTS_ON_BASIS_OF
+}) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -42,7 +45,7 @@ const TypeOf_ActsOnBasisOf_Add = ({ add_TYPE_OF_ACTS_ON_BASIS_OF }) => {
   const [disabledForm, setDisabledForm] = useState(true);
 
   useEffect(() => {
-    setNameOfPage('Создать группу едениц измерения');
+    setNameOfPage('Добавить основание');
   }, [setNameOfPage]);
 
   const onChangeHandler = e => {

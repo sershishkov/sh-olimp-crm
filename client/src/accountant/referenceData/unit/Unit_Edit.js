@@ -53,6 +53,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Unit_Edit = ({
+  setNameOfPage,
   getOne_UNIT,
   update_UNIT,
   getAll_TYPE_OF_UNITS,

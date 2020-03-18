@@ -50,6 +50,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Unit_Add = ({
+  setNameOfPage,
   add_UNIT,
   getAll_TYPE_OF_UNITS,
   typeOf_Unit: { arr_TYPE_OF_UNITS, loading }

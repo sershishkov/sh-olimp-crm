@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TypeOf_TaxPayerOn_Add = ({ add_TYPE_OF_TAX_PAYER_ON }) => {
+const TypeOf_TaxPayerOn_Add = ({ setNameOfPage, add_TYPE_OF_TAX_PAYER_ON }) => {
   const classes = useStyles();
   const history = useHistory();
 

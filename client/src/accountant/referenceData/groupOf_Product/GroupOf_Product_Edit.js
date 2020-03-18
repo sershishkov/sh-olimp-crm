@@ -33,6 +33,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const GroupOf_Product_Edit = ({
+  setNameOfPage,
   getOne_GROUP_OF_PRODUCT,
   update_GROUP_OF_PRODUCT,
   groupOf_Product: { one_GROUP_OF_PRODUCT, loading }
@@ -50,7 +51,7 @@ const GroupOf_Product_Edit = ({
   const [disabledForm, setDisabledForm] = useState(true);
 
   useEffect(() => {
-    setNameOfPage('Редактировать группу работ');
+    setNameOfPage('Редактировать группу товара');
     getOne_GROUP_OF_PRODUCT(id);
   }, [setNameOfPage, getOne_GROUP_OF_PRODUCT, id]);
 

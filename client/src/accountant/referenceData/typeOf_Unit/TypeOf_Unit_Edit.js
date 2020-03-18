@@ -33,6 +33,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TypeOf_Unit_Edit = ({
+  setNameOfPage,
   getOne_TYPE_OF_UNIT,
   update_TYPE_OF_UNIT,
   typeOf_Unit: { one_TYPE_OF_UNIT, loading }
@@ -50,7 +51,7 @@ const TypeOf_Unit_Edit = ({
   const [disabledForm, setDisabledForm] = useState(true);
 
   useEffect(() => {
-    setNameOfPage('Создать группу едениц измерения');
+    setNameOfPage('Редактировать группу едениц измерения');
     getOne_TYPE_OF_UNIT(id);
   }, [setNameOfPage, getOne_TYPE_OF_UNIT, id]);
 

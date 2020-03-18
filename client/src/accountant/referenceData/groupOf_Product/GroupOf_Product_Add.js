@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const GroupOf_Product_Add = ({ add_GROUP_OF_PRODUCT }) => {
+const GroupOf_Product_Add = ({ setNameOfPage, add_GROUP_OF_PRODUCT }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -42,7 +42,7 @@ const GroupOf_Product_Add = ({ add_GROUP_OF_PRODUCT }) => {
   const [disabledForm, setDisabledForm] = useState(true);
 
   useEffect(() => {
-    setNameOfPage('Создать группу работ');
+    setNameOfPage('Создать группу товара');
   }, [setNameOfPage]);
 
   const onChangeHandler = e => {

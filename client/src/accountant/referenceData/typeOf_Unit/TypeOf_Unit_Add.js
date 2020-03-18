@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TypeOf_Unit_Add = ({ add_TYPE_OF_UNIT }) => {
+const TypeOf_Unit_Add = ({ setNameOfPage, add_TYPE_OF_UNIT }) => {
   const classes = useStyles();
   const history = useHistory();
 

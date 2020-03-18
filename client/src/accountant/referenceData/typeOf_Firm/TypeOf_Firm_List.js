@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TypeOf_Firm_List = ({
+  setNameOfPage,
   getAll_TYPE_OF_FIRMS,
   delete_TYPE_OF_FIRM,
   typeOf_Firm: { arr_TYPE_OF_FIRMS, loading }

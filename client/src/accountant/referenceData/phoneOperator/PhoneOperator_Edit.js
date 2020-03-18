@@ -33,6 +33,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TypeOf_Unit_Edit = ({
+  setNameOfPage,
   getOneOperatorCode,
   updateOperatorCode,
   phoneOperator: { oneOperatorCode, loading }
@@ -50,7 +51,7 @@ const TypeOf_Unit_Edit = ({
   const [disabledForm, setDisabledForm] = useState(true);
 
   useEffect(() => {
-    setNameOfPage('Создать код оператора');
+    setNameOfPage('Редактировать код оператора');
     getOneOperatorCode(id);
   }, [setNameOfPage, getOneOperatorCode, id]);
 

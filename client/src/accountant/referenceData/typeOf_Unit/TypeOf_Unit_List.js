@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TypeOf_Unit_List = ({
+  setNameOfPage,
   getAll_TYPE_OF_UNITS,
   delete_TYPE_OF_UNIT,
   typeOf_Unit: { arr_TYPE_OF_UNITS, loading }
@@ -45,7 +46,7 @@ const TypeOf_Unit_List = ({
   const classes = useStyles();
 
   useEffect(() => {
-    setNameOfPage('Список фото');
+    setNameOfPage('Список групп едениц измерения');
     getAll_TYPE_OF_UNITS();
   }, [setNameOfPage, getAll_TYPE_OF_UNITS]);
 

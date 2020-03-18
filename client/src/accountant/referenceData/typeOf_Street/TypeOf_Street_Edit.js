@@ -33,6 +33,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TypeOf_Street_Edit = ({
+  setNameOfPage,
   getOne_TYPE_OF_STREET,
   update_TYPE_OF_STREET,
   typeOf_Street: { one_TYPE_OF_STREET, loading }

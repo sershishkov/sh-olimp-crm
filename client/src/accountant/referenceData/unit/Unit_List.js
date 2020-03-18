@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Unit_List = ({
+  setNameOfPage,
   getAll_UNITS,
   delete_UNIT,
   unit: { arr_UNITS, loading }
@@ -45,7 +46,7 @@ const Unit_List = ({
   const classes = useStyles();
 
   useEffect(() => {
-    setNameOfPage('Список фото');
+    setNameOfPage('Список единиц измерения');
     getAll_UNITS();
   }, [setNameOfPage, getAll_UNITS]);
 

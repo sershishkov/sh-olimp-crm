@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -10,9 +10,12 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
-import { add_FIRST_PERSON_POSITION } from '../../../store/actions/accountant/referenceData/firstPersonPosition';
+import {
+  getOne_BANK_NAME,
+  update_BANK_NAME
+} from '../../../store/actions/accountant/referenceData/bankName';
 
-// import Spinner from '../../../shared/spinner/Spinner';
+import Spinner from '../../../shared/spinner/Spinner';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,40 +32,56 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const FirstPersonPosition_Add = ({
+const BankName_Edit = ({
   setNameOfPage,
-  add_FIRST_PERSON_POSITION
+  getOne_BANK_NAME,
+  update_BANK_NAME,
+  bankName: { one_BANK_NAME, loading }
 }) => {
   const classes = useStyles();
   const history = useHistory();
+  const { id } = useParams();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/personposition');
+    history.push('/accountant/bankname');
   };
 
   const [formData, setFormData] = useState({
-    position: '',
-    positionRoditPadej: ''
+    bankName: '',
+    mfo: ''
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
-  const { position, positionRoditPadej } = formData;
+  const { bankName, mfo } = formData;
 
   useEffect(() => {
-    setNameOfPage('Добавить должность');
-  }, [setNameOfPage]);
+    setNameOfPage('Редактировать банк');
+    getOne_BANK_NAME(id);
+  }, [setNameOfPage, getOne_BANK_NAME, id]);
+
+  useLayoutEffect(() => {
+    if (one_BANK_NAME) {
+      setFormData({
+        ...FormData,
+        bankName: one_BANK_NAME.bankName,
+        mfo: one_BANK_NAME.mfo
+      });
+    }
+  }, [one_BANK_NAME]);
 
   const onChangeHandler = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setDisabledForm(!(position && positionRoditPadej));
+    setDisabledForm(!(bankName && mfo));
   };
 
-  const addItemHandler = () => {
-    add_FIRST_PERSON_POSITION(position, positionRoditPadej);
-    history.push('/accountant/personposition');
+  const updateItemHandler = () => {
+    update_BANK_NAME(id, bankName, mfo);
+    history.push('/accountant/bankname');
   };
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <Grid container className={classes.root} spacing={1}>
       <Button
         onClick={buttonBackHandler}
@@ -75,22 +94,22 @@ const FirstPersonPosition_Add = ({
       <Grid item xs={6}>
         <TextField
           variant='outlined'
-          name='position'
+          name='bankName'
           fullWidth
           placeholder='Введите полное название'
           type='text'
-          value={position}
+          value={bankName ? bankName : ''}
           onChange={e => onChangeHandler(e)}
         />
       </Grid>
       <Grid item xs={6}>
         <TextField
           variant='outlined'
-          name='positionRoditPadej'
+          name='mfo'
           fullWidth
           placeholder='Введите полное название'
-          type='text'
-          value={positionRoditPadej}
+          type='number'
+          value={mfo ? mfo : ''}
           onChange={e => onChangeHandler(e)}
         />
       </Grid>
@@ -103,7 +122,7 @@ const FirstPersonPosition_Add = ({
           variant='contained'
           color='primary'
           className={classes.buttonAdd}
-          onClick={() => addItemHandler()}
+          onClick={() => updateItemHandler()}
         >
           Сохранить
         </Button>
@@ -112,12 +131,19 @@ const FirstPersonPosition_Add = ({
   );
 };
 
-FirstPersonPosition_Add.propTypes = {
+BankName_Edit.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  add_FIRST_PERSON_POSITION: PropTypes.func.isRequired
+  getOne_BANK_NAME: PropTypes.func.isRequired,
+  update_BANK_NAME: PropTypes.func.isRequired,
+  bankName: PropTypes.object.isRequired
 };
 
-export default connect(null, {
+const mapStateToProps = state => ({
+  bankName: state.bankName
+});
+
+export default connect(mapStateToProps, {
   setNameOfPage,
-  add_FIRST_PERSON_POSITION
-})(FirstPersonPosition_Add);
+  getOne_BANK_NAME,
+  update_BANK_NAME
+})(BankName_Edit);

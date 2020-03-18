@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const GroupOf_Product_List = ({
+  setNameOfPage,
   getAll_GROUP_OF_PRODUCTS,
   delete_GROUP_OF_PRODUCT,
   groupOf_Product: { arr_GROUP_OF_PRODUCTS, loading }
@@ -45,7 +46,7 @@ const GroupOf_Product_List = ({
   const classes = useStyles();
 
   useEffect(() => {
-    setNameOfPage('Список групп работ');
+    setNameOfPage('Список групп товаров');
     getAll_GROUP_OF_PRODUCTS();
   }, [setNameOfPage, getAll_GROUP_OF_PRODUCTS]);
 

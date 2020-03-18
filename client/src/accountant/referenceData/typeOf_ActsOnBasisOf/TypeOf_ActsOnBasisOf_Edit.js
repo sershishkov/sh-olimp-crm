@@ -33,6 +33,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TypeOf_ActsOnBasisOf_Edit = ({
+  setNameOfPage,
   getOne_TYPE_OF_ACTS_ON_BASIS_OF,
   update_TYPE_OF_ACTS_ON_BASIS_OF,
   typeOf_ActsOnBasisOf: { one_TYPE_OF_ACTS_ON_BASIS_OF, loading }
@@ -50,7 +51,7 @@ const TypeOf_ActsOnBasisOf_Edit = ({
   const [disabledForm, setDisabledForm] = useState(true);
 
   useEffect(() => {
-    setNameOfPage('Создать группу едениц измерения');
+    setNameOfPage('Редактировать основание');
     getOne_TYPE_OF_ACTS_ON_BASIS_OF(id);
   }, [setNameOfPage, getOne_TYPE_OF_ACTS_ON_BASIS_OF, id]);
 

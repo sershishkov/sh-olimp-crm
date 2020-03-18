@@ -33,6 +33,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const GroupOf_ServiceJob_Edit = ({
+  setNameOfPage,
   getOne_GROUP_OF_SERVICE_JOB,
   update_GROUP_OF_SERVICE_JOB,
   groupOf_ServiceJob: { one_GROUP_OF_SERVICE_JOB, loading }

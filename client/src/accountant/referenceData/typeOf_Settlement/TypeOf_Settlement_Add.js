@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TypeOf_Street_Add = ({ add_TYPE_OF_SETTLEMENT }) => {
+const TypeOf_Street_Add = ({ setNameOfPage, add_TYPE_OF_SETTLEMENT }) => {
   const classes = useStyles();
   const history = useHistory();
 

@@ -29,7 +29,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const GroupOf_ServiceJob_Add = ({ add_GROUP_OF_SERVICE_JOB }) => {
+const GroupOf_ServiceJob_Add = ({
+  setNameOfPage,
+  add_GROUP_OF_SERVICE_JOB
+}) => {
   const classes = useStyles();
   const history = useHistory();
 

@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
-import { add_FIRST_PERSON_POSITION } from '../../../store/actions/accountant/referenceData/firstPersonPosition';
+import { add_BANK_NAME } from '../../../store/actions/accountant/referenceData/bankName';
 
 // import Spinner from '../../../shared/spinner/Spinner';
 
@@ -29,37 +29,34 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const FirstPersonPosition_Add = ({
-  setNameOfPage,
-  add_FIRST_PERSON_POSITION
-}) => {
+const BankName_Add = ({ setNameOfPage, add_BANK_NAME }) => {
   const classes = useStyles();
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/personposition');
+    history.push('/accountant/bankname');
   };
 
   const [formData, setFormData] = useState({
-    position: '',
-    positionRoditPadej: ''
+    bankName: '',
+    mfo: ''
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
-  const { position, positionRoditPadej } = formData;
+  const { bankName, mfo } = formData;
 
   useEffect(() => {
-    setNameOfPage('Добавить должность');
+    setNameOfPage('Добавить банк');
   }, [setNameOfPage]);
 
   const onChangeHandler = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setDisabledForm(!(position && positionRoditPadej));
+    setDisabledForm(!(bankName && mfo));
   };
 
   const addItemHandler = () => {
-    add_FIRST_PERSON_POSITION(position, positionRoditPadej);
-    history.push('/accountant/personposition');
+    add_BANK_NAME(bankName, mfo);
+    history.push('/accountant/bankname');
   };
 
   return (
@@ -75,22 +72,22 @@ const FirstPersonPosition_Add = ({
       <Grid item xs={6}>
         <TextField
           variant='outlined'
-          name='position'
+          name='bankName'
           fullWidth
           placeholder='Введите полное название'
           type='text'
-          value={position}
+          value={bankName}
           onChange={e => onChangeHandler(e)}
         />
       </Grid>
       <Grid item xs={6}>
         <TextField
           variant='outlined'
-          name='positionRoditPadej'
+          name='mfo'
           fullWidth
           placeholder='Введите полное название'
-          type='text'
-          value={positionRoditPadej}
+          type='number'
+          value={mfo}
           onChange={e => onChangeHandler(e)}
         />
       </Grid>
@@ -112,12 +109,12 @@ const FirstPersonPosition_Add = ({
   );
 };
 
-FirstPersonPosition_Add.propTypes = {
+BankName_Add.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  add_FIRST_PERSON_POSITION: PropTypes.func.isRequired
+  add_BANK_NAME: PropTypes.func.isRequired
 };
 
 export default connect(null, {
   setNameOfPage,
-  add_FIRST_PERSON_POSITION
-})(FirstPersonPosition_Add);
+  add_BANK_NAME
+})(BankName_Add);

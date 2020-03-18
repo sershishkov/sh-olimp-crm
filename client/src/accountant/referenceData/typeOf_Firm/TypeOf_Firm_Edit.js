@@ -33,6 +33,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TypeOf_Firm_Edit = ({
+  setNameOfPage,
   getOne_TYPE_OF_FIRM,
   update_TYPE_OF_FIRM,
   typeOf_Firm: { one_TYPE_OF_FIRM, loading }

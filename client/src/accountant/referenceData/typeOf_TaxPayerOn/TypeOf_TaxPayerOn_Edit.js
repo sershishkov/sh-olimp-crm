@@ -33,6 +33,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TypeOf_TaxPayerOn_Edit = ({
+  setNameOfPage,
   getOne_TYPE_OF_TAX_PAYER_ON,
   update_TYPE_OF_TAX_PAYER_ON,
   typeOf_TaxPayerOn: { one_TYPE_OF_TAX_PAYER_ON, loading }

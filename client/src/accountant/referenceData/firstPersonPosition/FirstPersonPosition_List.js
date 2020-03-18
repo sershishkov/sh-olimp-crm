@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const FirstPersonPosition_List = ({
+  setNameOfPage,
   getAll_FIRST_PERSON_POSITIONS,
   delete_FIRST_PERSON_POSITION,
   firstPersonPosition: { arr_FIRST_PERSON_POSITIONS, loading }

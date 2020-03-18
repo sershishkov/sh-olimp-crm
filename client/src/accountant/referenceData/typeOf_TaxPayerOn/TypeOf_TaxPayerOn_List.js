@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TypeOf_TaxPayerOn_List = ({
+  setNameOfPage,
   getAll_TYPE_OF_TAX_PAYER_ONS,
   delete_TYPE_OF_TAX_PAYER_ON,
   typeOf_TaxPayerOn: { arr_TYPE_OF_TAX_PAYER_ONS, loading }

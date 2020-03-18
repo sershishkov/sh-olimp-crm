@@ -517,7 +517,14 @@ const ResponsiveDrawer = ({
             </ListItem>
             <Collapse in={openReferenceData} timeout='auto' unmountOnExit>
               <List className={classes.nestedListLevel2}>
-                <ListItem button className={classes.nestedListItemLevel2}>
+                <ListItem
+                  button
+                  className={classes.nestedListItemLevel2}
+                  onClick={() => {
+                    history.push('/accountant/bankname');
+                    setMobileOpen(!mobileOpen);
+                  }}
+                >
                   <ListItemIcon>
                     <SubdirectoryArrowRightIcon />
                   </ListItemIcon>

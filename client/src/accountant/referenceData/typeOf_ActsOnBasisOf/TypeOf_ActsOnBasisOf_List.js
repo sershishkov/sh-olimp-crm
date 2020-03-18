@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TypeOf_ActsOnBasisOf_List = ({
+  setNameOfPage,
   getAll_TYPE_OF_ACTS_ON_BASIS_OFS,
   delete_TYPE_OF_ACTS_ON_BASIS_OF,
   typeOf_ActsOnBasisOf: { arr_TYPE_OF_ACTS_ON_BASIS_OFS, loading }
@@ -45,7 +46,7 @@ const TypeOf_ActsOnBasisOf_List = ({
   const classes = useStyles();
 
   useEffect(() => {
-    setNameOfPage('Список фото');
+    setNameOfPage('Список оснований');
     getAll_TYPE_OF_ACTS_ON_BASIS_OFS();
   }, [setNameOfPage, getAll_TYPE_OF_ACTS_ON_BASIS_OFS]);
 

@@ -189,6 +189,16 @@ const FirstPersonPosition_List = React.lazy(() =>
   )
 );
 
+const BankName_Add = React.lazy(() =>
+  import('./accountant/referenceData/bankName/BankName_Add')
+);
+const BankName_Edit = React.lazy(() =>
+  import('./accountant/referenceData/bankName/BankName_Edit')
+);
+const BankName_List = React.lazy(() =>
+  import('./accountant/referenceData/bankName/BankName_List')
+);
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: 70
@@ -464,6 +474,22 @@ function App() {
                 exact
                 path='/accountant/personposition'
                 component={FirstPersonPosition_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/bankname/add'
+                component={BankName_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/bankname/:id'
+                component={BankName_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/bankname'
+                component={BankName_List}
               />
             </Switch>
           </Suspense>

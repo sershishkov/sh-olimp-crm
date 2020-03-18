@@ -32,7 +32,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TypeOf_Street_Edit = ({
+const FirstPersonPosition_Edit = ({
+  setNameOfPage,
   getOne_FIRST_PERSON_POSITION,
   update_FIRST_PERSON_POSITION,
   firstPersonPosition: { one_FIRST_PERSON_POSITION, loading }
@@ -54,7 +55,7 @@ const TypeOf_Street_Edit = ({
   const { position, positionRoditPadej } = formData;
 
   useEffect(() => {
-    setNameOfPage('Редактировать тип улицы');
+    setNameOfPage('Редактировать должность');
     getOne_FIRST_PERSON_POSITION(id);
   }, [setNameOfPage, getOne_FIRST_PERSON_POSITION, id]);
 
@@ -130,7 +131,7 @@ const TypeOf_Street_Edit = ({
   );
 };
 
-TypeOf_Street_Edit.propTypes = {
+FirstPersonPosition_Edit.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getOne_FIRST_PERSON_POSITION: PropTypes.func.isRequired,
   update_FIRST_PERSON_POSITION: PropTypes.func.isRequired,
@@ -145,4 +146,4 @@ export default connect(mapStateToProps, {
   setNameOfPage,
   getOne_FIRST_PERSON_POSITION,
   update_FIRST_PERSON_POSITION
-})(TypeOf_Street_Edit);
+})(FirstPersonPosition_Edit);

@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TypeOf_Firm_Add = ({ add_TYPE_OF_FIRM }) => {
+const TypeOf_Firm_Add = ({ setNameOfPage, add_TYPE_OF_FIRM }) => {
   const classes = useStyles();
   const history = useHistory();
 

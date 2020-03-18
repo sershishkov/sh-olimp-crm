@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TypeOf_Unit_List = ({
+  setNameOfPage,
   getAllOperatorCode,
   deleteOperatorCode,
   phoneOperator: { operatorCodes, loading }

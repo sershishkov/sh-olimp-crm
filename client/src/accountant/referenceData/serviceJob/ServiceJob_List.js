@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ServiceJob_List = ({
+  setNameOfPage,
   getAll_SERVICE_JOBS,
   delete_SERVICE_JOB,
   serviceJob: { arr_SERVICE_JOBS, loading }

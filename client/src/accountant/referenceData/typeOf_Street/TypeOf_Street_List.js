@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TypeOf_Street_List = ({
+  setNameOfPage,
   getAll_TYPE_OF_STREETS,
   delete_TYPE_OF_STREET,
   typeOf_Street: { arr_TYPE_OF_STREETS, loading }
