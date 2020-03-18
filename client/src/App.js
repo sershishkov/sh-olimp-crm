@@ -173,6 +173,22 @@ const GroupOf_Product_List = React.lazy(() =>
   import('./accountant/referenceData/groupOf_Product/GroupOf_Product_List')
 );
 
+const FirstPersonPosition_Add = React.lazy(() =>
+  import(
+    './accountant/referenceData/firstPersonPosition/FirstPersonPosition_Add'
+  )
+);
+const FirstPersonPosition_Edit = React.lazy(() =>
+  import(
+    './accountant/referenceData/firstPersonPosition/FirstPersonPosition_Edit'
+  )
+);
+const FirstPersonPosition_List = React.lazy(() =>
+  import(
+    './accountant/referenceData/firstPersonPosition/FirstPersonPosition_List'
+  )
+);
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: 70
@@ -432,6 +448,22 @@ function App() {
                 exact
                 path='/accountant/group-of-product'
                 component={GroupOf_Product_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/personposition/add'
+                component={FirstPersonPosition_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/personposition/:id'
+                component={FirstPersonPosition_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/personposition'
+                component={FirstPersonPosition_List}
               />
             </Switch>
           </Suspense>
