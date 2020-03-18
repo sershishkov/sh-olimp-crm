@@ -149,6 +149,20 @@ const PhoneOperator_List = React.lazy(() =>
   import('./accountant/referenceData/phoneOperator/PhoneOperator_List')
 );
 
+const GroupOf_ServiceJob_Add = React.lazy(() =>
+  import('./accountant/referenceData/groupOf_ServiceJob/GroupOf_ServiceJob_Add')
+);
+const GroupOf_ServiceJob_Edit = React.lazy(() =>
+  import(
+    './accountant/referenceData/groupOf_ServiceJob/GroupOf_ServiceJob_Edit'
+  )
+);
+const GroupOf_ServiceJob_List = React.lazy(() =>
+  import(
+    './accountant/referenceData/groupOf_ServiceJob/GroupOf_ServiceJob_List'
+  )
+);
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: 70
@@ -376,6 +390,22 @@ function App() {
                 exact
                 path='/accountant/phone-operator'
                 component={PhoneOperator_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/group-of-servicejob/add'
+                component={GroupOf_ServiceJob_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/group-of-servicejob/:id'
+                component={GroupOf_ServiceJob_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/group-of-servicejob'
+                component={GroupOf_ServiceJob_List}
               />
             </Switch>
           </Suspense>
