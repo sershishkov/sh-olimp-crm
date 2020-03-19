@@ -81,6 +81,8 @@ const supplier = require('./routes/accountant/referenceData/supplier');
 const ourFirm = require('./routes/accountant/referenceData/ourFirm');
 const product = require('./routes/accountant/referenceData/product');
 const serviceJob = require('./routes/accountant/referenceData/serviceJob');
+const city = require('./routes/accountant/referenceData/city');
+const street = require('./routes/accountant/referenceData/street');
 
 // OUR  MAIN DATA      //
 const our_SalesInvoiceNakladnaya = require('./routes/accountant/ourMainData/our_SalesInvoiceNakladnaya');
@@ -141,6 +143,8 @@ app.use('/api/v1/accountant/supplier', supplier);
 app.use('/api/v1/accountant/our-firm', ourFirm);
 app.use('/api/v1/accountant/product', product);
 app.use('/api/v1/accountant/service-job', serviceJob);
+app.use('/api/v1/accountant/city', city);
+app.use('/api/v1/accountant/street', street);
 
 // OUR  MAIN DATA      //
 app.use(
