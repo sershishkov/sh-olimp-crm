@@ -27,7 +27,8 @@ const Worker = new mongoose.Schema({
     // required: [true, 'Тип нaселенного пункта? ']
   },
   city: {
-    type: String
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'City'
     // required: [true, 'Населенный пункт? ']
   },
   typeOf_street: {
@@ -36,7 +37,8 @@ const Worker = new mongoose.Schema({
     // required: [true, 'Тип улицы? ']
   },
   street: {
-    type: String
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Street'
     // required: [true, 'Улица? ']
   },
   numberOf_house: {
