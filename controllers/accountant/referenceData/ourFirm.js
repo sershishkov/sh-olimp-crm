@@ -109,9 +109,20 @@ exports.updateOurFirm = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/accountant/our-firm
 //@access Private
 exports.getAllOurFirms = asyncHandler(async (req, res, next) => {
-  const allOurFirms = await OurFirm.find({}, 'firmName').sort({
-    firmName: 1
-  });
+  const allOurFirms = await OurFirm.find()
+    .sort({
+      firmName: 1
+    })
+    .populate({ path: 'typeOf_settlement', select: 'typeOf_SettlementShort' })
+    .populate({ path: 'typeOfFirm', select: 'TypeOf_FirmShort' })
+    .populate({ path: 'city', select: 'cityName' })
+    .populate({ path: 'typeOf_street', select: 'typeOf_StreetShort' })
+    .populate({ path: 'street', select: 'streetName' })
+    .populate({ path: 'firstPersonPosition', select: 'position' })
+    .populate({ path: 'actsOnBasisOf', select: 'actOnBasisOf' })
+    .populate({ path: 'taxPayerOn', select: 'typeOf_TaxPayerOn' })
+    .populate({ path: 'operatorCode', select: 'operatorCode' })
+    .populate({ path: 'groupOf_product', select: 'productGroup' });
   //Check if  exists response
   if (!allOurFirms) {
     return next(new ErrorResponse('На данный момент ничего в базе нет ', 400));

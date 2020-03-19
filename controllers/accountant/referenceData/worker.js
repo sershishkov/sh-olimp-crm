@@ -80,9 +80,15 @@ exports.updateWorker = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/accountant/worker
 //@access Private
 exports.getAllWorkers = asyncHandler(async (req, res, next) => {
-  const allWorkers = await Worker.find({}, 'surname').sort({
-    surname: 1
-  });
+  const allWorkers = await Worker.find()
+    .sort({
+      surname: 1
+    })
+    .populate({ path: 'typeOf_settlement', select: 'typeOf_SettlementShort' })
+    .populate({ path: 'city', select: 'cityName' })
+    .populate({ path: 'typeOf_street', select: 'typeOf_StreetShort' })
+    .populate({ path: 'street', select: 'streetName' })
+    .populate({ path: 'operatorCode', select: 'operatorCode' });
   //Check if  exists response
   if (!allWorkers) {
     return next(new ErrorResponse('На данный момент ничего в базе нет ', 400));
