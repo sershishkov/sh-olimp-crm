@@ -199,6 +199,36 @@ const BankName_List = React.lazy(() =>
   import('./accountant/referenceData/bankName/BankName_List')
 );
 
+const Worker_Add = React.lazy(() =>
+  import('./accountant/referenceData/worker/Worker_Add')
+);
+const Worker_Edit = React.lazy(() =>
+  import('./accountant/referenceData/worker/Worker_Edit')
+);
+const Worker_List = React.lazy(() =>
+  import('./accountant/referenceData/worker/Worker_List')
+);
+
+const City_Add = React.lazy(() =>
+  import('./accountant/referenceData/city/City_Add')
+);
+const City_Edit = React.lazy(() =>
+  import('./accountant/referenceData/city/City_Edit')
+);
+const City_List = React.lazy(() =>
+  import('./accountant/referenceData/city/City_List')
+);
+
+const Street_Add = React.lazy(() =>
+  import('./accountant/referenceData/street/Street_Add')
+);
+const Street_Edit = React.lazy(() =>
+  import('./accountant/referenceData/street/Street_Edit')
+);
+const Street_List = React.lazy(() =>
+  import('./accountant/referenceData/street/Street_List')
+);
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: 70
@@ -490,6 +520,54 @@ function App() {
                 exact
                 path='/accountant/bankname'
                 component={BankName_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/worker/add'
+                component={Worker_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/worker/:id'
+                component={Worker_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/worker'
+                component={Worker_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/city/add'
+                component={City_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/city/:id'
+                component={City_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/city'
+                component={City_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/street/add'
+                component={Street_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/street/:id'
+                component={Street_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/street'
+                component={Street_List}
               />
             </Switch>
           </Suspense>

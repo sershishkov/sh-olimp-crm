@@ -515,6 +515,7 @@ const ResponsiveDrawer = ({
               <ListItemText>Справочники</ListItemText>
               {openReferenceData ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
+
             <Collapse in={openReferenceData} timeout='auto' unmountOnExit>
               <List className={classes.nestedListLevel2}>
                 <ListItem
@@ -675,6 +676,20 @@ const ResponsiveDrawer = ({
                   button
                   className={classes.nestedListItemLevel2}
                   onClick={() => {
+                    history.push('/accountant/city');
+                    setMobileOpen(!mobileOpen);
+                  }}
+                >
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Города</ListItemText>
+                </ListItem>
+
+                <ListItem
+                  button
+                  className={classes.nestedListItemLevel2}
+                  onClick={() => {
                     history.push('/accountant/type-of-street');
                     setMobileOpen(!mobileOpen);
                   }}
@@ -683,6 +698,19 @@ const ResponsiveDrawer = ({
                     <SubdirectoryArrowRightIcon />
                   </ListItemIcon>
                   <ListItemText>ТипУлицы</ListItemText>
+                </ListItem>
+                <ListItem
+                  button
+                  className={classes.nestedListItemLevel2}
+                  onClick={() => {
+                    history.push('/accountant/street');
+                    setMobileOpen(!mobileOpen);
+                  }}
+                >
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Улицы</ListItemText>
                 </ListItem>
 
                 <ListItem
@@ -727,7 +755,14 @@ const ResponsiveDrawer = ({
                   <ListItemText>ЕдиницыИзмерения</ListItemText>
                 </ListItem>
 
-                <ListItem button className={classes.nestedListItemLevel2}>
+                <ListItem
+                  button
+                  className={classes.nestedListItemLevel2}
+                  onClick={() => {
+                    history.push('/accountant/worker');
+                    setMobileOpen(!mobileOpen);
+                  }}
+                >
                   <ListItemIcon>
                     <SubdirectoryArrowRightIcon />
                   </ListItemIcon>

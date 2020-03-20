@@ -39,6 +39,8 @@ import typeOf_TaxPayerOn from './accountant/referenceData/typeOf_TaxPayerOn';
 import typeOf_Unit from './accountant/referenceData/typeOf_Unit';
 import unit from './accountant/referenceData/unit';
 import worker from './accountant/referenceData/worker';
+import city from './accountant/referenceData/city';
+import street from './accountant/referenceData/street';
 
 export default combineReducers({
   alert,
@@ -81,5 +83,7 @@ export default combineReducers({
   typeOf_TaxPayerOn,
   typeOf_Unit,
   unit,
-  worker
+  worker,
+  city,
+  street
 });

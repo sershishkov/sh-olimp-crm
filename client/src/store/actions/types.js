@@ -256,3 +256,15 @@ export const UPDATE_WORKER = 'UPDATE_WORKER';
 export const GET_ALL_WORKERS = 'GET_ALL_WORKERS';
 export const GET_ONE_WORKER = 'GET_ONE_WORKER';
 export const DELETE_WORKER = 'DELETE_WORKER';
+
+export const SET_CITY = 'SET_CITY';
+export const UPDATE_CITY = 'UPDATE_CITY';
+export const GET_ALL_CITYS = 'GET_ALL_CITYS';
+export const GET_ONE_CITY = 'GET_ONE_CITY';
+export const DELETE_CITY = 'DELETE_CITY';
+
+export const SET_STREET = 'SET_STREET';
+export const UPDATE_STREET = 'UPDATE_STREET';
+export const GET_ALL_STREETS = 'GET_ALL_STREETS';
+export const GET_ONE_STREET = 'GET_ONE_STREET';
+export const DELETE_STREET = 'DELETE_STREET';

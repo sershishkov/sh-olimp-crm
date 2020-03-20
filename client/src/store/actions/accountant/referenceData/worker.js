@@ -11,7 +11,7 @@ import {
 
 export const getAll_WORKERS = () => async dispatch => {
   try {
-    const result = await axios.get(`/api/v1//accountant/worker`);
+    const result = await axios.get(`/api/v1/accountant/worker`);
     dispatch({ type: GET_ALL_WORKERS, payload: result.data.data });
   } catch (err) {
     const error = err.response.data.error;
@@ -23,7 +23,7 @@ export const getAll_WORKERS = () => async dispatch => {
 
 export const getOne_WORKER = itemId => async dispatch => {
   try {
-    const oneResult = await axios.get(`/api/v1//accountant/worker/${itemId}`);
+    const oneResult = await axios.get(`/api/v1/accountant/worker/${itemId}`);
 
     dispatch({
       type: GET_ONE_WORKER,
@@ -44,6 +44,7 @@ export const add_WORKER = (
   dateOf_Birth,
   postCode,
   typeOf_settlement,
+  city,
   typeOf_street,
   street,
   numberOf_house,
@@ -65,6 +66,7 @@ export const add_WORKER = (
     dateOf_Birth,
     postCode,
     typeOf_settlement,
+    city,
     typeOf_street,
     street,
     numberOf_house,
@@ -76,7 +78,7 @@ export const add_WORKER = (
 
   try {
     const createdItem = await axios.post(
-      `/api/v1//accountant/worker`,
+      `/api/v1/accountant/worker`,
       body,
       config
     );
@@ -103,6 +105,7 @@ export const update_WORKER = (
   dateOf_Birth,
   postCode,
   typeOf_settlement,
+  city,
   typeOf_street,
   street,
   numberOf_house,
@@ -124,6 +127,7 @@ export const update_WORKER = (
     dateOf_Birth,
     postCode,
     typeOf_settlement,
+    city,
     typeOf_street,
     street,
     numberOf_house,
@@ -135,7 +139,7 @@ export const update_WORKER = (
 
   try {
     const updatedItem = await axios.put(
-      `/api/v1//accountant/worker/${itemId}`,
+      `/api/v1/accountant/worker/${itemId}`,
       body,
       config
     );
@@ -156,7 +160,7 @@ export const update_WORKER = (
 
 export const delete_WORKER = itemId => async dispatch => {
   try {
-    await axios.delete(`/api/v1//accountant/worker/${itemId}`);
+    await axios.delete(`/api/v1/accountant/worker/${itemId}`);
     dispatch({
       type: DELETE_WORKER,
       payload: itemId
