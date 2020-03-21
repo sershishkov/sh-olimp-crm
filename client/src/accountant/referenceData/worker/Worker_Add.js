@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import IMask from 'imask';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -146,6 +147,16 @@ const Worker_Add = ({
         phoneNumber
       )
     );
+  };
+
+  const onInputPhoneHandler = e => {
+    // const inputPhoneNumber = document.getElementById('pnoneNumber');
+    const inputMaskOptions = {
+      mask: '+{38}(000)000-00-00'
+    };
+    const inputMask = IMask(e.target, inputMaskOptions);
+    // console.log(inputMask.value);
+    // console.log(inputMask.unmaskedValue);
   };
 
   const addItemHandler = () => {
@@ -432,12 +443,14 @@ const Worker_Add = ({
         </Grid>
         <Grid item xs={5}>
           <TextField
+            id='pnoneNumber'
             variant='outlined'
             name='phoneNumber'
             fullWidth
             placeholder='телефон'
-            type='number'
+            type='tel'
             value={phoneNumber}
+            onInput={e => onInputPhoneHandler(e)}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>

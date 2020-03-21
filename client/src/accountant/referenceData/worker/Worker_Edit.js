@@ -2,6 +2,7 @@ import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import IMask from 'imask';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -142,6 +143,7 @@ const Worker_Edit = ({
       const day =
         oldDate.getDay() < 10 ? `0${oldDate.getDay()}` : oldDate.getDay();
       const reverceDate = `${year}-${month}-${day}`;
+      console.log(reverceDate);
 
       setPageForm({
         ...pageForm,
@@ -162,6 +164,7 @@ const Worker_Edit = ({
       });
     }
   }, [one_WORKER]);
+  console.log(dateOf_Birth);
 
   const onChangeHandler = e => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
@@ -183,6 +186,13 @@ const Worker_Edit = ({
         phoneNumber
       )
     );
+  };
+  const onInputPhoneHandler = e => {
+    // const inputPhoneNumber = document.getElementById('pnoneNumber');
+    const inputMaskOptions = {
+      mask: '+{38}(000)000-00-00'
+    };
+    const inputMask = IMask(e.target, inputMaskOptions);
   };
 
   const updateItemHandler = () => {
@@ -466,12 +476,14 @@ const Worker_Edit = ({
         </Grid>
         <Grid item xs={5}>
           <TextField
+            id='pnoneNumber'
             variant='outlined'
             name='phoneNumber'
             fullWidth
             placeholder='телефон'
             type='text'
             value={phoneNumber ? phoneNumber : ''}
+            onInput={e => onInputPhoneHandler(e)}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
