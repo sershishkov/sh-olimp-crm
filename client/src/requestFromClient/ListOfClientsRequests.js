@@ -127,7 +127,7 @@ const ListOfClientsRequests = ({
               >
                 <Grid item xs={6}>
                   <Typography variant='h6' align='center'>
-                    тел: {item.operatorCode.operatorCode} {item.phoneNumber}
+                    тел: {item.phoneNumber}
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>

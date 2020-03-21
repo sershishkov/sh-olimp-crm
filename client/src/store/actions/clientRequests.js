@@ -40,7 +40,6 @@ export const getOneClientRequest = imageId => async dispatch => {
 export const addClientRequest = (
   clientName,
   requestFromClient,
-  operatorCode,
   phoneNumber,
   email
 ) => async dispatch => {
@@ -53,7 +52,6 @@ export const addClientRequest = (
   const body = JSON.stringify({
     clientName,
     requestFromClient,
-    operatorCode,
     phoneNumber,
     email
   });
@@ -83,7 +81,6 @@ export const updateClientRequest = (
   itemId,
   clientName,
   requestFromClient,
-  operatorCode,
   phoneNumber,
   email
 ) => async dispatch => {
@@ -96,7 +93,6 @@ export const updateClientRequest = (
   const body = JSON.stringify({
     clientName,
     requestFromClient,
-    operatorCode,
     phoneNumber,
     email
   });

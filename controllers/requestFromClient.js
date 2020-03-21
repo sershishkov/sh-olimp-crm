@@ -14,7 +14,6 @@ exports.addRequestFromClient = asyncHandler(async (req, res, next) => {
   const newRequestFromClient = new RequestFromClient({
     clientName: req.body.clientName,
     requestFromClient: req.body.requestFromClient,
-    operatorCode: req.body.operatorCode,
     phoneNumber: req.body.phoneNumber,
     email: req.body.email
   });
@@ -38,7 +37,6 @@ exports.updateRequestFromClient = asyncHandler(async (req, res, next) => {
   const newRequestFromClient = {
     clientName: req.body.clientName,
     requestFromClient: req.body.requestFromClient,
-    operatorCode: req.body.operatorCode,
     phoneNumber: req.body.phoneNumber,
     email: req.body.email
   };
@@ -62,11 +60,9 @@ exports.updateRequestFromClient = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/request-from-client
 //@access Private
 exports.getAllRequestFromClients = asyncHandler(async (req, res, next) => {
-  const allRequestFromClients = await RequestFromClient.find()
-    .populate({ path: 'operatorCode', select: 'operatorCode' })
-    .sort({
-      createdAt: -1
-    });
+  const allRequestFromClients = await RequestFromClient.find().sort({
+    createdAt: -1
+  });
   //Check if  exists response
   if (!allRequestFromClients) {
     return next(new ErrorResponse('На данный момент ничего в базе нет ', 400));
@@ -83,7 +79,6 @@ exports.getAllRequestFromClients = asyncHandler(async (req, res, next) => {
 //@access Private
 exports.getOneRequestFromClient = asyncHandler(async (req, res, next) => {
   const oneRequestFromClient = await RequestFromClient.findById(req.params.id);
-  // .populate({ path: 'operatorCode', select: 'operatorCode' });
   //Check if  exists response
   if (!oneRequestFromClient) {
     return next(new ErrorResponse('Нет  объекта с данным id', 400));

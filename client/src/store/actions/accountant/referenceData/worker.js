@@ -50,7 +50,6 @@ export const add_WORKER = (
   numberOf_house,
   numberOf_app,
   individualTaxNumber,
-  operatorCode,
   phoneNumber
 ) => async dispatch => {
   const config = {
@@ -72,7 +71,6 @@ export const add_WORKER = (
     numberOf_house,
     numberOf_app,
     individualTaxNumber,
-    operatorCode,
     phoneNumber
   });
 
@@ -111,7 +109,6 @@ export const update_WORKER = (
   numberOf_house,
   numberOf_app,
   individualTaxNumber,
-  operatorCode,
   phoneNumber
 ) => async dispatch => {
   const config = {
@@ -133,7 +130,6 @@ export const update_WORKER = (
     numberOf_house,
     numberOf_app,
     individualTaxNumber,
-    operatorCode,
     phoneNumber
   });
 

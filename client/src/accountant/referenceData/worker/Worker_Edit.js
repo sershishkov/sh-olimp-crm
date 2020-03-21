@@ -23,7 +23,6 @@ import { getAll_TYPE_OF_SETTLEMENTS } from '../../../store/actions/accountant/re
 import { getAll_CITYS } from '../../../store/actions/accountant/referenceData/city';
 import { getAll_TYPE_OF_STREETS } from '../../../store/actions/accountant/referenceData/typeOf_Street';
 import { getAll_STREETS } from '../../../store/actions/accountant/referenceData/street';
-import { getAllOperatorCode } from '../../../store/actions/accountant/referenceData/phoneOperator';
 
 import Spinner from '../../../shared/spinner/Spinner';
 
@@ -64,13 +63,11 @@ const Worker_Edit = ({
   getAll_CITYS,
   getAll_TYPE_OF_STREETS,
   getAll_STREETS,
-  getAllOperatorCode,
   state_worker: { one_WORKER },
   state_typeOf_Settlement: { arr_TYPE_OF_SETTLEMENTS },
   state_city: { arr_CITYS },
   state_typeOf_Street: { arr_TYPE_OF_STREETS },
-  state_street: { arr_STREETS },
-  state_phoneOperator: { operatorCodes }
+  state_street: { arr_STREETS }
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -93,7 +90,6 @@ const Worker_Edit = ({
     numberOf_house: '',
     numberOf_app: '',
     individualTaxNumber: '',
-    operatorCode: '',
     phoneNumber: ''
   });
 
@@ -111,7 +107,6 @@ const Worker_Edit = ({
     numberOf_house,
     numberOf_app,
     individualTaxNumber,
-    operatorCode,
     phoneNumber
   } = pageForm;
 
@@ -122,14 +117,12 @@ const Worker_Edit = ({
     getAll_CITYS();
     getAll_TYPE_OF_STREETS();
     getAll_STREETS();
-    getAllOperatorCode();
   }, [
     setNameOfPage,
     getAll_TYPE_OF_SETTLEMENTS,
     getAll_CITYS,
     getAll_TYPE_OF_STREETS,
     getAll_STREETS,
-    getAllOperatorCode,
     getOne_WORKER,
     id
   ]);
@@ -159,7 +152,6 @@ const Worker_Edit = ({
         numberOf_house: one_WORKER.numberOf_house,
         numberOf_app: one_WORKER.numberOf_app,
         individualTaxNumber: one_WORKER.individualTaxNumber,
-        operatorCode: one_WORKER.operatorCode,
         phoneNumber: one_WORKER.phoneNumber
       });
     }
@@ -182,7 +174,6 @@ const Worker_Edit = ({
         numberOf_house &&
         numberOf_app &&
         individualTaxNumber &&
-        operatorCode &&
         phoneNumber
       )
     );
@@ -192,7 +183,8 @@ const Worker_Edit = ({
     const inputMaskOptions = {
       mask: '+{38}(000)000-00-00'
     };
-    const inputMask = IMask(e.target, inputMaskOptions);
+    // const inputMask =
+    IMask(e.target, inputMaskOptions);
   };
 
   const updateItemHandler = () => {
@@ -210,7 +202,6 @@ const Worker_Edit = ({
       numberOf_house,
       numberOf_app,
       individualTaxNumber,
-      operatorCode,
       phoneNumber
     );
     history.push('/accountant/worker');
@@ -432,7 +423,7 @@ const Worker_Edit = ({
       </Grid>
 
       <Grid item xs={12} container>
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <TextField
             variant='outlined'
             name='individualTaxNumber'
@@ -443,38 +434,8 @@ const Worker_Edit = ({
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
-        <Grid item xs={2}>
-          {!operatorCodes ? (
-            <Spinner />
-          ) : (
-            <Grid item xs={12} className={classes.wrapSelect}>
-              <InputLabel
-                id='select-phone-code'
-                className={
-                  operatorCode ? classes.displayNone : classes.displayFlex
-                }
-              >
-                тел код
-              </InputLabel>
-              <Select
-                variant='outlined'
-                labelId='select-phone-code'
-                fullWidth
-                value={operatorCode ? operatorCode : ''}
-                name='operatorCode'
-                onChange={e => onChangeHandler(e)}
-                className={classes.select}
-              >
-                {operatorCodes.map(item => (
-                  <MenuItem key={item._id} value={item._id}>
-                    {item.operatorCode}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
-          )}
-        </Grid>
-        <Grid item xs={5}>
+
+        <Grid item xs={6}>
           <TextField
             id='pnoneNumber'
             variant='outlined'
@@ -514,13 +475,11 @@ Worker_Edit.propTypes = {
   getAll_CITYS: PropTypes.func.isRequired,
   getAll_TYPE_OF_STREETS: PropTypes.func.isRequired,
   getAll_STREETS: PropTypes.func.isRequired,
-  getAllOperatorCode: PropTypes.func.isRequired,
 
   state_typeOf_Settlement: PropTypes.object.isRequired,
   state_city: PropTypes.object.isRequired,
   state_typeOf_Street: PropTypes.object.isRequired,
   state_street: PropTypes.object.isRequired,
-  state_phoneOperator: PropTypes.object.isRequired,
   state_worker: PropTypes.object.isRequired
 };
 
@@ -529,7 +488,6 @@ const mapStateToProps = state => ({
   state_city: state.city,
   state_typeOf_Street: state.typeOf_Street,
   state_street: state.street,
-  state_phoneOperator: state.phoneOperator,
   state_worker: state.worker
 });
 
@@ -540,6 +498,5 @@ export default connect(mapStateToProps, {
   getAll_TYPE_OF_SETTLEMENTS,
   getAll_CITYS,
   getAll_TYPE_OF_STREETS,
-  getAll_STREETS,
-  getAllOperatorCode
+  getAll_STREETS
 })(Worker_Edit);

@@ -24,7 +24,6 @@ exports.addWorker = asyncHandler(async (req, res, next) => {
     numberOf_house: req.body.numberOf_house,
     numberOf_app: req.body.numberOf_app,
     individualTaxNumber: req.body.individualTaxNumber,
-    operatorCode: req.body.operatorCode,
     phoneNumber: req.body.phoneNumber
   });
 
@@ -57,7 +56,6 @@ exports.updateWorker = asyncHandler(async (req, res, next) => {
     numberOf_house: req.body.numberOf_house,
     numberOf_app: req.body.numberOf_app,
     individualTaxNumber: req.body.individualTaxNumber,
-    operatorCode: req.body.operatorCode,
     phoneNumber: req.body.phoneNumber
   };
 
@@ -87,8 +85,7 @@ exports.getAllWorkers = asyncHandler(async (req, res, next) => {
     .populate({ path: 'typeOf_settlement', select: 'typeOf_SettlementShort' })
     .populate({ path: 'city', select: 'cityName' })
     .populate({ path: 'typeOf_street', select: 'typeOf_StreetShort' })
-    .populate({ path: 'street', select: 'streetName' })
-    .populate({ path: 'operatorCode', select: 'operatorCode' });
+    .populate({ path: 'street', select: 'streetName' });
   //Check if  exists response
   if (!allWorkers) {
     return next(new ErrorResponse('На данный момент ничего в базе нет ', 400));

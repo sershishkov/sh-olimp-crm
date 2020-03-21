@@ -122,7 +122,6 @@ exports.getAllSuppliers = asyncHandler(async (req, res, next) => {
     .populate({ path: 'firstPersonPosition', select: 'position' })
     .populate({ path: 'actsOnBasisOf', select: 'actOnBasisOf' })
     .populate({ path: 'taxPayerOn', select: 'typeOf_TaxPayerOn' })
-    .populate({ path: 'phoneNumbers.phoneCode', select: 'operatorCode' })
     .populate({ path: 'groupOf_product', select: 'productGroup' });
   //Check if  exists response
   if (!allSuppliers) {
@@ -139,21 +138,21 @@ exports.getAllSuppliers = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/accountant/supplier/:id
 //@access Private
 exports.getOneSupplier = asyncHandler(async (req, res, next) => {
-  const oneSupplier = await Supplier.findById(req.params.id)
-    .populate({
-      path: 'typeOfFirm',
-      select: 'TypeOf_FirmLong TypeOf_FirmShort'
-    })
-    .populate({ path: 'typeOf_settlement', select: 'typeOf_SettlementShort' })
-    .populate({ path: 'typeOf_street', select: 'typeOf_StreetShort' })
-    .populate({
-      path: 'firstPersonPosition',
-      select: 'position positionRoditPadej'
-    })
-    .populate({ path: 'actsOnBasisOf', select: 'actOnBasisOf' })
-    .populate({ path: 'taxPayerOn', select: 'typeOf_TaxPayerOn' })
-    .populate({ path: 'groupOf_product', select: 'productGroup' })
-    .populate({ path: 'phoneNumbers.phoneCode', select: 'operatorCode' });
+  const oneSupplier = await Supplier.findById(req.params.id);
+  // .populate({
+  //   path: 'typeOfFirm',
+  //   select: 'TypeOf_FirmLong TypeOf_FirmShort'
+  // })
+  // .populate({ path: 'typeOf_settlement', select: 'typeOf_SettlementShort' })
+  // .populate({ path: 'typeOf_street', select: 'typeOf_StreetShort' })
+  // .populate({
+  //   path: 'firstPersonPosition',
+  //   select: 'position positionRoditPadej'
+  // })
+  // .populate({ path: 'actsOnBasisOf', select: 'actOnBasisOf' })
+  // .populate({ path: 'taxPayerOn', select: 'typeOf_TaxPayerOn' })
+  // .populate({ path: 'groupOf_product', select: 'productGroup' });
+
   //Check if  exists response
   if (!oneSupplier) {
     return next(new ErrorResponse('Нет  объекта с данным id', 400));

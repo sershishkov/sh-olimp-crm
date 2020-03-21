@@ -54,12 +54,6 @@ const Worker = new mongoose.Schema({
     // required: [true, 'Введите  ЄДРПОУ '],
     match: [/\b\d{10}\b/, 'Пожалуйста введите 10 цифр']
   },
-
-  operatorCode: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'PhoneOperator',
-    required: [true, 'Выберите код вашего оператора']
-  },
   phoneNumber: {
     type: String,
     required: [true, 'Введите номер телефона']

@@ -38,7 +38,6 @@ exports.addOurFirm = asyncHandler(async (req, res, next) => {
     issuedBy: req.body.issuedBy,
     taxPayerOn: req.body.taxPayerOn,
     email: req.body.email,
-    operatorCode: req.body.operatorCode,
     phoneNumber: req.body.phoneNumber,
     creator: req.user.id
   });
@@ -86,7 +85,6 @@ exports.updateOurFirm = asyncHandler(async (req, res, next) => {
     issuedBy: req.body.issuedBy,
     taxPayerOn: req.body.taxPayerOn,
     email: req.body.email,
-    operatorCode: req.body.operatorCode,
     phoneNumber: req.body.phoneNumber
   };
 
@@ -121,7 +119,6 @@ exports.getAllOurFirms = asyncHandler(async (req, res, next) => {
     .populate({ path: 'firstPersonPosition', select: 'position' })
     .populate({ path: 'actsOnBasisOf', select: 'actOnBasisOf' })
     .populate({ path: 'taxPayerOn', select: 'typeOf_TaxPayerOn' })
-    .populate({ path: 'operatorCode', select: 'operatorCode' })
     .populate({ path: 'groupOf_product', select: 'productGroup' });
   //Check if  exists response
   if (!allOurFirms) {
@@ -138,24 +135,23 @@ exports.getAllOurFirms = asyncHandler(async (req, res, next) => {
 //@route  GET /api/v1/accountant/our-firm/:id
 //@access Private
 exports.getOneOurFirm = asyncHandler(async (req, res, next) => {
-  const oneOurFirm = await OurFirm.findById(req.params.id)
-    .populate({
-      path: 'typeOfFirm',
-      select: 'TypeOf_FirmLong TypeOf_FirmShort'
-    })
-    .populate({ path: 'typeOf_settlement', select: 'typeOf_SettlementShort' })
-    .populate({ path: 'typeOf_street', select: 'typeOf_StreetShort' })
-    .populate({
-      path: 'firstPersonPosition',
-      select: 'position positionRoditPadej'
-    })
-    .populate({ path: 'actsOnBasisOf', select: 'actOnBasisOf' })
-    .populate({ path: 'taxPayerOn', select: 'typeOf_TaxPayerOn' })
-    .populate({ path: 'operatorCode', select: 'operatorCode' })
-    .populate({
-      path: 'typeOfFirm',
-      select: 'TypeOf_FirmLong TypeOf_FirmShort'
-    });
+  const oneOurFirm = await OurFirm.findById(req.params.id);
+  // .populate({
+  //   path: 'typeOfFirm',
+  //   select: 'TypeOf_FirmLong TypeOf_FirmShort'
+  // })
+  // .populate({ path: 'typeOf_settlement', select: 'typeOf_SettlementShort' })
+  // .populate({ path: 'typeOf_street', select: 'typeOf_StreetShort' })
+  // .populate({
+  //   path: 'firstPersonPosition',
+  //   select: 'position positionRoditPadej'
+  // })
+  // .populate({ path: 'actsOnBasisOf', select: 'actOnBasisOf' })
+  // .populate({ path: 'taxPayerOn', select: 'typeOf_TaxPayerOn' })
+  // .populate({
+  //   path: 'typeOfFirm',
+  //   select: 'TypeOf_FirmLong TypeOf_FirmShort'
+  // });
   //Check if  exists response
   if (!oneOurFirm) {
     return next(new ErrorResponse('Нет  объекта с данным id', 400));

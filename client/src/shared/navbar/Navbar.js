@@ -588,20 +588,6 @@ const ResponsiveDrawer = ({
                   <ListItemText>Наши фирмы</ListItemText>
                 </ListItem>
 
-                <ListItem
-                  button
-                  className={classes.nestedListItemLevel2}
-                  onClick={() => {
-                    history.push('/accountant/phone-operator');
-                    setMobileOpen(!mobileOpen);
-                  }}
-                >
-                  <ListItemIcon>
-                    <SubdirectoryArrowRightIcon />
-                  </ListItemIcon>
-                  <ListItemText>ТелОператор</ListItemText>
-                </ListItem>
-
                 <ListItem button className={classes.nestedListItemLevel2}>
                   <ListItemIcon>
                     <SubdirectoryArrowRightIcon />

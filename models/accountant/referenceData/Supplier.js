@@ -111,10 +111,6 @@ const Supplier = new mongoose.Schema({
   },
   phoneNumbers: [
     {
-      phoneCode: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'PhoneOperator'
-      },
       phoneNumber: {
         type: String,
         required: [true, 'Введите номер телефона'],

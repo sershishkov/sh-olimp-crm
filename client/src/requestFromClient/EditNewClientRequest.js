@@ -2,9 +2,9 @@ import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import IMask from 'imask';
 
 import { setNameOfPage } from '../store/actions/nameOfPage';
-import { getAllOperatorCode } from '../store/actions/accountant/referenceData/phoneOperator';
 import {
   getOneClientRequest,
   updateClientRequest
@@ -15,9 +15,6 @@ import Spinner from '../shared/spinner/Spinner';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -51,12 +48,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const EditNewClientRequest = ({
-  phoneOperator: { operatorCodes, loading },
-  clientRequests: { oneClientRequest },
+  clientRequests: { oneClientRequest, loading },
   setNameOfPage,
   getOneClientRequest,
-  updateClientRequest,
-  getAllOperatorCode
+  updateClientRequest
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -69,25 +64,17 @@ const EditNewClientRequest = ({
   const [pageForm, setPageForm] = useState({
     clientName: '',
     requestFromClient: '',
-    operatorCod: '',
     phoneNumber: '',
     email: ''
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
-  const {
-    clientName,
-    requestFromClient,
-    operatorCod,
-    phoneNumber,
-    email
-  } = pageForm;
+  const { clientName, requestFromClient, phoneNumber, email } = pageForm;
 
   useEffect(() => {
     setNameOfPage('Редактируем заявку');
-    getAllOperatorCode();
     getOneClientRequest(id);
-  }, [setNameOfPage, getAllOperatorCode, getOneClientRequest, id]);
+  }, [setNameOfPage, getOneClientRequest, id]);
 
   useLayoutEffect(() => {
     if (oneClientRequest) {
@@ -95,7 +82,6 @@ const EditNewClientRequest = ({
         ...pageForm,
         clientName: oneClientRequest.clientName,
         requestFromClient: oneClientRequest.requestFromClient,
-        operatorCod: oneClientRequest.operatorCode,
         phoneNumber: oneClientRequest.phoneNumber,
         email: oneClientRequest.email
       });
@@ -104,29 +90,24 @@ const EditNewClientRequest = ({
 
   const onChangeHandler = e => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
-    // console.log(e.target.value);
     setDisabledForm(
-      !(
-        clientName &&
-        requestFromClient &&
-        ((operatorCod && phoneNumber) || email)
-      )
+      !(clientName && requestFromClient && (phoneNumber || email))
     );
   };
 
   const updateClientRequestHandler = () => {
-    updateClientRequest(
-      id,
-      clientName,
-      requestFromClient,
-      operatorCod,
-      phoneNumber,
-      email
-    );
+    updateClientRequest(id, clientName, requestFromClient, phoneNumber, email);
     history.push('/request-from-client');
   };
 
-  return loading || !oneClientRequest ? (
+  const onInputPhoneHandler = e => {
+    const inputMaskOptions = {
+      mask: '+{38}(000)000-00-00'
+    };
+    IMask(e.target, inputMaskOptions);
+  };
+
+  return loading ? (
     <Spinner />
   ) : (
     <Grid container className={classes.root} spacing={3}>
@@ -164,42 +145,19 @@ const EditNewClientRequest = ({
       </Grid>
 
       <Grid item xs={12} container alignItems='center'>
-        <Grid item xs={2} className={classes.wrapSelect}>
-          <InputLabel
-            id='add-select-label'
-            className={operatorCod ? classes.displayNone : classes.displayFlex}
-          >
-            код оператора
-          </InputLabel>
-          <Select
-            variant='outlined'
-            labelId='add-select-label'
-            fullWidth
-            value={operatorCod ? operatorCod : ''}
-            name='operatorCod'
-            onChange={e => onChangeHandler(e)}
-            className={classes.select}
-          >
-            {operatorCodes.map(item => (
-              <MenuItem key={item._id} value={item._id}>
-                {item.operatorCode}
-              </MenuItem>
-            ))}
-          </Select>
-        </Grid>
-
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <TextField
             variant='outlined'
-            type='number'
+            type='tel'
             fullWidth
-            placeholder='номер телефона 7 цифр'
+            placeholder='телефон'
             name='phoneNumber'
             value={phoneNumber ? phoneNumber : ''}
+            onInput={e => onInputPhoneHandler(e)}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <TextField
             variant='outlined'
             type='text'
@@ -260,20 +218,16 @@ const EditNewClientRequest = ({
 
 EditNewClientRequest.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  getAllOperatorCode: PropTypes.func.isRequired,
   getOneClientRequest: PropTypes.func.isRequired,
-  updateClientRequest: PropTypes.func.isRequired,
-  phoneOperator: PropTypes.object.isRequired
+  updateClientRequest: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  phoneOperator: state.phoneOperator,
   clientRequests: state.clientRequests
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getOneClientRequest,
-  updateClientRequest,
-  getAllOperatorCode
+  updateClientRequest
 })(EditNewClientRequest);

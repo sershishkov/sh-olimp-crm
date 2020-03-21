@@ -64,7 +64,6 @@ export const add_OUR_FIRM = (
   issuedBy,
   taxPayerOn,
   email,
-  operatorCode,
   phoneNumber
 ) => async dispatch => {
   const config = {
@@ -97,7 +96,6 @@ export const add_OUR_FIRM = (
     issuedBy,
     taxPayerOn,
     email,
-    operatorCode,
     phoneNumber
   });
 
@@ -147,7 +145,6 @@ export const update_OUR_FIRM = (
   issuedBy,
   taxPayerOn,
   email,
-  operatorCode,
   phoneNumber
 ) => async dispatch => {
   const config = {
@@ -180,7 +177,6 @@ export const update_OUR_FIRM = (
     issuedBy,
     taxPayerOn,
     email,
-    operatorCode,
     phoneNumber
   });
 

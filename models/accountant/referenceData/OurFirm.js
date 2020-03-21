@@ -108,11 +108,6 @@ const OurFirm = new mongoose.Schema({
       'Пожалуйста введите корректный email'
     ]
   },
-  operatorCode: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'PhoneOperator',
-    required: [true, 'Выберите код вашего оператора']
-  },
   phoneNumber: {
     type: String,
     required: [true, 'Введите номер телефона'],

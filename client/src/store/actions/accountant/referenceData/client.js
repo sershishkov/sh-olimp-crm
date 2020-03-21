@@ -65,7 +65,6 @@ export const add_CLIENT = (
   issuedBy,
   taxPayerOn,
   email,
-  operatorCode,
   phoneNumber
 ) => async dispatch => {
   const config = {
@@ -99,7 +98,6 @@ export const add_CLIENT = (
     issuedBy,
     taxPayerOn,
     email,
-    operatorCode,
     phoneNumber
   });
 
@@ -150,7 +148,6 @@ export const update_CLIENT = (
   issuedBy,
   taxPayerOn,
   email,
-  operatorCode,
   phoneNumber
 ) => async dispatch => {
   const config = {
@@ -184,7 +181,6 @@ export const update_CLIENT = (
     issuedBy,
     taxPayerOn,
     email,
-    operatorCode,
     phoneNumber
   });
 

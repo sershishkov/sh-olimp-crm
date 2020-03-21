@@ -27,7 +27,6 @@ import firstPersonPosition from './accountant/referenceData/firstPersonPosition'
 import groupOf_Product from './accountant/referenceData/groupOf_Product';
 import groupOf_ServiceJob from './accountant/referenceData/groupOf_ServiceJob';
 import ourFirm from './accountant/referenceData/ourFirm';
-import phoneOperator from './accountant/referenceData/phoneOperator';
 import product from './accountant/referenceData/product';
 import serviceJob from './accountant/referenceData/serviceJob';
 import supplier from './accountant/referenceData/supplier';
@@ -72,7 +71,6 @@ export default combineReducers({
   groupOf_Product,
   groupOf_ServiceJob,
   ourFirm,
-  phoneOperator,
   product,
   serviceJob,
   supplier,

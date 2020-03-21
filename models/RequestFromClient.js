@@ -9,15 +9,11 @@ const RequestFromClient = new mongoose.Schema({
     type: String,
     required: [true, 'напишите вашу заявку']
   },
-  operatorCode: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'PhoneOperator'
-    // required: [true, 'Выберите код вашего оператора']
-  },
+
   phoneNumber: {
-    type: String,
+    type: String
     // required: [true, 'Введите номер телефона'],
-    match: [/\b\d{7}\b/, 'Пожалуйста введите 7 цифр']
+    // match: [/\b\d{7}\b/, 'Пожалуйста введите 7 цифр']
   },
   email: {
     type: String,
