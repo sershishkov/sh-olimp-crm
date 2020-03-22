@@ -109,15 +109,11 @@ const Supplier = new mongoose.Schema({
       'Пожалуйста введите корректный email'
     ]
   },
-  phoneNumbers: [
-    {
-      phoneNumber: {
-        type: String,
-        required: [true, 'Введите номер телефона'],
-        match: [/\b\d{7}\b/, 'Пожалуйста введите 7 цифр']
-      }
-    }
-  ],
+  phoneNumber: {
+    type: String,
+    required: [true, 'Введите номер телефона']
+    // match: [/\b\d{7}\b/, 'Пожалуйста введите 7 цифр']
+  },
 
   groupOf_product: [
     {

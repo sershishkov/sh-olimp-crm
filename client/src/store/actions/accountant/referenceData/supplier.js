@@ -64,7 +64,7 @@ export const add_SUPPLIER = (
   issuedBy,
   taxPayerOn,
   email,
-  phoneNumbers,
+  phoneNumber,
   groupOf_product
 ) => async dispatch => {
   const config = {
@@ -97,7 +97,7 @@ export const add_SUPPLIER = (
     issuedBy,
     taxPayerOn,
     email,
-    phoneNumbers,
+    phoneNumber,
     groupOf_product
   });
 
@@ -147,7 +147,7 @@ export const update_SUPPLIER = (
   issuedBy,
   taxPayerOn,
   email,
-  phoneNumbers,
+  phoneNumber,
   groupOf_product
 ) => async dispatch => {
   const config = {
@@ -180,7 +180,7 @@ export const update_SUPPLIER = (
     issuedBy,
     taxPayerOn,
     email,
-    phoneNumbers,
+    phoneNumber,
     groupOf_product
   });
 

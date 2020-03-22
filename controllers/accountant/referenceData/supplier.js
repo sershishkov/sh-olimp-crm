@@ -38,7 +38,7 @@ exports.addSupplier = asyncHandler(async (req, res, next) => {
     issuedBy: req.body.issuedBy,
     taxPayerOn: req.body.taxPayerOn,
     email: req.body.email,
-    phoneNumbers: req.body.phoneNumbers,
+    phoneNumber: req.body.phoneNumber,
     groupOf_product: req.body.groupOf_product,
     creator: req.user.id
   });
@@ -87,7 +87,7 @@ exports.updateSupplier = asyncHandler(async (req, res, next) => {
     taxPayerOn: req.body.taxPayerOn,
     email: req.body.email,
 
-    phoneNumbers: req.body.phoneNumbers,
+    phoneNumber: req.body.phoneNumber,
     groupOf_product: req.body.groupOf_product
   };
 

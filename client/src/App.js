@@ -219,6 +219,16 @@ const Street_List = React.lazy(() =>
   import('./accountant/referenceData/street/Street_List')
 );
 
+const Supplier_Add = React.lazy(() =>
+  import('./accountant/referenceData/supplier/Supplier_Add')
+);
+const Supplier_Edit = React.lazy(() =>
+  import('./accountant/referenceData/supplier/Supplier_Edit')
+);
+const Supplier_List = React.lazy(() =>
+  import('./accountant/referenceData/supplier/Supplier_List')
+);
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: 70
@@ -501,6 +511,7 @@ function App() {
                 path='/accountant/worker/add'
                 component={Worker_Add}
               />
+
               <PrivateRoute
                 exact
                 path='/accountant/worker/:id'
@@ -542,6 +553,22 @@ function App() {
                 exact
                 path='/accountant/street'
                 component={Street_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/supplier/add'
+                component={Supplier_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/supplier/:id'
+                component={Supplier_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/supplier'
+                component={Supplier_List}
               />
             </Switch>
           </Suspense>
