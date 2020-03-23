@@ -111,7 +111,7 @@ const OurFirm = new mongoose.Schema({
   phoneNumber: {
     type: String,
     required: [true, 'Введите номер телефона'],
-    match: [/\b\d{7}\b/, 'Пожалуйста введите 7 цифр']
+   // match: [/\b\d{7}\b/, 'Пожалуйста введите 7 цифр']
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,

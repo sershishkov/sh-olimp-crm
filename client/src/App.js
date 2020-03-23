@@ -229,6 +229,16 @@ const Supplier_List = React.lazy(() =>
   import('./accountant/referenceData/supplier/Supplier_List')
 );
 
+const OurFirm_Add = React.lazy(() =>
+  import('./accountant/referenceData/ourFirm/OurFirm_Add')
+);
+const OurFirm_Edit = React.lazy(() =>
+  import('./accountant/referenceData/ourFirm/OurFirm_Edit')
+);
+const OurFirm_List = React.lazy(() =>
+  import('./accountant/referenceData/ourFirm/OurFirm_List')
+);
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: 70
@@ -569,6 +579,22 @@ function App() {
                 exact
                 path='/accountant/supplier'
                 component={Supplier_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/our-firm/add'
+                component={OurFirm_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/our-firm/:id'
+                component={OurFirm_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/our-firm'
+                component={OurFirm_List}
               />
             </Switch>
           </Suspense>

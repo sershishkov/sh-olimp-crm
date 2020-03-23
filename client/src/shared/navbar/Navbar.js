@@ -581,7 +581,14 @@ const ResponsiveDrawer = ({
                   <ListItemText>Группы работ</ListItemText>
                 </ListItem>
 
-                <ListItem button className={classes.nestedListItemLevel2}>
+                <ListItem
+                  button
+                  className={classes.nestedListItemLevel2}
+                  onClick={() => {
+                    history.push('/accountant/our-firm');
+                    setMobileOpen(!mobileOpen);
+                  }}
+                >
                   <ListItemIcon>
                     <SubdirectoryArrowRightIcon />
                   </ListItemIcon>
