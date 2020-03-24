@@ -100,73 +100,94 @@ const ServiceJob_Add = ({
         назад
       </Button>
 
-      <Grid item xs={4}>
-        <TextField
-          variant='outlined'
-          name='serviceName'
-          fullWidth
-          placeholder='Введите полное название'
-          type='text'
-          value={serviceName}
-          onChange={e => onChangeHandler(e)}
-        />
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Наименование работы</Typography>
+        </Grid>
+        <Grid item xs={8} container>
+          <TextField
+            variant='outlined'
+            name='serviceName'
+            fullWidth
+            placeholder='Введите полное название'
+            type='text'
+            value={serviceName}
+            onChange={e => onChangeHandler(e)}
+          />
+        </Grid>
       </Grid>
-      {!unit ? (
-        <Spinner />
-      ) : (
-        <Grid item xs={4} className={classes.wrapSelect}>
-          <InputLabel
-            id='select-unit'
-            className={thisUnit ? classes.displayNone : classes.displayFlex}
-          >
-            ед. измерений
-          </InputLabel>
-          <Select
-            variant='outlined'
-            labelId='select-unit'
-            fullWidth
-            value={thisUnit}
-            name='thisUnit'
-            onChange={e => onChangeHandler(e)}
-            className={classes.select}
-          >
-            {unit.arr_UNITS.map(item => (
-              <MenuItem key={item._id} value={item._id}>
-                {item.unitNameShort}
-              </MenuItem>
-            ))}
-          </Select>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Единицы измерения</Typography>
         </Grid>
-      )}
-      {!groupOf_ServiceJob ? (
-        <Spinner />
-      ) : (
-        <Grid item xs={4} className={classes.wrapSelect}>
-          <InputLabel
-            id='select-service-job-group'
-            className={
-              serviceJobGroup ? classes.displayNone : classes.displayFlex
-            }
-          >
-            группа работ
-          </InputLabel>
-          <Select
-            variant='outlined'
-            labelId='select-service-job-group'
-            fullWidth
-            value={serviceJobGroup}
-            name='serviceJobGroup'
-            onChange={e => onChangeHandler(e)}
-            className={classes.select}
-          >
-            {groupOf_ServiceJob.arr_GROUP_OF_SERVICE_JOBS.map(item => (
-              <MenuItem key={item._id} value={item._id}>
-                {item.serviceJobGroup}
-              </MenuItem>
-            ))}
-          </Select>
+        <Grid item xs={8} container>
+          {!unit ? (
+            <Spinner />
+          ) : (
+            <Grid item xs={12} className={classes.wrapSelect}>
+              <InputLabel
+                id='select-unit'
+                className={thisUnit ? classes.displayNone : classes.displayFlex}
+              >
+                ед. измерений
+              </InputLabel>
+              <Select
+                variant='outlined'
+                labelId='select-unit'
+                fullWidth
+                value={thisUnit}
+                name='thisUnit'
+                onChange={e => onChangeHandler(e)}
+                className={classes.select}
+              >
+                {unit.arr_UNITS.map(item => (
+                  <MenuItem key={item._id} value={item._id}>
+                    {item.unitNameShort}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+          )}
         </Grid>
-      )}
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Группа работ</Typography>
+        </Grid>
+        <Grid item xs={8} container>
+          {!groupOf_ServiceJob ? (
+            <Spinner />
+          ) : (
+            <Grid item xs={12} className={classes.wrapSelect}>
+              <InputLabel
+                id='select-service-job-group'
+                className={
+                  serviceJobGroup ? classes.displayNone : classes.displayFlex
+                }
+              >
+                группа работ
+              </InputLabel>
+              <Select
+                variant='outlined'
+                labelId='select-service-job-group'
+                fullWidth
+                value={serviceJobGroup}
+                name='serviceJobGroup'
+                onChange={e => onChangeHandler(e)}
+                className={classes.select}
+              >
+                {groupOf_ServiceJob.arr_GROUP_OF_SERVICE_JOBS.map(item => (
+                  <MenuItem key={item._id} value={item._id}>
+                    {item.serviceJobGroup}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+          )}
+        </Grid>
+      </Grid>
 
       <Grid item xs={12}>
         <Button

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -65,16 +66,22 @@ const TypeOf_TaxPayerOn_Add = ({ setNameOfPage, add_TYPE_OF_TAX_PAYER_ON }) => {
       >
         назад
       </Button>
-      <Grid item xs={12}>
-        <TextField
-          variant='outlined'
-          name='typeOf_TaxPayerOn'
-          fullWidth
-          placeholder='Введите полное название'
-          type='text'
-          value={typeOf_TaxPayerOn}
-          onChange={e => onChangeHandler(e)}
-        />
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Тип налогооблажения</Typography>
+        </Grid>
+        <Grid item xs={8} container>
+          <TextField
+            variant='outlined'
+            name='typeOf_TaxPayerOn'
+            fullWidth
+            placeholder='Введите полное название'
+            type='text'
+            value={typeOf_TaxPayerOn}
+            onChange={e => onChangeHandler(e)}
+          />
+        </Grid>
       </Grid>
 
       <Grid item xs={12}>

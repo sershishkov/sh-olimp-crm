@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -69,27 +70,43 @@ const TypeOf_Firm_Add = ({ setNameOfPage, add_TYPE_OF_FIRM }) => {
       >
         назад
       </Button>
-      <Grid item xs={6}>
-        <TextField
-          variant='outlined'
-          name='TypeOf_FirmLong'
-          fullWidth
-          placeholder='Введите полное название'
-          type='text'
-          value={TypeOf_FirmLong}
-          onChange={e => onChangeHandler(e)}
-        />
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>
+            Полное название формы собственности
+          </Typography>
+        </Grid>
+        <Grid item xs={8} container>
+          <TextField
+            variant='outlined'
+            name='TypeOf_FirmLong'
+            fullWidth
+            placeholder='Введите полное название'
+            type='text'
+            value={TypeOf_FirmLong}
+            onChange={e => onChangeHandler(e)}
+          />
+        </Grid>
       </Grid>
-      <Grid item xs={6}>
-        <TextField
-          variant='outlined'
-          name='TypeOf_FirmShort'
-          fullWidth
-          placeholder='Введите полное название'
-          type='text'
-          value={TypeOf_FirmShort}
-          onChange={e => onChangeHandler(e)}
-        />
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>
+            Сокращенное название формы собственности
+          </Typography>
+        </Grid>
+        <Grid item xs={8} container>
+          <TextField
+            variant='outlined'
+            name='TypeOf_FirmShort'
+            fullWidth
+            placeholder='Введите полное название'
+            type='text'
+            value={TypeOf_FirmShort}
+            onChange={e => onChangeHandler(e)}
+          />
+        </Grid>
       </Grid>
 
       <Grid item xs={12}>

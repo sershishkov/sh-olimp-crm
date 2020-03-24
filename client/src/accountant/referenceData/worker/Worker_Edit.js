@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import IMask from 'imask';
 
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -179,11 +180,9 @@ const Worker_Edit = ({
     );
   };
   const onInputPhoneHandler = e => {
-    // const inputPhoneNumber = document.getElementById('pnoneNumber');
     const inputMaskOptions = {
       mask: '+{38}(000)000-00-00'
     };
-    // const inputMask =
     IMask(e.target, inputMaskOptions);
   };
 
@@ -219,7 +218,10 @@ const Worker_Edit = ({
       </Button>
 
       <Grid item xs={12} container>
-        <Grid item xs={3}>
+        <Grid item xs={4} container>
+          <Typography align='left'>Фамилия</Typography>
+        </Grid>
+        <Grid item xs={8} container>
           <TextField
             variant='outlined'
             name='surname'
@@ -230,7 +232,13 @@ const Worker_Edit = ({
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
-        <Grid item xs={3}>
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Имя</Typography>
+        </Grid>
+        <Grid item xs={8} container>
           <TextField
             variant='outlined'
             name='name'
@@ -241,7 +249,12 @@ const Worker_Edit = ({
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
-        <Grid item xs={3}>
+      </Grid>
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Отчество</Typography>
+        </Grid>
+        <Grid item xs={8} container>
           <TextField
             variant='outlined'
             name='middleName'
@@ -252,8 +265,13 @@ const Worker_Edit = ({
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
+      </Grid>
 
-        <Grid item xs={3}>
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Дата рождения</Typography>
+        </Grid>
+        <Grid item xs={8} container>
           <TextField
             type='date'
             variant='outlined'
@@ -267,7 +285,10 @@ const Worker_Edit = ({
       </Grid>
 
       <Grid item xs={12} container>
-        <Grid item xs={2}>
+        <Grid item xs={4} container>
+          <Typography align='left'>Индекс</Typography>
+        </Grid>
+        <Grid item xs={8} container>
           <TextField
             variant='outlined'
             name='postCode'
@@ -278,7 +299,13 @@ const Worker_Edit = ({
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
-        <Grid item xs={1}>
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>ТипНасПункта</Typography>
+        </Grid>
+        <Grid item xs={8} container>
           {!arr_TYPE_OF_SETTLEMENTS ? (
             <Spinner />
           ) : (
@@ -309,7 +336,13 @@ const Worker_Edit = ({
             </Grid>
           )}
         </Grid>
-        <Grid item xs={3}>
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Город</Typography>
+        </Grid>
+        <Grid item xs={8} container>
           {!arr_CITYS ? (
             <Spinner />
           ) : (
@@ -338,7 +371,13 @@ const Worker_Edit = ({
             </Grid>
           )}
         </Grid>
-        <Grid item xs={1}>
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Тип улицы</Typography>
+        </Grid>
+        <Grid item xs={8} container>
           {!arr_TYPE_OF_STREETS ? (
             <Spinner />
           ) : (
@@ -369,7 +408,13 @@ const Worker_Edit = ({
             </Grid>
           )}
         </Grid>
-        <Grid item xs={3}>
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Улица</Typography>
+        </Grid>
+        <Grid item xs={8} container>
           {!arr_STREETS ? (
             <Spinner />
           ) : (
@@ -398,7 +443,13 @@ const Worker_Edit = ({
             </Grid>
           )}
         </Grid>
-        <Grid item xs={1}>
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Номер дома</Typography>
+        </Grid>
+        <Grid item xs={8} container>
           <TextField
             variant='outlined'
             name='numberOf_house'
@@ -409,7 +460,13 @@ const Worker_Edit = ({
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
-        <Grid item xs={1}>
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Номер квартиры</Typography>
+        </Grid>
+        <Grid item xs={8} container>
           <TextField
             variant='outlined'
             name='numberOf_app'
@@ -423,26 +480,34 @@ const Worker_Edit = ({
       </Grid>
 
       <Grid item xs={12} container>
-        <Grid item xs={6}>
+        <Grid item xs={4} container>
+          <Typography align='left'>ИНН</Typography>
+        </Grid>
+        <Grid item xs={8} container>
           <TextField
             variant='outlined'
             name='individualTaxNumber'
             fullWidth
             placeholder='ИНН'
-            type='text'
+            type='number'
             value={individualTaxNumber ? individualTaxNumber : ''}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
+      </Grid>
 
-        <Grid item xs={6}>
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Телефон</Typography>
+        </Grid>
+        <Grid item xs={8} container>
           <TextField
             id='pnoneNumber'
             variant='outlined'
             name='phoneNumber'
             fullWidth
             placeholder='телефон'
-            type='text'
+            type='tel'
             value={phoneNumber ? phoneNumber : ''}
             onInput={e => onInputPhoneHandler(e)}
             onChange={e => onChangeHandler(e)}
@@ -471,6 +536,7 @@ Worker_Edit.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getOne_WORKER: PropTypes.func.isRequired,
   update_WORKER: PropTypes.func.isRequired,
+
   getAll_TYPE_OF_SETTLEMENTS: PropTypes.func.isRequired,
   getAll_CITYS: PropTypes.func.isRequired,
   getAll_TYPE_OF_STREETS: PropTypes.func.isRequired,
@@ -480,6 +546,7 @@ Worker_Edit.propTypes = {
   state_city: PropTypes.object.isRequired,
   state_typeOf_Street: PropTypes.object.isRequired,
   state_street: PropTypes.object.isRequired,
+
   state_worker: PropTypes.object.isRequired
 };
 
