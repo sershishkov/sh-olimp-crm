@@ -3,8 +3,6 @@ const router = express.Router();
 const { protect, authorize } = require('../../../middleware/auth');
 
 const {
-  uploadPhoto,
-  resizePhoto,
   addProduct,
   updateProduct,
   getAllProducts,
@@ -18,8 +16,6 @@ router
   .post(
     protect,
     authorize('engineer', 'accountant', 'boss', 'admin'),
-    uploadPhoto,
-    resizePhoto,
     addProduct
   );
 
@@ -29,8 +25,6 @@ router
   .put(
     protect,
     authorize('engineer', 'accountant', 'boss', 'admin'),
-    uploadPhoto,
-    resizePhoto,
     updateProduct
   )
   .delete(

@@ -321,7 +321,7 @@ const Supplier_Edit = ({
                 variant='outlined'
                 labelId='select-type-of-firm'
                 fullWidth
-                value={typeOfFirm}
+                value={typeOfFirm ? typeOfFirm : ''}
                 name='typeOfFirm'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}
@@ -348,7 +348,7 @@ const Supplier_Edit = ({
             fullWidth
             placeholder='название фирмы'
             type='text'
-            value={supplierName}
+            value={supplierName ? supplierName : ''}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -365,7 +365,7 @@ const Supplier_Edit = ({
             fullWidth
             placeholder='Введите индекс'
             type='text'
-            value={postCode}
+            value={postCode ? postCode : ''}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -392,7 +392,7 @@ const Supplier_Edit = ({
                 variant='outlined'
                 labelId='select-type-of-city'
                 fullWidth
-                value={typeOf_settlement}
+                value={typeOf_settlement ? typeOf_settlement : ''}
                 name='typeOf_settlement'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}
@@ -427,7 +427,7 @@ const Supplier_Edit = ({
                 variant='outlined'
                 labelId='select-city'
                 fullWidth
-                value={city}
+                value={city ? city : ''}
                 name='city'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}
@@ -463,7 +463,7 @@ const Supplier_Edit = ({
                 variant='outlined'
                 labelId='select-type-of-street'
                 fullWidth
-                value={typeOf_street}
+                value={typeOf_street ? typeOf_street : ''}
                 name='typeOf_street'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}
@@ -497,7 +497,7 @@ const Supplier_Edit = ({
                 variant='outlined'
                 labelId='select-street'
                 fullWidth
-                value={street}
+                value={street ? street : ''}
                 name='street'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}
@@ -524,7 +524,7 @@ const Supplier_Edit = ({
             fullWidth
             placeholder='Дом№_'
             type='text'
-            value={numberOf_house}
+            value={numberOf_house ? numberOf_house : ''}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -541,7 +541,7 @@ const Supplier_Edit = ({
             fullWidth
             placeholder='Кв.№_'
             type='text'
-            value={numberOf_app}
+            value={numberOf_app ? numberOf_app : ''}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -558,7 +558,7 @@ const Supplier_Edit = ({
             fullWidth
             placeholder='ЄДРПОУ'
             type='text'
-            value={EDRPOU}
+            value={EDRPOU ? EDRPOU : ''}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -575,7 +575,7 @@ const Supplier_Edit = ({
             fullWidth
             placeholder='IBAN'
             type='text'
-            value={iban}
+            value={iban ? iban : ''}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -604,7 +604,7 @@ const Supplier_Edit = ({
                 variant='outlined'
                 labelId='select-firstPersonPosition'
                 fullWidth
-                value={firstPersonPosition}
+                value={firstPersonPosition ? firstPersonPosition : ''}
                 name='firstPersonPosition'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}
@@ -631,7 +631,7 @@ const Supplier_Edit = ({
             fullWidth
             placeholder='Введите фамилию'
             type='text'
-            value={firstPersonSurname}
+            value={firstPersonSurname ? firstPersonSurname : ''}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -648,7 +648,7 @@ const Supplier_Edit = ({
             fullWidth
             placeholder='Введите имя'
             type='text'
-            value={firstPersonName}
+            value={firstPersonName ? firstPersonName : ''}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -665,7 +665,7 @@ const Supplier_Edit = ({
             fullWidth
             placeholder='Введите Отчество'
             type='text'
-            value={firstPersonMiddleName}
+            value={firstPersonMiddleName ? firstPersonMiddleName : ''}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -684,7 +684,11 @@ const Supplier_Edit = ({
             fullWidth
             placeholder='Введите фамилию в родительном падеже'
             type='text'
-            value={firstPersonSurnameRoditelPadej}
+            value={
+              firstPersonSurnameRoditelPadej
+                ? firstPersonSurnameRoditelPadej
+                : ''
+            }
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -703,7 +707,9 @@ const Supplier_Edit = ({
             fullWidth
             placeholder='Введите имя в родительном падеже'
             type='text'
-            value={firstPersonNameRoditelPadej}
+            value={
+              firstPersonNameRoditelPadej ? firstPersonNameRoditelPadej : ''
+            }
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -722,7 +728,11 @@ const Supplier_Edit = ({
             fullWidth
             placeholder='Введите Отчество в родительном падеже'
             type='text'
-            value={firstPersonMiddleNameRoditelPadej}
+            value={
+              firstPersonMiddleNameRoditelPadej
+                ? firstPersonMiddleNameRoditelPadej
+                : ''
+            }
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -739,7 +749,7 @@ const Supplier_Edit = ({
             fullWidth
             placeholder='Введите имя'
             type='text'
-            value={shortName}
+            value={shortName ? shortName : ''}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -768,7 +778,7 @@ const Supplier_Edit = ({
                 variant='outlined'
                 labelId='select-type-of-actsOnBasisOf'
                 fullWidth
-                value={actsOnBasisOf}
+                value={actsOnBasisOf ? actsOnBasisOf : ''}
                 name='actsOnBasisOf'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}
@@ -795,7 +805,7 @@ const Supplier_Edit = ({
             fullWidth
             placeholder='Выдан кем и когда'
             type='text'
-            value={issuedBy}
+            value={issuedBy ? issuedBy : ''}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -822,7 +832,7 @@ const Supplier_Edit = ({
                 variant='outlined'
                 labelId='select-type-of-taxPayerOn'
                 fullWidth
-                value={taxPayerOn}
+                value={taxPayerOn ? taxPayerOn : ''}
                 name='taxPayerOn'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}
@@ -847,9 +857,9 @@ const Supplier_Edit = ({
             variant='outlined'
             name='email'
             fullWidth
-            placeholder='Дом№_'
+            placeholder='email'
             type='email'
-            value={email}
+            value={email ? email : ''}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -866,7 +876,7 @@ const Supplier_Edit = ({
             fullWidth
             placeholder='телефон'
             type='tel'
-            value={phoneNumber}
+            value={phoneNumber ? phoneNumber : ''}
             onInput={e => onInputPhoneHandler(e)}
             onChange={e => onChangeHandler(e)}
           />
@@ -895,7 +905,7 @@ const Supplier_Edit = ({
                 labelId='select-groupOf_product'
                 fullWidth
                 multiple
-                value={groupOf_product}
+                value={groupOf_product ? groupOf_product : []}
                 name='groupOf_product'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}

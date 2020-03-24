@@ -239,6 +239,16 @@ const OurFirm_List = React.lazy(() =>
   import('./accountant/referenceData/ourFirm/OurFirm_List')
 );
 
+const Product_Add = React.lazy(() =>
+  import('./accountant/referenceData/product/Product_Add')
+);
+const Product_Edit = React.lazy(() =>
+  import('./accountant/referenceData/product/Product_Edit')
+);
+const Product_List = React.lazy(() =>
+  import('./accountant/referenceData/product/Product_List')
+);
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: 70
@@ -595,6 +605,22 @@ function App() {
                 exact
                 path='/accountant/our-firm'
                 component={OurFirm_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/product/add'
+                component={Product_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/product/:id'
+                component={Product_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/product'
+                component={Product_List}
               />
             </Switch>
           </Suspense>

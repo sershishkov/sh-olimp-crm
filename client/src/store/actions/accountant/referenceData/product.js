@@ -41,12 +41,10 @@ export const getOne_PRODUCT = itemId => async dispatch => {
 };
 
 export const add_PRODUCT = (
-  file,
   productName,
   unit,
   productGroup,
   amountInPackage,
-  price,
   suppliers,
   ratePerUnit,
   length,
@@ -54,19 +52,19 @@ export const add_PRODUCT = (
   height,
   weight
 ) => async dispatch => {
-  const newFormData = new FormData();
-  newFormData.append('productImage', file);
-  newFormData.append('productName', productName);
-  newFormData.append('unit', unit);
-  newFormData.append('productGroup', productGroup);
-  newFormData.append('amountInPackage', amountInPackage);
-  newFormData.append('price', price);
-  newFormData.append('suppliers', suppliers);
-  newFormData.append('ratePerUnit', ratePerUnit);
-  newFormData.append('length', length);
-  newFormData.append('width', width);
-  newFormData.append('height', height);
-  newFormData.append('weight', weight);
+  const body = JSON.stringify({
+    productName,
+    unit,
+    productGroup,
+    amountInPackage,
+    suppliers,
+    ratePerUnit,
+    length,
+    width,
+    height,
+    weight
+  });
+
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -76,7 +74,7 @@ export const add_PRODUCT = (
   try {
     const createdItem = await axios.post(
       `/api/v1/accountant/product`,
-      newFormData,
+      body,
       config
     );
 
@@ -96,12 +94,10 @@ export const add_PRODUCT = (
 
 export const update_PRODUCT = (
   itemId,
-  file,
   productName,
   unit,
   productGroup,
   amountInPackage,
-  price,
   suppliers,
   ratePerUnit,
   length,
@@ -109,19 +105,18 @@ export const update_PRODUCT = (
   height,
   weight
 ) => async dispatch => {
-  const newFormData = new FormData();
-  newFormData.append('productImage', file);
-  newFormData.append('productName', productName);
-  newFormData.append('unit', unit);
-  newFormData.append('productGroup', productGroup);
-  newFormData.append('amountInPackage', amountInPackage);
-  newFormData.append('price', price);
-  newFormData.append('suppliers', suppliers);
-  newFormData.append('ratePerUnit', ratePerUnit);
-  newFormData.append('length', length);
-  newFormData.append('width', width);
-  newFormData.append('height', height);
-  newFormData.append('weight', weight);
+  const body = JSON.stringify({
+    productName,
+    unit,
+    productGroup,
+    amountInPackage,
+    suppliers,
+    ratePerUnit,
+    length,
+    width,
+    height,
+    weight
+  });
 
   const config = {
     headers: {
@@ -132,7 +127,7 @@ export const update_PRODUCT = (
   try {
     const updatedItem = await axios.put(
       `/api/v1/accountant/product/${itemId}`,
-      newFormData,
+      body,
       config
     );
 

@@ -5,12 +5,7 @@ const Product = new mongoose.Schema({
     type: String,
     required: [true, 'Введите название материала'],
     unique: true
-  },
-  productImage: {
-    type: String,
-    required: true,
-    default: '/uploads/default_product.jpg'
-  },
+  },  
   unit: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Unit',
