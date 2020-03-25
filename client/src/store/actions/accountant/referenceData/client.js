@@ -44,15 +44,18 @@ export const add_CLIENT = (
   firmName,
   typeOfFirm,
   postCode,
+
   typeOf_settlement,
   city,
   typeOf_street,
   street,
   numberOf_house,
   numberOf_app,
+
   EDRPOU,
   ibanOwn,
   ibanGazBank,
+
   firstPersonPosition,
   firstPersonSurname,
   firstPersonName,
@@ -61,6 +64,7 @@ export const add_CLIENT = (
   firstPersonNameRoditelPadej,
   firstPersonMiddleNameRoditelPadej,
   shortName,
+
   actsOnBasisOf,
   issuedBy,
   taxPayerOn,

@@ -532,7 +532,14 @@ const ResponsiveDrawer = ({
                   <ListItemText>Банки</ListItemText>
                 </ListItem>
 
-                <ListItem button className={classes.nestedListItemLevel2}>
+                <ListItem
+                  button
+                  className={classes.nestedListItemLevel2}
+                  onClick={() => {
+                    history.push('/accountant/client');
+                    setMobileOpen(!mobileOpen);
+                  }}
+                >
                   <ListItemIcon>
                     <SubdirectoryArrowRightIcon />
                   </ListItemIcon>

@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import IMask from 'imask';
@@ -15,10 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
-import {
-  getOne_OUR_FIRM,
-  update_OUR_FIRM
-} from '../../../store/actions/accountant/referenceData/ourFirm';
+import { add_CLIENT } from '../../../store/actions/accountant/referenceData/client';
 
 import { getAll_TYPE_OF_FIRMS } from '../../../store/actions/accountant/referenceData/typeOf_Firm';
 import { getAll_FIRST_PERSON_POSITIONS } from '../../../store/actions/accountant/referenceData/firstPersonPosition';
@@ -58,13 +55,14 @@ const useStyles = makeStyles(theme => ({
   select: {
     height: 55
     // border: '1px solid red'
-  }
+  },
+  dateField: {}
 }));
 
-const OurFirm_Edit = ({
+const Client_Add = ({
   setNameOfPage,
-  getOne_OUR_FIRM,
-  update_OUR_FIRM,
+  add_CLIENT,
+
   getAll_TYPE_OF_SETTLEMENTS,
   getAll_CITYS,
   getAll_TYPE_OF_STREETS,
@@ -74,7 +72,6 @@ const OurFirm_Edit = ({
   getAll_FIRST_PERSON_POSITIONS,
   getAll_TYPE_OF_ACTS_ON_BASIS_OFS,
   getAll_TYPE_OF_TAX_PAYER_ONS,
-  getAll_GROUP_OF_PRODUCTS,
 
   state_typeOf_Settlement: { arr_TYPE_OF_SETTLEMENTS },
   state_city: { arr_CITYS },
@@ -84,29 +81,31 @@ const OurFirm_Edit = ({
   state_typeOf_Firm: { arr_TYPE_OF_FIRMS },
   state_firstPersonPosition: { arr_FIRST_PERSON_POSITIONS },
   state_typeOf_ActsOnBasisOf: { arr_TYPE_OF_ACTS_ON_BASIS_OFS },
-  state_typeOf_TaxPayerOn: { arr_TYPE_OF_TAX_PAYER_ONS },
-  state_ourFirm: { one_OUR_FIRM }
+  state_typeOf_TaxPayerOn: { arr_TYPE_OF_TAX_PAYER_ONS }
 }) => {
   const classes = useStyles();
   const history = useHistory();
-  const { id } = useParams();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/our-firm');
+    history.push('/accountant/client');
   };
 
   const [pageForm, setPageForm] = useState({
     firmName: '',
     typeOfFirm: '',
     postCode: '',
+
     typeOf_settlement: '',
     city: '',
     typeOf_street: '',
     street: '',
     numberOf_house: '',
     numberOf_app: '',
+
     EDRPOU: '',
-    iban: '',
+    ibanOwn: '',
+    ibanGazBank: '',
+
     firstPersonPosition: '',
     firstPersonSurname: '',
     firstPersonName: '',
@@ -115,6 +114,7 @@ const OurFirm_Edit = ({
     firstPersonNameRoditelPadej: '',
     firstPersonMiddleNameRoditelPadej: '',
     shortName: '',
+
     actsOnBasisOf: '',
     issuedBy: '',
     taxPayerOn: '',
@@ -134,7 +134,8 @@ const OurFirm_Edit = ({
     numberOf_house,
     numberOf_app,
     EDRPOU,
-    iban,
+    ibanOwn,
+    ibanGazBank,
     firstPersonPosition,
     firstPersonSurname,
     firstPersonName,
@@ -151,9 +152,7 @@ const OurFirm_Edit = ({
   } = pageForm;
 
   useEffect(() => {
-    setNameOfPage('Редактировать нашу фирму');
-    getOne_OUR_FIRM(id);
-
+    setNameOfPage('Создать клиента');
     getAll_TYPE_OF_SETTLEMENTS();
     getAll_CITYS();
     getAll_TYPE_OF_STREETS();
@@ -172,48 +171,12 @@ const OurFirm_Edit = ({
     getAll_TYPE_OF_FIRMS,
     getAll_FIRST_PERSON_POSITIONS,
     getAll_TYPE_OF_ACTS_ON_BASIS_OFS,
-    getAll_TYPE_OF_TAX_PAYER_ONS,
-
-    getOne_OUR_FIRM,
-    id
+    getAll_TYPE_OF_TAX_PAYER_ONS
   ]);
-
-  useLayoutEffect(() => {
-    if (one_OUR_FIRM) {
-      setPageForm({
-        ...pageForm,
-        firmName: one_OUR_FIRM.firmName,
-        typeOfFirm: one_OUR_FIRM.typeOfFirm,
-        postCode: one_OUR_FIRM.postCode,
-        typeOf_settlement: one_OUR_FIRM.typeOf_settlement,
-        city: one_OUR_FIRM.city,
-        typeOf_street: one_OUR_FIRM.typeOf_street,
-        street: one_OUR_FIRM.street,
-        numberOf_house: one_OUR_FIRM.numberOf_house,
-        numberOf_app: one_OUR_FIRM.numberOf_app,
-        EDRPOU: one_OUR_FIRM.EDRPOU,
-        iban: one_OUR_FIRM.iban,
-        firstPersonPosition: one_OUR_FIRM.firstPersonPosition,
-        firstPersonSurname: one_OUR_FIRM.firstPersonSurname,
-        firstPersonName: one_OUR_FIRM.firstPersonName,
-        firstPersonMiddleName: one_OUR_FIRM.firstPersonMiddleName,
-        firstPersonSurnameRoditelPadej:
-          one_OUR_FIRM.firstPersonSurnameRoditelPadej,
-        firstPersonNameRoditelPadej: one_OUR_FIRM.firstPersonNameRoditelPadej,
-        firstPersonMiddleNameRoditelPadej:
-          one_OUR_FIRM.firstPersonMiddleNameRoditelPadej,
-        shortName: one_OUR_FIRM.shortName,
-        actsOnBasisOf: one_OUR_FIRM.actsOnBasisOf,
-        issuedBy: one_OUR_FIRM.issuedBy,
-        taxPayerOn: one_OUR_FIRM.taxPayerOn,
-        email: one_OUR_FIRM.email,
-        phoneNumber: one_OUR_FIRM.phoneNumber
-      });
-    }
-  }, [one_OUR_FIRM]);
 
   const onChangeHandler = e => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
+    // console.log(e.target.value);
     setDisabledForm(
       !(
         firmName &&
@@ -226,7 +189,8 @@ const OurFirm_Edit = ({
         numberOf_house &&
         numberOf_app &&
         EDRPOU &&
-        iban &&
+        ibanOwn &&
+        ibanGazBank &&
         firstPersonPosition &&
         firstPersonSurname &&
         firstPersonName &&
@@ -243,6 +207,7 @@ const OurFirm_Edit = ({
       )
     );
   };
+
   const onInputPhoneHandler = e => {
     const inputMaskOptions = {
       mask: '+{38}(000)000-00-00'
@@ -250,9 +215,8 @@ const OurFirm_Edit = ({
     IMask(e.target, inputMaskOptions);
   };
 
-  const updateItemHandler = () => {
-    update_OUR_FIRM(
-      id,
+  const addItemHandler = () => {
+    add_CLIENT(
       firmName,
       typeOfFirm,
       postCode,
@@ -263,7 +227,8 @@ const OurFirm_Edit = ({
       numberOf_house,
       numberOf_app,
       EDRPOU,
-      iban,
+      ibanOwn,
+      ibanGazBank,
       firstPersonPosition,
       firstPersonSurname,
       firstPersonName,
@@ -278,7 +243,7 @@ const OurFirm_Edit = ({
       email,
       phoneNumber
     );
-    history.push('/accountant/our-firm');
+    history.push('/accountant/client');
   };
 
   return (
@@ -313,7 +278,7 @@ const OurFirm_Edit = ({
                 variant='outlined'
                 labelId='select-type-of-firm'
                 fullWidth
-                value={typeOfFirm ? typeOfFirm : ''}
+                value={typeOfFirm}
                 name='typeOfFirm'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}
@@ -340,7 +305,7 @@ const OurFirm_Edit = ({
             fullWidth
             placeholder='название фирмы'
             type='text'
-            value={firmName ? firmName : ''}
+            value={firmName}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -357,7 +322,7 @@ const OurFirm_Edit = ({
             fullWidth
             placeholder='Введите индекс'
             type='text'
-            value={postCode ? postCode : ''}
+            value={postCode}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -384,7 +349,7 @@ const OurFirm_Edit = ({
                 variant='outlined'
                 labelId='select-type-of-city'
                 fullWidth
-                value={typeOf_settlement ? typeOf_settlement : ''}
+                value={typeOf_settlement}
                 name='typeOf_settlement'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}
@@ -419,7 +384,7 @@ const OurFirm_Edit = ({
                 variant='outlined'
                 labelId='select-city'
                 fullWidth
-                value={city ? city : ''}
+                value={city}
                 name='city'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}
@@ -455,7 +420,7 @@ const OurFirm_Edit = ({
                 variant='outlined'
                 labelId='select-type-of-street'
                 fullWidth
-                value={typeOf_street ? typeOf_street : ''}
+                value={typeOf_street}
                 name='typeOf_street'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}
@@ -489,7 +454,7 @@ const OurFirm_Edit = ({
                 variant='outlined'
                 labelId='select-street'
                 fullWidth
-                value={street ? street : ''}
+                value={street}
                 name='street'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}
@@ -516,7 +481,7 @@ const OurFirm_Edit = ({
             fullWidth
             placeholder='Дом№_'
             type='text'
-            value={numberOf_house ? numberOf_house : ''}
+            value={numberOf_house}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -533,7 +498,7 @@ const OurFirm_Edit = ({
             fullWidth
             placeholder='Кв.№_'
             type='text'
-            value={numberOf_app ? numberOf_app : ''}
+            value={numberOf_app}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -550,7 +515,7 @@ const OurFirm_Edit = ({
             fullWidth
             placeholder='ЄДРПОУ'
             type='text'
-            value={EDRPOU ? EDRPOU : ''}
+            value={EDRPOU}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -558,16 +523,33 @@ const OurFirm_Edit = ({
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
-          <Typography align='left'>IBAN</Typography>
+          <Typography align='left'>IBAN собственный</Typography>
         </Grid>
         <Grid item xs={8} container>
           <TextField
             variant='outlined'
-            name='iban'
+            name='ibanOwn'
             fullWidth
             placeholder='IBAN'
             type='text'
-            value={iban ? iban : ''}
+            value={ibanOwn}
+            onChange={e => onChangeHandler(e)}
+          />
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>IBAN бюджет(газбанк)</Typography>
+        </Grid>
+        <Grid item xs={8} container>
+          <TextField
+            variant='outlined'
+            name='ibanGazBank'
+            fullWidth
+            placeholder='ibanGazBank'
+            type='text'
+            value={ibanGazBank}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -596,7 +578,7 @@ const OurFirm_Edit = ({
                 variant='outlined'
                 labelId='select-firstPersonPosition'
                 fullWidth
-                value={firstPersonPosition ? firstPersonPosition : ''}
+                value={firstPersonPosition}
                 name='firstPersonPosition'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}
@@ -623,7 +605,7 @@ const OurFirm_Edit = ({
             fullWidth
             placeholder='Введите фамилию'
             type='text'
-            value={firstPersonSurname ? firstPersonSurname : ''}
+            value={firstPersonSurname}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -640,7 +622,7 @@ const OurFirm_Edit = ({
             fullWidth
             placeholder='Введите имя'
             type='text'
-            value={firstPersonName ? firstPersonName : ''}
+            value={firstPersonName}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -657,7 +639,7 @@ const OurFirm_Edit = ({
             fullWidth
             placeholder='Введите Отчество'
             type='text'
-            value={firstPersonMiddleName ? firstPersonMiddleName : ''}
+            value={firstPersonMiddleName}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -676,11 +658,7 @@ const OurFirm_Edit = ({
             fullWidth
             placeholder='Введите фамилию в родительном падеже'
             type='text'
-            value={
-              firstPersonSurnameRoditelPadej
-                ? firstPersonSurnameRoditelPadej
-                : ''
-            }
+            value={firstPersonSurnameRoditelPadej}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -699,9 +677,7 @@ const OurFirm_Edit = ({
             fullWidth
             placeholder='Введите имя в родительном падеже'
             type='text'
-            value={
-              firstPersonNameRoditelPadej ? firstPersonNameRoditelPadej : ''
-            }
+            value={firstPersonNameRoditelPadej}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -720,11 +696,7 @@ const OurFirm_Edit = ({
             fullWidth
             placeholder='Введите Отчество в родительном падеже'
             type='text'
-            value={
-              firstPersonMiddleNameRoditelPadej
-                ? firstPersonMiddleNameRoditelPadej
-                : ''
-            }
+            value={firstPersonMiddleNameRoditelPadej}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -741,7 +713,7 @@ const OurFirm_Edit = ({
             fullWidth
             placeholder='Введите имя'
             type='text'
-            value={shortName ? shortName : ''}
+            value={shortName}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -770,7 +742,7 @@ const OurFirm_Edit = ({
                 variant='outlined'
                 labelId='select-type-of-actsOnBasisOf'
                 fullWidth
-                value={actsOnBasisOf ? actsOnBasisOf : ''}
+                value={actsOnBasisOf}
                 name='actsOnBasisOf'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}
@@ -797,7 +769,7 @@ const OurFirm_Edit = ({
             fullWidth
             placeholder='Выдан кем и когда'
             type='text'
-            value={issuedBy ? issuedBy : ''}
+            value={issuedBy}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -824,7 +796,7 @@ const OurFirm_Edit = ({
                 variant='outlined'
                 labelId='select-type-of-taxPayerOn'
                 fullWidth
-                value={taxPayerOn ? taxPayerOn : ''}
+                value={taxPayerOn}
                 name='taxPayerOn'
                 onChange={e => onChangeHandler(e)}
                 className={classes.select}
@@ -849,9 +821,9 @@ const OurFirm_Edit = ({
             variant='outlined'
             name='email'
             fullWidth
-            placeholder='email'
+            placeholder='Дом№_'
             type='email'
-            value={email ? email : ''}
+            value={email}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -868,7 +840,7 @@ const OurFirm_Edit = ({
             fullWidth
             placeholder='телефон'
             type='tel'
-            value={phoneNumber ? phoneNumber : ''}
+            value={phoneNumber}
             onInput={e => onInputPhoneHandler(e)}
             onChange={e => onChangeHandler(e)}
           />
@@ -883,7 +855,7 @@ const OurFirm_Edit = ({
           variant='contained'
           color='primary'
           className={classes.buttonAdd}
-          onClick={() => updateItemHandler()}
+          onClick={() => addItemHandler()}
         >
           Сохранить
         </Button>
@@ -892,10 +864,9 @@ const OurFirm_Edit = ({
   );
 };
 
-OurFirm_Edit.propTypes = {
+Client_Add.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  getOne_OUR_FIRM: PropTypes.func.isRequired,
-  update_OUR_FIRM: PropTypes.func.isRequired,
+  add_CLIENT: PropTypes.func.isRequired,
 
   getAll_TYPE_OF_SETTLEMENTS: PropTypes.func.isRequired,
   getAll_CITYS: PropTypes.func.isRequired,
@@ -915,9 +886,7 @@ OurFirm_Edit.propTypes = {
   state_typeOf_Firm: PropTypes.object.isRequired,
   state_firstPersonPosition: PropTypes.object.isRequired,
   state_typeOf_ActsOnBasisOf: PropTypes.object.isRequired,
-  state_typeOf_TaxPayerOn: PropTypes.object.isRequired,
-
-  state_ourFirm: PropTypes.object.isRequired
+  state_typeOf_TaxPayerOn: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -925,8 +894,6 @@ const mapStateToProps = state => ({
   state_city: state.city,
   state_typeOf_Street: state.typeOf_Street,
   state_street: state.street,
-
-  state_ourFirm: state.ourFirm,
 
   state_typeOf_Firm: state.typeOf_Firm,
   state_firstPersonPosition: state.firstPersonPosition,
@@ -936,8 +903,8 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   setNameOfPage,
-  getOne_OUR_FIRM,
-  update_OUR_FIRM,
+  add_CLIENT,
+
   getAll_TYPE_OF_SETTLEMENTS,
   getAll_CITYS,
   getAll_TYPE_OF_STREETS,
@@ -947,4 +914,4 @@ export default connect(mapStateToProps, {
   getAll_FIRST_PERSON_POSITIONS,
   getAll_TYPE_OF_ACTS_ON_BASIS_OFS,
   getAll_TYPE_OF_TAX_PAYER_ONS
-})(OurFirm_Edit);
+})(Client_Add);

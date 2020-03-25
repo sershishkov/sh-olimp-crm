@@ -228,7 +228,7 @@ const EditPhotoItem = ({
             fullWidth
             id='description'
             name='description'
-            value={description}
+            value={description ? description : ''}
             onChange={e => onChange(e)}
           />
         </Grid>
@@ -239,7 +239,7 @@ const EditPhotoItem = ({
             id='demo-simple-select'
             fullWidth
             variant='outlined'
-            value={selectedGroup}
+            value={selectedGroup ? selectedGroup : ''}
             onChange={selectChangeHandle}
             className={classes.select}
           >
@@ -247,7 +247,7 @@ const EditPhotoItem = ({
               <MenuItem
                 key={item._id}
                 value={item._id}
-                selected={photoWorks.onePhoto.imageGroup === item._id}
+                // selected={photoWorks.onePhoto.imageGroup === item._id}
               >
                 {item.imageGroup}
               </MenuItem>
@@ -268,7 +268,7 @@ const EditPhotoItem = ({
             labelId='add-select-category'
             fullWidth
             variant='outlined'
-            value={selectedCategory}
+            value={selectedCategory ? selectedCategory : ''}
             name='selectedCategory'
             onChange={selectCategoryHandle}
             className={classes.select}

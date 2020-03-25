@@ -15,15 +15,18 @@ exports.addClient = asyncHandler(async (req, res, next) => {
     firmName: req.body.firmName,
     typeOfFirm: req.body.typeOfFirm,
     postCode: req.body.postCode,
+
     typeOf_settlement: req.body.typeOf_settlement,
     city: req.body.city,
     typeOf_street: req.body.typeOf_street,
     street: req.body.street,
     numberOf_house: req.body.numberOf_house,
     numberOf_app: req.body.numberOf_app,
+
     EDRPOU: req.body.EDRPOU,
     ibanOwn: req.body.ibanOwn,
     ibanGazBank: req.body.ibanGazBank,
+
     firstPersonPosition: req.body.firstPersonPosition,
     firstPersonSurname: req.body.firstPersonSurname,
     firstPersonName: req.body.firstPersonName,
@@ -33,6 +36,7 @@ exports.addClient = asyncHandler(async (req, res, next) => {
     firstPersonMiddleNameRoditelPadej:
       req.body.firstPersonMiddleNameRoditelPadej,
     shortName: req.body.shortName,
+
     actsOnBasisOf: req.body.actsOnBasisOf,
     issuedBy: req.body.issuedBy,
     taxPayerOn: req.body.taxPayerOn,
@@ -116,8 +120,7 @@ exports.getAllClients = asyncHandler(async (req, res, next) => {
     .populate({ path: 'street', select: 'streetName' })
     .populate({ path: 'firstPersonPosition', select: 'position' })
     .populate({ path: 'actsOnBasisOf', select: 'actOnBasisOf' })
-    .populate({ path: 'taxPayerOn', select: 'typeOf_TaxPayerOn' })
-    .populate({ path: 'groupOf_product', select: 'productGroup' });
+    .populate({ path: 'taxPayerOn', select: 'typeOf_TaxPayerOn' });
   //Check if  exists response
   if (!allClients) {
     return next(new ErrorResponse('На данный момент ничего в базе нет ', 400));

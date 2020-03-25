@@ -16,9 +16,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
-  getOne_OUR_FIRM,
-  update_OUR_FIRM
-} from '../../../store/actions/accountant/referenceData/ourFirm';
+  getOne_CLIENT,
+  update_CLIENT
+} from '../../../store/actions/accountant/referenceData/client';
 
 import { getAll_TYPE_OF_FIRMS } from '../../../store/actions/accountant/referenceData/typeOf_Firm';
 import { getAll_FIRST_PERSON_POSITIONS } from '../../../store/actions/accountant/referenceData/firstPersonPosition';
@@ -61,10 +61,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const OurFirm_Edit = ({
+const Client_Edit = ({
   setNameOfPage,
-  getOne_OUR_FIRM,
-  update_OUR_FIRM,
+  getOne_CLIENT,
+  update_CLIENT,
+
   getAll_TYPE_OF_SETTLEMENTS,
   getAll_CITYS,
   getAll_TYPE_OF_STREETS,
@@ -74,7 +75,6 @@ const OurFirm_Edit = ({
   getAll_FIRST_PERSON_POSITIONS,
   getAll_TYPE_OF_ACTS_ON_BASIS_OFS,
   getAll_TYPE_OF_TAX_PAYER_ONS,
-  getAll_GROUP_OF_PRODUCTS,
 
   state_typeOf_Settlement: { arr_TYPE_OF_SETTLEMENTS },
   state_city: { arr_CITYS },
@@ -85,28 +85,33 @@ const OurFirm_Edit = ({
   state_firstPersonPosition: { arr_FIRST_PERSON_POSITIONS },
   state_typeOf_ActsOnBasisOf: { arr_TYPE_OF_ACTS_ON_BASIS_OFS },
   state_typeOf_TaxPayerOn: { arr_TYPE_OF_TAX_PAYER_ONS },
-  state_ourFirm: { one_OUR_FIRM }
+
+  state_client: { one_CLIENT }
 }) => {
   const classes = useStyles();
   const history = useHistory();
   const { id } = useParams();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/our-firm');
+    history.push('/accountant/client');
   };
 
   const [pageForm, setPageForm] = useState({
     firmName: '',
     typeOfFirm: '',
     postCode: '',
+
     typeOf_settlement: '',
     city: '',
     typeOf_street: '',
     street: '',
     numberOf_house: '',
     numberOf_app: '',
+
     EDRPOU: '',
-    iban: '',
+    ibanOwn: '',
+    ibanGazBank: '',
+
     firstPersonPosition: '',
     firstPersonSurname: '',
     firstPersonName: '',
@@ -115,6 +120,7 @@ const OurFirm_Edit = ({
     firstPersonNameRoditelPadej: '',
     firstPersonMiddleNameRoditelPadej: '',
     shortName: '',
+
     actsOnBasisOf: '',
     issuedBy: '',
     taxPayerOn: '',
@@ -134,7 +140,8 @@ const OurFirm_Edit = ({
     numberOf_house,
     numberOf_app,
     EDRPOU,
-    iban,
+    ibanOwn,
+    ibanGazBank,
     firstPersonPosition,
     firstPersonSurname,
     firstPersonName,
@@ -151,8 +158,8 @@ const OurFirm_Edit = ({
   } = pageForm;
 
   useEffect(() => {
-    setNameOfPage('Редактировать нашу фирму');
-    getOne_OUR_FIRM(id);
+    setNameOfPage('Редактировать клиента');
+    getOne_CLIENT(id);
 
     getAll_TYPE_OF_SETTLEMENTS();
     getAll_CITYS();
@@ -174,43 +181,44 @@ const OurFirm_Edit = ({
     getAll_TYPE_OF_ACTS_ON_BASIS_OFS,
     getAll_TYPE_OF_TAX_PAYER_ONS,
 
-    getOne_OUR_FIRM,
+    getOne_CLIENT,
     id
   ]);
 
   useLayoutEffect(() => {
-    if (one_OUR_FIRM) {
+    if (one_CLIENT) {
       setPageForm({
         ...pageForm,
-        firmName: one_OUR_FIRM.firmName,
-        typeOfFirm: one_OUR_FIRM.typeOfFirm,
-        postCode: one_OUR_FIRM.postCode,
-        typeOf_settlement: one_OUR_FIRM.typeOf_settlement,
-        city: one_OUR_FIRM.city,
-        typeOf_street: one_OUR_FIRM.typeOf_street,
-        street: one_OUR_FIRM.street,
-        numberOf_house: one_OUR_FIRM.numberOf_house,
-        numberOf_app: one_OUR_FIRM.numberOf_app,
-        EDRPOU: one_OUR_FIRM.EDRPOU,
-        iban: one_OUR_FIRM.iban,
-        firstPersonPosition: one_OUR_FIRM.firstPersonPosition,
-        firstPersonSurname: one_OUR_FIRM.firstPersonSurname,
-        firstPersonName: one_OUR_FIRM.firstPersonName,
-        firstPersonMiddleName: one_OUR_FIRM.firstPersonMiddleName,
+        firmName: one_CLIENT.firmName,
+        typeOfFirm: one_CLIENT.typeOfFirm,
+        postCode: one_CLIENT.postCode,
+        typeOf_settlement: one_CLIENT.typeOf_settlement,
+        city: one_CLIENT.city,
+        typeOf_street: one_CLIENT.typeOf_street,
+        street: one_CLIENT.street,
+        numberOf_house: one_CLIENT.numberOf_house,
+        numberOf_app: one_CLIENT.numberOf_app,
+        EDRPOU: one_CLIENT.EDRPOU,
+        ibanOwn: one_CLIENT.ibanOwn,
+        ibanGazBank: one_CLIENT.ibanGazBank,
+        firstPersonPosition: one_CLIENT.firstPersonPosition,
+        firstPersonSurname: one_CLIENT.firstPersonSurname,
+        firstPersonName: one_CLIENT.firstPersonName,
+        firstPersonMiddleName: one_CLIENT.firstPersonMiddleName,
         firstPersonSurnameRoditelPadej:
-          one_OUR_FIRM.firstPersonSurnameRoditelPadej,
-        firstPersonNameRoditelPadej: one_OUR_FIRM.firstPersonNameRoditelPadej,
+          one_CLIENT.firstPersonSurnameRoditelPadej,
+        firstPersonNameRoditelPadej: one_CLIENT.firstPersonNameRoditelPadej,
         firstPersonMiddleNameRoditelPadej:
-          one_OUR_FIRM.firstPersonMiddleNameRoditelPadej,
-        shortName: one_OUR_FIRM.shortName,
-        actsOnBasisOf: one_OUR_FIRM.actsOnBasisOf,
-        issuedBy: one_OUR_FIRM.issuedBy,
-        taxPayerOn: one_OUR_FIRM.taxPayerOn,
-        email: one_OUR_FIRM.email,
-        phoneNumber: one_OUR_FIRM.phoneNumber
+          one_CLIENT.firstPersonMiddleNameRoditelPadej,
+        shortName: one_CLIENT.shortName,
+        actsOnBasisOf: one_CLIENT.actsOnBasisOf,
+        issuedBy: one_CLIENT.issuedBy,
+        taxPayerOn: one_CLIENT.taxPayerOn,
+        email: one_CLIENT.email,
+        phoneNumber: one_CLIENT.phoneNumber
       });
     }
-  }, [one_OUR_FIRM]);
+  }, [one_CLIENT]);
 
   const onChangeHandler = e => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
@@ -226,7 +234,8 @@ const OurFirm_Edit = ({
         numberOf_house &&
         numberOf_app &&
         EDRPOU &&
-        iban &&
+        ibanOwn &&
+        ibanGazBank &&
         firstPersonPosition &&
         firstPersonSurname &&
         firstPersonName &&
@@ -251,7 +260,7 @@ const OurFirm_Edit = ({
   };
 
   const updateItemHandler = () => {
-    update_OUR_FIRM(
+    update_CLIENT(
       id,
       firmName,
       typeOfFirm,
@@ -263,7 +272,8 @@ const OurFirm_Edit = ({
       numberOf_house,
       numberOf_app,
       EDRPOU,
-      iban,
+      ibanOwn,
+      ibanGazBank,
       firstPersonPosition,
       firstPersonSurname,
       firstPersonName,
@@ -278,7 +288,7 @@ const OurFirm_Edit = ({
       email,
       phoneNumber
     );
-    history.push('/accountant/our-firm');
+    history.push('/accountant/client');
   };
 
   return (
@@ -558,16 +568,33 @@ const OurFirm_Edit = ({
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
-          <Typography align='left'>IBAN</Typography>
+          <Typography align='left'>IBAN собственный</Typography>
         </Grid>
         <Grid item xs={8} container>
           <TextField
             variant='outlined'
-            name='iban'
+            name='ibanOwn'
             fullWidth
             placeholder='IBAN'
             type='text'
-            value={iban ? iban : ''}
+            value={ibanOwn ? ibanOwn : ''}
+            onChange={e => onChangeHandler(e)}
+          />
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>IBAN бюджет(газбанк)</Typography>
+        </Grid>
+        <Grid item xs={8} container>
+          <TextField
+            variant='outlined'
+            name='ibanGazBank'
+            fullWidth
+            placeholder='ibanGazBank'
+            type='text'
+            value={ibanGazBank ? ibanGazBank : ''}
             onChange={e => onChangeHandler(e)}
           />
         </Grid>
@@ -892,10 +919,10 @@ const OurFirm_Edit = ({
   );
 };
 
-OurFirm_Edit.propTypes = {
+Client_Edit.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  getOne_OUR_FIRM: PropTypes.func.isRequired,
-  update_OUR_FIRM: PropTypes.func.isRequired,
+  getOne_CLIENT: PropTypes.func.isRequired,
+  update_CLIENT: PropTypes.func.isRequired,
 
   getAll_TYPE_OF_SETTLEMENTS: PropTypes.func.isRequired,
   getAll_CITYS: PropTypes.func.isRequired,
@@ -926,7 +953,7 @@ const mapStateToProps = state => ({
   state_typeOf_Street: state.typeOf_Street,
   state_street: state.street,
 
-  state_ourFirm: state.ourFirm,
+  state_client: state.client,
 
   state_typeOf_Firm: state.typeOf_Firm,
   state_firstPersonPosition: state.firstPersonPosition,
@@ -936,8 +963,8 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   setNameOfPage,
-  getOne_OUR_FIRM,
-  update_OUR_FIRM,
+  getOne_CLIENT,
+  update_CLIENT,
   getAll_TYPE_OF_SETTLEMENTS,
   getAll_CITYS,
   getAll_TYPE_OF_STREETS,
@@ -947,4 +974,4 @@ export default connect(mapStateToProps, {
   getAll_FIRST_PERSON_POSITIONS,
   getAll_TYPE_OF_ACTS_ON_BASIS_OFS,
   getAll_TYPE_OF_TAX_PAYER_ONS
-})(OurFirm_Edit);
+})(Client_Edit);

@@ -76,7 +76,7 @@ const TypeOfImageEdit = ({
             fullWidth
             placeholder='Введите новую группу'
             name='imageGroup'
-            value={imageGroup}
+            value={imageGroup ? imageGroup : ''}
             onChange={e => onChange(e)}
           />
         </Grid>
@@ -89,7 +89,7 @@ const TypeOfImageEdit = ({
             fullWidth
             // placeholder='Введите описание через запятую'
             name='descriptions'
-            value={descriptions}
+            value={descriptions ? descriptions : ''}
             onChange={e => onChange(e)}
           />
         </Grid>
