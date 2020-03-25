@@ -137,7 +137,7 @@ const Worker_Edit = ({
       const day =
         oldDate.getDay() < 10 ? `0${oldDate.getDay()}` : oldDate.getDay();
       const reverceDate = `${year}-${month}-${day}`;
-      console.log(reverceDate);
+      // console.log(reverceDate);
 
       setPageForm({
         ...pageForm,
@@ -157,7 +157,7 @@ const Worker_Edit = ({
       });
     }
   }, [one_WORKER]);
-  console.log(dateOf_Birth);
+  // console.log(dateOf_Birth);
 
   const onChangeHandler = e => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
