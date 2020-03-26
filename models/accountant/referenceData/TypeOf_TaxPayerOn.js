@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const TypeOf_TaxPayerOn = new mongoose.Schema({
+const TypeOf_TaxPayerOn_Schema = new mongoose.Schema({
   typeOf_TaxPayerOn: {
     type: String,
     required: [true, 'Введите основание налогооблажения'],
@@ -8,4 +8,4 @@ const TypeOf_TaxPayerOn = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('TypeOf_TaxPayerOn', TypeOf_TaxPayerOn);
+module.exports = mongoose.model('TypeOf_TaxPayerOn', TypeOf_TaxPayerOn_Schema);

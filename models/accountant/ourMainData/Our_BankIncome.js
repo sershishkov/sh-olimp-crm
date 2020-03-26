@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Our_BankIncome = new mongoose.Schema({
+const Our_BankIncome_Schema = new mongoose.Schema({
   bankIncomeNumber: {
     type: String,
     required: [true, 'Введите номер накладной'],
@@ -34,4 +34,4 @@ const Our_BankIncome = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Our_BankIncome', Our_BankIncome);
+module.exports = mongoose.model('Our_BankIncome', Our_BankIncome_Schema);

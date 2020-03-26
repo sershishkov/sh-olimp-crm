@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const OurFirm = new mongoose.Schema({
+const OurFirm_Schema = new mongoose.Schema({
   firmName: {
     type: String,
     required: [true, 'Введите название фирмы'],
@@ -110,8 +110,8 @@ const OurFirm = new mongoose.Schema({
   },
   phoneNumber: {
     type: String,
-    required: [true, 'Введите номер телефона'],
-   // match: [/\b\d{7}\b/, 'Пожалуйста введите 7 цифр']
+    required: [true, 'Введите номер телефона']
+    // match: [/\b\d{7}\b/, 'Пожалуйста введите 7 цифр']
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
@@ -124,4 +124,4 @@ const OurFirm = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('OurFirm', OurFirm);
+module.exports = mongoose.model('OurFirm', OurFirm_Schema);

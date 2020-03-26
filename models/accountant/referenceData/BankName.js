@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const BankName = new mongoose.Schema({
+const BankName_Schema = new mongoose.Schema({
   bankName: {
     type: String,
     required: [true, 'Введите название Банка'],
@@ -14,4 +14,4 @@ const BankName = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('BankName', BankName);
+module.exports = mongoose.model('BankName', BankName_Schema);

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const TypeOf_ActsOnBasisOf = new mongoose.Schema({
+const TypeOf_ActsOnBasisOf_Schema = new mongoose.Schema({
   actOnBasisOf: {
     type: String,
     required: [true, 'Введите основание действия руководителя'],
@@ -8,4 +8,7 @@ const TypeOf_ActsOnBasisOf = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('TypeOf_ActsOnBasisOf', TypeOf_ActsOnBasisOf);
+module.exports = mongoose.model(
+  'TypeOf_ActsOnBasisOf',
+  TypeOf_ActsOnBasisOf_Schema
+);

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const CategoryGroupOfImage = new mongoose.Schema({
+const CategoryGroupOfImage_Schema = new mongoose.Schema({
   categoryOf_Group: {
     type: String,
     required: true,
@@ -8,4 +8,7 @@ const CategoryGroupOfImage = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('CategoryGroupOfImage', CategoryGroupOfImage);
+module.exports = mongoose.model(
+  'CategoryGroupOfImage',
+  CategoryGroupOfImage_Schema
+);

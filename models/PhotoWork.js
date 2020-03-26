@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const PhotoWork = new mongoose.Schema({
+const PhotoWork_Schema = new mongoose.Schema({
   imageUrl: String,
   imageGroup: {
     type: mongoose.Schema.Types.ObjectId,
@@ -13,4 +13,4 @@ const PhotoWork = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('PhotoWork', PhotoWork);
+module.exports = mongoose.model('PhotoWork', PhotoWork_Schema);

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Our_InvoiceMixed = new mongoose.Schema({
+const Our_InvoiceMixed_Schema = new mongoose.Schema({
   invoiceNumber: {
     type: String,
     required: [true, 'Введите номер счета'],
@@ -71,4 +71,4 @@ const Our_InvoiceMixed = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Our_InvoiceMixed', Our_InvoiceMixed);
+module.exports = mongoose.model('Our_InvoiceMixed', Our_InvoiceMixed_Schema);

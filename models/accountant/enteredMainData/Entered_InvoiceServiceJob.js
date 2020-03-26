@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Entered_InvoiceServiceJob = new mongoose.Schema({
+const Entered_InvoiceServiceJob_Schema = new mongoose.Schema({
   invoiceServiceJobNumber: {
     type: String,
     required: [true, 'Введите номер счета'],
@@ -56,5 +56,5 @@ const Entered_InvoiceServiceJob = new mongoose.Schema({
 
 module.exports = mongoose.model(
   'Entered_InvoiceServiceJob',
-  Entered_InvoiceServiceJob
+  Entered_InvoiceServiceJob_Schema
 );

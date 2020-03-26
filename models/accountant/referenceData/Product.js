@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const Product = new mongoose.Schema({
+const Product_Schema = new mongoose.Schema({
   productName: {
     type: String,
     required: [true, 'Введите название материала'],
     unique: true
-  },  
+  },
   unit: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Unit',
@@ -53,4 +53,4 @@ const Product = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Product', Product);
+module.exports = mongoose.model('Product', Product_Schema);

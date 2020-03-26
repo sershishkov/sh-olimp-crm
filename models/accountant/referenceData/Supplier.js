@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Supplier = new mongoose.Schema({
+const Supplier_Schema = new mongoose.Schema({
   supplierName: {
     type: String,
     required: [true, 'Введите  название поставщика'],
@@ -132,4 +132,4 @@ const Supplier = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Supplier', Supplier);
+module.exports = mongoose.model('Supplier', Supplier_Schema);

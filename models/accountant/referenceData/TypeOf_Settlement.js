@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const TypeOf_Settlement = new mongoose.Schema({
+const TypeOf_Settlement_Schema = new mongoose.Schema({
   typeOf_SettlementLong: {
     type: String,
     required: [true, 'Введите полное название типа населенного пункта'],
@@ -13,4 +13,4 @@ const TypeOf_Settlement = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('TypeOf_Settlement', TypeOf_Settlement);
+module.exports = mongoose.model('TypeOf_Settlement', TypeOf_Settlement_Schema);

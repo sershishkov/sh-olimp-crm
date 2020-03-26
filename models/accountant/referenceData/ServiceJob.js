@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ServiceJob = new mongoose.Schema({
+const ServiceJob_Schema = new mongoose.Schema({
   serviceName: {
     type: String,
     required: [true, 'Введите название материала'],
@@ -16,4 +16,4 @@ const ServiceJob = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('ServiceJob', ServiceJob);
+module.exports = mongoose.model('ServiceJob', ServiceJob_Schema);

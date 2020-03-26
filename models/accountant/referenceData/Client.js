@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Client = new mongoose.Schema({
+const Client_Schema = new mongoose.Schema({
   firmName: {
     type: String,
     required: [true, 'Введите название фирмы'],
@@ -130,4 +130,4 @@ const Client = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Client', Client);
+module.exports = mongoose.model('Client', Client_Schema);

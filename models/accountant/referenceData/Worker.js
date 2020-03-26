@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Worker = new mongoose.Schema({
+const Worker_Schema = new mongoose.Schema({
   surname: {
     type: String,
     required: [true, 'Фамилия? ']
@@ -65,4 +65,4 @@ const Worker = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Worker', Worker);
+module.exports = mongoose.model('Worker', Worker_Schema);

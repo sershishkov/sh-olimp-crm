@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Entered_SalesInvoiceNakladnaya = new mongoose.Schema({
+const Entered_SalesInvoiceNakladnaya_Schema = new mongoose.Schema({
   naklNumber: {
     type: String,
     required: [true, 'Введите номер накладной'],
@@ -52,5 +52,5 @@ const Entered_SalesInvoiceNakladnaya = new mongoose.Schema({
 
 module.exports = mongoose.model(
   'Entered_SalesInvoiceNakladnaya',
-  Entered_SalesInvoiceNakladnaya
+  Entered_SalesInvoiceNakladnaya_Schema
 );

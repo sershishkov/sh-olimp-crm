@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Unit = new mongoose.Schema({
+const Unit_Schema = new mongoose.Schema({
   unitNameLong: {
     type: String,
     required: [true, 'Введите полное название единицы измерения'],
@@ -17,4 +17,4 @@ const Unit = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Unit', Unit);
+module.exports = mongoose.model('Unit', Unit_Schema);

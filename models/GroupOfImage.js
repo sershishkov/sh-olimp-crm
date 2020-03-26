@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const GroupOfImage = new mongoose.Schema({
+const GroupOfImage_Schema = new mongoose.Schema({
   imageGroup: {
     type: String,
     required: true,
@@ -13,4 +13,4 @@ const GroupOfImage = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('GroupOfImage', GroupOfImage);
+module.exports = mongoose.model('GroupOfImage', GroupOfImage_Schema);

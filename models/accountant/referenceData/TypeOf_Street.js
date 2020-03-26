@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const TypeOf_Street = new mongoose.Schema({
+const TypeOf_Street_Schema = new mongoose.Schema({
   typeOf_StreetLong: {
     type: String,
     required: [true, 'Введите полное название типа улицы'],
@@ -13,4 +13,4 @@ const TypeOf_Street = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('TypeOf_Street', TypeOf_Street);
+module.exports = mongoose.model('TypeOf_Street', TypeOf_Street_Schema);

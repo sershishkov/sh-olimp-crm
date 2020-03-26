@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const FirstPersonPosition = new mongoose.Schema({
+const FirstPersonPosition_Schema = new mongoose.Schema({
   position: {
     type: String,
     required: [true, 'Введите должность в именительном падеже'],
@@ -13,4 +13,7 @@ const FirstPersonPosition = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('FirstPersonPosition', FirstPersonPosition);
+module.exports = mongoose.model(
+  'FirstPersonPosition',
+  FirstPersonPosition_Schema
+);

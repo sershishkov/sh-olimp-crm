@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Our_Payment = new mongoose.Schema({
+const Our_Payment_Schema = new mongoose.Schema({
   paymentNumber: {
     type: String,
     required: [true, 'Введите номер платежки'],
@@ -37,4 +37,4 @@ const Our_Payment = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Our_Payment', Our_Payment);
+module.exports = mongoose.model('Our_Payment', Our_Payment_Schema);

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Our_SalesInvoiceNakladnaya = new mongoose.Schema({
+const Our_SalesInvoiceNakladnaya_Schema = new mongoose.Schema({
   naklNumber: {
     type: String,
     required: [true, 'Введите номер накладной'],
@@ -39,6 +39,10 @@ const Our_SalesInvoiceNakladnaya = new mongoose.Schema({
       }
     }
   ],
+  sum: {
+    type: Number
+    // required: true
+  },
   active: {
     type: Boolean,
     // required: true,
@@ -51,7 +55,20 @@ const Our_SalesInvoiceNakladnaya = new mongoose.Schema({
   }
 });
 
+Our_SalesInvoiceNakladnaya_Schema.pre('save', async function(next) {
+  if (!this.products) {
+    next();
+  }
+  let sumOfProduct = 0;
+  this.products.forEach(item => {
+    sumOfProduct += item.amount * item.price;
+  });
+  this.sum = sumOfProduct;
+
+  next();
+});
+
 module.exports = mongoose.model(
   'Our_SalesInvoiceNakladnaya',
-  Our_SalesInvoiceNakladnaya
+  Our_SalesInvoiceNakladnaya_Schema
 );

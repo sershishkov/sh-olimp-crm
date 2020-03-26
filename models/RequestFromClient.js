@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const RequestFromClient = new mongoose.Schema({
+const RequestFromClient_Schema = new mongoose.Schema({
   clientName: {
     type: String,
     required: [true, 'напишите Ваше имя']
@@ -34,4 +34,4 @@ const RequestFromClient = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('RequestFromClient', RequestFromClient);
+module.exports = mongoose.model('RequestFromClient', RequestFromClient_Schema);

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Street = new mongoose.Schema({
+const Street_Schema = new mongoose.Schema({
   streetName: {
     type: String,
     required: [true, 'Введите название города'],
@@ -8,4 +8,4 @@ const Street = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Street', Street);
+module.exports = mongoose.model('Street', Street_Schema);
