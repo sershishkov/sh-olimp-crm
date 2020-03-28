@@ -259,6 +259,22 @@ const Client_List = React.lazy(() =>
   import('./accountant/referenceData/client/Client_List')
 );
 
+const Our_SalesInvoiceNakladnaya_Add = React.lazy(() =>
+  import(
+    './accountant/ourMainData/our_SalesInvoiceNakladnaya/Our_SalesInvoiceNakladnaya_Add'
+  )
+);
+const Our_SalesInvoiceNakladnaya_Edit = React.lazy(() =>
+  import(
+    './accountant/ourMainData/our_SalesInvoiceNakladnaya/Our_SalesInvoiceNakladnaya_Edit'
+  )
+);
+const Our_SalesInvoiceNakladnaya_List = React.lazy(() =>
+  import(
+    './accountant/ourMainData/our_SalesInvoiceNakladnaya/Our_SalesInvoiceNakladnaya_List'
+  )
+);
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: 70
@@ -647,6 +663,22 @@ function App() {
                 exact
                 path='/accountant/client'
                 component={Client_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/our-service-invoice-nakl/add'
+                component={Our_SalesInvoiceNakladnaya_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/our-service-invoice-nakl/:id'
+                component={Our_SalesInvoiceNakladnaya_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/our-service-invoice-nakl'
+                component={Our_SalesInvoiceNakladnaya_List}
               />
             </Switch>
           </Suspense>

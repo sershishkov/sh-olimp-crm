@@ -69,11 +69,16 @@ exports.updateOur_SalesInvoiceNakladnaya = asyncHandler(
 //@access Private
 exports.getAllOur_SalesInvoiceNakladnayas = asyncHandler(
   async (req, res, next) => {
-    const allOur_SalesInvoiceNakladnayas = await Our_SalesInvoiceNakladnaya.find().sort(
-      {
+    const allOur_SalesInvoiceNakladnayas = await Our_SalesInvoiceNakladnaya.find()
+      .sort({
         naclDate: -1
-      }
-    );
+      })
+      .populate({ path: 'ourFirm', select: 'firmName' })
+      .populate({ path: 'client', select: 'firmName' })
+      .populate({
+        path: 'products.product',
+        select: 'productName _id'
+      });
     //Check if  exists response
     if (!allOur_SalesInvoiceNakladnayas) {
       return next(
@@ -95,10 +100,10 @@ exports.getOneOur_SalesInvoiceNakladnaya = asyncHandler(
   async (req, res, next) => {
     const oneOur_SalesInvoiceNakladnaya = await Our_SalesInvoiceNakladnaya.findById(
       req.params.id
-    )
-      .populate({ path: 'ourFirm', select: 'firmName' })
-      .populate({ path: 'client', select: 'firmName' })
-      .populate({ path: 'products.product', select: 'productName' });
+    );
+    // .populate({ path: 'ourFirm', select: 'firmName' })
+    // .populate({ path: 'client', select: 'firmName' })
+    // .populate({ path: 'products.product', select: 'productName' });
 
     //Check if  exists response
     if (!oneOur_SalesInvoiceNakladnaya) {

@@ -66,20 +66,8 @@ Our_SalesInvoiceNakladnaya_Schema.virtual('sum').get(function() {
   this.products.forEach(item => {
     sumOfProduct += item.amount * item.price;
   });
-  return sumOfProduct;
+  return sumOfProduct.toFixed(2);
 });
-
-// Our_SalesInvoiceNakladnaya_Schema.pre('save', async function(next) {
-//   if (!this.products) {
-//     next();
-//   }
-//   let sumOfProduct = 0;
-//   this.products.forEach(item => {
-//     sumOfProduct += item.amount * item.price;
-//   });
-//   this.sum = sumOfProduct;
-//   next();
-// });
 
 module.exports = mongoose.model(
   'Our_SalesInvoiceNakladnaya',

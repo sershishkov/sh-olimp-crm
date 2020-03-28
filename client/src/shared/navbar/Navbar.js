@@ -481,11 +481,18 @@ const ResponsiveDrawer = ({
                   <ListItemText>Счет работы</ListItemText>
                 </ListItem>
 
-                <ListItem button className={classes.nestedListItemLevel2}>
+                <ListItem
+                  button
+                  className={classes.nestedListItemLevel2}
+                  onClick={() => {
+                    history.push('/accountant/our-service-invoice-nakl');
+                    setMobileOpen(!mobileOpen);
+                  }}
+                >
                   <ListItemIcon>
                     <SubdirectoryArrowRightIcon />
                   </ListItemIcon>
-                  <ListItemText>Накладная</ListItemText>
+                  <ListItemText>Накладные</ListItemText>
                 </ListItem>
 
                 <ListItem button className={classes.nestedListItemLevel2}>
