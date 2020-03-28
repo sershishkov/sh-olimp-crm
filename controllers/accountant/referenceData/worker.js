@@ -17,6 +17,8 @@ exports.addWorker = asyncHandler(async (req, res, next) => {
     middleName: req.body.middleName,
     dateOf_Birth: req.body.dateOf_Birth,
     postCode: req.body.postCode,
+    oblast: req.body.oblast,
+    rayon: req.body.rayon,
     typeOf_settlement: req.body.typeOf_settlement,
     city: req.body.city,
     typeOf_street: req.body.typeOf_street,
@@ -49,6 +51,8 @@ exports.updateWorker = asyncHandler(async (req, res, next) => {
     middleName: req.body.middleName,
     dateOf_Birth: req.body.dateOf_Birth,
     postCode: req.body.postCode,
+    oblast: req.body.oblast,
+    rayon: req.body.rayon,
     typeOf_settlement: req.body.typeOf_settlement,
     city: req.body.city,
     typeOf_street: req.body.typeOf_street,
@@ -85,7 +89,9 @@ exports.getAllWorkers = asyncHandler(async (req, res, next) => {
     .populate({ path: 'typeOf_settlement', select: 'typeOf_SettlementShort' })
     .populate({ path: 'city', select: 'cityName' })
     .populate({ path: 'typeOf_street', select: 'typeOf_StreetShort' })
-    .populate({ path: 'street', select: 'streetName' });
+    .populate({ path: 'street', select: 'streetName' })
+    .populate({ path: 'oblast', select: 'oblastName' })
+    .populate({ path: 'rayon', select: 'rayonName' });
   //Check if  exists response
   if (!allWorkers) {
     return next(new ErrorResponse('На данный момент ничего в базе нет ', 400));

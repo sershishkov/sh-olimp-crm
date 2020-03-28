@@ -7,6 +7,7 @@ import groupOfImage from './groupOfImage';
 import users from './users';
 import clientRequests from './clientRequests';
 import clientCategory from './categoryOf_Client';
+
 import entered_CertificateOf_Completion from './accountant/enteredMainData/entered_CertificateOf_Completion';
 import entered_InvoiceMixed from './accountant/enteredMainData/entered_InvoiceMixed';
 import entered_InvoiceProduct from './accountant/enteredMainData/entered_InvoiceProduct';
@@ -40,6 +41,8 @@ import unit from './accountant/referenceData/unit';
 import worker from './accountant/referenceData/worker';
 import city from './accountant/referenceData/city';
 import street from './accountant/referenceData/street';
+import oblast from './accountant/referenceData/oblast';
+import rayon from './accountant/referenceData/rayon';
 
 export default combineReducers({
   alert,
@@ -83,5 +86,7 @@ export default combineReducers({
   unit,
   worker,
   city,
-  street
+  street,
+  oblast,
+  rayon
 });

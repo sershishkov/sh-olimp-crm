@@ -268,3 +268,15 @@ export const UPDATE_STREET = 'UPDATE_STREET';
 export const GET_ALL_STREETS = 'GET_ALL_STREETS';
 export const GET_ONE_STREET = 'GET_ONE_STREET';
 export const DELETE_STREET = 'DELETE_STREET';
+
+export const SET_OBLAST = 'SET_OBLAST';
+export const UPDATE_OBLAST = 'UPDATE_OBLAST';
+export const GET_ALL_OBLASTS = 'GET_ALL_OBLASTS';
+export const GET_ONE_OBLAST = 'GET_ONE_OBLAST';
+export const DELETE_OBLAST = 'DELETE_OBLAST';
+
+export const SET_RAYON = 'SET_RAYON';
+export const UPDATE_RAYON = 'UPDATE_RAYON';
+export const GET_ALL_RAYONS = 'GET_ALL_RAYONS';
+export const GET_ONE_RAYON = 'GET_ONE_RAYON';
+export const DELETE_RAYON = 'DELETE_RAYON';

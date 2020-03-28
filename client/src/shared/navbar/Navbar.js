@@ -683,6 +683,34 @@ const ResponsiveDrawer = ({
                   button
                   className={classes.nestedListItemLevel2}
                   onClick={() => {
+                    history.push('/accountant/oblast');
+                    setMobileOpen(!mobileOpen);
+                  }}
+                >
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Области</ListItemText>
+                </ListItem>
+
+                <ListItem
+                  button
+                  className={classes.nestedListItemLevel2}
+                  onClick={() => {
+                    history.push('/accountant/rayon');
+                    setMobileOpen(!mobileOpen);
+                  }}
+                >
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Районы</ListItemText>
+                </ListItem>
+
+                <ListItem
+                  button
+                  className={classes.nestedListItemLevel2}
+                  onClick={() => {
                     history.push('/accountant/type-of-settlement');
                     setMobileOpen(!mobileOpen);
                   }}

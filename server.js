@@ -82,6 +82,8 @@ const product = require('./routes/accountant/referenceData/product');
 const serviceJob = require('./routes/accountant/referenceData/serviceJob');
 const city = require('./routes/accountant/referenceData/city');
 const street = require('./routes/accountant/referenceData/street');
+const oblast = require('./routes/accountant/referenceData/oblast');
+const rayon = require('./routes/accountant/referenceData/rayon');
 
 // OUR  MAIN DATA      //
 const our_SalesInvoiceNakladnaya = require('./routes/accountant/ourMainData/our_SalesInvoiceNakladnaya');
@@ -143,6 +145,8 @@ app.use('/api/v1/accountant/product', product);
 app.use('/api/v1/accountant/service-job', serviceJob);
 app.use('/api/v1/accountant/city', city);
 app.use('/api/v1/accountant/street', street);
+app.use('/api/v1/accountant/oblast', oblast);
+app.use('/api/v1/accountant/rayon', rayon);
 
 // OUR  MAIN DATA      //
 app.use(

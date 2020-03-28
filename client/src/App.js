@@ -209,6 +209,26 @@ const City_List = React.lazy(() =>
   import('./accountant/referenceData/city/City_List')
 );
 
+const Oblast_Add = React.lazy(() =>
+  import('./accountant/referenceData/oblast/Oblast_Add')
+);
+const Oblast_Edit = React.lazy(() =>
+  import('./accountant/referenceData/oblast/Oblast_Edit')
+);
+const Oblast_List = React.lazy(() =>
+  import('./accountant/referenceData/oblast/Oblast_List')
+);
+
+const Rayon_Add = React.lazy(() =>
+  import('./accountant/referenceData/rayon/Rayon_Add')
+);
+const Rayon_Edit = React.lazy(() =>
+  import('./accountant/referenceData/rayon/Rayon_Edit')
+);
+const Rayon_List = React.lazy(() =>
+  import('./accountant/referenceData/rayon/Rayon_List')
+);
+
 const Street_Add = React.lazy(() =>
   import('./accountant/referenceData/street/Street_Add')
 );
@@ -583,6 +603,38 @@ function App() {
                 exact
                 path='/accountant/city'
                 component={City_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/oblast/add'
+                component={Oblast_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/oblast/:id'
+                component={Oblast_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/oblast'
+                component={Oblast_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/rayon/add'
+                component={Rayon_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/rayon/:id'
+                component={Rayon_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/rayon'
+                component={Rayon_List}
               />
 
               <PrivateRoute

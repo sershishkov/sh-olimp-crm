@@ -16,6 +16,14 @@ const Client_Schema = new mongoose.Schema({
     required: [true, 'Введите почтовый индекс '],
     match: [/\b\d{5}\b/, 'Пожалуйста введите 5 цифр']
   },
+  oblast: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Oblast'
+  },
+  rayon: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Oblast'
+  },
   typeOf_settlement: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'TypeOf_Settlement',

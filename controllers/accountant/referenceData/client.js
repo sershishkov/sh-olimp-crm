@@ -15,6 +15,8 @@ exports.addClient = asyncHandler(async (req, res, next) => {
     firmName: req.body.firmName,
     typeOfFirm: req.body.typeOfFirm,
     postCode: req.body.postCode,
+    oblast: req.body.oblast,
+    rayon: req.body.rayon,
 
     typeOf_settlement: req.body.typeOf_settlement,
     city: req.body.city,
@@ -65,6 +67,8 @@ exports.updateClient = asyncHandler(async (req, res, next) => {
     firmName: req.body.firmName,
     typeOfFirm: req.body.typeOfFirm,
     postCode: req.body.postCode,
+    oblast: req.body.oblast,
+    rayon: req.body.rayon,
     typeOf_settlement: req.body.typeOf_settlement,
     city: req.body.city,
     typeOf_street: req.body.typeOf_street,
@@ -118,6 +122,8 @@ exports.getAllClients = asyncHandler(async (req, res, next) => {
     .populate({ path: 'city', select: 'cityName' })
     .populate({ path: 'typeOf_street', select: 'typeOf_StreetShort' })
     .populate({ path: 'street', select: 'streetName' })
+    .populate({ path: 'rayon', select: 'rayonName' })
+    .populate({ path: 'oblast', select: 'oblastName' })
     .populate({ path: 'firstPersonPosition', select: 'position' })
     .populate({ path: 'actsOnBasisOf', select: 'actOnBasisOf' })
     .populate({ path: 'taxPayerOn', select: 'typeOf_TaxPayerOn' });

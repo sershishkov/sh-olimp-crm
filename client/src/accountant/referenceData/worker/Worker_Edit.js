@@ -24,6 +24,8 @@ import { getAll_TYPE_OF_SETTLEMENTS } from '../../../store/actions/accountant/re
 import { getAll_CITYS } from '../../../store/actions/accountant/referenceData/city';
 import { getAll_TYPE_OF_STREETS } from '../../../store/actions/accountant/referenceData/typeOf_Street';
 import { getAll_STREETS } from '../../../store/actions/accountant/referenceData/street';
+import { getAll_OBLASTS } from '../../../store/actions/accountant/referenceData/oblast';
+import { getAll_RAYONS } from '../../../store/actions/accountant/referenceData/rayon';
 
 import Spinner from '../../../shared/spinner/Spinner';
 
@@ -64,11 +66,17 @@ const Worker_Edit = ({
   getAll_CITYS,
   getAll_TYPE_OF_STREETS,
   getAll_STREETS,
+  getAll_OBLASTS,
+  getAll_RAYONS,
+
   state_worker: { one_WORKER },
   state_typeOf_Settlement: { arr_TYPE_OF_SETTLEMENTS },
   state_city: { arr_CITYS },
   state_typeOf_Street: { arr_TYPE_OF_STREETS },
-  state_street: { arr_STREETS }
+  state_street: { arr_STREETS },
+
+  state_oblast: { arr_OBLASTS },
+  state_rayon: { arr_RAYONS }
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -84,6 +92,10 @@ const Worker_Edit = ({
     middleName: '',
     dateOf_Birth: '',
     postCode: '',
+
+    oblast: '',
+    rayon: '',
+
     typeOf_settlement: '',
     city: '',
     typeOf_street: '',
@@ -101,6 +113,8 @@ const Worker_Edit = ({
     middleName,
     dateOf_Birth,
     postCode,
+    oblast,
+    rayon,
     typeOf_settlement,
     city,
     typeOf_street,
@@ -118,6 +132,9 @@ const Worker_Edit = ({
     getAll_CITYS();
     getAll_TYPE_OF_STREETS();
     getAll_STREETS();
+
+    getAll_OBLASTS();
+    getAll_RAYONS();
   }, [
     setNameOfPage,
     getAll_TYPE_OF_SETTLEMENTS,
@@ -125,6 +142,8 @@ const Worker_Edit = ({
     getAll_TYPE_OF_STREETS,
     getAll_STREETS,
     getOne_WORKER,
+    getAll_OBLASTS,
+    getAll_RAYONS,
     id
   ]);
 
@@ -146,6 +165,8 @@ const Worker_Edit = ({
         middleName: one_WORKER.middleName,
         dateOf_Birth: reverceDate,
         postCode: one_WORKER.postCode,
+        oblast: one_WORKER.oblast,
+        rayon: one_WORKER.rayon,
         typeOf_settlement: one_WORKER.typeOf_settlement,
         city: one_WORKER.city,
         typeOf_street: one_WORKER.typeOf_street,
@@ -194,6 +215,8 @@ const Worker_Edit = ({
       middleName,
       dateOf_Birth,
       postCode,
+      oblast,
+      rayon,
       typeOf_settlement,
       city,
       typeOf_street,
@@ -298,6 +321,76 @@ const Worker_Edit = ({
             value={postCode ? postCode : ''}
             onChange={e => onChangeHandler(e)}
           />
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Область</Typography>
+        </Grid>
+        <Grid item xs={8} container>
+          {!arr_OBLASTS ? (
+            <Spinner />
+          ) : (
+            <Grid item xs={12} className={classes.wrapSelect}>
+              <InputLabel
+                id='select-oblast'
+                className={oblast ? classes.displayNone : classes.displayFlex}
+              >
+                Область
+              </InputLabel>
+              <Select
+                variant='outlined'
+                labelId='select-oblast'
+                fullWidth
+                value={oblast ? oblast : ''}
+                name='oblast'
+                onChange={e => onChangeHandler(e)}
+                className={classes.select}
+              >
+                {arr_OBLASTS.map(item => (
+                  <MenuItem key={item._id} value={item._id}>
+                    {item.oblastName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+          )}
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Район</Typography>
+        </Grid>
+        <Grid item xs={8} container>
+          {!arr_RAYONS ? (
+            <Spinner />
+          ) : (
+            <Grid item xs={12} className={classes.wrapSelect}>
+              <InputLabel
+                id='select-rayon'
+                className={rayon ? classes.displayNone : classes.displayFlex}
+              >
+                Район
+              </InputLabel>
+              <Select
+                variant='outlined'
+                labelId='select-rayon'
+                fullWidth
+                value={rayon ? rayon : ''}
+                name='rayon'
+                onChange={e => onChangeHandler(e)}
+                className={classes.select}
+              >
+                {arr_RAYONS.map(item => (
+                  <MenuItem key={item._id} value={item._id}>
+                    {item.rayonName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+          )}
         </Grid>
       </Grid>
 
@@ -547,7 +640,9 @@ Worker_Edit.propTypes = {
   state_typeOf_Street: PropTypes.object.isRequired,
   state_street: PropTypes.object.isRequired,
 
-  state_worker: PropTypes.object.isRequired
+  state_worker: PropTypes.object.isRequired,
+  state_oblast: PropTypes.object.isRequired,
+  state_rayon: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -555,7 +650,9 @@ const mapStateToProps = state => ({
   state_city: state.city,
   state_typeOf_Street: state.typeOf_Street,
   state_street: state.street,
-  state_worker: state.worker
+  state_worker: state.worker,
+  state_oblast: state.oblast,
+  state_rayon: state.rayon
 });
 
 export default connect(mapStateToProps, {
@@ -565,5 +662,7 @@ export default connect(mapStateToProps, {
   getAll_TYPE_OF_SETTLEMENTS,
   getAll_CITYS,
   getAll_TYPE_OF_STREETS,
-  getAll_STREETS
+  getAll_STREETS,
+  getAll_OBLASTS,
+  getAll_RAYONS
 })(Worker_Edit);
