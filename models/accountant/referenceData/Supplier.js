@@ -101,6 +101,9 @@ const Supplier_Schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'TypeOf_ActsOnBasisOf'
   },
+  actsOnBasisOf_Number: {
+    type: String
+  },
   issuedBy: {
     type: String
   },

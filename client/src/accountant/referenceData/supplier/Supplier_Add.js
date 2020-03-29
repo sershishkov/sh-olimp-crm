@@ -9,6 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -27,6 +29,8 @@ import { getAll_TYPE_OF_SETTLEMENTS } from '../../../store/actions/accountant/re
 import { getAll_CITYS } from '../../../store/actions/accountant/referenceData/city';
 import { getAll_TYPE_OF_STREETS } from '../../../store/actions/accountant/referenceData/typeOf_Street';
 import { getAll_STREETS } from '../../../store/actions/accountant/referenceData/street';
+import { getAll_OBLASTS } from '../../../store/actions/accountant/referenceData/oblast';
+import { getAll_RAYONS } from '../../../store/actions/accountant/referenceData/rayon';
 
 import Spinner from '../../../shared/spinner/Spinner';
 
@@ -67,6 +71,8 @@ const Supplier_Add = ({
   getAll_CITYS,
   getAll_TYPE_OF_STREETS,
   getAll_STREETS,
+  getAll_OBLASTS,
+  getAll_RAYONS,
 
   getAll_TYPE_OF_FIRMS,
   getAll_FIRST_PERSON_POSITIONS,
@@ -83,7 +89,9 @@ const Supplier_Add = ({
   state_firstPersonPosition: { arr_FIRST_PERSON_POSITIONS },
   state_typeOf_ActsOnBasisOf: { arr_TYPE_OF_ACTS_ON_BASIS_OFS },
   state_typeOf_TaxPayerOn: { arr_TYPE_OF_TAX_PAYER_ONS },
-  state_groupOf_Product: { arr_GROUP_OF_PRODUCTS }
+  state_groupOf_Product: { arr_GROUP_OF_PRODUCTS },
+  state_oblast: { arr_OBLASTS },
+  state_rayon: { arr_RAYONS }
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -96,6 +104,8 @@ const Supplier_Add = ({
     supplierName: '',
     typeOfFirm: '',
     postCode: '',
+    oblast: '5e808f28376cba45cb4f131f',
+    rayon: '5e808f36376cba45cb4f1320',
     typeOf_settlement: '',
     city: '',
     typeOf_street: '',
@@ -113,6 +123,7 @@ const Supplier_Add = ({
     firstPersonMiddleNameRoditelPadej: '',
     shortName: '',
     actsOnBasisOf: '',
+    actsOnBasisOf_Number: '',
     issuedBy: '',
     taxPayerOn: '',
     email: '',
@@ -125,6 +136,8 @@ const Supplier_Add = ({
     supplierName,
     typeOfFirm,
     postCode,
+    oblast,
+    rayon,
     typeOf_settlement,
     city,
     typeOf_street,
@@ -142,6 +155,7 @@ const Supplier_Add = ({
     firstPersonMiddleNameRoditelPadej,
     shortName,
     actsOnBasisOf,
+    actsOnBasisOf_Number,
     issuedBy,
     taxPayerOn,
     email,
@@ -161,6 +175,8 @@ const Supplier_Add = ({
     getAll_TYPE_OF_ACTS_ON_BASIS_OFS();
     getAll_TYPE_OF_TAX_PAYER_ONS();
     getAll_GROUP_OF_PRODUCTS();
+    getAll_OBLASTS();
+    getAll_RAYONS();
   }, [
     setNameOfPage,
     getAll_TYPE_OF_SETTLEMENTS,
@@ -171,12 +187,14 @@ const Supplier_Add = ({
     getAll_FIRST_PERSON_POSITIONS,
     getAll_TYPE_OF_ACTS_ON_BASIS_OFS,
     getAll_TYPE_OF_TAX_PAYER_ONS,
-    getAll_GROUP_OF_PRODUCTS
+    getAll_GROUP_OF_PRODUCTS,
+
+    getAll_OBLASTS,
+    getAll_RAYONS
   ]);
 
   const onChangeHandler = e => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
-    // console.log(e.target.value);
     setDisabledForm(
       !(
         supplierName &&
@@ -187,7 +205,7 @@ const Supplier_Add = ({
         typeOf_street &&
         street &&
         numberOf_house &&
-        numberOf_app &&
+        // numberOf_app &&
         EDRPOU &&
         iban &&
         firstPersonPosition &&
@@ -199,7 +217,7 @@ const Supplier_Add = ({
         firstPersonMiddleNameRoditelPadej &&
         shortName &&
         actsOnBasisOf &&
-        issuedBy &&
+        // issuedBy &&
         taxPayerOn &&
         email &&
         phoneNumber &&
@@ -220,6 +238,8 @@ const Supplier_Add = ({
       supplierName,
       typeOfFirm,
       postCode,
+      oblast,
+      rayon,
       typeOf_settlement,
       city,
       typeOf_street,
@@ -237,13 +257,14 @@ const Supplier_Add = ({
       firstPersonMiddleNameRoditelPadej,
       shortName,
       actsOnBasisOf,
+      actsOnBasisOf_Number,
       issuedBy,
       taxPayerOn,
       email,
       phoneNumber,
       groupOf_product
     );
-    history.push('/accountant/supplier');
+    history.goBack();
   };
 
   return (
@@ -256,12 +277,11 @@ const Supplier_Add = ({
       >
         назад
       </Button>
-
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Вид собственности</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_TYPE_OF_FIRMS ? (
             <Spinner />
           ) : (
@@ -292,8 +312,17 @@ const Supplier_Add = ({
             </Grid>
           )}
         </Grid>
-      </Grid>
 
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/type-of-firm/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
+      </Grid>
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Название фирмы</Typography>
@@ -310,7 +339,6 @@ const Supplier_Add = ({
           />
         </Grid>
       </Grid>
-
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Почтовый индекс</Typography>
@@ -327,12 +355,99 @@ const Supplier_Add = ({
           />
         </Grid>
       </Grid>
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Область</Typography>
+        </Grid>
+        <Grid item xs={7} container>
+          {!arr_OBLASTS ? (
+            <Spinner />
+          ) : (
+            <Grid item xs={12} className={classes.wrapSelect}>
+              <InputLabel
+                id='select-oblast'
+                className={oblast ? classes.displayNone : classes.displayFlex}
+              >
+                Область
+              </InputLabel>
+              <Select
+                variant='outlined'
+                labelId='select-oblast'
+                fullWidth
+                value={oblast}
+                name='oblast'
+                onChange={e => onChangeHandler(e)}
+                className={classes.select}
+              >
+                {arr_OBLASTS.map(item => (
+                  <MenuItem key={item._id} value={item._id}>
+                    {item.oblastName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+          )}
+        </Grid>
 
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/oblast/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Район</Typography>
+        </Grid>
+        <Grid item xs={7} container>
+          {!arr_RAYONS ? (
+            <Spinner />
+          ) : (
+            <Grid item xs={12} className={classes.wrapSelect}>
+              <InputLabel
+                id='select-rayon'
+                className={rayon ? classes.displayNone : classes.displayFlex}
+              >
+                Район
+              </InputLabel>
+              <Select
+                variant='outlined'
+                labelId='select-rayon'
+                fullWidth
+                value={rayon}
+                name='rayon'
+                onChange={e => onChangeHandler(e)}
+                className={classes.select}
+              >
+                {arr_RAYONS.map(item => (
+                  <MenuItem key={item._id} value={item._id}>
+                    {item.rayonName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+          )}
+        </Grid>
+
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/rayon/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
+      </Grid>
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Тип нас.пункта</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_TYPE_OF_SETTLEMENTS ? (
             <Spinner />
           ) : (
@@ -363,13 +478,22 @@ const Supplier_Add = ({
             </Grid>
           )}
         </Grid>
-      </Grid>
 
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/type-of-settlement/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
+      </Grid>
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Город</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_CITYS ? (
             <Spinner />
           ) : (
@@ -398,12 +522,22 @@ const Supplier_Add = ({
             </Grid>
           )}
         </Grid>
+
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/city/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
       </Grid>
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Тип улицы</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_TYPE_OF_STREETS ? (
             <Spinner />
           ) : (
@@ -434,12 +568,22 @@ const Supplier_Add = ({
             </Grid>
           )}
         </Grid>
+
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/type-of-street/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
       </Grid>
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Улица</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_STREETS ? (
             <Spinner />
           ) : (
@@ -468,8 +612,17 @@ const Supplier_Add = ({
             </Grid>
           )}
         </Grid>
-      </Grid>
 
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/street/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
+      </Grid>
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Номер дома</Typography>
@@ -486,7 +639,6 @@ const Supplier_Add = ({
           />
         </Grid>
       </Grid>
-
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Номер квартиры или офиса</Typography>
@@ -503,7 +655,6 @@ const Supplier_Add = ({
           />
         </Grid>
       </Grid>
-
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>ЄДРПОУ</Typography>
@@ -520,7 +671,6 @@ const Supplier_Add = ({
           />
         </Grid>
       </Grid>
-
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>IBAN</Typography>
@@ -537,12 +687,11 @@ const Supplier_Add = ({
           />
         </Grid>
       </Grid>
-
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Должность первого лица</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_FIRST_PERSON_POSITIONS ? (
             <Spinner />
           ) : (
@@ -575,8 +724,17 @@ const Supplier_Add = ({
             </Grid>
           )}
         </Grid>
-      </Grid>
 
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/personposition/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
+      </Grid>
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Фамилия руководителя</Typography>
@@ -593,7 +751,6 @@ const Supplier_Add = ({
           />
         </Grid>
       </Grid>
-
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Имя руководителя</Typography>
@@ -610,7 +767,6 @@ const Supplier_Add = ({
           />
         </Grid>
       </Grid>
-
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Отчество руководителя</Typography>
@@ -627,7 +783,6 @@ const Supplier_Add = ({
           />
         </Grid>
       </Grid>
-
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>
@@ -646,7 +801,6 @@ const Supplier_Add = ({
           />
         </Grid>
       </Grid>
-
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>
@@ -665,7 +819,6 @@ const Supplier_Add = ({
           />
         </Grid>
       </Grid>
-
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>
@@ -684,7 +837,6 @@ const Supplier_Add = ({
           />
         </Grid>
       </Grid>
-
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>И.О.Фамилия</Typography>
@@ -701,14 +853,13 @@ const Supplier_Add = ({
           />
         </Grid>
       </Grid>
-
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>
             Руководитель действует на основании
           </Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_TYPE_OF_ACTS_ON_BASIS_OFS ? (
             <Spinner />
           ) : (
@@ -739,6 +890,33 @@ const Supplier_Add = ({
             </Grid>
           )}
         </Grid>
+
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/type-of-acts-on-basis-of/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Номер свидоства</Typography>
+        </Grid>
+        <Grid item xs={8} container>
+          <TextField
+            variant='outlined'
+            name='actsOnBasisOf_Number'
+            fullWidth
+            placeholder='Номер свидоства'
+            type='text'
+            value={actsOnBasisOf_Number}
+            onChange={e => onChangeHandler(e)}
+          />
+        </Grid>
       </Grid>
 
       <Grid item xs={12} container>
@@ -757,12 +935,11 @@ const Supplier_Add = ({
           />
         </Grid>
       </Grid>
-
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Плательщик налогов на основании</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_TYPE_OF_TAX_PAYER_ONS ? (
             <Spinner />
           ) : (
@@ -793,8 +970,17 @@ const Supplier_Add = ({
             </Grid>
           )}
         </Grid>
-      </Grid>
 
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/type-of-tax-payer-on/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
+      </Grid>
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Электронная почта</Typography>
@@ -811,7 +997,6 @@ const Supplier_Add = ({
           />
         </Grid>
       </Grid>
-
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Телефон</Typography>
@@ -829,12 +1014,11 @@ const Supplier_Add = ({
           />
         </Grid>
       </Grid>
-
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Группы товаров</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_GROUP_OF_PRODUCTS ? (
             <Spinner />
           ) : (
@@ -866,8 +1050,17 @@ const Supplier_Add = ({
             </Grid>
           )}
         </Grid>
-      </Grid>
 
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/group-of-product/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
+      </Grid>
       <Grid item xs={12}>
         <Button
           type='button'
@@ -893,6 +1086,8 @@ Supplier_Add.propTypes = {
   getAll_CITYS: PropTypes.func.isRequired,
   getAll_TYPE_OF_STREETS: PropTypes.func.isRequired,
   getAll_STREETS: PropTypes.func.isRequired,
+  getAll_OBLASTS: PropTypes.func.isRequired,
+  getAll_RAYONS: PropTypes.func.isRequired,
 
   getAll_TYPE_OF_FIRMS: PropTypes.func.isRequired,
   getAll_FIRST_PERSON_POSITIONS: PropTypes.func.isRequired,
@@ -909,7 +1104,10 @@ Supplier_Add.propTypes = {
   state_firstPersonPosition: PropTypes.object.isRequired,
   state_typeOf_ActsOnBasisOf: PropTypes.object.isRequired,
   state_typeOf_TaxPayerOn: PropTypes.object.isRequired,
-  state_groupOf_Product: PropTypes.object.isRequired
+  state_groupOf_Product: PropTypes.object.isRequired,
+
+  state_oblast: PropTypes.object.isRequired,
+  state_rayon: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -922,7 +1120,10 @@ const mapStateToProps = state => ({
   state_firstPersonPosition: state.firstPersonPosition,
   state_typeOf_ActsOnBasisOf: state.typeOf_ActsOnBasisOf,
   state_typeOf_TaxPayerOn: state.typeOf_TaxPayerOn,
-  state_groupOf_Product: state.groupOf_Product
+  state_groupOf_Product: state.groupOf_Product,
+
+  state_oblast: state.oblast,
+  state_rayon: state.rayon
 });
 
 export default connect(mapStateToProps, {
@@ -932,6 +1133,8 @@ export default connect(mapStateToProps, {
   getAll_CITYS,
   getAll_TYPE_OF_STREETS,
   getAll_STREETS,
+  getAll_OBLASTS,
+  getAll_RAYONS,
 
   getAll_TYPE_OF_FIRMS,
   getAll_FIRST_PERSON_POSITIONS,

@@ -9,6 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -157,7 +159,7 @@ const Unit_Edit = ({
         <Grid item xs={4} container>
           <Typography align='left'>Группа измерений</Typography>
         </Grid>
-        <Grid item xs={8} className={classes.wrapSelect} container>
+        <Grid item xs={7} className={classes.wrapSelect} container>
           <InputLabel
             id='add-select-label'
             className={unitType ? classes.displayNone : classes.displayFlex}
@@ -179,6 +181,15 @@ const Unit_Edit = ({
               </MenuItem>
             ))}
           </Select>
+        </Grid>
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/type-of-unit/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
         </Grid>
       </Grid>
       <Grid item xs={12}>

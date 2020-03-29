@@ -57,7 +57,7 @@ const TypeOf_Street_Add = ({ setNameOfPage, add_TYPE_OF_SETTLEMENT }) => {
 
   const addItemHandler = () => {
     add_TYPE_OF_SETTLEMENT(typeOf_SettlementLong, typeOf_SettlementShort);
-    history.push('/accountant/type-of-settlement');
+    history.goBack();
   };
 
   return (

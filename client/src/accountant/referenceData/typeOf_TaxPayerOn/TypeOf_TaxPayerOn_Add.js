@@ -53,7 +53,7 @@ const TypeOf_TaxPayerOn_Add = ({ setNameOfPage, add_TYPE_OF_TAX_PAYER_ON }) => {
 
   const addItemHandler = () => {
     add_TYPE_OF_TAX_PAYER_ON(typeOf_TaxPayerOn);
-    history.push('/accountant/type-of-tax-payer-on');
+    history.goBack();
   };
 
   return (

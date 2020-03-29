@@ -9,6 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -148,7 +150,7 @@ const ServiceJob_Edit = ({
         <Grid item xs={4} container>
           <Typography align='left'>Единицы измерения</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!unit ? (
             <Spinner />
           ) : (
@@ -177,13 +179,22 @@ const ServiceJob_Edit = ({
             </Grid>
           )}
         </Grid>
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/unit/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
       </Grid>
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Группа работ</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!groupOf_ServiceJob ? (
             <Spinner />
           ) : (
@@ -213,6 +224,15 @@ const ServiceJob_Edit = ({
               </Select>
             </Grid>
           )}
+        </Grid>
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/group-of-servicejob/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
         </Grid>
       </Grid>
 

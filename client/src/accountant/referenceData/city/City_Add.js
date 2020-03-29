@@ -53,7 +53,7 @@ const City_Add = ({ setNameOfPage, add_CITY }) => {
 
   const addItemHandler = () => {
     add_CITY(cityName);
-    history.push('/accountant/city');
+    history.goBack();
   };
 
   return (

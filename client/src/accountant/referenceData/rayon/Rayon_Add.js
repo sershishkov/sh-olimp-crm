@@ -53,7 +53,7 @@ const Rayon_Add = ({ setNameOfPage, add_RAYON }) => {
 
   const addItemHandler = () => {
     add_RAYON(rayonName);
-    history.push('/accountant/rayon');
+    history.goBack();
   };
 
   return (
@@ -69,7 +69,7 @@ const Rayon_Add = ({ setNameOfPage, add_RAYON }) => {
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
-          <Typography align='left'>Город</Typography>
+          <Typography align='left'>Район</Typography>
         </Grid>
         <Grid item xs={8} container>
           <TextField

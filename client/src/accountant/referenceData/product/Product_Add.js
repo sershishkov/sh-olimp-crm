@@ -9,6 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -135,7 +137,7 @@ const Product_Add = ({
       height,
       weight
     );
-    history.push('/accountant/product');
+    history.goBack();
   };
 
   return (
@@ -170,7 +172,7 @@ const Product_Add = ({
         <Grid item xs={4} container>
           <Typography align='left'>Единицы измерения</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_UNITS ? (
             <Spinner />
           ) : (
@@ -199,13 +201,22 @@ const Product_Add = ({
             </Grid>
           )}
         </Grid>
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/unit/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
       </Grid>
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Группа товаров</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_GROUP_OF_PRODUCTS ? (
             <Spinner />
           ) : (
@@ -236,6 +247,16 @@ const Product_Add = ({
             </Grid>
           )}
         </Grid>
+
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/group-of-product/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
       </Grid>
 
       <Grid item xs={12} container>
@@ -259,7 +280,7 @@ const Product_Add = ({
         <Grid item xs={4} container>
           <Typography align='left'>Поставщики</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_SUPPLIERS ? (
             <Spinner />
           ) : (
@@ -290,6 +311,15 @@ const Product_Add = ({
               </Select>
             </Grid>
           )}
+        </Grid>
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/supplier/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
         </Grid>
       </Grid>
 

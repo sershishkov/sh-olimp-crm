@@ -57,7 +57,7 @@ const TypeOf_Firm_Add = ({ setNameOfPage, add_TYPE_OF_FIRM }) => {
 
   const addItemHandler = () => {
     add_TYPE_OF_FIRM(TypeOf_FirmLong, TypeOf_FirmShort);
-    history.push('/accountant/type-of-firm');
+    history.goBack();
   };
 
   return (

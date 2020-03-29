@@ -56,7 +56,7 @@ const GroupOf_ServiceJob_Add = ({
 
   const addItemHandler = () => {
     add_GROUP_OF_SERVICE_JOB(serviceJobGroup);
-    history.push('/accountant/group-of-servicejob');
+    history.goBack();
   };
 
   return (

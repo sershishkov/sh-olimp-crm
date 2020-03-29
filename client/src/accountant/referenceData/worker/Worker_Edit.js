@@ -10,6 +10,8 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -24,6 +26,7 @@ import { getAll_TYPE_OF_SETTLEMENTS } from '../../../store/actions/accountant/re
 import { getAll_CITYS } from '../../../store/actions/accountant/referenceData/city';
 import { getAll_TYPE_OF_STREETS } from '../../../store/actions/accountant/referenceData/typeOf_Street';
 import { getAll_STREETS } from '../../../store/actions/accountant/referenceData/street';
+
 import { getAll_OBLASTS } from '../../../store/actions/accountant/referenceData/oblast';
 import { getAll_RAYONS } from '../../../store/actions/accountant/referenceData/rayon';
 
@@ -66,6 +69,7 @@ const Worker_Edit = ({
   getAll_CITYS,
   getAll_TYPE_OF_STREETS,
   getAll_STREETS,
+
   getAll_OBLASTS,
   getAll_RAYONS,
 
@@ -113,8 +117,10 @@ const Worker_Edit = ({
     middleName,
     dateOf_Birth,
     postCode,
+
     oblast,
     rayon,
+
     typeOf_settlement,
     city,
     typeOf_street,
@@ -142,8 +148,10 @@ const Worker_Edit = ({
     getAll_TYPE_OF_STREETS,
     getAll_STREETS,
     getOne_WORKER,
+
     getAll_OBLASTS,
     getAll_RAYONS,
+
     id
   ]);
 
@@ -165,8 +173,10 @@ const Worker_Edit = ({
         middleName: one_WORKER.middleName,
         dateOf_Birth: reverceDate,
         postCode: one_WORKER.postCode,
+
         oblast: one_WORKER.oblast,
         rayon: one_WORKER.rayon,
+
         typeOf_settlement: one_WORKER.typeOf_settlement,
         city: one_WORKER.city,
         typeOf_street: one_WORKER.typeOf_street,
@@ -215,8 +225,10 @@ const Worker_Edit = ({
       middleName,
       dateOf_Birth,
       postCode,
+
       oblast,
       rayon,
+
       typeOf_settlement,
       city,
       typeOf_street,
@@ -328,7 +340,7 @@ const Worker_Edit = ({
         <Grid item xs={4} container>
           <Typography align='left'>Область</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_OBLASTS ? (
             <Spinner />
           ) : (
@@ -357,13 +369,23 @@ const Worker_Edit = ({
             </Grid>
           )}
         </Grid>
+
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/oblast/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
       </Grid>
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Район</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_RAYONS ? (
             <Spinner />
           ) : (
@@ -392,13 +414,22 @@ const Worker_Edit = ({
             </Grid>
           )}
         </Grid>
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/rayon/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
       </Grid>
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>ТипНасПункта</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_TYPE_OF_SETTLEMENTS ? (
             <Spinner />
           ) : (
@@ -429,13 +460,22 @@ const Worker_Edit = ({
             </Grid>
           )}
         </Grid>
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/type-of-settlement/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
       </Grid>
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Город</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_CITYS ? (
             <Spinner />
           ) : (
@@ -464,13 +504,22 @@ const Worker_Edit = ({
             </Grid>
           )}
         </Grid>
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/city/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
       </Grid>
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Тип улицы</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_TYPE_OF_STREETS ? (
             <Spinner />
           ) : (
@@ -501,13 +550,22 @@ const Worker_Edit = ({
             </Grid>
           )}
         </Grid>
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/type-of-street/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
       </Grid>
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Улица</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_STREETS ? (
             <Spinner />
           ) : (
@@ -535,6 +593,15 @@ const Worker_Edit = ({
               </Select>
             </Grid>
           )}
+        </Grid>
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/street/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
         </Grid>
       </Grid>
 
@@ -635,12 +702,16 @@ Worker_Edit.propTypes = {
   getAll_TYPE_OF_STREETS: PropTypes.func.isRequired,
   getAll_STREETS: PropTypes.func.isRequired,
 
+  getAll_OBLASTS: PropTypes.func.isRequired,
+  getAll_RAYONS: PropTypes.func.isRequired,
+
   state_typeOf_Settlement: PropTypes.object.isRequired,
   state_city: PropTypes.object.isRequired,
   state_typeOf_Street: PropTypes.object.isRequired,
   state_street: PropTypes.object.isRequired,
 
   state_worker: PropTypes.object.isRequired,
+
   state_oblast: PropTypes.object.isRequired,
   state_rayon: PropTypes.object.isRequired
 };
@@ -651,6 +722,7 @@ const mapStateToProps = state => ({
   state_typeOf_Street: state.typeOf_Street,
   state_street: state.street,
   state_worker: state.worker,
+
   state_oblast: state.oblast,
   state_rayon: state.rayon
 });
@@ -663,6 +735,7 @@ export default connect(mapStateToProps, {
   getAll_CITYS,
   getAll_TYPE_OF_STREETS,
   getAll_STREETS,
+
   getAll_OBLASTS,
   getAll_RAYONS
 })(Worker_Edit);

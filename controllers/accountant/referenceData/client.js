@@ -40,6 +40,7 @@ exports.addClient = asyncHandler(async (req, res, next) => {
     shortName: req.body.shortName,
 
     actsOnBasisOf: req.body.actsOnBasisOf,
+    actsOnBasisOf_Number: req.body.actsOnBasisOf_Number,
     issuedBy: req.body.issuedBy,
     taxPayerOn: req.body.taxPayerOn,
     email: req.body.email,
@@ -88,6 +89,7 @@ exports.updateClient = asyncHandler(async (req, res, next) => {
       req.body.firstPersonMiddleNameRoditelPadej,
     shortName: req.body.shortName,
     actsOnBasisOf: req.body.actsOnBasisOf,
+    actsOnBasisOf_Number: req.body.actsOnBasisOf_Number,
     issuedBy: req.body.issuedBy,
     taxPayerOn: req.body.taxPayerOn,
     email: req.body.email,

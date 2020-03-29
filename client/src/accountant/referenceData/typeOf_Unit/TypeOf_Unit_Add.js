@@ -51,7 +51,7 @@ const TypeOf_Unit_Add = ({ setNameOfPage, add_TYPE_OF_UNIT }) => {
 
   const addItemHandler = () => {
     add_TYPE_OF_UNIT(typeOf_Unit);
-    history.push('/accountant/type-of-unit');
+    history.goBack();
   };
 
   return (

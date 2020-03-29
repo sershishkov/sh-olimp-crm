@@ -258,8 +258,6 @@ const Our_SalesInvoiceNakladnaya_Add = ({
       };
     });
 
-    console.log(poductsSaveToDataBase);
-
     add_OUR_SALES_INVOICE_NAKLADNAYA(
       naklNumber,
       naclDate,
@@ -269,7 +267,7 @@ const Our_SalesInvoiceNakladnaya_Add = ({
       active,
       cashPayment
     );
-    history.push('/accountant/our-service-invoice-nakl');
+    history.goBack();
   };
 
   const listOf_OUR_SALES_INVOICE_NAKLADNAYAS = (

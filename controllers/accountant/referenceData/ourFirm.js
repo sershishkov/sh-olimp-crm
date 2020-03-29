@@ -37,6 +37,7 @@ exports.addOurFirm = asyncHandler(async (req, res, next) => {
     shortName: req.body.shortName,
 
     actsOnBasisOf: req.body.actsOnBasisOf,
+    actsOnBasisOf_Number: req.body.actsOnBasisOf_Number,
     issuedBy: req.body.issuedBy,
     taxPayerOn: req.body.taxPayerOn,
     email: req.body.email,
@@ -86,6 +87,7 @@ exports.updateOurFirm = asyncHandler(async (req, res, next) => {
     shortName: req.body.shortName,
 
     actsOnBasisOf: req.body.actsOnBasisOf,
+    actsOnBasisOf_Number: req.body.actsOnBasisOf_Number,
     issuedBy: req.body.issuedBy,
     taxPayerOn: req.body.taxPayerOn,
     email: req.body.email,

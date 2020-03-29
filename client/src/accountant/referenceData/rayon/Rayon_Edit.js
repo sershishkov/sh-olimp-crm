@@ -87,7 +87,7 @@ const Rayon_Edit = ({
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
-          <Typography align='left'>Город</Typography>
+          <Typography align='left'>Район</Typography>
         </Grid>
         <Grid item xs={8} container>
           <TextField

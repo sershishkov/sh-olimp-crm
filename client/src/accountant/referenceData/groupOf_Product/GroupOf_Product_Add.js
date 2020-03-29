@@ -53,7 +53,7 @@ const GroupOf_Product_Add = ({ setNameOfPage, add_GROUP_OF_PRODUCT }) => {
 
   const addItemHandler = () => {
     add_GROUP_OF_PRODUCT(productGroup);
-    history.push('/accountant/group-of-product');
+    history.goBack();
   };
 
   return (

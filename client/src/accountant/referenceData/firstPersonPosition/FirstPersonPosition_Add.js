@@ -60,7 +60,7 @@ const FirstPersonPosition_Add = ({
 
   const addItemHandler = () => {
     add_FIRST_PERSON_POSITION(position, positionRoditPadej);
-    history.push('/accountant/personposition');
+    history.goBack();
   };
 
   return (

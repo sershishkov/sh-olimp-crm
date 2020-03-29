@@ -57,7 +57,7 @@ const BankName_Add = ({ setNameOfPage, add_BANK_NAME }) => {
 
   const addItemHandler = () => {
     add_BANK_NAME(bankName, mfo);
-    history.push('/accountant/bankname');
+    history.goBack();
   };
 
   return (

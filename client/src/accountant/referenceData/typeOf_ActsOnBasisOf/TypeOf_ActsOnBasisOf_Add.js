@@ -56,7 +56,7 @@ const TypeOf_ActsOnBasisOf_Add = ({
 
   const addItemHandler = () => {
     add_TYPE_OF_ACTS_ON_BASIS_OF(actOnBasisOf);
-    history.push('/accountant/type-of-acts-on-basis-of');
+    history.goBack();
   };
 
   return (

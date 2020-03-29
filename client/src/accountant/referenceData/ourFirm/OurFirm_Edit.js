@@ -9,6 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,6 +31,8 @@ import { getAll_TYPE_OF_SETTLEMENTS } from '../../../store/actions/accountant/re
 import { getAll_CITYS } from '../../../store/actions/accountant/referenceData/city';
 import { getAll_TYPE_OF_STREETS } from '../../../store/actions/accountant/referenceData/typeOf_Street';
 import { getAll_STREETS } from '../../../store/actions/accountant/referenceData/street';
+import { getAll_OBLASTS } from '../../../store/actions/accountant/referenceData/oblast';
+import { getAll_RAYONS } from '../../../store/actions/accountant/referenceData/rayon';
 
 import Spinner from '../../../shared/spinner/Spinner';
 
@@ -70,11 +74,13 @@ const OurFirm_Edit = ({
   getAll_TYPE_OF_STREETS,
   getAll_STREETS,
 
+  getAll_OBLASTS,
+  getAll_RAYONS,
+
   getAll_TYPE_OF_FIRMS,
   getAll_FIRST_PERSON_POSITIONS,
   getAll_TYPE_OF_ACTS_ON_BASIS_OFS,
   getAll_TYPE_OF_TAX_PAYER_ONS,
-  getAll_GROUP_OF_PRODUCTS,
 
   state_typeOf_Settlement: { arr_TYPE_OF_SETTLEMENTS },
   state_city: { arr_CITYS },
@@ -85,7 +91,10 @@ const OurFirm_Edit = ({
   state_firstPersonPosition: { arr_FIRST_PERSON_POSITIONS },
   state_typeOf_ActsOnBasisOf: { arr_TYPE_OF_ACTS_ON_BASIS_OFS },
   state_typeOf_TaxPayerOn: { arr_TYPE_OF_TAX_PAYER_ONS },
-  state_ourFirm: { one_OUR_FIRM }
+  state_ourFirm: { one_OUR_FIRM },
+
+  state_oblast: { arr_OBLASTS },
+  state_rayon: { arr_RAYONS }
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -99,6 +108,8 @@ const OurFirm_Edit = ({
     firmName: '',
     typeOfFirm: '',
     postCode: '',
+    oblast: '',
+    rayon: '',
     typeOf_settlement: '',
     city: '',
     typeOf_street: '',
@@ -116,6 +127,7 @@ const OurFirm_Edit = ({
     firstPersonMiddleNameRoditelPadej: '',
     shortName: '',
     actsOnBasisOf: '',
+    actsOnBasisOf_Number: '',
     issuedBy: '',
     taxPayerOn: '',
     email: '',
@@ -127,6 +139,8 @@ const OurFirm_Edit = ({
     firmName,
     typeOfFirm,
     postCode,
+    oblast,
+    rayon,
     typeOf_settlement,
     city,
     typeOf_street,
@@ -144,6 +158,7 @@ const OurFirm_Edit = ({
     firstPersonMiddleNameRoditelPadej,
     shortName,
     actsOnBasisOf,
+    actsOnBasisOf_Number,
     issuedBy,
     taxPayerOn,
     email,
@@ -158,6 +173,8 @@ const OurFirm_Edit = ({
     getAll_CITYS();
     getAll_TYPE_OF_STREETS();
     getAll_STREETS();
+    getAll_OBLASTS();
+    getAll_RAYONS();
 
     getAll_TYPE_OF_FIRMS();
     getAll_FIRST_PERSON_POSITIONS();
@@ -173,7 +190,8 @@ const OurFirm_Edit = ({
     getAll_FIRST_PERSON_POSITIONS,
     getAll_TYPE_OF_ACTS_ON_BASIS_OFS,
     getAll_TYPE_OF_TAX_PAYER_ONS,
-
+    getAll_OBLASTS,
+    getAll_RAYONS,
     getOne_OUR_FIRM,
     id
   ]);
@@ -185,6 +203,10 @@ const OurFirm_Edit = ({
         firmName: one_OUR_FIRM.firmName,
         typeOfFirm: one_OUR_FIRM.typeOfFirm,
         postCode: one_OUR_FIRM.postCode,
+
+        oblast: one_OUR_FIRM.oblast,
+        rayon: one_OUR_FIRM.rayon,
+
         typeOf_settlement: one_OUR_FIRM.typeOf_settlement,
         city: one_OUR_FIRM.city,
         typeOf_street: one_OUR_FIRM.typeOf_street,
@@ -204,6 +226,7 @@ const OurFirm_Edit = ({
           one_OUR_FIRM.firstPersonMiddleNameRoditelPadej,
         shortName: one_OUR_FIRM.shortName,
         actsOnBasisOf: one_OUR_FIRM.actsOnBasisOf,
+        actsOnBasisOf_Number: one_OUR_FIRM.actsOnBasisOf_Number,
         issuedBy: one_OUR_FIRM.issuedBy,
         taxPayerOn: one_OUR_FIRM.taxPayerOn,
         email: one_OUR_FIRM.email,
@@ -224,7 +247,7 @@ const OurFirm_Edit = ({
         typeOf_street &&
         street &&
         numberOf_house &&
-        numberOf_app &&
+        // numberOf_app &&
         EDRPOU &&
         iban &&
         firstPersonPosition &&
@@ -236,7 +259,7 @@ const OurFirm_Edit = ({
         firstPersonMiddleNameRoditelPadej &&
         shortName &&
         actsOnBasisOf &&
-        issuedBy &&
+        // issuedBy &&
         taxPayerOn &&
         email &&
         phoneNumber
@@ -256,6 +279,8 @@ const OurFirm_Edit = ({
       firmName,
       typeOfFirm,
       postCode,
+      oblast,
+      rayon,
       typeOf_settlement,
       city,
       typeOf_street,
@@ -273,6 +298,7 @@ const OurFirm_Edit = ({
       firstPersonMiddleNameRoditelPadej,
       shortName,
       actsOnBasisOf,
+      actsOnBasisOf_Number,
       issuedBy,
       taxPayerOn,
       email,
@@ -296,7 +322,7 @@ const OurFirm_Edit = ({
         <Grid item xs={4} container>
           <Typography align='left'>Вид собственности</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_TYPE_OF_FIRMS ? (
             <Spinner />
           ) : (
@@ -326,6 +352,16 @@ const OurFirm_Edit = ({
               </Select>
             </Grid>
           )}
+        </Grid>
+
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/type-of-firm/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
         </Grid>
       </Grid>
 
@@ -365,9 +401,99 @@ const OurFirm_Edit = ({
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
+          <Typography align='left'>Область</Typography>
+        </Grid>
+        <Grid item xs={7} container>
+          {!arr_OBLASTS ? (
+            <Spinner />
+          ) : (
+            <Grid item xs={12} className={classes.wrapSelect}>
+              <InputLabel
+                id='select-oblast'
+                className={oblast ? classes.displayNone : classes.displayFlex}
+              >
+                Область
+              </InputLabel>
+              <Select
+                variant='outlined'
+                labelId='select-oblast'
+                fullWidth
+                value={oblast ? oblast : ''}
+                name='oblast'
+                onChange={e => onChangeHandler(e)}
+                className={classes.select}
+              >
+                {arr_OBLASTS.map(item => (
+                  <MenuItem key={item._id} value={item._id}>
+                    {item.oblastName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+          )}
+        </Grid>
+
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/oblast/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Район</Typography>
+        </Grid>
+        <Grid item xs={7} container>
+          {!arr_RAYONS ? (
+            <Spinner />
+          ) : (
+            <Grid item xs={12} className={classes.wrapSelect}>
+              <InputLabel
+                id='select-rayon'
+                className={rayon ? classes.displayNone : classes.displayFlex}
+              >
+                Район
+              </InputLabel>
+              <Select
+                variant='outlined'
+                labelId='select-rayon'
+                fullWidth
+                value={rayon ? rayon : ''}
+                name='rayon'
+                onChange={e => onChangeHandler(e)}
+                className={classes.select}
+              >
+                {arr_RAYONS.map(item => (
+                  <MenuItem key={item._id} value={item._id}>
+                    {item.rayonName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+          )}
+        </Grid>
+
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/rayon/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
           <Typography align='left'>Тип нас.пункта</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_TYPE_OF_SETTLEMENTS ? (
             <Spinner />
           ) : (
@@ -398,13 +524,23 @@ const OurFirm_Edit = ({
             </Grid>
           )}
         </Grid>
+
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/type-of-settlement/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
       </Grid>
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Город</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_CITYS ? (
             <Spinner />
           ) : (
@@ -433,12 +569,23 @@ const OurFirm_Edit = ({
             </Grid>
           )}
         </Grid>
+
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/city/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
       </Grid>
+
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Тип улицы</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_TYPE_OF_STREETS ? (
             <Spinner />
           ) : (
@@ -469,12 +616,23 @@ const OurFirm_Edit = ({
             </Grid>
           )}
         </Grid>
+
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/type-of-street/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
       </Grid>
+
       <Grid item xs={12} container>
         <Grid item xs={4} container>
           <Typography align='left'>Улица</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_STREETS ? (
             <Spinner />
           ) : (
@@ -502,6 +660,16 @@ const OurFirm_Edit = ({
               </Select>
             </Grid>
           )}
+        </Grid>
+
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/street/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
         </Grid>
       </Grid>
 
@@ -577,7 +745,7 @@ const OurFirm_Edit = ({
         <Grid item xs={4} container>
           <Typography align='left'>Должность первого лица</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_FIRST_PERSON_POSITIONS ? (
             <Spinner />
           ) : (
@@ -609,6 +777,16 @@ const OurFirm_Edit = ({
               </Select>
             </Grid>
           )}
+        </Grid>
+
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/personposition/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
         </Grid>
       </Grid>
 
@@ -753,7 +931,7 @@ const OurFirm_Edit = ({
             Руководитель действует на основании
           </Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_TYPE_OF_ACTS_ON_BASIS_OFS ? (
             <Spinner />
           ) : (
@@ -784,6 +962,33 @@ const OurFirm_Edit = ({
             </Grid>
           )}
         </Grid>
+
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/type-of-acts-on-basis-of/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Номер свидоства</Typography>
+        </Grid>
+        <Grid item xs={8} container>
+          <TextField
+            variant='outlined'
+            name='actsOnBasisOf_Number'
+            fullWidth
+            placeholder='Номер свидоства'
+            type='text'
+            value={actsOnBasisOf_Number ? actsOnBasisOf_Number : ''}
+            onChange={e => onChangeHandler(e)}
+          />
+        </Grid>
       </Grid>
 
       <Grid item xs={12} container>
@@ -807,7 +1012,7 @@ const OurFirm_Edit = ({
         <Grid item xs={4} container>
           <Typography align='left'>Плательщик налогов на основании</Typography>
         </Grid>
-        <Grid item xs={8} container>
+        <Grid item xs={7} container>
           {!arr_TYPE_OF_TAX_PAYER_ONS ? (
             <Spinner />
           ) : (
@@ -837,6 +1042,16 @@ const OurFirm_Edit = ({
               </Select>
             </Grid>
           )}
+        </Grid>
+
+        <Grid item xs={1} container alignItems='center' justify='center'>
+          <IconButton
+            onClick={() => {
+              history.push('/accountant/type-of-tax-payer-on/add');
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
         </Grid>
       </Grid>
 
@@ -901,6 +1116,8 @@ OurFirm_Edit.propTypes = {
   getAll_CITYS: PropTypes.func.isRequired,
   getAll_TYPE_OF_STREETS: PropTypes.func.isRequired,
   getAll_STREETS: PropTypes.func.isRequired,
+  getAll_OBLASTS: PropTypes.func.isRequired,
+  getAll_RAYONS: PropTypes.func.isRequired,
 
   getAll_TYPE_OF_FIRMS: PropTypes.func.isRequired,
   getAll_FIRST_PERSON_POSITIONS: PropTypes.func.isRequired,
@@ -917,7 +1134,10 @@ OurFirm_Edit.propTypes = {
   state_typeOf_ActsOnBasisOf: PropTypes.object.isRequired,
   state_typeOf_TaxPayerOn: PropTypes.object.isRequired,
 
-  state_ourFirm: PropTypes.object.isRequired
+  state_ourFirm: PropTypes.object.isRequired,
+
+  state_oblast: PropTypes.object.isRequired,
+  state_rayon: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -931,7 +1151,10 @@ const mapStateToProps = state => ({
   state_typeOf_Firm: state.typeOf_Firm,
   state_firstPersonPosition: state.firstPersonPosition,
   state_typeOf_ActsOnBasisOf: state.typeOf_ActsOnBasisOf,
-  state_typeOf_TaxPayerOn: state.typeOf_TaxPayerOn
+  state_typeOf_TaxPayerOn: state.typeOf_TaxPayerOn,
+
+  state_oblast: state.oblast,
+  state_rayon: state.rayon
 });
 
 export default connect(mapStateToProps, {
@@ -946,5 +1169,8 @@ export default connect(mapStateToProps, {
   getAll_TYPE_OF_FIRMS,
   getAll_FIRST_PERSON_POSITIONS,
   getAll_TYPE_OF_ACTS_ON_BASIS_OFS,
-  getAll_TYPE_OF_TAX_PAYER_ONS
+  getAll_TYPE_OF_TAX_PAYER_ONS,
+
+  getAll_OBLASTS,
+  getAll_RAYONS
 })(OurFirm_Edit);

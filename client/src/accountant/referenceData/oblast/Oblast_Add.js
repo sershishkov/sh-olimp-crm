@@ -53,7 +53,7 @@ const Oblast_Add = ({ setNameOfPage, add_OBLAST }) => {
 
   const addItemHandler = () => {
     add_OBLAST(oblastName);
-    history.push('/accountant/oblast');
+    history.goBack();
   };
 
   return (
@@ -69,7 +69,7 @@ const Oblast_Add = ({ setNameOfPage, add_OBLAST }) => {
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
-          <Typography align='left'>Город</Typography>
+          <Typography align='left'>Область</Typography>
         </Grid>
         <Grid item xs={8} container>
           <TextField

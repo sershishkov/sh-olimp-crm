@@ -53,7 +53,7 @@ const Street_Add = ({ setNameOfPage, add_STREET }) => {
 
   const addItemHandler = () => {
     add_STREET(streetName);
-    history.push('/accountant/street');
+    history.goBack();
   };
 
   return (
