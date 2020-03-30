@@ -1,6 +1,9 @@
 const ErrorResponse = require('../../../utils/errorResponse');
 const asyncHandler = require('../../../middleware/async');
 const TypeOf_Firm = require('../../../models/accountant/referenceData/TypeOf_Firm');
+const Client = require('../../../models/accountant/referenceData/Client');
+const OurFirm = require('../../../models/accountant/referenceData/OurFirm');
+const Supplier = require('../../../models/accountant/referenceData/Supplier');
 
 //@desc   Add a TypeOf_Firm
 //@route  POST /api/v1/accountant/type-of-firm
@@ -90,15 +93,39 @@ exports.getOneTypeOf_Firm = asyncHandler(async (req, res, next) => {
 //@route  DELETE /api/v1/accountant/type-of-firm/:id
 //@access Private
 exports.deleteTypeOf_Firm = asyncHandler(async (req, res, next) => {
-  const oneTypeOf_Firm = await TypeOf_Firm.findByIdAndDelete(req.params.id);
+  const relatedClient = await Client.findOne(
+    { typeOfFirm: req.params.id },
+    '_id'
+  );
+  const relatedOurFirm = await OurFirm.findOne(
+    { typeOfFirm: req.params.id },
+    '_id'
+  );
+  const relatedSupplier = await Supplier.findOne(
+    { typeOfFirm: req.params.id },
+    '_id'
+  );
 
-  //Check if  exists response
-  if (!oneTypeOf_Firm) {
-    return next(new ErrorResponse('Нет  объекта с данным id', 400));
+  const forbiddenToDelete = relatedClient || relatedOurFirm || relatedSupplier;
+
+  if (forbiddenToDelete) {
+    return next(
+      new ErrorResponse(
+        'не возможно удалить этот елемент, есть связанные элементы',
+        403
+      )
+    );
+  } else {
+    const oneTypeOf_Firm = await TypeOf_Firm.findByIdAndDelete(req.params.id);
+
+    //Check if  exists response
+    if (!oneTypeOf_Firm) {
+      return next(new ErrorResponse('Нет  объекта с данным id', 400));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {}
+    });
   }
-
-  res.status(200).json({
-    success: true,
-    data: {}
-  });
 });

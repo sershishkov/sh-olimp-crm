@@ -2,6 +2,13 @@ const ErrorResponse = require('../../../utils/errorResponse');
 const asyncHandler = require('../../../middleware/async');
 const Supplier = require('../../../models/accountant/referenceData/Supplier');
 
+const Entered_CertificateOf_Completion = require('../../../models/accountant/enteredMainData/Entered_CertificateOf_Completion');
+const Entered_InvoiceMixed = require('../../../models/accountant/enteredMainData/Entered_InvoiceMixed');
+const Entered_InvoiceProduct = require('../../../models/accountant/enteredMainData/Entered_InvoiceProduct');
+const Entered_InvoiceServiceJob = require('../../../models/accountant/enteredMainData/Entered_InvoiceServiceJob');
+const Entered_SalesInvoiceNakladnaya = require('../../../models/accountant/enteredMainData/Entered_SalesInvoiceNakladnaya');
+const Our_Payment = require('../../../models/accountant/ourMainData/Our_Payment');
+
 //@desc   Add a Supplier
 //@route  POST /api/v1/accountant/supplier
 //@access Private
@@ -176,15 +183,57 @@ exports.getOneSupplier = asyncHandler(async (req, res, next) => {
 //@route  DELETE /api/v1/accountant/supplier/:id
 //@access Private
 exports.deleteSupplier = asyncHandler(async (req, res, next) => {
-  const oneSupplier = await Supplier.findByIdAndDelete(req.params.id);
+  const relatedEntered_CertificateOf_Completion = await Entered_CertificateOf_Completion.findOne(
+    { supplier: req.params.id },
+    '_id'
+  );
+  const relatedEntered_InvoiceMixed = await Entered_InvoiceMixed.findOne(
+    { supplier: req.params.id },
+    '_id'
+  );
+  const relatedEntered_InvoiceProduct = await Entered_InvoiceProduct.findOne(
+    { supplier: req.params.id },
+    '_id'
+  );
+  const relatedEntered_InvoiceServiceJob = await Entered_InvoiceServiceJob.findOne(
+    { supplier: req.params.id },
+    '_id'
+  );
+  const relatedEntered_SalesInvoiceNakladnaya = await Entered_SalesInvoiceNakladnaya.findOne(
+    { supplier: req.params.id },
+    '_id'
+  );
+  const relatedOur_Payment = await Our_Payment.findOne(
+    { supplier: req.params.id },
+    '_id'
+  );
 
-  //Check if  exists response
-  if (!oneSupplier) {
-    return next(new ErrorResponse('Нет  объекта с данным id', 400));
+  const forbiddenToDelete =
+    relatedEntered_CertificateOf_Completion ||
+    relatedEntered_InvoiceMixed ||
+    relatedEntered_InvoiceProduct ||
+    relatedEntered_InvoiceServiceJob ||
+    relatedEntered_SalesInvoiceNakladnaya ||
+    relatedOur_Payment;
+
+  if (forbiddenToDelete) {
+    return next(
+      new ErrorResponse(
+        'не возможно удалить этот елемент, есть связанные элементы',
+        403
+      )
+    );
+  } else {
+    const oneSupplier = await Supplier.findByIdAndDelete(req.params.id);
+
+    //Check if  exists response
+    if (!oneSupplier) {
+      return next(new ErrorResponse('Нет  объекта с данным id', 400));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {}
+    });
   }
-
-  res.status(200).json({
-    success: true,
-    data: {}
-  });
 });

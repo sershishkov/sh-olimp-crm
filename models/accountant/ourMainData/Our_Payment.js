@@ -11,10 +11,10 @@ const Our_Payment_Schema = new mongoose.Schema({
     required: [true, 'Введите дату прихода']
     // default: Date.now
   },
-  client: {
+  supplier: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Client',
-    required: [true, 'Необходимо выбрать клиента']
+    ref: 'Supplier',
+    required: [true, 'Выберите поставщика']
   },
   ourFirm: {
     type: mongoose.Schema.Types.ObjectId,

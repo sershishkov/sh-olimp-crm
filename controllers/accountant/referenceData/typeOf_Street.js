@@ -1,6 +1,10 @@
 const ErrorResponse = require('../../../utils/errorResponse');
 const asyncHandler = require('../../../middleware/async');
 const TypeOf_Street = require('../../../models/accountant/referenceData/TypeOf_Street');
+const Client = require('../../../models/accountant/referenceData/Client');
+const OurFirm = require('../../../models/accountant/referenceData/OurFirm');
+const Supplier = require('../../../models/accountant/referenceData/Supplier');
+const Worker = require('../../../models/accountant/referenceData/Worker');
 
 //@desc   Add a TypeOf_Street
 //@route  POST /api/v1/accountant/type-of-street
@@ -90,15 +94,46 @@ exports.getOneTypeOf_Street = asyncHandler(async (req, res, next) => {
 //@route  DELETE /api/v1/accountant/type-of-street/:id
 //@access Private
 exports.deleteTypeOf_Street = asyncHandler(async (req, res, next) => {
-  const oneTypeOf_Street = await TypeOf_Street.findByIdAndDelete(req.params.id);
+  const relatedClient = await Client.findOne(
+    { typeOf_street: req.params.id },
+    '_id'
+  );
+  const relatedOurFirm = await OurFirm.findOne(
+    { typeOf_street: req.params.id },
+    '_id'
+  );
+  const relatedSupplier = await Supplier.findOne(
+    { typeOf_street: req.params.id },
+    '_id'
+  );
+  const relatedWorker = await Worker.findOne(
+    { typeOf_street: req.params.id },
+    '_id'
+  );
 
-  //Check if  exists response
-  if (!oneTypeOf_Street) {
-    return next(new ErrorResponse('Нет  объекта с данным id', 400));
+  const forbiddenToDelete =
+    relatedClient || relatedOurFirm || relatedSupplier || relatedWorker;
+
+  if (forbiddenToDelete) {
+    return next(
+      new ErrorResponse(
+        'не возможно удалить этот елемент, есть связанные элементы',
+        403
+      )
+    );
+  } else {
+    const oneTypeOf_Street = await TypeOf_Street.findByIdAndDelete(
+      req.params.id
+    );
+
+    //Check if  exists response
+    if (!oneTypeOf_Street) {
+      return next(new ErrorResponse('Нет  объекта с данным id', 400));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {}
+    });
   }
-
-  res.status(200).json({
-    success: true,
-    data: {}
-  });
 });

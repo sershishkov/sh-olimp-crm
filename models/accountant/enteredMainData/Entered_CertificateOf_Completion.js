@@ -14,10 +14,10 @@ const Entered_CertificateOf_Completion_Schema = new mongoose.Schema({
     ref: 'OurFirm',
     required: [true, 'Выберите фирму Исполнителя']
   },
-  client: {
+  supplier: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Client',
-    required: [true, 'Выберите фирму Заказчика']
+    ref: 'Supplier',
+    required: [true, 'Выберите поставщика']
   },
   serviceJobs: [
     {

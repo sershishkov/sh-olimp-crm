@@ -1,6 +1,9 @@
 const ErrorResponse = require('../../../utils/errorResponse');
 const asyncHandler = require('../../../middleware/async');
 const TypeOf_ActsOnBasisOf = require('../../../models/accountant/referenceData/TypeOf_ActsOnBasisOf');
+const Client = require('../../../models/accountant/referenceData/Client');
+const OurFirm = require('../../../models/accountant/referenceData/OurFirm');
+const Supplier = require('../../../models/accountant/referenceData/Supplier');
 
 //@desc   Add a TypeOf_ActsOnBasisOf
 //@route  POST /api/v1/accountant/type-of-acts-on-basis-of
@@ -90,17 +93,41 @@ exports.getOneTypeOf_ActsOnBasisOf = asyncHandler(async (req, res, next) => {
 //@route  DELETE /api/v1/accountant/type-of-acts-on-basis-of/:id
 //@access Private
 exports.deleteTypeOf_ActsOnBasisOf = asyncHandler(async (req, res, next) => {
-  const oneTypeOf_ActsOnBasisOf = await TypeOf_ActsOnBasisOf.findByIdAndDelete(
-    req.params.id
+  const relatedClient = await Client.findOne(
+    { actsOnBasisOf: req.params.id },
+    '_id'
+  );
+  const relatedOurFirm = await OurFirm.findOne(
+    { actsOnBasisOf: req.params.id },
+    '_id'
+  );
+  const relatedSupplier = await Supplier.findOne(
+    { actsOnBasisOf: req.params.id },
+    '_id'
   );
 
-  //Check if  exists response
-  if (!oneTypeOf_ActsOnBasisOf) {
-    return next(new ErrorResponse('Нет  объекта с данным id', 400));
-  }
+  const forbiddenToDelete = relatedClient || relatedOurFirm || relatedSupplier;
 
-  res.status(200).json({
-    success: true,
-    data: {}
-  });
+  if (forbiddenToDelete) {
+    return next(
+      new ErrorResponse(
+        'не возможно удалить этот елемент, есть связанные элементы',
+        403
+      )
+    );
+  } else {
+    const oneTypeOf_ActsOnBasisOf = await TypeOf_ActsOnBasisOf.findByIdAndDelete(
+      req.params.id
+    );
+
+    //Check if  exists response
+    if (!oneTypeOf_ActsOnBasisOf) {
+      return next(new ErrorResponse('Нет  объекта с данным id', 400));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {}
+    });
+  }
 });

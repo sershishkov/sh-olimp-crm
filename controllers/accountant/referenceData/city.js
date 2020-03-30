@@ -1,6 +1,10 @@
 const ErrorResponse = require('../../../utils/errorResponse');
 const asyncHandler = require('../../../middleware/async');
 const City = require('../../../models/accountant/referenceData/City');
+const Client = require('../../../models/accountant/referenceData/Client');
+const OurFirm = require('../../../models/accountant/referenceData/OurFirm');
+const Supplier = require('../../../models/accountant/referenceData/Supplier');
+const Worker = require('../../../models/accountant/referenceData/Worker');
 
 //@desc   Add a City
 //@route  POST /api/v1/accountant/city
@@ -84,15 +88,35 @@ exports.getOneCity = asyncHandler(async (req, res, next) => {
 //@route  DELETE /api/v1/accountant/city/:id
 //@access Private
 exports.deleteCity = asyncHandler(async (req, res, next) => {
-  const oneCity = await City.findByIdAndDelete(req.params.id);
+  const relatedClient = await Client.findOne({ city: req.params.id }, '_id');
+  const relatedOurFirm = await OurFirm.findOne({ city: req.params.id }, '_id');
+  const relatedSupplier = await Supplier.findOne(
+    { city: req.params.id },
+    '_id'
+  );
+  const relatedWorker = await Worker.findOne({ city: req.params.id }, '_id');
 
-  //Check if  exists response
-  if (!oneCity) {
-    return next(new ErrorResponse('Нет  объекта с данным id', 400));
+  const forbiddenToDelete =
+    relatedClient || relatedOurFirm || relatedSupplier || relatedWorker;
+
+  if (forbiddenToDelete) {
+    return next(
+      new ErrorResponse(
+        'не возможно удалить этот елемент, есть связанные элементы',
+        403
+      )
+    );
+  } else {
+    const oneCity = await City.findByIdAndDelete(req.params.id);
+
+    //Check if  exists response
+    if (!oneCity) {
+      return next(new ErrorResponse('Нет  объекта с данным id', 400));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {}
+    });
   }
-
-  res.status(200).json({
-    success: true,
-    data: {}
-  });
 });

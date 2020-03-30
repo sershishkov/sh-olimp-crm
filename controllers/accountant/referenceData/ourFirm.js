@@ -2,6 +2,20 @@ const ErrorResponse = require('../../../utils/errorResponse');
 const asyncHandler = require('../../../middleware/async');
 const OurFirm = require('../../../models/accountant/referenceData/OurFirm');
 
+const Entered_CertificateOf_Completion = require('../../../models/accountant/enteredMainData/Entered_CertificateOf_Completion');
+const Entered_InvoiceMixed = require('../../../models/accountant/enteredMainData/Entered_InvoiceMixed');
+const Entered_InvoiceProduct = require('../../../models/accountant/enteredMainData/Entered_InvoiceProduct');
+const Entered_InvoiceServiceJob = require('../../../models/accountant/enteredMainData/Entered_InvoiceServiceJob');
+const Entered_SalesInvoiceNakladnaya = require('../../../models/accountant/enteredMainData/Entered_SalesInvoiceNakladnaya');
+
+const Our_BankIncome = require('../../../models/accountant/ourMainData/Our_BankIncome');
+const Our_CertificateOf_Completion = require('../../../models/accountant/ourMainData/Our_CertificateOf_Completion');
+const Our_InvoiceMixed = require('../../../models/accountant/ourMainData/Our_InvoiceMixed');
+const Our_InvoiceProduct = require('../../../models/accountant/ourMainData/Our_InvoiceProduct');
+const Our_InvoiceServiceJob = require('../../../models/accountant/ourMainData/Our_InvoiceServiceJob');
+const Our_Payment = require('../../../models/accountant/ourMainData/Our_Payment');
+const Our_SalesInvoiceNakladnaya = require('../../../models/accountant/ourMainData/Our_SalesInvoiceNakladnaya');
+
 //@desc   Add a OurFirm
 //@route  POST /api/v1/accountant/our-firm
 //@access Private
@@ -175,15 +189,88 @@ exports.getOneOurFirm = asyncHandler(async (req, res, next) => {
 //@route  DELETE /api/v1/accountant/our-firm/:id
 //@access Private
 exports.deleteOurFirm = asyncHandler(async (req, res, next) => {
-  const oneOurFirm = await OurFirm.findByIdAndDelete(req.params.id);
+  const relatedEntered_CertificateOf_Completion = await Entered_CertificateOf_Completion.findOne(
+    { ourFirm: req.params.id },
+    '_id'
+  );
+  const relatedEntered_InvoiceMixed = await Entered_InvoiceMixed.findOne(
+    { ourFirm: req.params.id },
+    '_id'
+  );
+  const relatedEntered_InvoiceProduct = await Entered_InvoiceProduct.findOne(
+    { ourFirm: req.params.id },
+    '_id'
+  );
+  const relatedEntered_InvoiceServiceJob = await Entered_InvoiceServiceJob.findOne(
+    { ourFirm: req.params.id },
+    '_id'
+  );
+  const relatedEntered_SalesInvoiceNakladnaya = await Entered_SalesInvoiceNakladnaya.findOne(
+    { ourFirm: req.params.id },
+    '_id'
+  );
 
-  //Check if  exists response
-  if (!oneOurFirm) {
-    return next(new ErrorResponse('Нет  объекта с данным id', 400));
+  const relatedOur_BankIncome = await Our_BankIncome.findOne(
+    { ourFirm: req.params.id },
+    '_id'
+  );
+  const relatedOur_CertificateOf_Completion = await Our_CertificateOf_Completion.findOne(
+    { ourFirm: req.params.id },
+    '_id'
+  );
+  const relatedOur_InvoiceMixed = await Our_InvoiceMixed.findOne(
+    { ourFirm: req.params.id },
+    '_id'
+  );
+  const relatedOur_InvoiceProduct = await Our_InvoiceProduct.findOne(
+    { ourFirm: req.params.id },
+    '_id'
+  );
+  const relatedOur_InvoiceServiceJob = await Our_InvoiceServiceJob.findOne(
+    { ourFirm: req.params.id },
+    '_id'
+  );
+  const relatedOur_Payment = await Our_Payment.findOne(
+    { ourFirm: req.params.id },
+    '_id'
+  );
+  const relatedOur_SalesInvoiceNakladnaya = await Our_SalesInvoiceNakladnaya.findOne(
+    { ourFirm: req.params.id },
+    '_id'
+  );
+
+  const forbiddenToDelete =
+    relatedEntered_CertificateOf_Completion ||
+    relatedEntered_InvoiceMixed ||
+    relatedEntered_InvoiceProduct ||
+    relatedEntered_InvoiceServiceJob ||
+    relatedEntered_SalesInvoiceNakladnaya ||
+    relatedOur_BankIncome ||
+    relatedOur_CertificateOf_Completion ||
+    relatedOur_InvoiceMixed ||
+    relatedOur_InvoiceProduct ||
+    relatedOur_InvoiceServiceJob ||
+    relatedOur_Payment ||
+    relatedOur_SalesInvoiceNakladnaya;
+
+  if (forbiddenToDelete) {
+    return next(
+      new ErrorResponse(
+        'не возможно удалить этот елемент, есть связанные элементы',
+        403
+      )
+    );
+  } else {
+    const oneOurFirm = await OurFirm.findByIdAndDelete(req.params.id);
+
+    //Check if  exists response
+    if (!oneOurFirm) {
+      return next(new ErrorResponse('Нет  объекта с данным id', 400));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {}
+    });
   }
-
-  res.status(200).json({
-    success: true,
-    data: {}
-  });
 });

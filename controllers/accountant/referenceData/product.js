@@ -2,6 +2,13 @@ const ErrorResponse = require('../../../utils/errorResponse');
 const asyncHandler = require('../../../middleware/async');
 const Product = require('../../../models/accountant/referenceData/Product');
 
+const Our_SalesInvoiceNakladnaya = require('../../../models/accountant/ourMainData/Our_SalesInvoiceNakladnaya');
+const Our_InvoiceMixed = require('../../../models/accountant/ourMainData/Our_InvoiceMixed');
+const Our_InvoiceProduct = require('../../../models/accountant/ourMainData/Our_InvoiceProduct');
+const Entered_SalesInvoiceNakladnaya = require('../../../models/accountant/enteredMainData/Entered_SalesInvoiceNakladnaya');
+const Entered_InvoiceMixed = require('../../../models/accountant/enteredMainData/Entered_InvoiceMixed');
+const Entered_InvoiceProduct = require('../../../models/accountant/enteredMainData/Entered_InvoiceProduct');
+
 //@desc   Add a Product
 //@route  POST /api/v1/accountant/our-firm
 //@access Private
@@ -117,15 +124,57 @@ exports.getOneProduct = asyncHandler(async (req, res, next) => {
 //@route  DELETE /api/v1/accountant/our-firm/:id
 //@access Private
 exports.deleteProduct = asyncHandler(async (req, res, next) => {
-  const oneProduct = await Product.findByIdAndDelete(req.params.id);
+  const relatedOur_SalesInvoiceNakladnaya = await Our_SalesInvoiceNakladnaya.findOne(
+    { 'products.product': req.params.id },
+    '_id'
+  );
+  const relatedOur_InvoiceMixed = await Our_InvoiceMixed.findOne(
+    { 'products.product': req.params.id },
+    '_id'
+  );
+  const relatedOur_InvoiceProduct = await Our_InvoiceProduct.findOne(
+    { 'products.product': req.params.id },
+    '_id'
+  );
+  const relatedEntered_SalesInvoiceNakladnaya = await Entered_SalesInvoiceNakladnaya.findOne(
+    { 'products.product': req.params.id },
+    '_id'
+  );
+  const relateEntered_InvoiceMixed = await Entered_InvoiceMixed.findOne(
+    { 'products.product': req.params.id },
+    '_id'
+  );
+  const relatedEntered_InvoiceProduct = await Entered_InvoiceProduct.findOne(
+    { 'products.product': req.params.id },
+    '_id'
+  );
 
-  //Check if  exists response
-  if (!oneProduct) {
-    return next(new ErrorResponse('Нет  объекта с данным id', 400));
+  const forbiddenToDelete =
+    relatedOur_SalesInvoiceNakladnaya ||
+    relatedOur_InvoiceMixed ||
+    relatedOur_InvoiceProduct ||
+    relatedEntered_SalesInvoiceNakladnaya ||
+    relateEntered_InvoiceMixed ||
+    relatedEntered_InvoiceProduct;
+
+  if (forbiddenToDelete) {
+    return next(
+      new ErrorResponse(
+        'не возможно удалить этот елемент, есть связанные элементы',
+        403
+      )
+    );
+  } else {
+    const oneProduct = await Product.findByIdAndDelete(req.params.id);
+
+    //Check if  exists response
+    if (!oneProduct) {
+      return next(new ErrorResponse('Нет  объекта с данным id', 400));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {}
+    });
   }
-
-  res.status(200).json({
-    success: true,
-    data: {}
-  });
 });
