@@ -84,6 +84,22 @@ exports.getOneBankName = asyncHandler(async (req, res, next) => {
   });
 });
 
+//@desc   Get one BankName by mfo
+//@route  GET /api/v1/accountant/bankname/:id
+//@access Private
+exports.getOneBankName = asyncHandler(async (req, res, next) => {
+  const oneBankName = await BankName.find({ mfo: req.params.mfo });
+  //Check if  exists response
+  if (!oneBankName) {
+    return next(new ErrorResponse('Нет  объекта с данным mfo', 400));
+  }
+
+  res.status(200).json({
+    success: true,
+    data: oneBankName
+  });
+});
+
 //@desc   DELETE one BankName
 //@route  DELETE /api/v1/accountant/bankname/:id
 //@access Private

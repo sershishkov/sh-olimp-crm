@@ -2,6 +2,13 @@ const ErrorResponse = require('../../../utils/errorResponse');
 const asyncHandler = require('../../../middleware/async');
 const Client = require('../../../models/accountant/referenceData/Client');
 
+const Our_BankIncome = require('../../../models/accountant/ourMainData/Our_BankIncome');
+const Our_CertificateOf_Completion = require('../../../models/accountant/ourMainData/Our_CertificateOf_Completion');
+const Our_InvoiceMixed = require('../../../models/accountant/ourMainData/Our_InvoiceMixed');
+const Our_InvoiceProduct = require('../../../models/accountant/ourMainData/Our_InvoiceProduct');
+const Our_InvoiceServiceJob = require('../../../models/accountant/ourMainData/Our_InvoiceServiceJob');
+const Our_SalesInvoiceNakladnaya = require('../../../models/accountant/ourMainData/Our_SalesInvoiceNakladnaya');
+
 //@desc   Add a Client
 //@route  POST /api/v1/accountant/client
 //@access Private
@@ -176,15 +183,57 @@ exports.getOneClient = asyncHandler(async (req, res, next) => {
 //@route  DELETE /api/v1/accountant/client/:id
 //@access Private
 exports.deleteClient = asyncHandler(async (req, res, next) => {
-  const oneClient = await Client.findByIdAndDelete(req.params.id);
+  const relatedOur_BankIncome = await Our_BankIncome.findOne(
+    { client: req.params.id },
+    '_id'
+  );
+  const relatedOur_CertificateOf_Completion = await Our_CertificateOf_Completion.findOne(
+    { client: req.params.id },
+    '_id'
+  );
+  const relatedOur_InvoiceMixed = await Our_InvoiceMixed.findOne(
+    { client: req.params.id },
+    '_id'
+  );
+  const relatedOur_InvoiceProduct = await Our_InvoiceProduct.findOne(
+    { client: req.params.id },
+    '_id'
+  );
+  const relatedOur_InvoiceServiceJob = await Our_InvoiceServiceJob.findOne(
+    { client: req.params.id },
+    '_id'
+  );
+  const relatedOur_SalesInvoiceNakladnaya = await Our_SalesInvoiceNakladnaya.findOne(
+    { client: req.params.id },
+    '_id'
+  );
 
-  //Check if  exists response
-  if (!oneClient) {
-    return next(new ErrorResponse('Нет  объекта с данным id', 400));
+  const forbiddenToDelete =
+    relatedOur_BankIncome ||
+    relatedOur_CertificateOf_Completion ||
+    relatedOur_InvoiceMixed ||
+    relatedOur_InvoiceProduct ||
+    relatedOur_InvoiceServiceJob ||
+    relatedOur_SalesInvoiceNakladnaya;
+
+  if (forbiddenToDelete) {
+    return next(
+      new ErrorResponse(
+        'не возможно удалить этот елемент, есть связанные элементы',
+        403
+      )
+    );
+  } else {
+    const oneClient = await Client.findByIdAndDelete(req.params.id);
+
+    //Check if  exists response
+    if (!oneClient) {
+      return next(new ErrorResponse('Нет  объекта с данным id', 400));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {}
+    });
   }
-
-  res.status(200).json({
-    success: true,
-    data: {}
-  });
 });

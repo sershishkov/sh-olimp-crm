@@ -1,6 +1,8 @@
 const ErrorResponse = require('../../../utils/errorResponse');
 const asyncHandler = require('../../../middleware/async');
 const Worker = require('../../../models/accountant/referenceData/Worker');
+const Our_WorkersSalary = require('../../../models/accountant/ourMainData/Our_WorkersSalary');
+const Our_CurrentExpense = require('../../../models/accountant/ourMainData/Our_CurrentExpense');
 
 //@desc   Add a Worker
 //@route  POST /api/v1/accountant/worker
@@ -123,15 +125,33 @@ exports.getOneWorker = asyncHandler(async (req, res, next) => {
 //@route  DELETE /api/v1/accountant/worker/:id
 //@access Private
 exports.deleteWorker = asyncHandler(async (req, res, next) => {
-  const oneWorker = await Worker.findByIdAndDelete(req.params.id);
+  const relatedOur_WorkersSalary = await Our_WorkersSalary.findOne(
+    { worker: req.params.id },
+    '_id'
+  );
+  const relatedOur_CurrentExpense = await Our_CurrentExpense.findOne(
+    { worker: req.params.id },
+    '_id'
+  );
 
-  //Check if  exists response
-  if (!oneWorker) {
-    return next(new ErrorResponse('Нет  объекта с данным id', 400));
+  if (relatedOur_WorkersSalary || relatedOur_CurrentExpense) {
+    return next(
+      new ErrorResponse(
+        'не возможно удалить этот елемент, есть связанные элементы',
+        403
+      )
+    );
+  } else {
+    const oneWorker = await Worker.findByIdAndDelete(req.params.id);
+
+    //Check if  exists response
+    if (!oneWorker) {
+      return next(new ErrorResponse('Нет  объекта с данным id', 400));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {}
+    });
   }
-
-  res.status(200).json({
-    success: true,
-    data: {}
-  });
 });

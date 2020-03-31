@@ -84,6 +84,7 @@ const city = require('./routes/accountant/referenceData/city');
 const street = require('./routes/accountant/referenceData/street');
 const oblast = require('./routes/accountant/referenceData/oblast');
 const rayon = require('./routes/accountant/referenceData/rayon');
+const typeOf_Expense = require('./routes/accountant/referenceData/typeOf_Expense');
 
 // OUR  MAIN DATA      //
 const our_SalesInvoiceNakladnaya = require('./routes/accountant/ourMainData/our_SalesInvoiceNakladnaya');
@@ -93,6 +94,8 @@ const our_InvoiceProduct = require('./routes/accountant/ourMainData/our_InvoiceP
 const our_InvoiceMixed = require('./routes/accountant/ourMainData/our_InvoiceMixed');
 const our_CertificateOf_Completion = require('./routes/accountant/ourMainData/our_CertificateOf_Completion');
 const our_BankIncome = require('./routes/accountant/ourMainData/our_BankIncome');
+const our_WorkersSalary = require('./routes/accountant/ourMainData/our_WorkersSalary');
+const our_CurrentExpense = require('./routes/accountant/ourMainData/our_CurrentExpense');
 
 // ENTERTED  MAIN DATA      //
 const entered_SalesInvoiceNakladnaya = require('./routes/accountant/enteredMainData/entered_SalesInvoiceNakladnaya');
@@ -147,6 +150,7 @@ app.use('/api/v1/accountant/city', city);
 app.use('/api/v1/accountant/street', street);
 app.use('/api/v1/accountant/oblast', oblast);
 app.use('/api/v1/accountant/rayon', rayon);
+app.use('/api/v1/accountant/type-of-expense', typeOf_Expense);
 
 // OUR  MAIN DATA      //
 app.use(
@@ -162,6 +166,8 @@ app.use(
   our_CertificateOf_Completion
 );
 app.use('/api/v1/accountant/our-bank-income', our_BankIncome);
+app.use('/api/v1/accountant/our-workers-salary', our_WorkersSalary);
+app.use('/api/v1/accountant/our-current-expense', our_CurrentExpense);
 
 // ENTERTED  MAIN DATA      //
 app.use(

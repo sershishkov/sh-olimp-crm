@@ -2,6 +2,10 @@ const ErrorResponse = require('../../../utils/errorResponse');
 const asyncHandler = require('../../../middleware/async');
 const FirstPersonPosition = require('../../../models/accountant/referenceData/FirstPersonPosition');
 
+const Client = require('../../../models/accountant/referenceData/Client');
+const OurFirm = require('../../../models/accountant/referenceData/OurFirm');
+const Supplier = require('../../../models/accountant/referenceData/Supplier');
+
 //@desc   Add a PersonPosition
 //@route  POST /api/v1/accountant/personposition
 //@access Private
@@ -90,17 +94,41 @@ exports.getOneFirstPersonPosition = asyncHandler(async (req, res, next) => {
 //@route  DELETE /api/v1/accountant/personposition/:id
 //@access Private
 exports.deleteFirstPersonPosition = asyncHandler(async (req, res, next) => {
-  const PersonPosition = await FirstPersonPosition.findByIdAndDelete(
-    req.params.id
+  const relatedClient = await Client.findOne(
+    { firstPersonPosition: req.params.id },
+    '_id'
+  );
+  const relatedOurFirm = await OurFirm.findOne(
+    { firstPersonPosition: req.params.id },
+    '_id'
+  );
+  const relatedSupplier = await Supplier.findOne(
+    { firstPersonPosition: req.params.id },
+    '_id'
   );
 
-  //Check if  exists response
-  if (!PersonPosition) {
-    return next(new ErrorResponse('Нет  объекта с данным id', 400));
-  }
+  const forbiddenToDelete = relatedClient || relatedOurFirm || relatedSupplier;
 
-  res.status(200).json({
-    success: true,
-    data: {}
-  });
+  if (forbiddenToDelete) {
+    return next(
+      new ErrorResponse(
+        'не возможно удалить этот елемент, есть связанные элементы',
+        403
+      )
+    );
+  } else {
+    const PersonPosition = await FirstPersonPosition.findByIdAndDelete(
+      req.params.id
+    );
+
+    //Check if  exists response
+    if (!PersonPosition) {
+      return next(new ErrorResponse('Нет  объекта с данным id', 400));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {}
+    });
+  }
 });

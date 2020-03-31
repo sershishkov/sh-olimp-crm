@@ -1,6 +1,7 @@
 const ErrorResponse = require('../../../utils/errorResponse');
 const asyncHandler = require('../../../middleware/async');
 const GroupOf_Product = require('../../../models/accountant/referenceData/GroupOf_Product');
+const Product = require('../../../models/accountant/referenceData/Product');
 
 //@desc   Add a GroupOf_Product
 //@route  POST /api/v1/accountant/group-of-product
@@ -88,17 +89,31 @@ exports.getOneGroupOf_Product = asyncHandler(async (req, res, next) => {
 //@route  DELETE /api/v1/accountant/group-of-product/:id
 //@access Private
 exports.deleteGroupOf_Product = asyncHandler(async (req, res, next) => {
-  const groupOf_Product = await GroupOf_Product.findByIdAndDelete(
-    req.params.id
+  const relatedElement = await Product.findOne(
+    { productGroup: req.params.id },
+    '_id'
   );
 
-  //Check if  exists response
-  if (!groupOf_Product) {
-    return next(new ErrorResponse('Нет  объекта с данным id', 400));
-  }
+  if (relatedElement) {
+    return next(
+      new ErrorResponse(
+        'не возможно удалить этот елемент, есть связанные элементы',
+        403
+      )
+    );
+  } else {
+    const groupOf_Product = await GroupOf_Product.findByIdAndDelete(
+      req.params.id
+    );
 
-  res.status(200).json({
-    success: true,
-    data: {}
-  });
+    //Check if  exists response
+    if (!groupOf_Product) {
+      return next(new ErrorResponse('Нет  объекта с данным id', 400));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {}
+    });
+  }
 });
