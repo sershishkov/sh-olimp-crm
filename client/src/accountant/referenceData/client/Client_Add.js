@@ -96,7 +96,8 @@ const Client_Add = ({
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/client');
+    history.goBack();
+    // history.push('/accountant/client');
   };
 
   const [pageForm, setPageForm] = useState({

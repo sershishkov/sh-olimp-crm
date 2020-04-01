@@ -495,6 +495,20 @@ const ResponsiveDrawer = ({
                   <ListItemText>Накладные</ListItemText>
                 </ListItem>
 
+                <ListItem
+                  button
+                  className={classes.nestedListItemLevel2}
+                  onClick={() => {
+                    history.push('/accountant/our-workers-salary');
+                    setMobileOpen(!mobileOpen);
+                  }}
+                >
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Зарплата</ListItemText>
+                </ListItem>
+
                 <ListItem button className={classes.nestedListItemLevel2}>
                   <ListItemIcon>
                     <SubdirectoryArrowRightIcon />
@@ -802,6 +816,20 @@ const ResponsiveDrawer = ({
                     <SubdirectoryArrowRightIcon />
                   </ListItemIcon>
                   <ListItemText>ЕдиницыИзмерения</ListItemText>
+                </ListItem>
+
+                <ListItem
+                  button
+                  className={classes.nestedListItemLevel2}
+                  onClick={() => {
+                    history.push('/accountant/type-of-expense');
+                    setMobileOpen(!mobileOpen);
+                  }}
+                >
+                  <ListItemIcon>
+                    <SubdirectoryArrowRightIcon />
+                  </ListItemIcon>
+                  <ListItemText>Тип расходов</ListItemText>
                 </ListItem>
 
                 <ListItem

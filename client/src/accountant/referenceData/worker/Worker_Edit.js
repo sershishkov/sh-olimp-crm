@@ -161,10 +161,9 @@ const Worker_Edit = ({
       const year = oldDate.getFullYear();
       const month =
         oldDate.getMonth() < 10 ? `0${oldDate.getMonth()}` : oldDate.getMonth();
-      const day =
-        oldDate.getDay() < 10 ? `0${oldDate.getDay()}` : oldDate.getDay();
-      const reverceDate = `${year}-${month}-${day}`;
-      // console.log(reverceDate);
+      const date =
+        oldDate.getDate() < 10 ? `0${oldDate.getDate()}` : oldDate.getDate();
+      const reverceDate = `${year}-${month}-${date}`;
 
       setPageForm({
         ...pageForm,

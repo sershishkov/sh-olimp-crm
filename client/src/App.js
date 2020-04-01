@@ -278,6 +278,15 @@ const Client_Edit = React.lazy(() =>
 const Client_List = React.lazy(() =>
   import('./accountant/referenceData/client/Client_List')
 );
+const TypeOf_Expense_Add = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_Expense/TypeOf_Expense_Add')
+);
+const TypeOf_Expense_Edit = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_Expense/TypeOf_Expense_Edit')
+);
+const TypeOf_Expense_List = React.lazy(() =>
+  import('./accountant/referenceData/typeOf_Expense/TypeOf_Expense_List')
+);
 
 const Our_SalesInvoiceNakladnaya_Add = React.lazy(() =>
   import(
@@ -293,6 +302,16 @@ const Our_SalesInvoiceNakladnaya_List = React.lazy(() =>
   import(
     './accountant/ourMainData/our_SalesInvoiceNakladnaya/Our_SalesInvoiceNakladnaya_List'
   )
+);
+
+const Our_WorkersSalary_Add = React.lazy(() =>
+  import('./accountant/ourMainData/our_WorkersSalary/Our_WorkersSalary_Add')
+);
+const Our_WorkersSalary_Edit = React.lazy(() =>
+  import('./accountant/ourMainData/our_WorkersSalary/Our_WorkersSalary_Edit')
+);
+const Our_WorkersSalary_List = React.lazy(() =>
+  import('./accountant/ourMainData/our_WorkersSalary/Our_WorkersSalary_List')
 );
 
 const useStyles = makeStyles(theme => ({
@@ -731,6 +750,38 @@ function App() {
                 exact
                 path='/accountant/our-service-invoice-nakl'
                 component={Our_SalesInvoiceNakladnaya_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-expense/add'
+                component={TypeOf_Expense_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-expense/:id'
+                component={TypeOf_Expense_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/type-of-expense'
+                component={TypeOf_Expense_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/accountant/our-workers-salary/add'
+                component={Our_WorkersSalary_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/our-workers-salary/:id'
+                component={Our_WorkersSalary_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/accountant/our-workers-salary'
+                component={Our_WorkersSalary_List}
               />
             </Switch>
           </Suspense>

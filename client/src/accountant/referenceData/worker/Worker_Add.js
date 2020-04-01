@@ -82,7 +82,8 @@ const Worker_Add = ({
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/worker');
+    history.goBack();
+    // history.push('/accountant/worker');
   };
 
   const [pageForm, setPageForm] = useState({
