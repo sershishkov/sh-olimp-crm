@@ -21,6 +21,8 @@ import our_InvoiceProduct from './accountant/ourMainData/our_InvoiceProduct';
 import our_InvoiceServiceJob from './accountant/ourMainData/our_InvoiceServiceJob';
 import our_Payments from './accountant/ourMainData/our_Payments';
 import our_SalesInvoiceNakladnaya from './accountant/ourMainData/our_SalesInvoiceNakladnaya';
+import our_CurrentExpense from './accountant/ourMainData/our_CurrentExpense';
+import our_WorkersSalary from './accountant/ourMainData/our_WorkersSalary';
 
 import bankName from './accountant/referenceData/bankName';
 import client from './accountant/referenceData/client';
@@ -43,6 +45,7 @@ import city from './accountant/referenceData/city';
 import street from './accountant/referenceData/street';
 import oblast from './accountant/referenceData/oblast';
 import rayon from './accountant/referenceData/rayon';
+import typeOf_Expense from './accountant/referenceData/typeOf_Expense';
 
 export default combineReducers({
   alert,
@@ -67,6 +70,8 @@ export default combineReducers({
   our_InvoiceServiceJob,
   our_Payments,
   our_SalesInvoiceNakladnaya,
+  our_CurrentExpense,
+  our_WorkersSalary,
 
   bankName,
   client,
@@ -88,5 +93,6 @@ export default combineReducers({
   city,
   street,
   oblast,
-  rayon
+  rayon,
+  typeOf_Expense
 });
