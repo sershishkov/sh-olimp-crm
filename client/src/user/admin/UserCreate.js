@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { addUser } from '../../store/actions/users';
+import { addUser } from '../../store/actions/user/admin/users';
 import { setNameOfPage } from '../../store/actions/nameOfPage';
 
 import Button from '@material-ui/core/Button';

@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import Spinner from '../spinner/Spinner';
 
 import { setNameOfPage } from '../../store/actions/nameOfPage';
-import { getAllPhotoWork } from '../../store/actions/photoWorks';
-import { getAllGroupOfImage } from '../../store/actions/groupOfImage';
+import { getAllPhotoWork } from '../../store/actions/mainInformation/osbb/photoWorks';
+import { getAllGroupOfImage } from '../../store/actions/mainInformation/osbb/groupOfImage';
 import ListOfPhotos from './Components/ListOfPhotos';
 import PropTypes from 'prop-types';
 
@@ -34,23 +34,6 @@ const Landing = ({
     getAllPhotoWork();
     getAllGroupOfImage();
   }, [setNameOfPage, getAllPhotoWork, getAllGroupOfImage]);
-
-  // const viewImages = (
-  //   <Grid className={classes.root}>
-  //     {imageGroups.map(group => {
-  //       const newArr = photoWorks.filter(
-  //         photo => group.imageGroup === photo.imageGroup.imageGroup
-  //       );
-  //       return (
-  //         <Fragment key={group._id}>
-  //           <Typography component='h1' variant='h5' align='center'>
-  //             {group.imageGroup}
-  //           </Typography>
-  //           <ListOfPhotos arr={newArr} />
-  //         </Fragment>
-  //       );
-  //     })}
-  //   </Grid>
 
   const viewImages = (
     <Grid>

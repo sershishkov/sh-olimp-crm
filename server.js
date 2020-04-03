@@ -53,13 +53,17 @@ app.use(hpp());
 app.use(cors());
 
 //Route file
-const auth = require('./routes/auth');
-const users = require('./routes/users');
+////////User////////
+const auth = require('./routes/user/auth/auth');
+const users = require('./routes/user/admin/users');
 
-const photoWorks = require('./routes//photoWorks');
-const groupOfImage = require('./routes/groupOfImage');
-const categoryGroupOfImage = require('./routes/categoryGroupOfImage');
-const requestFromClient = require('./routes/requestFromClient');
+//////////Main Information//////////
+
+const photoWorks = require('./routes/mainInformation/osbb/photoWorks');
+const groupOfImage = require('./routes/mainInformation/osbb/groupOfImage');
+
+/////////////////free//////////////////////////
+const requestFromClient = require('./routes/mainInformation/free/requestFromClient');
 
 //////   ACCOUNTANT     /////////
 //   REFERENCE DATA //
@@ -118,13 +122,14 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/uploads', express.static('uploads'));
 
 //Mount routes
-
+///////User/////
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/users', users);
 
+//////////Main Information//////////
 app.use('/api/v1/photo', photoWorks);
 app.use('/api/v1/imagegroup', groupOfImage);
-app.use('/api/v1/category-imagegroup', categoryGroupOfImage);
+/////////////////free//////////////////////////
 app.use('/api/v1/request-from-client', requestFromClient);
 
 //////   ACCOUNTANT     /////////

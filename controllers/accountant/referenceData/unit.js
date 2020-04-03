@@ -1,6 +1,8 @@
 const ErrorResponse = require('../../../utils/errorResponse');
 const asyncHandler = require('../../../middleware/async');
 const Unit = require('../../../models/accountant/referenceData/Unit');
+const Product = require('../../../models/accountant/referenceData/Product');
+const ServiceJob = require('../../../models/accountant/referenceData/ServiceJob');
 
 //@desc   Add a Unit
 //@route  POST /api/v1/accountant/unit
@@ -91,15 +93,32 @@ exports.getOneUnit = asyncHandler(async (req, res, next) => {
 //@route  DELETE /api/v1/accountant/unit/:id
 //@access Private
 exports.deleteUnit = asyncHandler(async (req, res, next) => {
-  const oneUnit = await Unit.findByIdAndDelete(req.params.id);
+  const relatedProduct = await Product.findOne({ unit: req.params.id }, '_id');
+  const relatedServiceJob = await ServiceJob.findOne(
+    { unit: req.params.id },
+    '_id'
+  );
 
-  //Check if  exists response
-  if (!oneUnit) {
-    return next(new ErrorResponse('Нет  объекта с данным id', 400));
+  const forbiddenToDelete = relatedProduct || relatedServiceJob;
+
+  if (forbiddenToDelete) {
+    return next(
+      new ErrorResponse(
+        'не возможно удалить этот елемент, есть связанные элементы',
+        403
+      )
+    );
+  } else {
+    const oneUnit = await Unit.findByIdAndDelete(req.params.id);
+
+    //Check if  exists response
+    if (!oneUnit) {
+      return next(new ErrorResponse('Нет  объекта с данным id', 400));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {}
+    });
   }
-
-  res.status(200).json({
-    success: true,
-    data: {}
-  });
 });

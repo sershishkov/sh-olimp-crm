@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
 import { connect } from 'react-redux';
-import { logout } from '../../store/actions/auth';
+
+import { logout } from '../../store/actions/user/auth/auth';
 import ourLogo from '../img/LogotipDS.PNG';
 
 import myGif from '../img/Обсуждаем.gif';

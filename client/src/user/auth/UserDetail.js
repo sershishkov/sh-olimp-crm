@@ -7,7 +7,7 @@ import {
   updatepassword,
   changeAvatar,
   logout
-} from '../../store/actions/auth';
+} from '../../store/actions/user/auth/auth';
 
 import Spinner from '../../shared/spinner/Spinner';
 

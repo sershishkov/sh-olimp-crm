@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getAllUsers, deleteUser } from '../../store/actions/users';
+import { getAllUsers, deleteUser } from '../../store/actions/user/admin/users';
 import { setNameOfPage } from '../../store/actions/nameOfPage';
 
 import Spinner from '../../shared/spinner/Spinner';

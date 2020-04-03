@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
 import store from './store/store';
-import { loadUser } from './store/actions/auth';
+import { loadUser } from './store/actions/user/auth/auth';
 import setAuthToken from './utils/setAuthToken';
 
 import Spinner from './shared/spinner/Spinner';
@@ -22,31 +22,39 @@ import Alert from './shared/alert/Alert';
 import Login from './user/auth/Login';
 import Register from './user/auth/Register';
 import PrivateRoute from './routing/PrivateRoute';
-import ForOSBB from './shared/landing/ForOSBB';
-import ForIndividuals from './shared/landing/ForIndividuals';
+import ForOSBB from './mainInformation/osbb/ForOSBB';
+import ForIndividuals from './mainInformation/individuals/ForIndividuals';
 
 const DescriptionOf_Works = React.lazy(() =>
-  import('./descriptionOfWorks/DescriptionOf_Works')
+  import('./mainInformation/osbb/descriptionOfWorks/DescriptionOf_Works')
 );
 const ListOfClientsRequests = React.lazy(() =>
-  import('./requestFromClient/ListOfClientsRequests')
+  import('./mainInformation/free/requestFromClient/ListOfClientsRequests')
 );
 const AddNewClientRequest = React.lazy(() =>
-  import('./requestFromClient/AddNewClientRequest')
+  import('./mainInformation/free/requestFromClient/AddNewClientRequest')
 );
 const EditNewClientRequest = React.lazy(() =>
-  import('./requestFromClient/EditNewClientRequest')
+  import('./mainInformation/free/requestFromClient/EditNewClientRequest')
 );
 const UserDetail = React.lazy(() => import('./user/auth/UserDetail'));
-const AddPhoto = React.lazy(() => import('./photoWork/AddPhoto'));
-const EditPhotoList = React.lazy(() => import('./photoWork/PhotoList'));
-const EditPhotoItem = React.lazy(() => import('./photoWork/EditPhotoItem'));
-const GroupOfImage = React.lazy(() => import('./groupOfImage/GroupOfImage'));
+const AddPhoto = React.lazy(() =>
+  import('./mainInformation/osbb/photoWork/AddPhoto')
+);
+const EditPhotoList = React.lazy(() =>
+  import('./mainInformation/osbb/photoWork/PhotoList')
+);
+const EditPhotoItem = React.lazy(() =>
+  import('./mainInformation/osbb/photoWork/EditPhotoItem')
+);
+const GroupOfImage = React.lazy(() =>
+  import('./mainInformation/osbb/groupOfImage/GroupOfImage')
+);
 const AddGroupOfImage = React.lazy(() =>
-  import('./groupOfImage/AddGroupOfImage')
+  import('./mainInformation/osbb/groupOfImage/AddGroupOfImage')
 );
 const GroupOfImageEdit = React.lazy(() =>
-  import('./groupOfImage/GroupOfImageEdit')
+  import('./mainInformation/osbb/groupOfImage/GroupOfImageEdit')
 );
 const UserAdmin = React.lazy(() => import('./user/admin/UserAdmin'));
 const UserCreate = React.lazy(() => import('./user/admin/UserCreate'));

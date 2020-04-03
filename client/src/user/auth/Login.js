@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { login } from '../../store/actions/auth';
+
+import { login } from '../../store/actions/user/auth/auth';
 import { setNameOfPage } from '../../store/actions/nameOfPage';
 
 import Avatar from '@material-ui/core/Avatar';

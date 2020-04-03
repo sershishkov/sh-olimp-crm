@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux';
-import auth from './auth';
+
 import alert from './alert';
 import nameOfPage from './nameOfPage';
-import photoWorks from './photoWorks';
-import groupOfImage from './groupOfImage';
-import users from './users';
-import clientRequests from './clientRequests';
-import clientCategory from './categoryOf_Client';
+
+import auth from './user/auth/auth';
+import photoWorks from './mainInformation/osbb/photoWorks';
+import groupOfImage from './mainInformation/osbb/groupOfImage';
+import users from './user/admin/users';
+import clientRequests from './mainInformation/free/clientRequests';
 
 import entered_CertificateOf_Completion from './accountant/enteredMainData/entered_CertificateOf_Completion';
 import entered_InvoiceMixed from './accountant/enteredMainData/entered_InvoiceMixed';
@@ -55,7 +56,6 @@ export default combineReducers({
   groupOfImage,
   users,
   clientRequests,
-  clientCategory,
 
   entered_CertificateOf_Completion,
   entered_InvoiceMixed,

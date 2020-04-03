@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { setAlert } from '../../store/actions/alert';
-import { register } from '../../store/actions/auth';
+import { register } from '../../store/actions/user/auth/auth';
 import { setNameOfPage } from '../../store/actions/nameOfPage';
 
 import Avatar from '@material-ui/core/Avatar';
