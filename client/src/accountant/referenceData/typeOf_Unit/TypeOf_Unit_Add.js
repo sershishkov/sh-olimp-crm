@@ -33,7 +33,8 @@ const TypeOf_Unit_Add = ({ setNameOfPage, add_TYPE_OF_UNIT }) => {
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/type-of-unit');
+    history.goBack();
+    // history.push('/accountant/type-of-unit');
   };
 
   const [typeOf_Unit, setTypeOf_Unit] = useState('');

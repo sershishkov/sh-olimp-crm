@@ -63,7 +63,8 @@ const Unit_Add = ({
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/unit');
+    history.goBack();
+    // history.push('/accountant/unit');
   };
 
   const [pageForm, setPageForm] = useState({

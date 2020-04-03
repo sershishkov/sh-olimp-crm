@@ -35,7 +35,8 @@ const Rayon_Add = ({ setNameOfPage, add_RAYON }) => {
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/rayon');
+    history.goBack();
+    // history.push('/accountant/rayon');
   };
 
   const [rayonName, setRayontName] = useState('');

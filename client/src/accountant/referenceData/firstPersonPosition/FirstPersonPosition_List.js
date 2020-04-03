@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import MaterialTable from 'material-table';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
@@ -11,9 +12,6 @@ import {
 
 import Spinner from '../../../shared/spinner/Spinner';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -56,51 +54,53 @@ const FirstPersonPosition_List = ({
   };
 
   const listOf_FIRST_PERSON_POSITIONS = (
-    <List className={classes.list}>
-      {loading ? (
-        <Spinner />
-      ) : (
-        arr_FIRST_PERSON_POSITIONS.map(item => (
-          <ListItem key={item._id} className={classes.listItem}>
-            <Grid container className={classes.root}>
-              <Grid item xs={4}>
-                <Typography align='center'>{item.position}</Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography align='center'>
-                  {item.positionRoditPadej}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={2}>
-                <IconButton
-                  color='secondary'
-                  variant='contained'
-                  onClick={() => deleteItem(item._id)}
-                  className={classes.buttonDelete}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </Grid>
-
-              <Grid item xs={2}>
-                <IconButton
-                  color='primary'
-                  variant='contained'
-                  href={`/accountant/personposition/${item._id}`}
-                  className={classes.buttonDelete}
-                >
-                  <EditIcon />
-                </IconButton>
-              </Grid>
-            </Grid>
-          </ListItem>
-        ))
-      )}
-    </List>
+    <MaterialTable
+      title='Список '
+      columns={[
+        { title: 'Должность', field: 'field_position' },
+        {
+          title: 'Должность в родительном падеже',
+          field: 'field_positionRoditPadej'
+        },
+        { title: 'Удалить', field: 'btnDel', sorting: false },
+        { title: 'редактировать', field: 'btnEdit', sorting: false }
+      ]}
+      data={arr_FIRST_PERSON_POSITIONS.map(item => {
+        return {
+          field_position: item.position,
+          field_positionRoditPadej: item.positionRoditPadej,
+          btnDel: (
+            <IconButton
+              color='secondary'
+              variant='contained'
+              onClick={() => deleteItem(item._id)}
+              className={classes.buttonDelete}
+            >
+              <DeleteIcon />
+            </IconButton>
+          ),
+          btnEdit: (
+            <IconButton
+              color='primary'
+              variant='contained'
+              href={`/accountant/personposition/${item._id}`}
+              className={classes.buttonDelete}
+            >
+              <EditIcon />
+            </IconButton>
+          )
+        };
+      })}
+      options={{
+        sorting: true,
+        search: false
+      }}
+    />
   );
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <Grid container className={classes.root}>
       <IconButton
         variant='contained'

@@ -994,7 +994,7 @@ const Client_Add = ({
                   taxPayerOn ? classes.displayNone : classes.displayFlex
                 }
               >
-                м.?
+                Плательщик налогов?
               </InputLabel>
               <Select
                 variant='outlined'

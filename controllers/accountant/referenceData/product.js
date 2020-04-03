@@ -23,7 +23,6 @@ exports.addProduct = asyncHandler(async (req, res, next) => {
     unit: req.body.unit,
     productGroup: req.body.productGroup,
     amountInPackage: req.body.amountInPackage,
-    suppliers: req.body.suppliers,
     ratePerUnit: req.body.ratePerUnit,
     length: req.body.length,
     width: req.body.width,
@@ -53,7 +52,6 @@ exports.updateProduct = asyncHandler(async (req, res, next) => {
     unit: req.body.unit,
     productGroup: req.body.productGroup,
     amountInPackage: req.body.amountInPackage,
-    suppliers: req.body.suppliers,
     ratePerUnit: req.body.ratePerUnit,
     length: req.body.length,
     width: req.body.width,
@@ -85,8 +83,7 @@ exports.getAllProducts = asyncHandler(async (req, res, next) => {
       productName: 1
     })
     .populate({ path: 'unit', select: 'unitNameShort' })
-    .populate({ path: 'productGroup', select: 'productGroup' })
-    .populate({ path: 'suppliers', select: 'supplierName' });
+    .populate({ path: 'productGroup', select: 'productGroup' });
   //Check if  exists response
   if (!allProducts) {
     return next(new ErrorResponse('На данный момент ничего в базе нет ', 400));

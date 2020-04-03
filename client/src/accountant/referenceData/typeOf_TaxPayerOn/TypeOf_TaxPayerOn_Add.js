@@ -35,7 +35,8 @@ const TypeOf_TaxPayerOn_Add = ({ setNameOfPage, add_TYPE_OF_TAX_PAYER_ON }) => {
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/type-of-tax-payer-on');
+    history.goBack();
+    // history.push('/accountant/type-of-tax-payer-on');
   };
 
   const [typeOf_TaxPayerOn, setTypeOf_TaxPayerOn] = useState('');

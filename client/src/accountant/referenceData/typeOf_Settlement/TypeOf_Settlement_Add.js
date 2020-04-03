@@ -35,7 +35,8 @@ const TypeOf_Street_Add = ({ setNameOfPage, add_TYPE_OF_SETTLEMENT }) => {
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/type-of-settlement');
+    history.goBack();
+    // history.push('/accountant/type-of-settlement');
   };
 
   const [formData, setFormData] = useState({

@@ -35,7 +35,8 @@ const TypeOf_Firm_Add = ({ setNameOfPage, add_TYPE_OF_FIRM }) => {
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/type-of-firm');
+    history.goBack();
+    // history.push('/accountant/type-of-firm');
   };
 
   const [formData, setFormData] = useState({

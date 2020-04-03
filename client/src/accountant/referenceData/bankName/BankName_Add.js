@@ -35,7 +35,8 @@ const BankName_Add = ({ setNameOfPage, add_BANK_NAME }) => {
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/bankname');
+    history.goBack();
+    // history.push('/accountant/bankname');
   };
 
   const [formData, setFormData] = useState({

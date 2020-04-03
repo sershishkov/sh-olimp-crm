@@ -7,6 +7,7 @@ const {
   updateBankName,
   getAllBankNames,
   getOneBankName,
+  getOneBankNameByMfo,
   deleteBankName
 } = require('../../../controllers/accountant/referenceData/bankName');
 
@@ -32,5 +33,7 @@ router
     authorize('engineer', 'accountant', 'boss', 'admin'),
     deleteBankName
   );
+
+router.route('/:mfo').get(getOneBankNameByMfo);
 
 module.exports = router;

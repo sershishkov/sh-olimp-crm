@@ -73,6 +73,8 @@ exports.getAllBankNames = asyncHandler(async (req, res, next) => {
 //@access Private
 exports.getOneBankName = asyncHandler(async (req, res, next) => {
   const oneBankName = await BankName.findById(req.params.id);
+
+  console.log(oneBankName);
   //Check if  exists response
   if (!oneBankName) {
     return next(new ErrorResponse('Нет  объекта с данным id', 400));
@@ -87,7 +89,7 @@ exports.getOneBankName = asyncHandler(async (req, res, next) => {
 //@desc   Get one BankName by mfo
 //@route  GET /api/v1/accountant/bankname/:id
 //@access Private
-exports.getOneBankName = asyncHandler(async (req, res, next) => {
+exports.getOneBankNameByMfo = asyncHandler(async (req, res, next) => {
   const oneBankName = await BankName.find({ mfo: req.params.mfo });
   //Check if  exists response
   if (!oneBankName) {

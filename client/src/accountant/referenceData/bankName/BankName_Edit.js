@@ -37,7 +37,7 @@ const BankName_Edit = ({
   setNameOfPage,
   getOne_BANK_NAME,
   update_BANK_NAME,
-  bankName: { one_BANK_NAME, loading }
+  state_bankName: { one_BANK_NAME, loading }
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -148,11 +148,11 @@ BankName_Edit.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getOne_BANK_NAME: PropTypes.func.isRequired,
   update_BANK_NAME: PropTypes.func.isRequired,
-  bankName: PropTypes.object.isRequired
+  state_bankName: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  bankName: state.bankName
+  state_bankName: state.bankName
 });
 
 export default connect(mapStateToProps, {

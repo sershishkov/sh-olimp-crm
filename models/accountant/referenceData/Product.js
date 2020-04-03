@@ -20,12 +20,6 @@ const Product_Schema = new mongoose.Schema({
     default: 1,
     required: [true, 'Введите количество в упаковке']
   },
-  suppliers: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Supplier'
-    }
-  ],
   ratePerUnit: {
     type: Number,
     required: [true, 'Введите норму расхода'],

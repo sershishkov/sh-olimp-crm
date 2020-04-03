@@ -38,7 +38,8 @@ const GroupOf_ServiceJob_Add = ({
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/group-of-servicejob');
+    history.goBack();
+    // history.push('/accountant/group-of-servicejob');
   };
 
   const [serviceJobGroup, setServiceJobGroup] = useState('');

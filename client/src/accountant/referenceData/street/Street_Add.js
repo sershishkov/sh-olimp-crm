@@ -35,7 +35,8 @@ const Street_Add = ({ setNameOfPage, add_STREET }) => {
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/street');
+    history.goBack();
+    // history.push('/accountant/street');
   };
 
   const [streetName, setStreetName] = useState('');

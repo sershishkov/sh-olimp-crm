@@ -38,7 +38,8 @@ const FirstPersonPosition_Add = ({
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/personposition');
+    history.goBack();
+    // history.push('/accountant/personposition');
   };
 
   const [formData, setFormData] = useState({

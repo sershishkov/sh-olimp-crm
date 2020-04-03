@@ -1050,7 +1050,7 @@ const Client_Edit = ({
                   taxPayerOn ? classes.displayNone : classes.displayFlex
                 }
               >
-                м.?
+                Плательщик налогов?
               </InputLabel>
               <Select
                 variant='outlined'

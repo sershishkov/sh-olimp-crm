@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import MaterialTable from 'material-table';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
@@ -11,9 +12,6 @@ import {
 
 import Spinner from '../../../shared/spinner/Spinner';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -67,60 +65,54 @@ const OurFirm_List = ({
   };
 
   const listOf_CLIENTS = (
-    <List className={classes.list}>
-      {loading ? (
-        <Spinner />
-      ) : (
-        arr_CLIENTS.map(item => (
-          <ListItem key={item._id} className={classes.listItem}>
-            <Grid container className={classes.root}>
-              <Grid item xs={12} container className={classes.row}>
-                <Grid item xs={3} className={classes.rowItem} container>
-                  <Typography align='center'>
-                    {item.typeOfFirm.TypeOf_FirmShort}
-                  </Typography>
-                </Grid>
-                <Grid item xs={3} className={classes.rowItem} container>
-                  <Typography align='center'>{item.firmName}</Typography>
-                </Grid>
-                <Grid item xs={3} className={classes.rowItem} container>
-                  <Typography align='center'>
-                    {item.firstPersonPosition.position}
-                  </Typography>
-                </Grid>
-                <Grid item xs={1} className={classes.rowItem} container>
-                  <Typography align='center'>{item.shortName}</Typography>
-                </Grid>
-                <Grid item xs={1} className={classes.rowItem} container>
-                  <IconButton
-                    color='secondary'
-                    variant='contained'
-                    onClick={() => deleteItem(item._id)}
-                    className={classes.buttonDelete}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Grid>
-
-                <Grid item xs={1} className={classes.rowItem} container>
-                  <IconButton
-                    color='primary'
-                    variant='contained'
-                    href={`/accountant/client/${item._id}`}
-                    className={classes.buttonDelete}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </Grid>
-          </ListItem>
-        ))
-      )}
-    </List>
+    <MaterialTable
+      title='Список '
+      columns={[
+        { title: 'Форма собственности', field: 'field_typeOfFirm' },
+        { title: 'Название фирмы', field: 'field_firmName' },
+        { title: 'Должность руководителя', field: 'field_firstPersonPosition' },
+        { title: 'ФИО', field: 'field_shortName' },
+        { title: 'Удалить', field: 'btnDel', sorting: false },
+        { title: 'редактировать', field: 'btnEdit', sorting: false }
+      ]}
+      data={arr_CLIENTS.map(item => {
+        return {
+          field_typeOfFirm: item.typeOfFirm.TypeOf_FirmShort,
+          field_firmName: item.firmName,
+          field_firstPersonPosition: item.firstPersonPosition.position,
+          field_shortName: item.shortName,
+          btnDel: (
+            <IconButton
+              color='secondary'
+              variant='contained'
+              onClick={() => deleteItem(item._id)}
+              className={classes.buttonDelete}
+            >
+              <DeleteIcon />
+            </IconButton>
+          ),
+          btnEdit: (
+            <IconButton
+              color='primary'
+              variant='contained'
+              href={`/accountant/client/${item._id}`}
+              className={classes.buttonDelete}
+            >
+              <EditIcon />
+            </IconButton>
+          )
+        };
+      })}
+      options={{
+        sorting: true,
+        search: false
+      }}
+    />
   );
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <Grid container className={classes.root}>
       <IconButton
         variant='contained'
@@ -141,6 +133,7 @@ OurFirm_List.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAll_CLIENTS: PropTypes.func.isRequired,
   delete_CLIENT: PropTypes.func.isRequired,
+
   state_client: PropTypes.object.isRequired
 };
 

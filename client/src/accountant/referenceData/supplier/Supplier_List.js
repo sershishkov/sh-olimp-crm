@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import MaterialTable from 'material-table';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
@@ -11,9 +12,6 @@ import {
 
 import Spinner from '../../../shared/spinner/Spinner';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -67,60 +65,54 @@ const Supplier_List = ({
   };
 
   const listOf_SUPPLIERS = (
-    <List className={classes.list}>
-      {loading ? (
-        <Spinner />
-      ) : (
-        arr_SUPPLIERS.map(item => (
-          <ListItem key={item._id} className={classes.listItem}>
-            <Grid container className={classes.root}>
-              <Grid item xs={12} container className={classes.row}>
-                <Grid item xs={3} className={classes.rowItem} container>
-                  <Typography align='center'>
-                    {item.typeOfFirm.TypeOf_FirmShort}
-                  </Typography>
-                </Grid>
-                <Grid item xs={3} className={classes.rowItem} container>
-                  <Typography align='center'>{item.supplierName}</Typography>
-                </Grid>
-                <Grid item xs={3} className={classes.rowItem} container>
-                  <Typography align='center'>
-                    {item.firstPersonPosition.position}
-                  </Typography>
-                </Grid>
-                <Grid item xs={1} className={classes.rowItem} container>
-                  <Typography align='center'>{item.shortName}</Typography>
-                </Grid>
-                <Grid item xs={1} className={classes.rowItem} container>
-                  <IconButton
-                    color='secondary'
-                    variant='contained'
-                    onClick={() => deleteItem(item._id)}
-                    className={classes.buttonDelete}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Grid>
-
-                <Grid item xs={1} className={classes.rowItem} container>
-                  <IconButton
-                    color='primary'
-                    variant='contained'
-                    href={`/accountant/supplier/${item._id}`}
-                    className={classes.buttonDelete}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </Grid>
-          </ListItem>
-        ))
-      )}
-    </List>
+    <MaterialTable
+      title='Список поставщиков'
+      columns={[
+        { title: 'Форма собств', field: 'field_TypeOf_FirmShort' },
+        { title: 'Наименование', field: 'field_supplierName' },
+        { title: 'Должность', field: 'field_firstPersonPosition' },
+        { title: 'Фамилия', field: 'field_shortName' },
+        { title: 'Удалить', field: 'btnDel', sorting: false },
+        { title: 'редактировать', field: 'btnEdit', sorting: false }
+      ]}
+      data={arr_SUPPLIERS.map(item => {
+        return {
+          field_TypeOf_FirmShort: item.typeOfFirm.TypeOf_FirmShort,
+          field_supplierName: item.supplierName,
+          field_firstPersonPosition: item.firstPersonPosition.position,
+          field_shortName: item.shortName,
+          btnDel: (
+            <IconButton
+              color='secondary'
+              variant='contained'
+              onClick={() => deleteItem(item._id)}
+              className={classes.buttonDelete}
+            >
+              <DeleteIcon />
+            </IconButton>
+          ),
+          btnEdit: (
+            <IconButton
+              color='primary'
+              variant='contained'
+              href={`/accountant/supplier/${item._id}`}
+              className={classes.buttonDelete}
+            >
+              <EditIcon />
+            </IconButton>
+          )
+        };
+      })}
+      options={{
+        sorting: true,
+        search: false
+      }}
+    />
   );
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <Grid container className={classes.root}>
       <IconButton
         variant='contained'

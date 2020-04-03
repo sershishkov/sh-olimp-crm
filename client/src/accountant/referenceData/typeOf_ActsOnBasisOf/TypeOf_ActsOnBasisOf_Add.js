@@ -38,7 +38,8 @@ const TypeOf_ActsOnBasisOf_Add = ({
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/type-of-acts-on-basis-of');
+    history.goBack();
+    // history.push('/accountant/type-of-acts-on-basis-of');
   };
 
   const [actOnBasisOf, setActOnBasisOf] = useState('');

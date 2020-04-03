@@ -35,7 +35,8 @@ const TypeOf_Street_Add = ({ setNameOfPage, add_TYPE_OF_STREET }) => {
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/type-of-street');
+    history.goBack();
+    // history.push('/accountant/type-of-street');
   };
 
   const [formData, setFormData] = useState({

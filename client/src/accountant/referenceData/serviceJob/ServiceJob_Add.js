@@ -64,7 +64,8 @@ const ServiceJob_Add = ({
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/service-job');
+    history.goBack();
+    // history.push('/accountant/service-job');
   };
 
   const [pageForm, setPageForm] = useState({

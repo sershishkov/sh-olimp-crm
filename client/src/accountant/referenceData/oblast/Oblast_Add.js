@@ -35,7 +35,8 @@ const Oblast_Add = ({ setNameOfPage, add_OBLAST }) => {
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/oblast');
+    history.goBack();
+    // history.push('/accountant/oblast');
   };
 
   const [oblastName, setOblastName] = useState('');

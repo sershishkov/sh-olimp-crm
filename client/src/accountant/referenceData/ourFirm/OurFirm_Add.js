@@ -95,7 +95,8 @@ const OurFirm_Add = ({
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/our-firm');
+    history.goBack();
+    // history.push('/accountant/our-firm');
   };
 
   const [pageForm, setPageForm] = useState({

@@ -35,7 +35,8 @@ const City_Add = ({ setNameOfPage, add_CITY }) => {
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/city');
+    history.goBack();
+    // history.push('/accountant/city');
   };
 
   const [cityName, setCityName] = useState('');

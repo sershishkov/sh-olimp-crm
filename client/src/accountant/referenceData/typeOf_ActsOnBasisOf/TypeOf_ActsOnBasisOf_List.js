@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import MaterialTable from 'material-table';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
@@ -11,9 +12,6 @@ import {
 
 import Spinner from '../../../shared/spinner/Spinner';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -56,46 +54,49 @@ const TypeOf_ActsOnBasisOf_List = ({
   };
 
   const listOf_TYPE_OF_ACTS_ON_BASIS_OFS = (
-    <List className={classes.list}>
-      {loading ? (
-        <Spinner />
-      ) : (
-        arr_TYPE_OF_ACTS_ON_BASIS_OFS.map(item => (
-          <ListItem key={item._id} className={classes.listItem}>
-            <Grid container className={classes.root}>
-              <Grid item xs={8}>
-                <Typography align='center'>{item.actOnBasisOf}</Typography>
-              </Grid>
+    <MaterialTable
+      title='Список оснований'
+      columns={[
+        { title: 'Полное название', field: 'field_actOnBasisOf' },
+        { title: 'Удалить', field: 'btnDel', sorting: false },
+        { title: 'редактировать', field: 'btnEdit', sorting: false }
+      ]}
+      data={arr_TYPE_OF_ACTS_ON_BASIS_OFS.map(item => {
+        return {
+          field_actOnBasisOf: item.actOnBasisOf,
 
-              <Grid item xs={2}>
-                <IconButton
-                  color='secondary'
-                  variant='contained'
-                  onClick={() => deleteItem(item._id)}
-                  className={classes.buttonDelete}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </Grid>
-
-              <Grid item xs={2}>
-                <IconButton
-                  color='primary'
-                  variant='contained'
-                  href={`/accountant/type-of-acts-on-basis-of/${item._id}`}
-                  className={classes.buttonDelete}
-                >
-                  <EditIcon />
-                </IconButton>
-              </Grid>
-            </Grid>
-          </ListItem>
-        ))
-      )}
-    </List>
+          btnDel: (
+            <IconButton
+              color='secondary'
+              variant='contained'
+              onClick={() => deleteItem(item._id)}
+              className={classes.buttonDelete}
+            >
+              <DeleteIcon />
+            </IconButton>
+          ),
+          btnEdit: (
+            <IconButton
+              color='primary'
+              variant='contained'
+              href={`/accountant/type-of-acts-on-basis-of/${item._id}`}
+              className={classes.buttonDelete}
+            >
+              <EditIcon />
+            </IconButton>
+          )
+        };
+      })}
+      options={{
+        sorting: true,
+        search: false
+      }}
+    />
   );
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <Grid container className={classes.root}>
       <IconButton
         variant='contained'

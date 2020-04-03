@@ -35,7 +35,8 @@ const GroupOf_Product_Add = ({ setNameOfPage, add_GROUP_OF_PRODUCT }) => {
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/group-of-product');
+    history.goBack();
+    // history.push('/accountant/group-of-product');
   };
 
   const [productGroup, setProductGroup] = useState('');

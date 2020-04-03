@@ -20,7 +20,6 @@ import { add_PRODUCT } from '../../../store/actions/accountant/referenceData/pro
 
 import { getAll_UNITS } from '../../../store/actions/accountant/referenceData/unit';
 import { getAll_GROUP_OF_PRODUCTS } from '../../../store/actions/accountant/referenceData/groupOf_Product';
-import { getAll_SUPPLIERS } from '../../../store/actions/accountant/referenceData/supplier';
 
 import Spinner from '../../../shared/spinner/Spinner';
 
@@ -59,17 +58,16 @@ const Product_Add = ({
 
   getAll_UNITS,
   getAll_GROUP_OF_PRODUCTS,
-  getAll_SUPPLIERS,
 
   state_unit: { arr_UNITS },
-  state_groupOf_Product: { arr_GROUP_OF_PRODUCTS },
-  state_supplier: { arr_SUPPLIERS }
+  state_groupOf_Product: { arr_GROUP_OF_PRODUCTS }
 }) => {
   const classes = useStyles();
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/product');
+    history.goBack();
+    // history.push('/accountant/product');
   };
 
   const [pageForm, setPageForm] = useState({
@@ -77,7 +75,6 @@ const Product_Add = ({
     unit: '',
     productGroup: '',
     amountInPackage: '',
-    suppliers: [],
     ratePerUnit: '',
     length: '',
     width: '',
@@ -91,7 +88,6 @@ const Product_Add = ({
     unit,
     productGroup,
     amountInPackage,
-    suppliers,
     ratePerUnit,
     length,
     width,
@@ -103,8 +99,7 @@ const Product_Add = ({
     setNameOfPage('Создать товар');
     getAll_UNITS();
     getAll_GROUP_OF_PRODUCTS();
-    getAll_SUPPLIERS();
-  }, [setNameOfPage, getAll_UNITS, getAll_GROUP_OF_PRODUCTS, getAll_SUPPLIERS]);
+  }, [setNameOfPage, getAll_UNITS, getAll_GROUP_OF_PRODUCTS]);
 
   const onChangeHandler = e => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
@@ -114,7 +109,6 @@ const Product_Add = ({
         unit &&
         productGroup &&
         amountInPackage &&
-        suppliers &&
         ratePerUnit &&
         length &&
         width &&
@@ -130,7 +124,6 @@ const Product_Add = ({
       unit,
       productGroup,
       amountInPackage,
-      suppliers,
       ratePerUnit,
       length,
       width,
@@ -278,53 +271,6 @@ const Product_Add = ({
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
-          <Typography align='left'>Поставщики</Typography>
-        </Grid>
-        <Grid item xs={7} container>
-          {!arr_SUPPLIERS ? (
-            <Spinner />
-          ) : (
-            <Grid item xs={12} className={classes.wrapSelect}>
-              <InputLabel
-                id='select-type-of-suppliers'
-                className={
-                  suppliers ? classes.displayNone : classes.displayFlex
-                }
-              >
-                Поставщики
-              </InputLabel>
-              <Select
-                variant='outlined'
-                labelId='select-type-of-suppliers'
-                fullWidth
-                multiple
-                value={suppliers}
-                name='suppliers'
-                onChange={e => onChangeHandler(e)}
-                className={classes.select}
-              >
-                {arr_SUPPLIERS.map(item => (
-                  <MenuItem key={item._id} value={item._id}>
-                    {item.supplierName}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
-          )}
-        </Grid>
-        <Grid item xs={1} container alignItems='center' justify='center'>
-          <IconButton
-            onClick={() => {
-              history.push('/accountant/supplier/add');
-            }}
-          >
-            <AddCircleIcon color='primary' />
-          </IconButton>
-        </Grid>
-      </Grid>
-
-      <Grid item xs={12} container>
-        <Grid item xs={4} container>
           <Typography align='left'>Расход на ед</Typography>
         </Grid>
         <Grid item xs={8} container>
@@ -434,20 +380,17 @@ Product_Add.propTypes = {
   getAll_SUPPLIERS: PropTypes.func.isRequired,
 
   state_unit: PropTypes.object.isRequired,
-  state_groupOf_Product: PropTypes.object.isRequired,
-  state_supplier: PropTypes.object.isRequired
+  state_groupOf_Product: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   state_unit: state.unit,
-  state_groupOf_Product: state.groupOf_Product,
-  state_supplier: state.supplier
+  state_groupOf_Product: state.groupOf_Product
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   add_PRODUCT,
   getAll_UNITS,
-  getAll_GROUP_OF_PRODUCTS,
-  getAll_SUPPLIERS
+  getAll_GROUP_OF_PRODUCTS
 })(Product_Add);

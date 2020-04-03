@@ -97,7 +97,8 @@ const Supplier_Add = ({
   const history = useHistory();
 
   const buttonBackHandler = () => {
-    history.push('/accountant/supplier');
+    history.goBack();
+    // history.push('/accountant/supplier');
   };
 
   const [pageForm, setPageForm] = useState({
