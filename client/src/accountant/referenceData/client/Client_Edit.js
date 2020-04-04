@@ -247,30 +247,30 @@ const Client_Edit = ({
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
     setDisabledForm(
       !(
-        firmName &&
-        typeOfFirm &&
-        postCode &&
-        typeOf_settlement &&
-        city &&
-        typeOf_street &&
-        street &&
-        numberOf_house &&
-        // numberOf_app &&
-        EDRPOU &&
-        ibanOwn &&
-        ibanGazBank &&
-        firstPersonPosition &&
-        firstPersonSurname &&
-        firstPersonName &&
-        firstPersonMiddleName &&
-        firstPersonSurnameRoditelPadej &&
-        firstPersonNameRoditelPadej &&
-        firstPersonMiddleNameRoditelPadej &&
-        shortName &&
-        actsOnBasisOf &&
-        // issuedBy &&
-        taxPayerOn &&
-        email &&
+        firmName ||
+        typeOfFirm ||
+        postCode ||
+        typeOf_settlement ||
+        city ||
+        typeOf_street ||
+        street ||
+        numberOf_house ||
+        numberOf_app ||
+        EDRPOU ||
+        ibanOwn ||
+        ibanGazBank ||
+        firstPersonPosition ||
+        firstPersonSurname ||
+        firstPersonName ||
+        firstPersonMiddleName ||
+        firstPersonSurnameRoditelPadej ||
+        firstPersonNameRoditelPadej ||
+        firstPersonMiddleNameRoditelPadej ||
+        shortName ||
+        actsOnBasisOf ||
+        issuedBy ||
+        taxPayerOn ||
+        email ||
         phoneNumber
       )
     );

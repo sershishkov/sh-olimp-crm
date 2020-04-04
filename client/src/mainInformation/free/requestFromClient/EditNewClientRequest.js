@@ -90,9 +90,7 @@ const EditNewClientRequest = ({
 
   const onChangeHandler = e => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
-    setDisabledForm(
-      !(clientName && requestFromClient && (phoneNumber || email))
-    );
+    setDisabledForm(!(clientName || requestFromClient || phoneNumber || email));
   };
 
   const updateClientRequestHandler = () => {

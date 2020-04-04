@@ -23,8 +23,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    marginBottom: '1rem'
-    // border: '1px solid red'
+    marginTop: '7.5rem'
   },
   header: {
     marginBottom: '1rem'
@@ -104,7 +103,12 @@ const EditPhotoItem = ({
 
   const onChange = e => {
     setDescription(e.target.value);
-    setDisabledForm(!(selectedGroup && description));
+    setDisabledForm(!(newPhoto || selectedGroup || description));
+  };
+
+  const buttonBackHandler = () => {
+    history.goBack();
+    // history.push('/accountant/unit');
   };
 
   useEffect(() => {
@@ -144,6 +148,14 @@ const EditPhotoItem = ({
 
   return (
     <Grid container className={classes.root}>
+      <Button
+        onClick={buttonBackHandler}
+        variant='contained'
+        className={classes.buttonBack}
+        color='primary'
+      >
+        назад
+      </Button>
       <Grid item xs={12} className={classes.header}>
         <Typography component='h1' variant='h5' align='center'>
           Редактируем
@@ -258,7 +270,6 @@ EditPhotoItem.propTypes = {
   getOnePhotoWork: PropTypes.func.isRequired,
   getAllGroupOfImage: PropTypes.func.isRequired,
   updatePhotoWork: PropTypes.func.isRequired,
-  getAllCategoryOfClient: PropTypes.func.isRequired,
   photoWorks: PropTypes.object.isRequired,
   groupOfImage: PropTypes.object.isRequired
 };

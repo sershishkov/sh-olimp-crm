@@ -72,7 +72,7 @@ const TypeOf_Firm_Edit = ({
 
   const onChangeHandler = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setDisabledForm(!(TypeOf_FirmLong && TypeOf_FirmShort));
+    setDisabledForm(!(TypeOf_FirmLong || TypeOf_FirmShort));
   };
 
   const updateItemHandler = () => {

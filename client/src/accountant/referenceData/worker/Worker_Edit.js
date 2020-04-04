@@ -193,18 +193,18 @@ const Worker_Edit = ({
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
     setDisabledForm(
       !(
-        surname &&
-        name &&
-        middleName &&
-        dateOf_Birth &&
-        postCode &&
-        typeOf_settlement &&
-        city &&
-        typeOf_street &&
-        street &&
-        numberOf_house &&
-        numberOf_app &&
-        individualTaxNumber &&
+        surname ||
+        name ||
+        middleName ||
+        dateOf_Birth ||
+        postCode ||
+        typeOf_settlement ||
+        city ||
+        typeOf_street ||
+        street ||
+        numberOf_house ||
+        numberOf_app ||
+        individualTaxNumber ||
         phoneNumber
       )
     );

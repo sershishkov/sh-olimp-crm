@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -20,7 +20,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex'
+    display: 'flex',
+    marginTop: '7.5rem'
   },
   displayFlex: {
     display: 'flex',
@@ -54,6 +55,7 @@ const AddPhoto = ({
   groupOfImage: { imageGroups, loading }
 }) => {
   const classes = useStyles();
+  let history = useHistory();
   const [newPhoto, setNewPhoto] = useState('');
   const [selectedGroup, setSelectedGroup] = useState('');
   const [description, setDescription] = useState('');
@@ -98,11 +100,23 @@ const AddPhoto = ({
     setDescription(e.target.value);
     setDisabledForm(!(newPhoto && selectedGroup && description));
   };
+  const buttonBackHandler = () => {
+    history.goBack();
+    // history.push('/accountant/unit');
+  };
 
   return loading ? (
     <Spinner />
   ) : (
     <Grid container className={classes.root}>
+      <Button
+        onClick={buttonBackHandler}
+        variant='contained'
+        className={classes.buttonBack}
+        color='primary'
+      >
+        назад
+      </Button>
       <Grid item xs={12} className={classes.wrapImg}>
         {previewUrl && (
           <img src={previewUrl} alt='Preview' className={classes.img} />
@@ -137,7 +151,7 @@ const AddPhoto = ({
           </label>
         </Grid>
 
-        <Grid item xs={3} className={classes.wrapSelect}>
+        <Grid item xs={6} className={classes.wrapSelect}>
           <InputLabel
             id='add-select-label'
             className={
@@ -196,7 +210,6 @@ AddPhoto.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAllGroupOfImage: PropTypes.func.isRequired,
   addPhotoWork: PropTypes.func.isRequired,
-  getAllCategoryOfClient: PropTypes.func.isRequired,
   groupOfImage: PropTypes.object.isRequired
 };
 

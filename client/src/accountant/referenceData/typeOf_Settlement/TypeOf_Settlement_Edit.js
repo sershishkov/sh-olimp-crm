@@ -72,7 +72,7 @@ const TypeOf_Street_Edit = ({
 
   const onChangeHandler = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setDisabledForm(!(typeOf_SettlementLong && typeOf_SettlementShort));
+    setDisabledForm(!(typeOf_SettlementLong || typeOf_SettlementShort));
   };
 
   const updateItemHandler = () => {

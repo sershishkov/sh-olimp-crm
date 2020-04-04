@@ -100,7 +100,7 @@ const Unit_Edit = ({
 
   const onChangeHandler = e => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
-    setDisabledForm(!(unitNameLong && unitNameShort && unitType));
+    setDisabledForm(!(unitNameLong || unitNameShort || unitType));
   };
 
   const updateItemHandler = () => {

@@ -142,7 +142,7 @@ const Our_WorkersSalary_Edit = ({
 
   const onChangeHandler = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setDisabledForm(!(worker && ourFirm && client && description && sum));
+    setDisabledForm(!(worker || ourFirm || client || description || sum));
   };
 
   const onCheckHandler = e => {

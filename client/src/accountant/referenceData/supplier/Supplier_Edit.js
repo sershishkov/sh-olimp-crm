@@ -246,30 +246,30 @@ const Supplier_Edit = ({
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
     setDisabledForm(
       !(
-        supplierName &&
-        typeOfFirm &&
-        postCode &&
-        typeOf_settlement &&
-        city &&
-        typeOf_street &&
-        street &&
-        numberOf_house &&
-        // numberOf_app &&
-        EDRPOU &&
-        iban &&
-        firstPersonPosition &&
-        firstPersonSurname &&
-        firstPersonName &&
-        firstPersonMiddleName &&
-        firstPersonSurnameRoditelPadej &&
-        firstPersonNameRoditelPadej &&
-        firstPersonMiddleNameRoditelPadej &&
-        shortName &&
-        actsOnBasisOf &&
-        // issuedBy &&
-        taxPayerOn &&
-        email &&
-        phoneNumber &&
+        supplierName ||
+        typeOfFirm ||
+        postCode ||
+        typeOf_settlement ||
+        city ||
+        typeOf_street ||
+        street ||
+        numberOf_house ||
+        numberOf_app ||
+        EDRPOU ||
+        iban ||
+        firstPersonPosition ||
+        firstPersonSurname ||
+        firstPersonName ||
+        firstPersonMiddleName ||
+        firstPersonSurnameRoditelPadej ||
+        firstPersonNameRoditelPadej ||
+        firstPersonMiddleNameRoditelPadej ||
+        shortName ||
+        actsOnBasisOf ||
+        issuedBy ||
+        taxPayerOn ||
+        email ||
+        phoneNumber ||
         groupOf_product
       )
     );

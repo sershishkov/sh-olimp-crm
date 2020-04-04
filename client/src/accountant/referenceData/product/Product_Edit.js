@@ -135,14 +135,14 @@ const Product_Edit = ({
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
     setDisabledForm(
       !(
-        productName &&
-        unit &&
-        productGroup &&
-        amountInPackage &&
-        ratePerUnit &&
-        length &&
-        width &&
-        height &&
+        productName ||
+        unit ||
+        productGroup ||
+        amountInPackage ||
+        ratePerUnit ||
+        length ||
+        width ||
+        height ||
         weight
       )
     );

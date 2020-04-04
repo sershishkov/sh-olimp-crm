@@ -72,7 +72,7 @@ const BankName_Edit = ({
 
   const onChangeHandler = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setDisabledForm(!(bankName && mfo));
+    setDisabledForm(!(bankName || mfo));
   };
 
   const updateItemHandler = () => {

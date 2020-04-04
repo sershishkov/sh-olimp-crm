@@ -72,7 +72,7 @@ const FirstPersonPosition_Edit = ({
 
   const onChangeHandler = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setDisabledForm(!(position && positionRoditPadej));
+    setDisabledForm(!(position || positionRoditPadej));
   };
 
   const updateItemHandler = () => {

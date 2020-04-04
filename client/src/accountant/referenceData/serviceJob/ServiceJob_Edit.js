@@ -108,7 +108,7 @@ const ServiceJob_Edit = ({
 
   const onChangeHandler = e => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
-    setDisabledForm(!(serviceName && thisUnit && serviceJobGroup));
+    setDisabledForm(!(serviceName || thisUnit || serviceJobGroup));
   };
 
   const updateItemHandler = () => {

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import MaterialTable from 'material-table';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 import {
@@ -64,6 +65,54 @@ const TypeOfImage = ({
     window.location.reload();
   };
 
+  const listOfPhoto = (
+    <MaterialTable
+      title='Список '
+      columns={[
+        { title: 'Группа работ', field: 'field_imageGroup', width: '20%' },
+        { title: 'Описание', field: 'field_description' },
+        { title: 'Удалить', field: 'btnDel', sorting: false, width: '5%' },
+        {
+          title: 'редактировать',
+          field: 'btnEdit',
+          sorting: false,
+          width: '5%'
+        }
+      ]}
+      data={imageGroups.map(item => {
+        return {
+          field_imageGroup: item.imageGroup,
+          field_description: item.descriptions,
+          btnDel: (
+            <IconButton
+              color='secondary'
+              variant='contained'
+              onClick={() => onDeleteHandler(item._id)}
+              className={classes.buttonDelete}
+            >
+              <DeleteIcon />
+            </IconButton>
+          ),
+          btnEdit: (
+            <IconButton
+              color='primary'
+              variant='contained'
+              href={`/group-of-image/${item._id}`}
+              className={classes.buttonDelete}
+            >
+              <EditIcon />
+            </IconButton>
+          )
+        };
+      })}
+      options={{
+        sorting: true,
+        search: false,
+        pageSize: 10
+      }}
+    />
+  );
+
   return loading ? (
     <Spinner />
   ) : (
@@ -76,37 +125,8 @@ const TypeOfImage = ({
       >
         <PlusOneIcon className={classes.btnAddIcon} />
       </IconButton>
-      <Grid item xs={12} container spacing={1}>
-        <List className={classes.list}>
-          {imageGroups.map(item => (
-            <ListItem key={item._id} className={classes.listItem}>
-              <Grid item xs={5}>
-                <ListItemText>{item.imageGroup}</ListItemText>
-              </Grid>
-              <Grid item xs={5}>
-                <ListItemText>{item.descriptions}</ListItemText>
-              </Grid>
-              <Grid item xs={1}>
-                <IconButton
-                  variant='contained'
-                  color='secondary'
-                  onClick={() => onDeleteHandler(item.id)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </Grid>
-              <Grid item xs={1}>
-                <IconButton
-                  variant='contained'
-                  color='primary'
-                  href={`/group-of-image/${item._id}`}
-                >
-                  <EditIcon />
-                </IconButton>
-              </Grid>
-            </ListItem>
-          ))}
-        </List>
+      <Grid item xs={12} container>
+        {listOfPhoto}
       </Grid>
     </Grid>
   );

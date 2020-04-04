@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -142,6 +142,8 @@ const ResponsiveDrawer = ({
   const [openOurMainData, setOpenOurMainData] = useState(false);
   const [openReferenceData, setOpenReferenceData] = useState(false);
   const [openReports, setOpenReports] = useState(false);
+  const [openAdminOSBB, setOpenAdminOSBB] = useState(false);
+  const [openAdminIndividuals, setOpenAdminIndividuals] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -167,11 +169,25 @@ const ResponsiveDrawer = ({
     setOpenReports(!openReports);
   };
 
+  const openAdminOSBBHandler = () => {
+    setOpenAdminOSBB(!openAdminOSBB);
+  };
+
+  const openAdminIndividualsHandler = () => {
+    setOpenAdminIndividuals(!openAdminIndividuals);
+  };
+
   const logoutHandler = () => {
     logout();
   };
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (user) {
+  //     setUserName(user.name);
+  //   }
+  // }, [user, setUserName]);
+
+  useLayoutEffect(() => {
     if (user) {
       setUserName(user.name);
     }
@@ -303,6 +319,7 @@ const ResponsiveDrawer = ({
         </ListItem>
       </List>
       <Divider />
+
       <ListItem
         button
         onClick={() => {
@@ -318,42 +335,110 @@ const ResponsiveDrawer = ({
         <ListItemIcon>
           <MailIcon />
         </ListItemIcon>
-        <ListItemText>Админка</ListItemText>
+        <ListItemText>Админка Users</ListItemText>
       </ListItem>
+
       <ListItem
         button
-        onClick={() => {
-          history.push('/editphoto');
-          setMobileOpen(!mobileOpen);
-        }}
         className={
-          isAuthenticated && (user.role === 'boss' || user.role === 'admin')
+          isAuthenticated &&
+          (user.role === 'boss' ||
+            user.role === 'admin' ||
+            user.role === 'engineer')
             ? classes.displayFlex
             : classes.displayNone
         }
+        onClick={openAdminOSBBHandler}
       >
         <ListItemIcon>
-          <MailIcon />
+          <InboxIcon />
         </ListItemIcon>
-        <ListItemText>РедактФото</ListItemText>
+        <ListItemText>Админка ОСББ</ListItemText>
+        {openAdminOSBB ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
+
+      <Collapse in={openAdminOSBB} timeout='auto' unmountOnExit>
+        <List className={classes.nestedListLevel1}>
+          <ListItem
+            button
+            className={classes.nestedListItemLevel1}
+            onClick={() => {
+              history.push('/editphoto');
+              setMobileOpen(!mobileOpen);
+            }}
+          >
+            <ListItemIcon>
+              <StarBorder />
+            </ListItemIcon>
+            <ListItemText>РедактФото</ListItemText>
+          </ListItem>
+
+          <ListItem
+            button
+            className={classes.nestedListItemLevel1}
+            onClick={() => {
+              history.push('/group-of-image');
+              setMobileOpen(!mobileOpen);
+            }}
+          >
+            <ListItemIcon>
+              <StarBorder />
+            </ListItemIcon>
+            <ListItemText>РедактГруппыФото</ListItemText>
+          </ListItem>
+        </List>
+      </Collapse>
+
       <ListItem
         button
-        onClick={() => {
-          history.push('/group-of-image');
-          setMobileOpen(!mobileOpen);
-        }}
         className={
-          isAuthenticated && (user.role === 'boss' || user.role === 'admin')
+          isAuthenticated &&
+          (user.role === 'boss' ||
+            user.role === 'admin' ||
+            user.role === 'engineer')
             ? classes.displayFlex
             : classes.displayNone
         }
+        onClick={openAdminIndividualsHandler}
       >
         <ListItemIcon>
-          <MailIcon />
+          <InboxIcon />
         </ListItemIcon>
-        <ListItemText>РедактГруппыФото</ListItemText>
+        <ListItemText>Админка Физ. лиц</ListItemText>
+        {openAdminIndividuals ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
+      <Collapse in={openAdminIndividuals} timeout='auto' unmountOnExit>
+        <List className={classes.nestedListLevel2}>
+          <ListItem
+            button
+            className={classes.nestedListItemLevel1}
+            // onClick={() => {
+            //   history.push('/editphoto');
+            //   setMobileOpen(!mobileOpen);
+            // }}
+          >
+            <ListItemIcon>
+              <StarBorder />
+            </ListItemIcon>
+            <ListItemText>РедактФотоФиз</ListItemText>
+          </ListItem>
+
+          <ListItem
+            button
+            className={classes.nestedListItemLevel1}
+            // onClick={() => {
+            //   history.push('/group-of-image');
+            //   setMobileOpen(!mobileOpen);
+            // }}
+          >
+            <ListItemIcon>
+              <StarBorder />
+            </ListItemIcon>
+            <ListItemText>РедактГруппыФотоФиз</ListItemText>
+          </ListItem>
+        </List>
+      </Collapse>
+
       <List>
         <ListItem
           button
@@ -371,6 +456,7 @@ const ResponsiveDrawer = ({
           </ListItemIcon>
           <ListItemText>Расчеты</ListItemText>
         </ListItem>
+
         <ListItem
           button
           className={
@@ -389,6 +475,7 @@ const ResponsiveDrawer = ({
           <ListItemText>Бухгалтерия</ListItemText>
           {openAccountant ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
+
         <Collapse in={openAccountant} timeout='auto' unmountOnExit>
           <List className={classes.nestedListLevel1}>
             <ListItem

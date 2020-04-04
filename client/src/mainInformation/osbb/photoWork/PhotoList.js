@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import MaterialTable from 'material-table';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 import {
@@ -10,9 +11,6 @@ import {
 
 import Spinner from '../../../shared/spinner/Spinner';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -24,15 +22,6 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
   },
-  list: {},
-  listItem: {
-    position: 'relative'
-  },
-  img: {
-    width: 100,
-    height: 100,
-    objectFit: 'cover'
-  },
   btnAdd: {
     position: 'fixed',
     top: 50,
@@ -42,6 +31,13 @@ const useStyles = makeStyles(theme => ({
   btnAddIcon: {
     width: 50,
     height: 50
+  },
+  list: {},
+  listItem: {},
+  img: {
+    width: 100,
+    height: 100,
+    objectFit: 'cover'
   }
 }));
 
@@ -62,62 +58,61 @@ const EditPhotoList = ({
     deletePhotoWork(itemId);
     window.location.reload();
   };
-  // console.log(photoWorks);
+
   const listOfPhoto = (
-    <List className={classes.list}>
-      {loading ? (
-        <Spinner />
-      ) : (
-        photoWorks.map(item => (
-          <ListItem key={item._id} className={classes.listItem}>
-            <Grid container className={classes.root}>
-              <Grid item xs={2}>
-                <img
-                  src={item.imageUrl}
-                  alt={item.imageUrl}
-                  className={classes.img}
-                />
-              </Grid>
-
-              <Grid item xs={3}>
-                <Typography align='center'>{item.description}</Typography>
-              </Grid>
-
-              <Grid item xs={4}>
-                <Typography align='center'>
-                  {item.imageGroup.imageGroup}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={1}>
-                <IconButton
-                  color='secondary'
-                  variant='contained'
-                  onClick={() => deleteImage(item._id)}
-                  className={classes.buttonDelete}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </Grid>
-
-              <Grid item xs={1}>
-                <IconButton
-                  color='primary'
-                  variant='contained'
-                  href={`/editphoto/${item._id}`}
-                  className={classes.buttonDelete}
-                >
-                  <EditIcon />
-                </IconButton>
-              </Grid>
-            </Grid>
-          </ListItem>
-        ))
-      )}
-    </List>
+    <MaterialTable
+      title='Список '
+      columns={[
+        { title: 'Фото', field: 'field_imageUrl' },
+        { title: 'Описание', field: 'field_description' },
+        { title: 'Почта', field: 'field_imageGroup' },
+        { title: 'Удалить', field: 'btnDel', sorting: false },
+        { title: 'редактировать', field: 'btnEdit', sorting: false }
+      ]}
+      data={photoWorks.map(item => {
+        return {
+          field_imageUrl: (
+            <img
+              src={item.imageUrl}
+              alt={item.imageUrl}
+              className={classes.img}
+            />
+          ),
+          field_description: item.description,
+          field_imageGroup: item.imageGroup.imageGroup,
+          btnDel: (
+            <IconButton
+              color='secondary'
+              variant='contained'
+              onClick={() => deleteImage(item._id)}
+              className={classes.buttonDelete}
+            >
+              <DeleteIcon />
+            </IconButton>
+          ),
+          btnEdit: (
+            <IconButton
+              color='primary'
+              variant='contained'
+              href={`/editphoto/${item._id}`}
+              className={classes.buttonDelete}
+            >
+              <EditIcon />
+            </IconButton>
+          )
+        };
+      })}
+      options={{
+        sorting: true,
+        search: false,
+        pageSize: 10
+      }}
+    />
   );
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <Grid container className={classes.root}>
       <IconButton
         variant='contained'

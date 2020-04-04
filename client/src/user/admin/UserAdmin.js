@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import MaterialTable from 'material-table';
 
 import { getAllUsers, deleteUser } from '../../store/actions/user/admin/users';
 import { setNameOfPage } from '../../store/actions/nameOfPage';
@@ -8,9 +9,6 @@ import { setNameOfPage } from '../../store/actions/nameOfPage';
 import Spinner from '../../shared/spinner/Spinner';
 
 import Avatar from '@material-ui/core/Avatar';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -60,6 +58,59 @@ const UserAdmin = ({
     window.location.reload();
   };
 
+  const listOf_USERS = (
+    <MaterialTable
+      title='Список '
+      columns={[
+        { title: 'Фото', field: 'field_myAvatar' },
+        { title: 'Имя', field: 'field_name' },
+        { title: 'Почта', field: 'field_email' },
+        { title: 'Роль', field: 'field_role' },
+        { title: 'Удалить', field: 'btnDel', sorting: false },
+        { title: 'редактировать', field: 'btnEdit', sorting: false }
+      ]}
+      data={users.map(item => {
+        return {
+          field_myAvatar: (
+            <Avatar
+              src={item.myAvatar}
+              alt={item.name}
+              className={classes.img}
+            />
+          ),
+          field_name: item.name,
+          field_email: item.email,
+          field_role: item.role,
+          btnDel: (
+            <IconButton
+              color='secondary'
+              variant='contained'
+              onClick={() => deleteUserHandler(item._id)}
+              className={classes.buttonDelete}
+            >
+              <DeleteIcon />
+            </IconButton>
+          ),
+          btnEdit: (
+            <IconButton
+              color='primary'
+              variant='contained'
+              href={`/user-admin/${item._id}`}
+              className={classes.buttonDelete}
+            >
+              <EditIcon />
+            </IconButton>
+          )
+        };
+      })}
+      options={{
+        sorting: true,
+        search: false,
+        pageSize: 10
+      }}
+    />
+  );
+
   return loading ? (
     <Spinner />
   ) : (
@@ -72,55 +123,9 @@ const UserAdmin = ({
       >
         <GroupAddIcon className={classes.btnAddIcon} />
       </IconButton>
+
       <Grid item xs={12}>
-        <List className={classes.list}>
-          {users.map(item => (
-            <ListItem key={item._id} className={classes.list}>
-              <Grid container>
-                <Grid item xs={2}>
-                  <Avatar
-                    src={item.myAvatar}
-                    alt={item.name}
-                    className={classes.img}
-                  />
-                </Grid>
-
-                <Grid item xs={8} container flexdirextion='column'>
-                  <Grid item xs={12}>
-                    <Typography component='h6' variant='h5' align='center'>
-                      {item.name}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Typography component='h6' variant='h5' align='center'>
-                      {item.email}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Typography component='h6' variant='h5' align='center'>
-                      {item.role}
-                    </Typography>
-                  </Grid>
-                </Grid>
-
-                <Grid item xs={1}>
-                  <IconButton
-                    color='secondary'
-                    size='medium'
-                    onClick={() => deleteUserHandler(item._id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Grid>
-                <Grid item xs={1}>
-                  <IconButton color='primary' href={`/user-admin/${item._id}`}>
-                    <EditIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </ListItem>
-          ))}
-        </List>
+        {listOf_USERS}
       </Grid>
     </Grid>
   );

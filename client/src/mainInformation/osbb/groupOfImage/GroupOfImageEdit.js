@@ -12,7 +12,22 @@ import {
 import Spinner from '../../../shared/spinner/Spinner';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    marginTop: '7.5rem'
+  },
+  buttonBack: {
+    position: 'fixed',
+    top: '5rem',
+    left: 0
+  }
+}));
 
 const TypeOfImageEdit = ({
   groupOfImage: { oneImageGroups, loading },
@@ -22,6 +37,7 @@ const TypeOfImageEdit = ({
 }) => {
   const history = useHistory();
   const { id } = useParams();
+  const classes = useStyles();
 
   const [newGroup, setNewGroup] = useState({
     imageGroup: '',
@@ -33,7 +49,12 @@ const TypeOfImageEdit = ({
 
   const onChange = e => {
     setNewGroup({ ...newGroup, [e.target.name]: e.target.value });
-    setDisabledForm(!(imageGroup && descriptions));
+    setDisabledForm(!(imageGroup || descriptions));
+  };
+
+  const buttonBackHandler = () => {
+    history.goBack();
+    // history.push('/accountant/unit');
   };
 
   useEffect(() => {
@@ -65,9 +86,21 @@ const TypeOfImageEdit = ({
   return loading ? (
     <Spinner />
   ) : (
-    <Grid>
-      <Grid item xs={12} container flexdirextion='column'>
-        <Grid item xs={12}>
+    <Grid container className={classes.root}>
+      <Button
+        onClick={buttonBackHandler}
+        variant='contained'
+        className={classes.buttonBack}
+        color='primary'
+      >
+        назад
+      </Button>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Группа </Typography>
+        </Grid>
+        <Grid item xs={8} container>
           <TextField
             variant='outlined'
             type='text'
@@ -78,30 +111,35 @@ const TypeOfImageEdit = ({
             onChange={e => onChange(e)}
           />
         </Grid>
-        <Grid item xs={12}>
+      </Grid>
+
+      <Grid item xs={12} container>
+        <Grid item xs={4} container>
+          <Typography align='left'>Описание </Typography>
+        </Grid>
+        <Grid item xs={8} container>
           <TextField
             variant='outlined'
             type='text'
             multiline
-            // rowsMax='4'
             fullWidth
-            // placeholder='Введите описание через запятую'
+            placeholder='Введите описание через запятую'
             name='descriptions'
             value={descriptions ? descriptions : ''}
             onChange={e => onChange(e)}
           />
         </Grid>
-        <Grid item xs={12}>
-          <Button
-            variant='contained'
-            fullWidth
-            disabled={disabledForm}
-            color='primary'
-            onClick={updateGroupHandler}
-          >
-            Сохранить изменения
-          </Button>
-        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <Button
+          variant='contained'
+          fullWidth
+          disabled={disabledForm}
+          color='primary'
+          onClick={updateGroupHandler}
+        >
+          Сохранить изменения
+        </Button>
       </Grid>
     </Grid>
   );
