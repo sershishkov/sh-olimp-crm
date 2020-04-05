@@ -3,16 +3,16 @@ import {
   UPDATE_IMAGE_GROUP,
   GET_ALL_IMAGE_GROUPS,
   GET_ONE_IMAGE_GROUP,
-  DELETE_IMAGE_GROUP
+  DELETE_IMAGE_GROUP,
 } from '../../../actions/types';
 
 const initialState = {
   imageGroups: [],
   oneImageGroups: {},
-  loading: true
+  loading: true,
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -20,36 +20,36 @@ export default function(state = initialState, action) {
       return {
         ...state,
         imageGroups: [payload, ...state.imageGroups],
-        loading: false
+        loading: false,
       };
 
     case UPDATE_IMAGE_GROUP:
       return {
-        imageGroups: state.imageGroups.map(group =>
+        imageGroups: state.imageGroups.map((group) =>
           group._id === payload._id ? payload : group
         ),
-        loading: false
+        loading: false,
       };
 
     case GET_ALL_IMAGE_GROUPS:
       return {
         ...state,
         imageGroups: payload,
-        loading: false
+        loading: false,
       };
 
     case GET_ONE_IMAGE_GROUP:
       return {
         ...state,
         oneImageGroups: payload,
-        loading: false
+        loading: false,
       };
 
     case DELETE_IMAGE_GROUP:
       return {
         ...state,
-        imageGroups: state.imageGroups.filter(item => item.id !== payload),
-        loading: false
+        imageGroups: state.imageGroups.filter((item) => item.id !== payload),
+        loading: false,
       };
 
     default:

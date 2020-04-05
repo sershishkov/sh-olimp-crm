@@ -56,6 +56,37 @@ const AddGroupOfImage = React.lazy(() =>
 const GroupOfImageEdit = React.lazy(() =>
   import('./mainInformation/osbb/groupOfImage/GroupOfImageEdit')
 );
+
+const DescriptionOf_Works_Individual = React.lazy(() =>
+  import(
+    './mainInformation/individuals/descriptionOfWorks/DescriptionOf_Works_Individual'
+  )
+);
+const IndividualGroupOfImage_Add = React.lazy(() =>
+  import(
+    './mainInformation/individuals/groupOfImage/IndividualGroupOfImage_Add'
+  )
+);
+const IndividualGroupOfImage_Edit = React.lazy(() =>
+  import(
+    './mainInformation/individuals/groupOfImage/IndividualGroupOfImage_Edit'
+  )
+);
+const IndividualGroupOfImage_List = React.lazy(() =>
+  import(
+    './mainInformation/individuals/groupOfImage/IndividualGroupOfImage_List'
+  )
+);
+const IndividualPhoto_Add = React.lazy(() =>
+  import('./mainInformation/individuals/photoWork/IndividualPhoto_Add')
+);
+const IndividualPhoto_Edit = React.lazy(() =>
+  import('./mainInformation/individuals/photoWork/IndividualPhoto_Edit')
+);
+const IndividualPhoto_List = React.lazy(() =>
+  import('./mainInformation/individuals/photoWork/IndividualPhoto_List')
+);
+
 const UserAdmin = React.lazy(() => import('./user/admin/UserAdmin'));
 const UserCreate = React.lazy(() => import('./user/admin/UserCreate'));
 const UserEdit = React.lazy(() => import('./user/admin/UserEdit'));
@@ -322,11 +353,11 @@ const Our_WorkersSalary_List = React.lazy(() =>
   import('./accountant/ourMainData/our_WorkersSalary/Our_WorkersSalary_List')
 );
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: 70
+    marginTop: 70,
     // border: '1px solid blue'
-  }
+  },
 }));
 
 if (localStorage.token) {
@@ -369,6 +400,12 @@ function App() {
                 exact
                 path='/description/:id'
                 component={DescriptionOf_Works}
+              />
+
+              <Route
+                exact
+                path='/individual-description/:id'
+                component={DescriptionOf_Works_Individual}
               />
 
               <PrivateRoute exact path='/user-detail' component={UserDetail} />
@@ -790,6 +827,38 @@ function App() {
                 exact
                 path='/accountant/our-workers-salary'
                 component={Our_WorkersSalary_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/individual-imagegroup/add'
+                component={IndividualGroupOfImage_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/individual-imagegroup/:id'
+                component={IndividualGroupOfImage_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/individual-imagegroup'
+                component={IndividualGroupOfImage_List}
+              />
+
+              <PrivateRoute
+                exact
+                path='/individual-photo/add'
+                component={IndividualPhoto_Add}
+              />
+              <PrivateRoute
+                exact
+                path='/individual-photo/:id'
+                component={IndividualPhoto_Edit}
+              />
+              <PrivateRoute
+                exact
+                path='/individual-photo'
+                component={IndividualPhoto_List}
               />
             </Switch>
           </Suspense>

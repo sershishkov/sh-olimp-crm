@@ -6,6 +6,8 @@ import nameOfPage from './nameOfPage';
 import auth from './user/auth/auth';
 import photoWorks from './mainInformation/osbb/photoWorks';
 import groupOfImage from './mainInformation/osbb/groupOfImage';
+import individual_photoWorks from './mainInformation/individuals/individual_photoWorks';
+import individual_groupOfImage from './mainInformation/individuals/individual_groupOfImage';
 import users from './user/admin/users';
 import clientRequests from './mainInformation/free/clientRequests';
 
@@ -54,6 +56,8 @@ export default combineReducers({
   nameOfPage,
   photoWorks,
   groupOfImage,
+  individual_photoWorks,
+  individual_groupOfImage,
   users,
   clientRequests,
 
@@ -94,5 +98,5 @@ export default combineReducers({
   street,
   oblast,
   rayon,
-  typeOf_Expense
+  typeOf_Expense,
 });

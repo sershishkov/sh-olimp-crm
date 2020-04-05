@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 import {
-  getOneGroupOfImage,
-  updateGroupOfImage,
-} from '../../../store/actions/mainInformation/osbb/groupOfImage';
+  getOne_INDIVIDUAL_IMAGE_GROUP,
+  update_INDIVIDUAL_IMAGE_GROUP,
+} from '../../../store/actions/mainInformation/individuals/individual_groupOfImage';
 
 import Spinner from '../../../shared/spinner/Spinner';
 import Button from '@material-ui/core/Button';
@@ -29,11 +29,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GroupOfImageEdit = ({
-  groupOfImage: { oneImageGroups, loading },
-  getOneGroupOfImage,
-  updateGroupOfImage,
+const IndividualGroupOfImage_Edit = ({
   setNameOfPage,
+  getOne_INDIVIDUAL_IMAGE_GROUP,
+  update_INDIVIDUAL_IMAGE_GROUP,
+
+  state_individual_groupOfImage: { one_INDIVIDUAL_IMAGE_GROUP, loading },
 }) => {
   const history = useHistory();
   const { id } = useParams();
@@ -54,33 +55,26 @@ const GroupOfImageEdit = ({
 
   const buttonBackHandler = () => {
     history.goBack();
-    // history.push('/accountant/unit');
   };
 
   useEffect(() => {
     setNameOfPage('Редактируем группу');
-    getOneGroupOfImage(id);
+    getOne_INDIVIDUAL_IMAGE_GROUP(id);
+  }, [setNameOfPage, getOne_INDIVIDUAL_IMAGE_GROUP, id]);
 
-    if (oneImageGroups.imageGroup && oneImageGroups.descriptionsSTR) {
+  useLayoutEffect(() => {
+    if (one_INDIVIDUAL_IMAGE_GROUP) {
       setNewGroup({
         ...newGroup,
-        imageGroup: oneImageGroups.imageGroup,
-        descriptions: oneImageGroups.descriptionsSTR,
+        imageGroup: one_INDIVIDUAL_IMAGE_GROUP.imageGroup,
+        descriptions: one_INDIVIDUAL_IMAGE_GROUP.descriptionsSTR,
       });
     }
-  }, [
-    setNameOfPage,
-    getOneGroupOfImage,
-    setNewGroup,
-    loading,
-    oneImageGroups.imageGroup,
-    oneImageGroups.descriptionsSTR,
-    id,
-  ]);
+  }, []);
 
   const updateGroupHandler = () => {
-    updateGroupOfImage(id, imageGroup, descriptions);
-    history.push('/group-of-image');
+    update_INDIVIDUAL_IMAGE_GROUP(id, imageGroup, descriptions);
+    history.push('/individual-imagegroup');
   };
 
   return loading ? (
@@ -145,19 +139,20 @@ const GroupOfImageEdit = ({
   );
 };
 
-GroupOfImageEdit.propTypes = {
-  groupOfImage: PropTypes.object.isRequired,
-  getOneGroupOfImage: PropTypes.func.isRequired,
+IndividualGroupOfImage_Edit.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  updateGroupOfImage: PropTypes.func.isRequired,
+  getOne_INDIVIDUAL_IMAGE_GROUP: PropTypes.func.isRequired,
+  update_INDIVIDUAL_IMAGE_GROUP: PropTypes.func.isRequired,
+
+  state_individual_groupOfImage: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  groupOfImage: state.groupOfImage,
+  state_individual_groupOfImage: state.individual_groupOfImage,
 });
 
 export default connect(mapStateToProps, {
-  getOneGroupOfImage,
-  updateGroupOfImage,
   setNameOfPage,
-})(GroupOfImageEdit);
+  getOne_INDIVIDUAL_IMAGE_GROUP,
+  update_INDIVIDUAL_IMAGE_GROUP,
+})(IndividualGroupOfImage_Edit);

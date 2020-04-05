@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
-import { addPhotoWork } from '../../../store/actions/mainInformation/osbb/photoWorks';
-import { getAllGroupOfImage } from '../../../store/actions/mainInformation/osbb/groupOfImage';
+import { add_INDIVIDUAL_PHOTO } from '../../../store/actions/mainInformation/individuals/individual_photoWorks';
+import { getAll_INDIVIDUAL_IMAGE_GROUPS } from '../../../store/actions/mainInformation/individuals/individual_groupOfImage';
 import Spinner from '../../../shared/spinner/Spinner';
 
 import Button from '@material-ui/core/Button';
@@ -50,11 +50,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddPhoto = ({
-  addPhotoWork,
-  getAllGroupOfImage,
+const IndividualPhoto_Add = ({
   setNameOfPage,
-  groupOfImage: { imageGroups, loading },
+  add_INDIVIDUAL_PHOTO,
+  getAll_INDIVIDUAL_IMAGE_GROUPS,
+
+  state_individual_groupOfImage: { arr_INDIVIDUAL_IMAGE_GROUPS, loading },
 }) => {
   const classes = useStyles();
   let history = useHistory();
@@ -66,7 +67,7 @@ const AddPhoto = ({
 
   useEffect(() => {
     setNameOfPage('Добавить фото');
-    getAllGroupOfImage();
+    getAll_INDIVIDUAL_IMAGE_GROUPS();
 
     if (newPhoto) {
       const fileReader = new FileReader();
@@ -76,7 +77,7 @@ const AddPhoto = ({
       };
       fileReader.readAsDataURL(newPhoto);
     }
-  }, [setNameOfPage, getAllGroupOfImage, newPhoto]);
+  }, [setNameOfPage, getAll_INDIVIDUAL_IMAGE_GROUPS, newPhoto]);
 
   const selectChangeHandle = (e) => {
     setSelectedGroup(e.target.value);
@@ -84,14 +85,12 @@ const AddPhoto = ({
   };
 
   const pickedHandler = (e) => {
-    // e.preventDefault();
     setNewPhoto(e.target.files[0]);
-
     setDisabledForm(!(newPhoto && selectedGroup && description));
   };
 
   const addPhotoHandler = () => {
-    addPhotoWork(newPhoto, selectedGroup, description);
+    add_INDIVIDUAL_PHOTO(newPhoto, selectedGroup, description);
     setNewPhoto('');
     setSelectedGroup('');
     setDescription('');
@@ -104,7 +103,6 @@ const AddPhoto = ({
   };
   const buttonBackHandler = () => {
     history.goBack();
-    // history.push('/accountant/unit');
   };
 
   return loading ? (
@@ -171,7 +169,7 @@ const AddPhoto = ({
             onChange={selectChangeHandle}
             className={classes.select}
           >
-            {imageGroups.map((item) => (
+            {arr_INDIVIDUAL_IMAGE_GROUPS.map((item) => (
               <MenuItem key={item._id} value={item._id}>
                 {item.imageGroup}
               </MenuItem>
@@ -181,13 +179,14 @@ const AddPhoto = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/group-of-image-add');
+              history.push('/individual-imagegroup/add');
             }}
           >
             <AddCircleIcon color='primary' />
           </IconButton>
         </Grid>
       </Grid>
+
       <Grid item xs={12}>
         <TextField
           variant='outlined'
@@ -217,19 +216,20 @@ const AddPhoto = ({
   );
 };
 
-AddPhoto.propTypes = {
+IndividualPhoto_Add.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  getAllGroupOfImage: PropTypes.func.isRequired,
-  addPhotoWork: PropTypes.func.isRequired,
-  groupOfImage: PropTypes.object.isRequired,
+  getAll_INDIVIDUAL_IMAGE_GROUPS: PropTypes.func.isRequired,
+  add_INDIVIDUAL_PHOTO: PropTypes.func.isRequired,
+
+  state_individual_groupOfImage: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  groupOfImage: state.groupOfImage,
+  state_individual_groupOfImage: state.individual_groupOfImage,
 });
 
 export default connect(mapStateToProps, {
-  addPhotoWork,
-  getAllGroupOfImage,
+  add_INDIVIDUAL_PHOTO,
+  getAll_INDIVIDUAL_IMAGE_GROUPS,
   setNameOfPage,
-})(AddPhoto);
+})(IndividualPhoto_Add);

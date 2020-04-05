@@ -13,16 +13,16 @@ import Grid from '@material-ui/core/Grid';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7.5rem'
+    marginTop: '7.5rem',
   },
   buttonBack: {
     position: 'fixed',
     top: '5rem',
-    left: 0
-  }
+    left: 0,
+  },
 }));
 
 const AddGroupOfImage = ({ addGroupOfImage, setNameOfPage }) => {
@@ -30,7 +30,7 @@ const AddGroupOfImage = ({ addGroupOfImage, setNameOfPage }) => {
   const classes = useStyles();
   const [newGroup, setNewGroup] = useState({
     imageGroup: '',
-    descriptions: ''
+    descriptions: '',
   });
 
   const { imageGroup, descriptions } = newGroup;
@@ -41,9 +41,9 @@ const AddGroupOfImage = ({ addGroupOfImage, setNameOfPage }) => {
 
   const addGroupHandler = () => {
     addGroupOfImage(imageGroup, descriptions);
-    history.push('group-of-image');
+    history.goBack();
   };
-  const onChange = e => {
+  const onChange = (e) => {
     setNewGroup({ ...newGroup, [e.target.name]: e.target.value });
     setDisabledForm(!(imageGroup && descriptions));
   };
@@ -75,7 +75,7 @@ const AddGroupOfImage = ({ addGroupOfImage, setNameOfPage }) => {
             placeholder='Введите новую группу'
             name='imageGroup'
             value={imageGroup}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
         </Grid>
       </Grid>
@@ -93,7 +93,7 @@ const AddGroupOfImage = ({ addGroupOfImage, setNameOfPage }) => {
             placeholder='Введите описание через запятую'
             name='descriptions'
             value={descriptions}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
         </Grid>
       </Grid>
@@ -115,7 +115,7 @@ const AddGroupOfImage = ({ addGroupOfImage, setNameOfPage }) => {
 
 AddGroupOfImage.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  addGroupOfImage: PropTypes.func.isRequired
+  addGroupOfImage: PropTypes.func.isRequired,
 };
 
 export default connect(null, { addGroupOfImage, setNameOfPage })(

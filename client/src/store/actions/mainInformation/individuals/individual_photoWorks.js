@@ -2,22 +2,18 @@ import axios from 'axios';
 import { setAlert } from '../../alert';
 
 import {
-  SET_PHOTO,
-  UPDATE_PHOTO,
-  GET_ALL_PHOTOS,
-  GET_ONE_PHOTO,
-  DELETE_PHOTO,
+  SET_INDIVIDUAL_PHOTO,
+  UPDATE_INDIVIDUAL_PHOTO,
+  GET_ALL_INDIVIDUAL_PHOTOS,
+  GET_ONE_INDIVIDUAL_PHOTO,
+  DELETE_INDIVIDUAL_PHOTO,
 } from '../../types';
 
-export const getAllPhotoWork = (filterId) => async (dispatch) => {
-  let query = '';
-  if (filterId) {
-    query = `?categoryGroupOf_image=${filterId}`;
-  }
+export const getAll_INDIVIDUAL_PHOTOS = (filterId) => async (dispatch) => {
   try {
-    const result = await axios.get(`/api/v1/photo${query}`);
+    const result = await axios.get(`/api/v1/individual-photo`);
     // console.log(result);
-    dispatch({ type: GET_ALL_PHOTOS, payload: result.data.data });
+    dispatch({ type: GET_ALL_INDIVIDUAL_PHOTOS, payload: result.data.data });
   } catch (err) {
     const error = err.response.data.error;
     if (error) {
@@ -26,12 +22,12 @@ export const getAllPhotoWork = (filterId) => async (dispatch) => {
   }
 };
 
-export const getOnePhotoWork = (imageId) => async (dispatch) => {
+export const getOne_INDIVIDUAL_PHOTO = (imageId) => async (dispatch) => {
   try {
-    const onePhoto = await axios.get(`/api/v1/photo/${imageId}`);
+    const oneResult = await axios.get(`/api/v1/individual-photo/${imageId}`);
     dispatch({
-      type: GET_ONE_PHOTO,
-      payload: onePhoto.data.data,
+      type: GET_ONE_INDIVIDUAL_PHOTO,
+      payload: oneResult.data.data,
     });
   } catch (err) {
     const error = err.response.data.error;
@@ -41,17 +37,15 @@ export const getOnePhotoWork = (imageId) => async (dispatch) => {
   }
 };
 
-export const addPhotoWork = (
+export const add_INDIVIDUAL_PHOTO = (
   file,
   groupOfImageID,
-  description,
-  selectedCategory
+  description
 ) => async (dispatch) => {
   const photoFormData = new FormData();
   photoFormData.append('photoWork', file);
   photoFormData.append('imageGroup', groupOfImageID);
   photoFormData.append('description', description);
-  photoFormData.append('categoryGroupOf_image', selectedCategory);
   // console.log(file);
   const config = {
     headers: {
@@ -61,14 +55,18 @@ export const addPhotoWork = (
   };
 
   try {
-    const photo = await axios.post(`/api/v1/photo`, photoFormData, config);
+    const createdItem = await axios.post(
+      `/api/v1/individual-photo`,
+      photoFormData,
+      config
+    );
 
     dispatch({
-      type: SET_PHOTO,
-      payload: photo.data.data,
+      type: SET_INDIVIDUAL_PHOTO,
+      payload: createdItem.data.data,
     });
 
-    dispatch(getAllPhotoWork());
+    dispatch(getAll_INDIVIDUAL_PHOTOS());
   } catch (err) {
     const error = err.response.data.error;
     if (error) {
@@ -77,18 +75,16 @@ export const addPhotoWork = (
   }
 };
 
-export const updatePhotoWork = (
+export const update_INDIVIDUAL_PHOTO = (
   photoId,
   file,
   groupOfImageID,
-  description,
-  selectedCategory
+  description
 ) => async (dispatch) => {
   const photoFormData = new FormData();
   photoFormData.append('photoWork', file);
   photoFormData.append('imageGroup', groupOfImageID);
   photoFormData.append('description', description);
-  photoFormData.append('categoryGroupOf_image', selectedCategory);
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -96,18 +92,18 @@ export const updatePhotoWork = (
   };
 
   try {
-    const updatedPhoto = await axios.put(
-      `/api/v1/photo/${photoId}`,
+    const updatedItem = await axios.put(
+      `/api/v1/individual-photo/${photoId}`,
       photoFormData,
       config
     );
 
     dispatch({
-      type: UPDATE_PHOTO,
-      payload: updatedPhoto.data.data,
+      type: UPDATE_INDIVIDUAL_PHOTO,
+      payload: updatedItem.data.data,
     });
 
-    dispatch(getAllPhotoWork());
+    dispatch(getAll_INDIVIDUAL_PHOTOS());
   } catch (err) {
     const error = err.response.data.error;
     if (error) {
@@ -116,14 +112,14 @@ export const updatePhotoWork = (
   }
 };
 
-export const deletePhotoWork = (imageId) => async (dispatch) => {
+export const delete_INDIVIDUAL_PHOTO = (imageId) => async (dispatch) => {
   try {
-    await axios.delete(`/api/v1/photo/${imageId}`);
+    await axios.delete(`/api/v1/individual-photo/${imageId}`);
     dispatch({
-      type: DELETE_PHOTO,
+      type: DELETE_INDIVIDUAL_PHOTO,
       payload: imageId,
     });
-    dispatch(getAllPhotoWork());
+    dispatch(getAll_INDIVIDUAL_PHOTOS());
   } catch (err) {
     const error = err.response.data.error;
     if (error) {

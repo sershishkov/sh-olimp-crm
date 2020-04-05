@@ -35,56 +35,56 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   appBar: {},
   displayNone: {
-    display: 'none'
+    display: 'none',
   },
   displayBlock: {
-    display: 'block'
+    display: 'block',
   },
   displayFlex: {
-    display: 'flex'
+    display: 'flex',
   },
 
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
   myAvatar: {
     width: 30,
     height: 30,
-    marginRight: '1rem'
+    marginRight: '1rem',
   },
   wrapMenuLogo: {
     // border: '1px solid red'
   },
   logotip: {
-    width: '75px'
+    width: '75px',
   },
   nameOfPage: {
     // border: '1px solid green',
     [theme.breakpoints.down('sm')]: {
-      display: 'none'
-    }
+      display: 'none',
+    },
   },
   wrapPhonesCont1: {
     [theme.breakpoints.down('sm')]: {
-      display: 'none'
-    }
+      display: 'none',
+    },
   },
   wrapPhonesCont2: {
     [theme.breakpoints.down('sm')]: {
-      display: 'none'
-    }
+      display: 'none',
+    },
   },
   phones: {
     fontSize: '0.9rem',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '0.9rem'
-    }
+      fontSize: '0.9rem',
+    },
   },
   myGif: {
     position: 'fixed',
@@ -95,8 +95,8 @@ const useStyles = makeStyles(theme => ({
 
     '& img': {
       width: '100%',
-      objectFit: 'cover'
-    }
+      objectFit: 'cover',
+    },
   },
   myGif2: {
     position: 'fixed',
@@ -107,29 +107,29 @@ const useStyles = makeStyles(theme => ({
     display: 'none',
     '& img': {
       width: '100%',
-      objectFit: 'cover'
-    }
+      objectFit: 'cover',
+    },
   },
   nestedListLevel1: {
     // border: '1px solid red',
-    paddingLeft: 10
+    paddingLeft: 10,
   },
   nestedListItemLevel1: {
     // border: '1px solid green'
   },
   nestedListLevel2: {
     // border: '1px solid blue',
-    paddingLeft: 10
+    paddingLeft: 10,
   },
   nestedListItemLevel2: {
     // border: '1px solid black'
-  }
+  },
 }));
 
 const ResponsiveDrawer = ({
   auth: { isAuthenticated, user },
   logout,
-  pageName
+  pageName,
 }) => {
   let history = useHistory();
   const classes = useStyles();
@@ -281,6 +281,7 @@ const ResponsiveDrawer = ({
           </ListItemIcon>
           <ListItemText>Для ОСББ</ListItemText>
         </ListItem>
+
         <ListItem
           button
           onClick={() => {
@@ -293,6 +294,7 @@ const ResponsiveDrawer = ({
           </ListItemIcon>
           <ListItemText>Для физ.лиц</ListItemText>
         </ListItem>
+
         <ListItem
           button
           onClick={() => {
@@ -412,10 +414,10 @@ const ResponsiveDrawer = ({
           <ListItem
             button
             className={classes.nestedListItemLevel1}
-            // onClick={() => {
-            //   history.push('/editphoto');
-            //   setMobileOpen(!mobileOpen);
-            // }}
+            onClick={() => {
+              history.push('/individual-photo');
+              setMobileOpen(!mobileOpen);
+            }}
           >
             <ListItemIcon>
               <StarBorder />
@@ -426,10 +428,10 @@ const ResponsiveDrawer = ({
           <ListItem
             button
             className={classes.nestedListItemLevel1}
-            // onClick={() => {
-            //   history.push('/group-of-image');
-            //   setMobileOpen(!mobileOpen);
-            // }}
+            onClick={() => {
+              history.push('/individual-imagegroup');
+              setMobileOpen(!mobileOpen);
+            }}
           >
             <ListItemIcon>
               <StarBorder />
@@ -1121,10 +1123,10 @@ const ResponsiveDrawer = ({
             onClose={handleDrawerToggle}
             // onClick={handleDrawerToggle}
             classes={{
-              paper: classes.drawerPaper
+              paper: classes.drawerPaper,
             }}
             ModalProps={{
-              keepMounted: true // Better open performance on mobile.
+              keepMounted: true, // Better open performance on mobile.
             }}
           >
             {drawer}
@@ -1138,11 +1140,11 @@ const ResponsiveDrawer = ({
 ResponsiveDrawer.propTypes = {
   auth: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
-  pageName: PropTypes.string
+  pageName: PropTypes.string,
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  pageName: state.nameOfPage.pageName
+  pageName: state.nameOfPage.pageName,
 });
 
 export default connect(mapStateToProps, { logout })(ResponsiveDrawer);

@@ -3,16 +3,16 @@ import {
   UPDATE_PHOTO,
   GET_ALL_PHOTOS,
   GET_ONE_PHOTO,
-  DELETE_PHOTO
+  DELETE_PHOTO,
 } from '../../../actions/types';
 
 const initialState = {
   photoWorks: [],
   onePhoto: {},
-  loading: true
+  loading: true,
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -20,36 +20,36 @@ export default function(state = initialState, action) {
       return {
         ...state,
         photoWorks: state.photoWorks.push(payload),
-        loading: false
+        loading: false,
       };
     case UPDATE_PHOTO:
       return {
         ...state,
-        photoWorks: state.photoWorks.map(photo =>
+        photoWorks: state.photoWorks.map((photo) =>
           photo._id === payload.id ? payload : photo
         ),
-        loading: false
+        loading: false,
       };
 
     case GET_ALL_PHOTOS:
       return {
         ...state,
         photoWorks: payload,
-        loading: false
+        loading: false,
       };
 
     case GET_ONE_PHOTO:
       return {
         ...state,
         onePhoto: payload,
-        loading: false
+        loading: false,
       };
 
     case DELETE_PHOTO:
       return {
         ...state,
-        photoWorks: state.photoWorks.filter(item => item.id !== payload),
-        loading: false
+        photoWorks: state.photoWorks.filter((item) => item.id !== payload),
+        loading: false,
       };
 
     default:

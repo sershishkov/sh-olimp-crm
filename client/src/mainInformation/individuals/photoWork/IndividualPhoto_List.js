@@ -1,26 +1,21 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import MaterialTable from 'material-table';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 import {
-  getAllGroupOfImage,
-  deleteGroupOfImage,
-} from '../../../store/actions/mainInformation/osbb/groupOfImage';
+  getAll_INDIVIDUAL_PHOTOS,
+  delete_INDIVIDUAL_PHOTO,
+} from '../../../store/actions/mainInformation/individuals/individual_photoWorks';
 
 import Spinner from '../../../shared/spinner/Spinner';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import Grid from '@material-ui/core/Grid';
-
 import PlusOneIcon from '@material-ui/icons/PlusOne';
-
-import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,31 +32,31 @@ const useStyles = makeStyles((theme) => ({
     width: 50,
     height: 50,
   },
-  list: {
-    width: '100%',
-    // border: '1px solid red'
-  },
-  listItem: {
-    width: '100%',
-    // border: '1px solid blue'
+  list: {},
+  listItem: {},
+  img: {
+    width: 100,
+    height: 100,
+    objectFit: 'cover',
   },
 }));
 
-const GroupOfImage = ({
+const IndividualPhoto_List = ({
   setNameOfPage,
-  getAllGroupOfImage,
-  groupOfImage: { imageGroups, loading },
-  deleteGroupOfImage,
+  getAll_INDIVIDUAL_PHOTOS,
+  delete_INDIVIDUAL_PHOTO,
+
+  state_individual_photoWorks: { arr_INDIVIDUAL_PHOTOS, loading },
 }) => {
   const classes = useStyles();
 
   useEffect(() => {
-    setNameOfPage('Группы работ!');
-    getAllGroupOfImage();
-  }, [setNameOfPage, getAllGroupOfImage]);
+    setNameOfPage('Список фото');
+    getAll_INDIVIDUAL_PHOTOS();
+  }, [setNameOfPage, getAll_INDIVIDUAL_PHOTOS]);
 
-  const onDeleteHandler = (itemId) => {
-    deleteGroupOfImage(itemId);
+  const deleteImage = (itemId) => {
+    delete_INDIVIDUAL_PHOTO(itemId);
     window.location.reload();
   };
 
@@ -69,25 +64,28 @@ const GroupOfImage = ({
     <MaterialTable
       title='Список '
       columns={[
-        { title: 'Группа работ', field: 'field_imageGroup', width: '20%' },
+        { title: 'Фото', field: 'field_imageUrl' },
         { title: 'Описание', field: 'field_description' },
-        { title: 'Удалить', field: 'btnDel', sorting: false, width: '5%' },
-        {
-          title: 'редактировать',
-          field: 'btnEdit',
-          sorting: false,
-          width: '5%',
-        },
+        { title: 'Группа', field: 'field_imageGroup' },
+        { title: 'Удалить', field: 'btnDel', sorting: false },
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={imageGroups.map((item) => {
+      data={arr_INDIVIDUAL_PHOTOS.map((item) => {
         return {
-          field_imageGroup: item.imageGroup,
-          field_description: item.descriptions,
+          field_imageUrl: (
+            <img
+              src={item.imageUrl}
+              alt={item.imageUrl}
+              className={classes.img}
+            />
+          ),
+          field_description: item.description,
+          field_imageGroup: item.imageGroup.imageGroup,
           btnDel: (
             <IconButton
               color='secondary'
               variant='contained'
-              onClick={() => onDeleteHandler(item._id)}
+              onClick={() => deleteImage(item._id)}
               className={classes.buttonDelete}
             >
               <DeleteIcon />
@@ -97,7 +95,7 @@ const GroupOfImage = ({
             <IconButton
               color='primary'
               variant='contained'
-              href={`/group-of-image/${item._id}`}
+              href={`/individual-photo/${item._id}`}
               className={classes.buttonDelete}
             >
               <EditIcon />
@@ -116,35 +114,36 @@ const GroupOfImage = ({
   return loading ? (
     <Spinner />
   ) : (
-    <Grid container direction='column' className={classes.root}>
+    <Grid container className={classes.root}>
       <IconButton
         variant='contained'
         color='secondary'
-        href={`/group-of-image-add`}
+        href={`/individual-photo/add`}
         className={classes.btnAdd}
       >
         <PlusOneIcon className={classes.btnAddIcon} />
       </IconButton>
-      <Grid item xs={12} container>
+      <Grid item xs={12}>
         {listOfPhoto}
       </Grid>
     </Grid>
   );
 };
 
-GroupOfImage.propTypes = {
+IndividualPhoto_List.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  deleteGroupOfImage: PropTypes.func.isRequired,
-  getAllGroupOfImage: PropTypes.func.isRequired,
-  groupOfImage: PropTypes.object.isRequired,
+  getAll_INDIVIDUAL_PHOTOS: PropTypes.func.isRequired,
+  delete_INDIVIDUAL_PHOTO: PropTypes.func.isRequired,
+
+  state_individual_photoWorks: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  groupOfImage: state.groupOfImage,
+  state_individual_photoWorks: state.individual_photoWorks,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
-  getAllGroupOfImage,
-  deleteGroupOfImage,
-})(GroupOfImage);
+  getAll_INDIVIDUAL_PHOTOS,
+  delete_INDIVIDUAL_PHOTO,
+})(IndividualPhoto_List);

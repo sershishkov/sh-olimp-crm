@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 import {
-  getOnePhotoWork,
-  updatePhotoWork,
-} from '../../../store/actions/mainInformation/osbb/photoWorks';
-import { getAllGroupOfImage } from '../../../store/actions/mainInformation/osbb/groupOfImage';
+  getOne_INDIVIDUAL_PHOTO,
+  update_INDIVIDUAL_PHOTO,
+} from '../../../store/actions/mainInformation/individuals/individual_photoWorks';
+import { getAll_INDIVIDUAL_IMAGE_GROUPS } from '../../../store/actions/mainInformation/individuals/individual_groupOfImage';
 
+import Spinner from '../../../shared/spinner/Spinner';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -65,14 +66,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditPhotoItem = ({
+const IndividualPhoto_Edit = ({
   setNameOfPage,
-  getOnePhotoWork,
-  getAllGroupOfImage,
-  updatePhotoWork,
 
-  photoWorks,
-  groupOfImage,
+  getOne_INDIVIDUAL_PHOTO,
+  getAll_INDIVIDUAL_IMAGE_GROUPS,
+  update_INDIVIDUAL_PHOTO,
+
+  state_individual_groupOfImage: { arr_INDIVIDUAL_IMAGE_GROUPS, loading },
+  state_individual_photoWorks: { one_INDIVIDUAL_PHOTO },
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -97,8 +99,8 @@ const EditPhotoItem = ({
   };
 
   const updateImageHandler = () => {
-    updatePhotoWork(id, newPhoto, selectedGroup, description);
-    history.push('/editphoto');
+    update_INDIVIDUAL_PHOTO(id, newPhoto, selectedGroup, description);
+    history.push('/individual-photo');
   };
 
   const onChange = (e) => {
@@ -108,13 +110,12 @@ const EditPhotoItem = ({
 
   const buttonBackHandler = () => {
     history.goBack();
-    // history.push('/accountant/unit');
   };
 
   useEffect(() => {
     setNameOfPage('Редактируем фото');
-    getOnePhotoWork(id);
-    getAllGroupOfImage();
+    getOne_INDIVIDUAL_PHOTO(id);
+    getAll_INDIVIDUAL_IMAGE_GROUPS();
 
     if (newPhoto) {
       const fileReader = new FileReader();
@@ -124,22 +125,24 @@ const EditPhotoItem = ({
       };
       fileReader.readAsDataURL(newPhoto);
     }
-  }, [setNameOfPage, getOnePhotoWork, getAllGroupOfImage, id, newPhoto]);
-
-  useLayoutEffect(() => {
-    if (photoWorks.onePhoto) {
-      setDescription(photoWorks.onePhoto.description);
-      setSelectedGroup(photoWorks.onePhoto.imageGroup);
-    }
   }, [
-    setDescription,
-    setSelectedGroup,
-    photoWorks,
-    setPreviewUrl,
-    setNewPhoto,
+    setNameOfPage,
+    getOne_INDIVIDUAL_PHOTO,
+    getAll_INDIVIDUAL_IMAGE_GROUPS,
+    id,
+    newPhoto,
   ]);
 
-  return (
+  useLayoutEffect(() => {
+    if (one_INDIVIDUAL_PHOTO) {
+      setDescription(one_INDIVIDUAL_PHOTO.description);
+      setSelectedGroup(one_INDIVIDUAL_PHOTO.imageGroup);
+    }
+  }, [one_INDIVIDUAL_PHOTO]);
+
+  return loading ? (
+    <Spinner />
+  ) : (
     <Grid container className={classes.root}>
       <Button
         onClick={buttonBackHandler}
@@ -196,8 +199,8 @@ const EditPhotoItem = ({
       >
         <Grid item xs={2} container justify='center'>
           <img
-            src={photoWorks.onePhoto.imageUrl}
-            alt={photoWorks.onePhoto.imageUrl}
+            src={one_INDIVIDUAL_PHOTO.imageUrl}
+            alt={one_INDIVIDUAL_PHOTO.imageUrl}
             className={classes.img}
           />
         </Grid>
@@ -231,7 +234,7 @@ const EditPhotoItem = ({
             onChange={selectChangeHandle}
             className={classes.select}
           >
-            {groupOfImage.imageGroups.map((item) => (
+            {arr_INDIVIDUAL_IMAGE_GROUPS.map((item) => (
               <MenuItem key={item._id} value={item._id}>
                 {item.imageGroup}
               </MenuItem>
@@ -241,7 +244,7 @@ const EditPhotoItem = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/group-of-image-add');
+              history.push('/individual-imagegroup/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -263,24 +266,24 @@ const EditPhotoItem = ({
   );
 };
 
-EditPhotoItem.propTypes = {
+IndividualPhoto_Edit.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  getOnePhotoWork: PropTypes.func.isRequired,
-  getAllGroupOfImage: PropTypes.func.isRequired,
-  updatePhotoWork: PropTypes.func.isRequired,
+  getOne_INDIVIDUAL_PHOTO: PropTypes.func.isRequired,
+  getAll_INDIVIDUAL_IMAGE_GROUPS: PropTypes.func.isRequired,
+  update_INDIVIDUAL_PHOTO: PropTypes.func.isRequired,
 
-  photoWorks: PropTypes.object.isRequired,
-  groupOfImage: PropTypes.object.isRequired,
+  state_individual_photoWorks: PropTypes.object.isRequired,
+  state_individual_groupOfImage: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  photoWorks: state.photoWorks,
-  groupOfImage: state.groupOfImage,
+  state_individual_photoWorks: state.individual_photoWorks,
+  state_individual_groupOfImage: state.individual_groupOfImage,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
-  getOnePhotoWork,
-  getAllGroupOfImage,
-  updatePhotoWork,
-})(EditPhotoItem);
+  getOne_INDIVIDUAL_PHOTO,
+  getAll_INDIVIDUAL_IMAGE_GROUPS,
+  update_INDIVIDUAL_PHOTO,
+})(IndividualPhoto_Edit);

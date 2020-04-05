@@ -42,7 +42,7 @@ app.use(xss());
 //Rate limiting
 const limiter = rateLimit({
   windowMs: 10 * 60 * 1000, //10 min
-  max: 10000
+  max: 10000,
 });
 app.use(limiter);
 
@@ -61,6 +61,8 @@ const users = require('./routes/user/admin/users');
 
 const photoWorks = require('./routes/mainInformation/osbb/photoWorks');
 const groupOfImage = require('./routes/mainInformation/osbb/groupOfImage');
+const individual_photoWorks = require('./routes/mainInformation/individuals/individual_photoWorks');
+const individual_groupOfImage = require('./routes/mainInformation/individuals/individual_groupOfImage');
 
 /////////////////free//////////////////////////
 const requestFromClient = require('./routes/mainInformation/free/requestFromClient');
@@ -129,6 +131,9 @@ app.use('/api/v1/users', users);
 //////////Main Information//////////
 app.use('/api/v1/photo', photoWorks);
 app.use('/api/v1/imagegroup', groupOfImage);
+app.use('/api/v1/individual-photo', individual_photoWorks);
+app.use('/api/v1/individual-imagegroup', individual_groupOfImage);
+
 /////////////////free//////////////////////////
 app.use('/api/v1/request-from-client', requestFromClient);
 
