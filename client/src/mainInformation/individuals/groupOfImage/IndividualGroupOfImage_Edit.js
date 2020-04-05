@@ -70,7 +70,7 @@ const IndividualGroupOfImage_Edit = ({
         descriptions: one_INDIVIDUAL_IMAGE_GROUP.descriptionsSTR,
       });
     }
-  }, []);
+  }, [one_INDIVIDUAL_IMAGE_GROUP]);
 
   const updateGroupHandler = () => {
     update_INDIVIDUAL_IMAGE_GROUP(id, imageGroup, descriptions);

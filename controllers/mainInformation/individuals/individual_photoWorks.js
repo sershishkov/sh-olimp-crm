@@ -32,11 +32,19 @@ exports.resizePhoto = asyncHandler(async (req, res, next) => {
 
   req.file.filename = `${req.user.id}-${Date.now()}.jpeg`;
 
-  await sharp(req.file.buffer)
-    // .resize(500, 500)
-    .toFormat('jpeg')
-    .jpeg({ quality: 50 })
-    .toFile(`uploads/${req.file.filename}`);
+  if (req.file.size > 2000000) {
+    await sharp(req.file.buffer)
+      // .resize(500, 500)
+      .toFormat('jpeg')
+      .jpeg({ quality: 50 })
+      .toFile(`uploads/${req.file.filename}`);
+  } else {
+    await sharp(req.file.buffer)
+      // .resize(500, 500)
+      .toFormat('jpeg')
+      .jpeg({ quality: 100 })
+      .toFile(`uploads/${req.file.filename}`);
+  }
 
   next();
 });
