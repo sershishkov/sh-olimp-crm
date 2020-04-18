@@ -33,34 +33,34 @@ import { getAll_RAYONS } from '../../../store/actions/accountant/referenceData/r
 
 import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
   },
   buttonBack: {
     position: 'fixed',
     top: '5rem',
-    left: 0
+    left: 0,
   },
   displayNone: {
-    display: 'none'
+    display: 'none',
   },
   displayFlex: {
     display: 'flex',
     position: 'absolute',
     top: 22,
-    left: 7
+    left: 7,
     // zIndex: 555
   },
   wrapSelect: {
-    position: 'relative'
+    position: 'relative',
   },
   select: {
-    height: 55
+    height: 55,
     // border: '1px solid red'
   },
-  dateField: {}
+  dateField: {},
 }));
 
 const Client_Add = ({
@@ -90,7 +90,7 @@ const Client_Add = ({
   state_typeOf_TaxPayerOn: { arr_TYPE_OF_TAX_PAYER_ONS },
 
   state_oblast: { arr_OBLASTS },
-  state_rayon: { arr_RAYONS }
+  state_rayon: { arr_RAYONS },
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -106,9 +106,9 @@ const Client_Add = ({
     postCode: '',
     oblast: '5e808f28376cba45cb4f131f',
     rayon: '5e808f36376cba45cb4f1320',
-    typeOf_settlement: '',
-    city: '',
-    typeOf_street: '',
+    typeOf_settlement: '5e65fe20876315337683e2aa',
+    city: '5e7351aeba6ca4107af46e1f',
+    typeOf_street: '5e66025efe07ac366154bd8e',
     street: '',
     numberOf_house: '',
     numberOf_app: '',
@@ -129,9 +129,9 @@ const Client_Add = ({
     actsOnBasisOf: '',
     actsOnBasisOf_Number: '',
     issuedBy: '',
-    taxPayerOn: '',
-    email: '',
-    phoneNumber: ''
+    taxPayerOn: '5e66530d9bd54710d45b1196',
+    email: 'client@gmail.com',
+    phoneNumber: '',
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
@@ -163,7 +163,7 @@ const Client_Add = ({
     issuedBy,
     taxPayerOn,
     email,
-    phoneNumber
+    phoneNumber,
   } = pageForm;
 
   useEffect(() => {
@@ -191,10 +191,10 @@ const Client_Add = ({
     getAll_TYPE_OF_TAX_PAYER_ONS,
 
     getAll_OBLASTS,
-    getAll_RAYONS
+    getAll_RAYONS,
   ]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
     // console.log(e.target.value);
     setDisabledForm(
@@ -210,7 +210,7 @@ const Client_Add = ({
         // numberOf_app &&
         EDRPOU &&
         ibanOwn &&
-        ibanGazBank &&
+        // ibanGazBank &&
         firstPersonPosition &&
         firstPersonSurname &&
         firstPersonName &&
@@ -222,15 +222,22 @@ const Client_Add = ({
         actsOnBasisOf &&
         // issuedBy &&
         taxPayerOn &&
-        email &&
+        // email &&
         phoneNumber
       )
     );
   };
 
-  const onInputPhoneHandler = e => {
+  const onInputPhoneHandler = (e) => {
     const inputMaskOptions = {
-      mask: '+{38}(000)000-00-00'
+      mask: '+{38}(000)000-00-00',
+    };
+    IMask(e.target, inputMaskOptions);
+  };
+
+  const onInputIbanHandler = (e) => {
+    const inputMaskOptions = {
+      mask: '000000000000000000000000000',
     };
     IMask(e.target, inputMaskOptions);
   };
@@ -305,10 +312,10 @@ const Client_Add = ({
                 fullWidth
                 value={typeOfFirm}
                 name='typeOfFirm'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_TYPE_OF_FIRMS.map(item => (
+                {arr_TYPE_OF_FIRMS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.TypeOf_FirmShort}
                   </MenuItem>
@@ -341,7 +348,7 @@ const Client_Add = ({
             placeholder='название фирмы'
             type='text'
             value={firmName}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -358,7 +365,7 @@ const Client_Add = ({
             placeholder='Введите индекс'
             type='text'
             value={postCode}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -384,10 +391,10 @@ const Client_Add = ({
                 fullWidth
                 value={oblast}
                 name='oblast'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_OBLASTS.map(item => (
+                {arr_OBLASTS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.oblastName}
                   </MenuItem>
@@ -429,10 +436,10 @@ const Client_Add = ({
                 fullWidth
                 value={rayon}
                 name='rayon'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_RAYONS.map(item => (
+                {arr_RAYONS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.rayonName}
                   </MenuItem>
@@ -476,10 +483,10 @@ const Client_Add = ({
                 fullWidth
                 value={typeOf_settlement}
                 name='typeOf_settlement'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_TYPE_OF_SETTLEMENTS.map(item => (
+                {arr_TYPE_OF_SETTLEMENTS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.typeOf_SettlementShort}
                   </MenuItem>
@@ -521,10 +528,10 @@ const Client_Add = ({
                 fullWidth
                 value={city}
                 name='city'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_CITYS.map(item => (
+                {arr_CITYS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.cityName}
                   </MenuItem>
@@ -568,10 +575,10 @@ const Client_Add = ({
                 fullWidth
                 value={typeOf_street}
                 name='typeOf_street'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_TYPE_OF_STREETS.map(item => (
+                {arr_TYPE_OF_STREETS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.typeOf_StreetShort}
                   </MenuItem>
@@ -613,10 +620,10 @@ const Client_Add = ({
                 fullWidth
                 value={street}
                 name='street'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_STREETS.map(item => (
+                {arr_STREETS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.streetName}
                   </MenuItem>
@@ -649,7 +656,7 @@ const Client_Add = ({
             placeholder='Дом№_'
             type='text'
             value={numberOf_house}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -666,7 +673,7 @@ const Client_Add = ({
             placeholder='Кв.№_'
             type='text'
             value={numberOf_app}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -683,7 +690,7 @@ const Client_Add = ({
             placeholder='ЄДРПОУ'
             type='text'
             value={EDRPOU}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -700,7 +707,8 @@ const Client_Add = ({
             placeholder='IBAN'
             type='text'
             value={ibanOwn}
-            onChange={e => onChangeHandler(e)}
+            onInput={(e) => onInputIbanHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -717,7 +725,8 @@ const Client_Add = ({
             placeholder='ibanGazBank'
             type='text'
             value={ibanGazBank}
-            onChange={e => onChangeHandler(e)}
+            onInput={(e) => onInputIbanHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -747,10 +756,10 @@ const Client_Add = ({
                 fullWidth
                 value={firstPersonPosition}
                 name='firstPersonPosition'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_FIRST_PERSON_POSITIONS.map(item => (
+                {arr_FIRST_PERSON_POSITIONS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.position}
                   </MenuItem>
@@ -783,7 +792,7 @@ const Client_Add = ({
             placeholder='Введите фамилию'
             type='text'
             value={firstPersonSurname}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -800,7 +809,7 @@ const Client_Add = ({
             placeholder='Введите имя'
             type='text'
             value={firstPersonName}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -817,7 +826,7 @@ const Client_Add = ({
             placeholder='Введите Отчество'
             type='text'
             value={firstPersonMiddleName}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -836,7 +845,7 @@ const Client_Add = ({
             placeholder='Введите фамилию в родительном падеже'
             type='text'
             value={firstPersonSurnameRoditelPadej}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -855,7 +864,7 @@ const Client_Add = ({
             placeholder='Введите имя в родительном падеже'
             type='text'
             value={firstPersonNameRoditelPadej}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -874,7 +883,7 @@ const Client_Add = ({
             placeholder='Введите Отчество в родительном падеже'
             type='text'
             value={firstPersonMiddleNameRoditelPadej}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -891,7 +900,7 @@ const Client_Add = ({
             placeholder='Введите имя'
             type='text'
             value={shortName}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -921,10 +930,10 @@ const Client_Add = ({
                 fullWidth
                 value={actsOnBasisOf}
                 name='actsOnBasisOf'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_TYPE_OF_ACTS_ON_BASIS_OFS.map(item => (
+                {arr_TYPE_OF_ACTS_ON_BASIS_OFS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.actOnBasisOf}
                   </MenuItem>
@@ -957,7 +966,7 @@ const Client_Add = ({
             placeholder='Номер свидоства'
             type='text'
             value={actsOnBasisOf_Number}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -974,7 +983,7 @@ const Client_Add = ({
             placeholder='Выдан кем и когда'
             type='text'
             value={issuedBy}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -1002,10 +1011,10 @@ const Client_Add = ({
                 fullWidth
                 value={taxPayerOn}
                 name='taxPayerOn'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_TYPE_OF_TAX_PAYER_ONS.map(item => (
+                {arr_TYPE_OF_TAX_PAYER_ONS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.typeOf_TaxPayerOn}
                   </MenuItem>
@@ -1035,10 +1044,10 @@ const Client_Add = ({
             variant='outlined'
             name='email'
             fullWidth
-            placeholder='Дом№_'
+            placeholder='Почта'
             type='email'
             value={email}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -1055,8 +1064,8 @@ const Client_Add = ({
             placeholder='телефон'
             type='tel'
             value={phoneNumber}
-            onInput={e => onInputPhoneHandler(e)}
-            onChange={e => onChangeHandler(e)}
+            onInput={(e) => onInputPhoneHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -1105,10 +1114,10 @@ Client_Add.propTypes = {
   state_typeOf_TaxPayerOn: PropTypes.object.isRequired,
 
   state_oblast: PropTypes.object.isRequired,
-  state_rayon: PropTypes.object.isRequired
+  state_rayon: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   state_typeOf_Settlement: state.typeOf_Settlement,
   state_city: state.city,
   state_typeOf_Street: state.typeOf_Street,
@@ -1120,7 +1129,7 @@ const mapStateToProps = state => ({
   state_typeOf_TaxPayerOn: state.typeOf_TaxPayerOn,
 
   state_oblast: state.oblast,
-  state_rayon: state.rayon
+  state_rayon: state.rayon,
 });
 
 export default connect(mapStateToProps, {
@@ -1137,5 +1146,5 @@ export default connect(mapStateToProps, {
   getAll_TYPE_OF_FIRMS,
   getAll_FIRST_PERSON_POSITIONS,
   getAll_TYPE_OF_ACTS_ON_BASIS_OFS,
-  getAll_TYPE_OF_TAX_PAYER_ONS
+  getAll_TYPE_OF_TAX_PAYER_ONS,
 })(Client_Add);
