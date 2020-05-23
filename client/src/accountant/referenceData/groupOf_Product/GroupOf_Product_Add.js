@@ -15,29 +15,30 @@ import { add_GROUP_OF_PRODUCT } from '../../../store/actions/accountant/referenc
 
 // import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
+    backgroundColor: 'white',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0
+  // },
   displayNone: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 }));
 
 const GroupOf_Product_Add = ({ setNameOfPage, add_GROUP_OF_PRODUCT }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const buttonBackHandler = () => {
-    history.goBack();
-    // history.push('/accountant/group-of-product');
-  };
+  // const buttonBackHandler = () => {
+  //   history.goBack();
+  //   // history.push('/accountant/group-of-product');
+  // };
 
   const [productGroup, setProductGroup] = useState('');
 
@@ -47,26 +48,26 @@ const GroupOf_Product_Add = ({ setNameOfPage, add_GROUP_OF_PRODUCT }) => {
     setNameOfPage('Создать группу товара');
   }, [setNameOfPage]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setProductGroup(e.target.value);
     setDisabledForm(!productGroup);
   };
 
   const addItemHandler = () => {
     add_GROUP_OF_PRODUCT(productGroup);
-    history.goBack();
+    // history.goBack();
   };
 
   return (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
@@ -77,10 +78,11 @@ const GroupOf_Product_Add = ({ setNameOfPage, add_GROUP_OF_PRODUCT }) => {
             variant='outlined'
             name='productGroup'
             fullWidth
+            autoFocus
             placeholder='Введите полное название'
             type='text'
             value={productGroup}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -104,10 +106,10 @@ const GroupOf_Product_Add = ({ setNameOfPage, add_GROUP_OF_PRODUCT }) => {
 
 GroupOf_Product_Add.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  add_GROUP_OF_PRODUCT: PropTypes.func.isRequired
+  add_GROUP_OF_PRODUCT: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   setNameOfPage,
-  add_GROUP_OF_PRODUCT
+  add_GROUP_OF_PRODUCT,
 })(GroupOf_Product_Add);

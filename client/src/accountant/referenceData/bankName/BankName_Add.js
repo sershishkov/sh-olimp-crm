@@ -15,33 +15,34 @@ import { add_BANK_NAME } from '../../../store/actions/accountant/referenceData/b
 
 // import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
+    backgroundColor: 'white',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0
+  // },
   displayNone: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 }));
 
 const BankName_Add = ({ setNameOfPage, add_BANK_NAME }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const buttonBackHandler = () => {
-    history.goBack();
-    // history.push('/accountant/bankname');
-  };
+  // const buttonBackHandler = () => {
+  //   history.goBack();
+  //   // history.push('/accountant/bankname');
+  // };
 
   const [formData, setFormData] = useState({
     bankName: '',
-    mfo: ''
+    mfo: '',
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
@@ -51,26 +52,26 @@ const BankName_Add = ({ setNameOfPage, add_BANK_NAME }) => {
     setNameOfPage('Добавить банк');
   }, [setNameOfPage]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setDisabledForm(!(bankName && mfo));
   };
 
   const addItemHandler = () => {
     add_BANK_NAME(bankName, mfo);
-    history.goBack();
+    // history.goBack();
   };
 
   return (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
@@ -81,10 +82,11 @@ const BankName_Add = ({ setNameOfPage, add_BANK_NAME }) => {
             variant='outlined'
             name='bankName'
             fullWidth
+            autoFocus
             placeholder='Введите полное название'
             type='text'
             value={bankName}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -101,7 +103,7 @@ const BankName_Add = ({ setNameOfPage, add_BANK_NAME }) => {
             placeholder='Введите полное название'
             type='number'
             value={mfo}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -125,10 +127,10 @@ const BankName_Add = ({ setNameOfPage, add_BANK_NAME }) => {
 
 BankName_Add.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  add_BANK_NAME: PropTypes.func.isRequired
+  add_BANK_NAME: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   setNameOfPage,
-  add_BANK_NAME
+  add_BANK_NAME,
 })(BankName_Add);

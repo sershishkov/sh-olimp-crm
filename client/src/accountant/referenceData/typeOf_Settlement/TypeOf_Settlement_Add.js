@@ -15,33 +15,34 @@ import { add_TYPE_OF_SETTLEMENT } from '../../../store/actions/accountant/refere
 
 // import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
+    backgroundColor: 'white',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0
+  // },
   displayNone: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 }));
 
 const TypeOf_Street_Add = ({ setNameOfPage, add_TYPE_OF_SETTLEMENT }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const buttonBackHandler = () => {
-    history.goBack();
-    // history.push('/accountant/type-of-settlement');
-  };
+  // const buttonBackHandler = () => {
+  //   history.goBack();
+  //   // history.push('/accountant/type-of-settlement');
+  // };
 
   const [formData, setFormData] = useState({
     typeOf_SettlementLong: '',
-    typeOf_SettlementShort: ''
+    typeOf_SettlementShort: '',
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
@@ -51,26 +52,26 @@ const TypeOf_Street_Add = ({ setNameOfPage, add_TYPE_OF_SETTLEMENT }) => {
     setNameOfPage('Добавить тип населенного пункта');
   }, [setNameOfPage]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setDisabledForm(!(typeOf_SettlementLong && typeOf_SettlementShort));
   };
 
   const addItemHandler = () => {
     add_TYPE_OF_SETTLEMENT(typeOf_SettlementLong, typeOf_SettlementShort);
-    history.goBack();
+    // history.goBack();
   };
 
   return (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
@@ -81,10 +82,11 @@ const TypeOf_Street_Add = ({ setNameOfPage, add_TYPE_OF_SETTLEMENT }) => {
             variant='outlined'
             name='typeOf_SettlementLong'
             fullWidth
+            autoFocus
             placeholder='Введите полное название'
             type='text'
             value={typeOf_SettlementLong}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -101,7 +103,7 @@ const TypeOf_Street_Add = ({ setNameOfPage, add_TYPE_OF_SETTLEMENT }) => {
             placeholder='Введите полное название'
             type='text'
             value={typeOf_SettlementShort}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -125,10 +127,10 @@ const TypeOf_Street_Add = ({ setNameOfPage, add_TYPE_OF_SETTLEMENT }) => {
 
 TypeOf_Street_Add.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  add_TYPE_OF_SETTLEMENT: PropTypes.func.isRequired
+  add_TYPE_OF_SETTLEMENT: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   setNameOfPage,
-  add_TYPE_OF_SETTLEMENT
+  add_TYPE_OF_SETTLEMENT,
 })(TypeOf_Street_Add);

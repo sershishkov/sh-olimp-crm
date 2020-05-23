@@ -15,36 +15,37 @@ import { add_FIRST_PERSON_POSITION } from '../../../store/actions/accountant/ref
 
 // import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
+    backgroundColor: 'white',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0
+  // },
   displayNone: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 }));
 
 const FirstPersonPosition_Add = ({
   setNameOfPage,
-  add_FIRST_PERSON_POSITION
+  add_FIRST_PERSON_POSITION,
 }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const buttonBackHandler = () => {
-    history.goBack();
-    // history.push('/accountant/personposition');
-  };
+  // const buttonBackHandler = () => {
+  //   history.goBack();
+  //   // history.push('/accountant/personposition');
+  // };
 
   const [formData, setFormData] = useState({
     position: '',
-    positionRoditPadej: ''
+    positionRoditPadej: '',
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
@@ -54,26 +55,26 @@ const FirstPersonPosition_Add = ({
     setNameOfPage('Добавить должность');
   }, [setNameOfPage]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setDisabledForm(!(position && positionRoditPadej));
   };
 
   const addItemHandler = () => {
     add_FIRST_PERSON_POSITION(position, positionRoditPadej);
-    history.goBack();
+    // history.goBack();
   };
 
   return (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
@@ -84,10 +85,11 @@ const FirstPersonPosition_Add = ({
             variant='outlined'
             name='position'
             fullWidth
+            autoFocus
             placeholder='Введите полное название'
             type='text'
             value={position}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -104,7 +106,7 @@ const FirstPersonPosition_Add = ({
             placeholder='Введите полное название'
             type='text'
             value={positionRoditPadej}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -128,10 +130,10 @@ const FirstPersonPosition_Add = ({
 
 FirstPersonPosition_Add.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  add_FIRST_PERSON_POSITION: PropTypes.func.isRequired
+  add_FIRST_PERSON_POSITION: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   setNameOfPage,
-  add_FIRST_PERSON_POSITION
+  add_FIRST_PERSON_POSITION,
 })(FirstPersonPosition_Add);

@@ -15,29 +15,30 @@ import { add_OBLAST } from '../../../store/actions/accountant/referenceData/obla
 
 // import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
+    backgroundColor: 'white',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0
+  // },
   displayNone: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 }));
 
 const Oblast_Add = ({ setNameOfPage, add_OBLAST }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const buttonBackHandler = () => {
-    history.goBack();
-    // history.push('/accountant/oblast');
-  };
+  // const buttonBackHandler = () => {
+  //   history.goBack();
+  //   // history.push('/accountant/oblast');
+  // };
 
   const [oblastName, setOblastName] = useState('');
 
@@ -47,26 +48,26 @@ const Oblast_Add = ({ setNameOfPage, add_OBLAST }) => {
     setNameOfPage('Создать область');
   }, [setNameOfPage]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setOblastName(e.target.value);
     setDisabledForm(!oblastName);
   };
 
   const addItemHandler = () => {
     add_OBLAST(oblastName);
-    history.goBack();
+    // history.goBack();
   };
 
   return (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
@@ -77,10 +78,11 @@ const Oblast_Add = ({ setNameOfPage, add_OBLAST }) => {
             variant='outlined'
             name='oblastName'
             fullWidth
+            autoFocus
             placeholder='Введите полное название'
             type='text'
             value={oblastName}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -104,10 +106,10 @@ const Oblast_Add = ({ setNameOfPage, add_OBLAST }) => {
 
 Oblast_Add.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  add_OBLAST: PropTypes.func.isRequired
+  add_OBLAST: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   setNameOfPage,
-  add_OBLAST
+  add_OBLAST,
 })(Oblast_Add);

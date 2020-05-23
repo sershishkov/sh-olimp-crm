@@ -15,33 +15,34 @@ import { add_TYPE_OF_FIRM } from '../../../store/actions/accountant/referenceDat
 
 // import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
+    backgroundColor: 'white',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0
+  // },
   displayNone: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 }));
 
 const TypeOf_Firm_Add = ({ setNameOfPage, add_TYPE_OF_FIRM }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const buttonBackHandler = () => {
-    history.goBack();
-    // history.push('/accountant/type-of-firm');
-  };
+  // const buttonBackHandler = () => {
+  //   history.goBack();
+  //   // history.push('/accountant/type-of-firm');
+  // };
 
   const [formData, setFormData] = useState({
     TypeOf_FirmLong: '',
-    TypeOf_FirmShort: ''
+    TypeOf_FirmShort: '',
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
@@ -51,26 +52,26 @@ const TypeOf_Firm_Add = ({ setNameOfPage, add_TYPE_OF_FIRM }) => {
     setNameOfPage('Добавить тип фирмы');
   }, [setNameOfPage]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setDisabledForm(!(TypeOf_FirmLong && TypeOf_FirmShort));
   };
 
   const addItemHandler = () => {
     add_TYPE_OF_FIRM(TypeOf_FirmLong, TypeOf_FirmShort);
-    history.goBack();
+    // history.goBack();
   };
 
   return (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
@@ -83,10 +84,11 @@ const TypeOf_Firm_Add = ({ setNameOfPage, add_TYPE_OF_FIRM }) => {
             variant='outlined'
             name='TypeOf_FirmLong'
             fullWidth
+            autoFocus
             placeholder='Введите полное название'
             type='text'
             value={TypeOf_FirmLong}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -105,7 +107,7 @@ const TypeOf_Firm_Add = ({ setNameOfPage, add_TYPE_OF_FIRM }) => {
             placeholder='Введите полное название'
             type='text'
             value={TypeOf_FirmShort}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -129,10 +131,10 @@ const TypeOf_Firm_Add = ({ setNameOfPage, add_TYPE_OF_FIRM }) => {
 
 TypeOf_Firm_Add.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  add_TYPE_OF_FIRM: PropTypes.func.isRequired
+  add_TYPE_OF_FIRM: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   setNameOfPage,
-  add_TYPE_OF_FIRM
+  add_TYPE_OF_FIRM,
 })(TypeOf_Firm_Add);

@@ -23,33 +23,34 @@ import { getAll_GROUP_OF_SERVICE_JOBS } from '../../../store/actions/accountant/
 
 import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
+    backgroundColor: 'white',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0
+  // },
   displayNone: {
-    display: 'none'
+    display: 'none',
   },
   displayFlex: {
     display: 'flex',
     position: 'absolute',
     top: 22,
-    left: 7
+    left: 7,
     // zIndex: 555
   },
   wrapSelect: {
-    position: 'relative'
+    position: 'relative',
   },
   select: {
-    height: 55
+    height: 55,
     // border: '1px solid red'
-  }
+  },
 }));
 
 const ServiceJob_Add = ({
@@ -58,20 +59,20 @@ const ServiceJob_Add = ({
   getAll_UNITS,
   getAll_GROUP_OF_SERVICE_JOBS,
   unit,
-  groupOf_ServiceJob
+  groupOf_ServiceJob,
 }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const buttonBackHandler = () => {
-    history.goBack();
-    // history.push('/accountant/service-job');
-  };
+  // const buttonBackHandler = () => {
+  //   history.goBack();
+  //   // history.push('/accountant/service-job');
+  // };
 
   const [pageForm, setPageForm] = useState({
     serviceName: '',
     thisUnit: '',
-    serviceJobGroup: ''
+    serviceJobGroup: '',
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
@@ -83,26 +84,26 @@ const ServiceJob_Add = ({
     getAll_GROUP_OF_SERVICE_JOBS();
   }, [setNameOfPage, getAll_UNITS, getAll_GROUP_OF_SERVICE_JOBS]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
     setDisabledForm(!(serviceName && thisUnit && serviceJobGroup));
   };
 
   const addItemHandler = () => {
     add_SERVICE_JOB(serviceName, thisUnit, serviceJobGroup);
-    history.goBack();
+    // history.goBack();
   };
 
   return (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
@@ -113,10 +114,11 @@ const ServiceJob_Add = ({
             variant='outlined'
             name='serviceName'
             fullWidth
+            autoFocus
             placeholder='Введите полное название'
             type='text'
             value={serviceName}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -142,10 +144,10 @@ const ServiceJob_Add = ({
                 fullWidth
                 value={thisUnit}
                 name='thisUnit'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {unit.arr_UNITS.map(item => (
+                {unit.arr_UNITS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.unitNameShort}
                   </MenuItem>
@@ -188,10 +190,10 @@ const ServiceJob_Add = ({
                 fullWidth
                 value={serviceJobGroup}
                 name='serviceJobGroup'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {groupOf_ServiceJob.arr_GROUP_OF_SERVICE_JOBS.map(item => (
+                {groupOf_ServiceJob.arr_GROUP_OF_SERVICE_JOBS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.serviceJobGroup}
                   </MenuItem>
@@ -234,17 +236,17 @@ ServiceJob_Add.propTypes = {
   getAll_UNITS: PropTypes.func.isRequired,
   getAll_GROUP_OF_SERVICE_JOBS: PropTypes.func.isRequired,
   unit: PropTypes.object.isRequired,
-  groupOf_ServiceJob: PropTypes.object.isRequired
+  groupOf_ServiceJob: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   unit: state.unit,
-  groupOf_ServiceJob: state.groupOf_ServiceJob
+  groupOf_ServiceJob: state.groupOf_ServiceJob,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   add_SERVICE_JOB,
   getAll_UNITS,
-  getAll_GROUP_OF_SERVICE_JOBS
+  getAll_GROUP_OF_SERVICE_JOBS,
 })(ServiceJob_Add);

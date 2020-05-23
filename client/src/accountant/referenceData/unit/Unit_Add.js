@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import TypeOf_Unit_Add from '../typeOf_Unit/TypeOf_Unit_Add';
+
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -13,6 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
@@ -22,33 +25,32 @@ import { getAll_TYPE_OF_UNITS } from '../../../store/actions/accountant/referenc
 
 import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
+    backgroundColor: 'white',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0,
+  // },
   displayNone: {
-    display: 'none'
+    display: 'none',
   },
   displayFlex: {
     display: 'flex',
     position: 'absolute',
     top: 22,
-    left: 7
-    // zIndex: 555
+    left: 7,
   },
   wrapSelect: {
-    position: 'relative'
+    position: 'relative',
   },
   select: {
-    height: 55
-    // border: '1px solid red'
-  }
+    height: 55,
+  },
 }));
 
 const Unit_Add = ({
@@ -57,31 +59,40 @@ const Unit_Add = ({
 
   getAll_TYPE_OF_UNITS,
 
-  typeOf_Unit: { arr_TYPE_OF_UNITS, loading }
+  typeOf_Unit: { arr_TYPE_OF_UNITS, loading },
 }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const buttonBackHandler = () => {
-    history.goBack();
-    // history.push('/accountant/unit');
-  };
+  // const buttonBackHandler = () => {
+  //   history.goBack();
+  //   // history.push('/accountant/unit');
+  // };
 
   const [pageForm, setPageForm] = useState({
     unitNameLong: '',
     unitNameShort: '',
-    unitType: ''
+    unitType: '',
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
   const { unitNameLong, unitNameShort, unitType } = pageForm;
+  const [openTypeOf_Unit_Add, setOpenTypeOf_Unit_Add] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpenTypeOf_Unit_Add(true);
+  };
+
+  const handleClose = () => {
+    setOpenTypeOf_Unit_Add(false);
+  };
 
   useEffect(() => {
     setNameOfPage('Создать еденицу измерения');
     getAll_TYPE_OF_UNITS();
   }, [setNameOfPage, getAll_TYPE_OF_UNITS]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
     // console.log(e.target.value);
     setDisabledForm(!(unitNameLong && unitNameShort && unitType));
@@ -89,35 +100,40 @@ const Unit_Add = ({
 
   const addItemHandler = () => {
     add_UNIT(unitNameLong, unitNameShort, unitType);
-    history.goBack();
+    // history.goBack();
   };
 
   return loading ? (
     <Spinner />
   ) : (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      <Modal open={openTypeOf_Unit_Add} onClose={handleClose}>
+        <TypeOf_Unit_Add />
+      </Modal>
+
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
-          <Typography align='left'>Полное название </Typography>
+          <Typography align='left'>Полное название</Typography>
         </Grid>
         <Grid item xs={8} container>
           <TextField
             variant='outlined'
             name='unitNameLong'
             fullWidth
+            autoFocus
             placeholder='Введите полное название'
             type='text'
             value={unitNameLong}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -134,7 +150,7 @@ const Unit_Add = ({
             placeholder='Введите сокращеное название'
             type='text'
             value={unitNameShort}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -156,10 +172,10 @@ const Unit_Add = ({
             fullWidth
             value={unitType}
             name='unitType'
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
             className={classes.select}
           >
-            {arr_TYPE_OF_UNITS.map(item => (
+            {arr_TYPE_OF_UNITS.map((item) => (
               <MenuItem key={item._id} value={item._id}>
                 {item.typeOf_Unit}
               </MenuItem>
@@ -169,7 +185,8 @@ const Unit_Add = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/type-of-unit/add');
+              handleOpen();
+              // history.push("/accountant/type-of-unit/add");
             }}
           >
             <AddCircleIcon color='primary' />
@@ -200,15 +217,15 @@ Unit_Add.propTypes = {
 
   getAll_TYPE_OF_UNITS: PropTypes.func.isRequired,
 
-  typeOf_Unit: PropTypes.object.isRequired
+  typeOf_Unit: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  typeOf_Unit: state.typeOf_Unit
+const mapStateToProps = (state) => ({
+  typeOf_Unit: state.typeOf_Unit,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   add_UNIT,
-  getAll_TYPE_OF_UNITS
+  getAll_TYPE_OF_UNITS,
 })(Unit_Add);

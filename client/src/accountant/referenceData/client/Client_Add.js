@@ -37,12 +37,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     marginTop: '7rem',
+    backgroundColor: 'white',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0,
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0,
+  // },
   displayNone: {
     display: 'none',
   },
@@ -95,10 +96,10 @@ const Client_Add = ({
   const classes = useStyles();
   const history = useHistory();
 
-  const buttonBackHandler = () => {
-    history.goBack();
-    // history.push('/accountant/client');
-  };
+  // const buttonBackHandler = () => {
+  //   history.goBack();
+  //   // history.push('/accountant/client');
+  // };
 
   const [pageForm, setPageForm] = useState({
     firmName: '',
@@ -275,19 +276,19 @@ const Client_Add = ({
       email,
       phoneNumber
     );
-    history.goBack();
+    // history.goBack();
   };
 
   return (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>

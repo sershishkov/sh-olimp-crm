@@ -7,7 +7,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_UNITS,
-  delete_UNIT
+  delete_UNIT,
 } from '../../../store/actions/accountant/referenceData/unit';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -19,27 +19,27 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
-  }
+    height: 50,
+  },
 }));
 
 const Unit_List = ({
   setNameOfPage,
   getAll_UNITS,
   delete_UNIT,
-  unit: { arr_UNITS, loading }
+  unit: { arr_UNITS, loading },
 }) => {
   const classes = useStyles();
 
@@ -48,7 +48,7 @@ const Unit_List = ({
     getAll_UNITS();
   }, [setNameOfPage, getAll_UNITS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_UNIT(itemId);
     window.location.reload();
   };
@@ -61,9 +61,9 @@ const Unit_List = ({
         { title: 'Сокращенное название', field: 'unitNameShort' },
         { title: 'Группа измерений', field: 'unitType_' },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_UNITS.map(item => {
+      data={arr_UNITS.map((item) => {
         return {
           unitNameLong: item.unitNameLong,
           unitNameShort: item.unitNameShort,
@@ -87,12 +87,13 @@ const Unit_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -120,15 +121,15 @@ Unit_List.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAll_UNITS: PropTypes.func.isRequired,
   delete_UNIT: PropTypes.func.isRequired,
-  unit: PropTypes.object.isRequired
+  unit: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  unit: state.unit
+const mapStateToProps = (state) => ({
+  unit: state.unit,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_UNITS,
-  delete_UNIT
+  delete_UNIT,
 })(Unit_List);

@@ -16,14 +16,14 @@ exports.addUnit = asyncHandler(async (req, res, next) => {
   const newUnit = new Unit({
     unitNameLong,
     unitNameShort,
-    unitType
+    unitType,
   });
 
   await newUnit.save();
 
   res.status(200).json({
     success: true,
-    data: newUnit
+    data: newUnit,
   });
 });
 
@@ -38,17 +38,17 @@ exports.updateUnit = asyncHandler(async (req, res, next) => {
   const newUnit = {
     unitNameLong: req.body.unitNameLong,
     unitNameShort: req.body.unitNameShort,
-    unitType: req.body.unitType
+    unitType: req.body.unitType,
   };
 
   const updatedUnit = await Unit.findByIdAndUpdate(req.params.id, newUnit, {
     new: true,
-    runValidators: true
+    runValidators: true,
   });
 
   res.status(200).json({
     success: true,
-    data: updatedUnit
+    data: updatedUnit,
   });
 });
 
@@ -59,8 +59,7 @@ exports.getAllUnits = asyncHandler(async (req, res, next) => {
   const allUnits = await Unit.find()
     .populate({ path: 'unitType', select: 'typeOf_Unit' })
     .sort({
-      unitType: 1,
-      unitNameShort: 1
+      unitNameLong: 1,
     });
   //Check if  exists response
   if (!allUnits) {
@@ -69,7 +68,7 @@ exports.getAllUnits = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: allUnits
+    data: allUnits,
   });
 });
 
@@ -85,7 +84,7 @@ exports.getOneUnit = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: oneUnit
+    data: oneUnit,
   });
 });
 
@@ -118,7 +117,7 @@ exports.deleteUnit = asyncHandler(async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      data: {}
+      data: {},
     });
   }
 });

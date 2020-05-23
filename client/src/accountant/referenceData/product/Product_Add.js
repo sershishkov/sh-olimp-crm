@@ -23,33 +23,34 @@ import { getAll_GROUP_OF_PRODUCTS } from '../../../store/actions/accountant/refe
 
 import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
+    backgroundColor: 'white',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0
+  // },
   displayNone: {
-    display: 'none'
+    display: 'none',
   },
   displayFlex: {
     display: 'flex',
     position: 'absolute',
     top: 22,
-    left: 7
+    left: 7,
     // zIndex: 555
   },
   wrapSelect: {
-    position: 'relative'
+    position: 'relative',
   },
   select: {
-    height: 55
+    height: 55,
     // border: '1px solid red'
-  }
+  },
 }));
 
 const Product_Add = ({
@@ -60,15 +61,15 @@ const Product_Add = ({
   getAll_GROUP_OF_PRODUCTS,
 
   state_unit: { arr_UNITS },
-  state_groupOf_Product: { arr_GROUP_OF_PRODUCTS }
+  state_groupOf_Product: { arr_GROUP_OF_PRODUCTS },
 }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const buttonBackHandler = () => {
-    history.goBack();
-    // history.push('/accountant/product');
-  };
+  // const buttonBackHandler = () => {
+  //   history.goBack();
+  //   // history.push('/accountant/product');
+  // };
 
   const [pageForm, setPageForm] = useState({
     productName: '',
@@ -79,7 +80,7 @@ const Product_Add = ({
     length: '',
     width: '',
     height: '',
-    weight: ''
+    weight: '',
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
@@ -92,7 +93,7 @@ const Product_Add = ({
     length,
     width,
     height,
-    weight
+    weight,
   } = pageForm;
 
   useEffect(() => {
@@ -101,7 +102,7 @@ const Product_Add = ({
     getAll_GROUP_OF_PRODUCTS();
   }, [setNameOfPage, getAll_UNITS, getAll_GROUP_OF_PRODUCTS]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
     setDisabledForm(
       !(
@@ -130,19 +131,19 @@ const Product_Add = ({
       height,
       weight
     );
-    history.goBack();
+    // history.goBack();
   };
 
   return (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
@@ -153,10 +154,11 @@ const Product_Add = ({
             variant='outlined'
             name='productName'
             fullWidth
+            autoFocus
             placeholder='название товара'
             type='text'
             value={productName}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -182,10 +184,10 @@ const Product_Add = ({
                 fullWidth
                 value={unit}
                 name='unit'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_UNITS.map(item => (
+                {arr_UNITS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.unitNameShort}
                   </MenuItem>
@@ -228,10 +230,10 @@ const Product_Add = ({
                 fullWidth
                 value={productGroup}
                 name='productGroup'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_GROUP_OF_PRODUCTS.map(item => (
+                {arr_GROUP_OF_PRODUCTS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.productGroup}
                   </MenuItem>
@@ -264,7 +266,7 @@ const Product_Add = ({
             placeholder='Количество в упаковке'
             type='number'
             value={amountInPackage}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -281,7 +283,7 @@ const Product_Add = ({
             placeholder='Расход на ед'
             type='number'
             value={ratePerUnit}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -298,7 +300,7 @@ const Product_Add = ({
             placeholder='Длина упаковки'
             type='number'
             value={length}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -315,7 +317,7 @@ const Product_Add = ({
             placeholder='Длина упаковки'
             type='number'
             value={width}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -332,7 +334,7 @@ const Product_Add = ({
             placeholder='Высота упаковки'
             type='number'
             value={height}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -349,7 +351,7 @@ const Product_Add = ({
             placeholder='Вес упаковки'
             type='number'
             value={weight}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -380,17 +382,17 @@ Product_Add.propTypes = {
   getAll_SUPPLIERS: PropTypes.func.isRequired,
 
   state_unit: PropTypes.object.isRequired,
-  state_groupOf_Product: PropTypes.object.isRequired
+  state_groupOf_Product: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   state_unit: state.unit,
-  state_groupOf_Product: state.groupOf_Product
+  state_groupOf_Product: state.groupOf_Product,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   add_PRODUCT,
   getAll_UNITS,
-  getAll_GROUP_OF_PRODUCTS
+  getAll_GROUP_OF_PRODUCTS,
 })(Product_Add);

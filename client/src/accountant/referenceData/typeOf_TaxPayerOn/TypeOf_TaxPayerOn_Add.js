@@ -15,29 +15,30 @@ import { add_TYPE_OF_TAX_PAYER_ON } from '../../../store/actions/accountant/refe
 
 // import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
+    backgroundColor: 'white',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0
+  // },
   displayNone: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 }));
 
 const TypeOf_TaxPayerOn_Add = ({ setNameOfPage, add_TYPE_OF_TAX_PAYER_ON }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const buttonBackHandler = () => {
-    history.goBack();
-    // history.push('/accountant/type-of-tax-payer-on');
-  };
+  // const buttonBackHandler = () => {
+  //   history.goBack();
+  //   // history.push('/accountant/type-of-tax-payer-on');
+  // };
 
   const [typeOf_TaxPayerOn, setTypeOf_TaxPayerOn] = useState('');
 
@@ -47,26 +48,26 @@ const TypeOf_TaxPayerOn_Add = ({ setNameOfPage, add_TYPE_OF_TAX_PAYER_ON }) => {
     setNameOfPage('Добавить налогооблажение');
   }, [setNameOfPage]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setTypeOf_TaxPayerOn(e.target.value);
     setDisabledForm(!typeOf_TaxPayerOn);
   };
 
   const addItemHandler = () => {
     add_TYPE_OF_TAX_PAYER_ON(typeOf_TaxPayerOn);
-    history.goBack();
+    // history.goBack();
   };
 
   return (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
@@ -77,10 +78,11 @@ const TypeOf_TaxPayerOn_Add = ({ setNameOfPage, add_TYPE_OF_TAX_PAYER_ON }) => {
             variant='outlined'
             name='typeOf_TaxPayerOn'
             fullWidth
+            autoFocus
             placeholder='Введите полное название'
             type='text'
             value={typeOf_TaxPayerOn}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -104,10 +106,10 @@ const TypeOf_TaxPayerOn_Add = ({ setNameOfPage, add_TYPE_OF_TAX_PAYER_ON }) => {
 
 TypeOf_TaxPayerOn_Add.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  add_TYPE_OF_TAX_PAYER_ON: PropTypes.func.isRequired
+  add_TYPE_OF_TAX_PAYER_ON: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   setNameOfPage,
-  add_TYPE_OF_TAX_PAYER_ON
+  add_TYPE_OF_TAX_PAYER_ON,
 })(TypeOf_TaxPayerOn_Add);

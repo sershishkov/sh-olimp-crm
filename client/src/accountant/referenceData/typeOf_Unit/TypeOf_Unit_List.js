@@ -7,7 +7,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_TYPE_OF_UNITS,
-  delete_TYPE_OF_UNIT
+  delete_TYPE_OF_UNIT,
 } from '../../../store/actions/accountant/referenceData/typeOf_Unit';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -19,27 +19,27 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
-  }
+    height: 50,
+  },
 }));
 
 const TypeOf_Unit_List = ({
   setNameOfPage,
   getAll_TYPE_OF_UNITS,
   delete_TYPE_OF_UNIT,
-  typeOf_Unit: { arr_TYPE_OF_UNITS, loading }
+  typeOf_Unit: { arr_TYPE_OF_UNITS, loading },
 }) => {
   const classes = useStyles();
 
@@ -48,7 +48,7 @@ const TypeOf_Unit_List = ({
     getAll_TYPE_OF_UNITS();
   }, [setNameOfPage, getAll_TYPE_OF_UNITS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_TYPE_OF_UNIT(itemId);
     window.location.reload();
   };
@@ -59,9 +59,9 @@ const TypeOf_Unit_List = ({
       columns={[
         { title: 'Группа измерений', field: 'field_typeOf_Unit' },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_TYPE_OF_UNITS.map(item => {
+      data={arr_TYPE_OF_UNITS.map((item) => {
         return {
           field_typeOf_Unit: item.typeOf_Unit,
           btnDel: (
@@ -83,12 +83,13 @@ const TypeOf_Unit_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -116,15 +117,15 @@ TypeOf_Unit_List.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAll_TYPE_OF_UNITS: PropTypes.func.isRequired,
   delete_TYPE_OF_UNIT: PropTypes.func.isRequired,
-  typeOf_Unit: PropTypes.object.isRequired
+  typeOf_Unit: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  typeOf_Unit: state.typeOf_Unit
+const mapStateToProps = (state) => ({
+  typeOf_Unit: state.typeOf_Unit,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_TYPE_OF_UNITS,
-  delete_TYPE_OF_UNIT
+  delete_TYPE_OF_UNIT,
 })(TypeOf_Unit_List);

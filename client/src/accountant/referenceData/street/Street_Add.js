@@ -15,29 +15,30 @@ import { add_STREET } from '../../../store/actions/accountant/referenceData/stre
 
 // import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
+    backgroundColor: 'white',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0
+  // },
   displayNone: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 }));
 
 const Street_Add = ({ setNameOfPage, add_STREET }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const buttonBackHandler = () => {
-    history.goBack();
-    // history.push('/accountant/street');
-  };
+  // const buttonBackHandler = () => {
+  //   history.goBack();
+  //   // history.push('/accountant/street');
+  // };
 
   const [streetName, setStreetName] = useState('');
 
@@ -47,26 +48,26 @@ const Street_Add = ({ setNameOfPage, add_STREET }) => {
     setNameOfPage('Создать улицу');
   }, [setNameOfPage]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setStreetName(e.target.value);
     setDisabledForm(!streetName);
   };
 
   const addItemHandler = () => {
     add_STREET(streetName);
-    history.goBack();
+    // history.goBack();
   };
 
   return (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
@@ -77,10 +78,11 @@ const Street_Add = ({ setNameOfPage, add_STREET }) => {
             variant='outlined'
             name='streetName'
             fullWidth
+            autoFocus
             placeholder='Введите полное название'
             type='text'
             value={streetName}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -104,10 +106,10 @@ const Street_Add = ({ setNameOfPage, add_STREET }) => {
 
 Street_Add.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  add_STREET: PropTypes.func.isRequired
+  add_STREET: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   setNameOfPage,
-  add_STREET
+  add_STREET,
 })(Street_Add);

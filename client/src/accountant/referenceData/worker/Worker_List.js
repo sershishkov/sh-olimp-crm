@@ -8,7 +8,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_WORKERS,
-  delete_WORKER
+  delete_WORKER,
 } from '../../../store/actions/accountant/referenceData/worker';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -20,38 +20,38 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
+    height: 50,
   },
   rowItem: {
     // border: '1px solid red',
     justifyItems: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   rowItemDate: {
     fontSize: '0.85rem',
     [theme.breakpoints.down('sm')]: {
-      display: 'none'
-    }
-  }
+      display: 'none',
+    },
+  },
 }));
 
 const Worker_List = ({
   setNameOfPage,
   getAll_WORKERS,
   delete_WORKER,
-  worker: { arr_WORKERS, loading }
+  worker: { arr_WORKERS, loading },
 }) => {
   const classes = useStyles();
 
@@ -60,7 +60,7 @@ const Worker_List = ({
     getAll_WORKERS();
   }, [setNameOfPage, getAll_WORKERS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_WORKER(itemId);
     window.location.reload();
   };
@@ -74,9 +74,9 @@ const Worker_List = ({
         { title: 'Отчество', field: 'middleName' },
         { title: 'Дата рождения', field: 'dateOf_Birth' },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_WORKERS.map(item => {
+      data={arr_WORKERS.map((item) => {
         return {
           surname: item.surname,
           name: item.name,
@@ -103,12 +103,13 @@ const Worker_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -136,15 +137,15 @@ Worker_List.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAll_WORKERS: PropTypes.func.isRequired,
   delete_WORKER: PropTypes.func.isRequired,
-  worker: PropTypes.object.isRequired
+  worker: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  worker: state.worker
+const mapStateToProps = (state) => ({
+  worker: state.worker,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_WORKERS,
-  delete_WORKER
+  delete_WORKER,
 })(Worker_List);

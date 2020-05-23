@@ -15,29 +15,30 @@ import { add_CITY } from '../../../store/actions/accountant/referenceData/city';
 
 // import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
+    backgroundColor: 'white',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0
+  // },
   displayNone: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 }));
 
 const City_Add = ({ setNameOfPage, add_CITY }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const buttonBackHandler = () => {
-    history.goBack();
-    // history.push('/accountant/city');
-  };
+  // const buttonBackHandler = () => {
+  //   history.goBack();
+  //   // history.push('/accountant/city');
+  // };
 
   const [cityName, setCityName] = useState('');
 
@@ -47,26 +48,26 @@ const City_Add = ({ setNameOfPage, add_CITY }) => {
     setNameOfPage('Создать город');
   }, [setNameOfPage]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setCityName(e.target.value);
     setDisabledForm(!cityName);
   };
 
   const addItemHandler = () => {
     add_CITY(cityName);
-    history.goBack();
+    // history.goBack();
   };
 
   return (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
@@ -77,10 +78,11 @@ const City_Add = ({ setNameOfPage, add_CITY }) => {
             variant='outlined'
             name='cityName'
             fullWidth
+            autoFocus
             placeholder='Введите полное название'
             type='text'
             value={cityName}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -104,10 +106,10 @@ const City_Add = ({ setNameOfPage, add_CITY }) => {
 
 City_Add.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
-  add_CITY: PropTypes.func.isRequired
+  add_CITY: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   setNameOfPage,
-  add_CITY
+  add_CITY,
 })(City_Add);
