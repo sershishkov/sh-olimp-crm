@@ -3,6 +3,9 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Unit_Add from '../unit/Unit_Add';
+import GroupOf_Product_Add from '../groupOf_Product/GroupOf_Product_Add';
+
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -13,6 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
@@ -84,6 +88,10 @@ const Product_Add = ({
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
+
+  const [openUnit_Add, setOpenUnit_Add] = useState(false);
+  const [openGroupOf_Product_Add, setOpenGroupOf_Product_Add] = useState(false);
+
   const {
     productName,
     unit,
@@ -134,8 +142,32 @@ const Product_Add = ({
     // history.goBack();
   };
 
+  const handleOpen_Unit_Add = () => {
+    setOpenUnit_Add(true);
+  };
+  const handleOpen_GroupOf_Product_Add = () => {
+    setOpenGroupOf_Product_Add(true);
+  };
+
+  const handleClose_Unit_Add = () => {
+    setOpenUnit_Add(false);
+  };
+  const handleClose_GroupOf_Product_Add = () => {
+    setOpenGroupOf_Product_Add(false);
+  };
+
   return (
     <Grid container className={classes.root} spacing={1}>
+      <Modal open={openUnit_Add} onClose={handleClose_Unit_Add}>
+        <Unit_Add />
+      </Modal>
+      <Modal
+        open={openGroupOf_Product_Add}
+        onClose={handleClose_GroupOf_Product_Add}
+      >
+        <GroupOf_Product_Add />
+      </Modal>
+
       {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
@@ -199,7 +231,8 @@ const Product_Add = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/unit/add');
+              handleOpen_Unit_Add();
+              // history.push('/accountant/unit/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -246,7 +279,8 @@ const Product_Add = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/group-of-product/add');
+              handleOpen_GroupOf_Product_Add();
+              // history.push('/accountant/group-of-product/add');
             }}
           >
             <AddCircleIcon color='primary' />

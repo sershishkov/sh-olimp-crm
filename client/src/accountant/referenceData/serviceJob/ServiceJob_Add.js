@@ -3,6 +3,9 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Unit_Add from '../unit/Unit_Add';
+import GroupOf_ServiceJob_Add from '../groupOf_ServiceJob/GroupOf_ServiceJob_Add';
+
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -13,6 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
@@ -76,6 +80,12 @@ const ServiceJob_Add = ({
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
+
+  const [openUnit_Add, setOpenUnit_Add] = useState(false);
+  const [openGroupOf_ServiceJob_Add, setOpenGroupOf_ServiceJob_Add] = useState(
+    false
+  );
+
   const { serviceName, thisUnit, serviceJobGroup } = pageForm;
 
   useEffect(() => {
@@ -94,8 +104,32 @@ const ServiceJob_Add = ({
     // history.goBack();
   };
 
+  const handleOpen_Unit_Add = () => {
+    setOpenUnit_Add(true);
+  };
+  const handleOpen_GroupOf_ServiceJob_Add = () => {
+    setOpenGroupOf_ServiceJob_Add(true);
+  };
+
+  const handleClose_Unit_Add = () => {
+    setOpenUnit_Add(false);
+  };
+  const handleClose_GroupOf_ServiceJob_Add = () => {
+    setOpenGroupOf_ServiceJob_Add(false);
+  };
+
   return (
     <Grid container className={classes.root} spacing={1}>
+      <Modal open={openUnit_Add} onClose={handleClose_Unit_Add}>
+        <Unit_Add />
+      </Modal>
+      <Modal
+        open={openGroupOf_ServiceJob_Add}
+        onClose={handleClose_GroupOf_ServiceJob_Add}
+      >
+        <GroupOf_ServiceJob_Add />
+      </Modal>
+
       {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
@@ -159,7 +193,8 @@ const ServiceJob_Add = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/unit/add');
+              handleOpen_Unit_Add();
+              // history.push('/accountant/unit/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -205,7 +240,8 @@ const ServiceJob_Add = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/group-of-servicejob/add');
+              handleOpen_GroupOf_ServiceJob_Add();
+              // history.push('/accountant/group-of-servicejob/add');
             }}
           >
             <AddCircleIcon color='primary' />

@@ -4,6 +4,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import IMask from 'imask';
 
+import Oblast_Add from '../oblast/Oblast_Add';
+import Rayon_Add from '../rayon/Rayon_Add';
+import TypeOf_Settlement_Add from '../typeOf_Settlement/TypeOf_Settlement_Add';
+import City_Add from '../city/City_Add';
+import TypeOf_Street_Add from '../typeOf_Street/TypeOf_Street_Add';
+import Street_Add from '../street/Street_Add';
+
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -14,12 +21,13 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getOne_WORKER,
-  update_WORKER
+  update_WORKER,
 } from '../../../store/actions/accountant/referenceData/worker';
 
 import { getAll_TYPE_OF_SETTLEMENTS } from '../../../store/actions/accountant/referenceData/typeOf_Settlement';
@@ -32,33 +40,33 @@ import { getAll_RAYONS } from '../../../store/actions/accountant/referenceData/r
 
 import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0
+  // },
   displayNone: {
-    display: 'none'
+    display: 'none',
   },
   displayFlex: {
     display: 'flex',
     position: 'absolute',
     top: 22,
-    left: 7
+    left: 7,
     // zIndex: 555
   },
   wrapSelect: {
-    position: 'relative'
+    position: 'relative',
   },
   select: {
-    height: 55
+    height: 55,
     // border: '1px solid red'
-  }
+  },
 }));
 
 const Worker_Edit = ({
@@ -80,15 +88,15 @@ const Worker_Edit = ({
   state_street: { arr_STREETS },
 
   state_oblast: { arr_OBLASTS },
-  state_rayon: { arr_RAYONS }
+  state_rayon: { arr_RAYONS },
 }) => {
   const classes = useStyles();
   const history = useHistory();
   const { id } = useParams();
 
-  const buttonBackHandler = () => {
-    history.push('/accountant/worker');
-  };
+  // const buttonBackHandler = () => {
+  //   history.push('/accountant/worker');
+  // };
 
   const [pageForm, setPageForm] = useState({
     surname: '',
@@ -107,10 +115,23 @@ const Worker_Edit = ({
     numberOf_house: '',
     numberOf_app: '',
     individualTaxNumber: '',
-    phoneNumber: ''
+    phoneNumber: '',
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
+
+  const [openOblast_Add, setOpenOblast_Add] = React.useState(false);
+  const [openRayon_Add, setOpenRayon_Add] = React.useState(false);
+  const [
+    openTypeOf_Settlement_Add,
+    setOpenTypeOf_Settlement_Add,
+  ] = React.useState(false);
+  const [openCity_Add, setOpenCity_Add] = React.useState(false);
+  const [openTypeOf_Street_Add, setOpenTypeOf_Street_Add] = React.useState(
+    false
+  );
+  const [openStreet_Add, setOpenStreet_Add] = React.useState(false);
+
   const {
     surname,
     name,
@@ -128,7 +149,7 @@ const Worker_Edit = ({
     numberOf_house,
     numberOf_app,
     individualTaxNumber,
-    phoneNumber
+    phoneNumber,
   } = pageForm;
 
   useEffect(() => {
@@ -152,7 +173,7 @@ const Worker_Edit = ({
     getAll_OBLASTS,
     getAll_RAYONS,
 
-    id
+    id,
   ]);
 
   useLayoutEffect(() => {
@@ -183,13 +204,13 @@ const Worker_Edit = ({
         numberOf_house: one_WORKER.numberOf_house,
         numberOf_app: one_WORKER.numberOf_app,
         individualTaxNumber: one_WORKER.individualTaxNumber,
-        phoneNumber: one_WORKER.phoneNumber
+        phoneNumber: one_WORKER.phoneNumber,
       });
     }
   }, [one_WORKER]);
   // console.log(dateOf_Birth);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
     setDisabledForm(
       !(
@@ -209,9 +230,9 @@ const Worker_Edit = ({
       )
     );
   };
-  const onInputPhoneHandler = e => {
+  const onInputPhoneHandler = (e) => {
     const inputMaskOptions = {
-      mask: '+{38}(000)000-00-00'
+      mask: '+{38}(000)000-00-00',
     };
     IMask(e.target, inputMaskOptions);
   };
@@ -240,16 +261,79 @@ const Worker_Edit = ({
     history.push('/accountant/worker');
   };
 
+  const handleOpen_Oblast_Add = () => {
+    setOpenOblast_Add(true);
+  };
+  const handleOpen_Rayon_Add = () => {
+    setOpenRayon_Add(true);
+  };
+  const handleOpen_TypeOf_Settlement_Add = () => {
+    setOpenTypeOf_Settlement_Add(true);
+  };
+  const handleOpen_City_Add = () => {
+    setOpenCity_Add(true);
+  };
+  const handleOpen_TypeOf_Street_Add = () => {
+    setOpenTypeOf_Street_Add(true);
+  };
+  const handleOpen_Street_Add = () => {
+    setOpenStreet_Add(true);
+  };
+
+  const handleClose_Oblast_Add = () => {
+    setOpenOblast_Add(false);
+  };
+  const handleClose_Rayon_Add = () => {
+    setOpenRayon_Add(false);
+  };
+  const handleClose_TypeOf_Settlement_Add = () => {
+    setOpenTypeOf_Settlement_Add(false);
+  };
+  const handleClose_City_Add = () => {
+    setOpenCity_Add(false);
+  };
+  const handleClose_TypeOf_Street_Add = () => {
+    setOpenTypeOf_Street_Add(false);
+  };
+  const handleClose_Street_Add = () => {
+    setOpenStreet_Add(false);
+  };
+
   return (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      <Modal open={openOblast_Add} onClose={handleClose_Oblast_Add}>
+        <Oblast_Add />
+      </Modal>
+      <Modal open={openRayon_Add} onClose={handleClose_Rayon_Add}>
+        <Rayon_Add />
+      </Modal>
+      <Modal
+        open={openTypeOf_Settlement_Add}
+        onClose={handleClose_TypeOf_Settlement_Add}
+      >
+        <TypeOf_Settlement_Add />
+      </Modal>
+      <Modal open={openCity_Add} onClose={handleClose_City_Add}>
+        <City_Add />
+      </Modal>
+      <Modal
+        open={openTypeOf_Street_Add}
+        onClose={handleClose_TypeOf_Street_Add}
+      >
+        <TypeOf_Street_Add />
+      </Modal>
+      <Modal open={openStreet_Add} onClose={handleClose_Street_Add}>
+        <Street_Add />
+      </Modal>
+
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
@@ -263,7 +347,7 @@ const Worker_Edit = ({
             placeholder='Введите фамилию'
             type='text'
             value={surname ? surname : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -280,7 +364,7 @@ const Worker_Edit = ({
             placeholder='Введите имя'
             type='text'
             value={name ? name : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -296,7 +380,7 @@ const Worker_Edit = ({
             placeholder='Введите отчество'
             type='text'
             value={middleName ? middleName : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -312,7 +396,7 @@ const Worker_Edit = ({
             name='dateOf_Birth'
             fullWidth
             value={dateOf_Birth ? dateOf_Birth : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
             className={classes.dateField}
           />
         </Grid>
@@ -330,7 +414,7 @@ const Worker_Edit = ({
             placeholder='Введите индекс'
             type='text'
             value={postCode ? postCode : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -356,10 +440,10 @@ const Worker_Edit = ({
                 fullWidth
                 value={oblast ? oblast : ''}
                 name='oblast'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_OBLASTS.map(item => (
+                {arr_OBLASTS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.oblastName}
                   </MenuItem>
@@ -372,7 +456,8 @@ const Worker_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/oblast/add');
+              handleOpen_Oblast_Add();
+              // history.push('/accountant/oblast/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -401,10 +486,10 @@ const Worker_Edit = ({
                 fullWidth
                 value={rayon ? rayon : ''}
                 name='rayon'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_RAYONS.map(item => (
+                {arr_RAYONS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.rayonName}
                   </MenuItem>
@@ -416,7 +501,8 @@ const Worker_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/rayon/add');
+              handleOpen_Rayon_Add();
+              // history.push('/accountant/rayon/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -447,10 +533,10 @@ const Worker_Edit = ({
                 fullWidth
                 value={typeOf_settlement ? typeOf_settlement : ''}
                 name='typeOf_settlement'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_TYPE_OF_SETTLEMENTS.map(item => (
+                {arr_TYPE_OF_SETTLEMENTS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.typeOf_SettlementShort}
                   </MenuItem>
@@ -462,7 +548,8 @@ const Worker_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/type-of-settlement/add');
+              handleOpen_TypeOf_Settlement_Add();
+              // history.push('/accountant/type-of-settlement/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -491,10 +578,10 @@ const Worker_Edit = ({
                 fullWidth
                 value={city ? city : ''}
                 name='city'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_CITYS.map(item => (
+                {arr_CITYS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.cityName}
                   </MenuItem>
@@ -506,7 +593,8 @@ const Worker_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/city/add');
+              handleOpen_City_Add();
+              // history.push('/accountant/city/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -537,10 +625,10 @@ const Worker_Edit = ({
                 fullWidth
                 value={typeOf_street ? typeOf_street : ''}
                 name='typeOf_street'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_TYPE_OF_STREETS.map(item => (
+                {arr_TYPE_OF_STREETS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.typeOf_StreetShort}
                   </MenuItem>
@@ -552,7 +640,8 @@ const Worker_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/type-of-street/add');
+              handleOpen_TypeOf_Street_Add();
+              // history.push('/accountant/type-of-street/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -581,10 +670,10 @@ const Worker_Edit = ({
                 fullWidth
                 value={street ? street : ''}
                 name='street'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_STREETS.map(item => (
+                {arr_STREETS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.streetName}
                   </MenuItem>
@@ -596,7 +685,8 @@ const Worker_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/street/add');
+              handleOpen_Street_Add();
+              // history.push('/accountant/street/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -616,7 +706,7 @@ const Worker_Edit = ({
             placeholder='Дом№_'
             type='text'
             value={numberOf_house ? numberOf_house : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -633,7 +723,7 @@ const Worker_Edit = ({
             placeholder='Кв.№_'
             type='text'
             value={numberOf_app ? numberOf_app : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -650,7 +740,7 @@ const Worker_Edit = ({
             placeholder='ИНН'
             type='number'
             value={individualTaxNumber ? individualTaxNumber : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -668,8 +758,8 @@ const Worker_Edit = ({
             placeholder='телефон'
             type='tel'
             value={phoneNumber ? phoneNumber : ''}
-            onInput={e => onInputPhoneHandler(e)}
-            onChange={e => onChangeHandler(e)}
+            onInput={(e) => onInputPhoneHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -712,10 +802,10 @@ Worker_Edit.propTypes = {
   state_worker: PropTypes.object.isRequired,
 
   state_oblast: PropTypes.object.isRequired,
-  state_rayon: PropTypes.object.isRequired
+  state_rayon: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   state_typeOf_Settlement: state.typeOf_Settlement,
   state_city: state.city,
   state_typeOf_Street: state.typeOf_Street,
@@ -723,7 +813,7 @@ const mapStateToProps = state => ({
   state_worker: state.worker,
 
   state_oblast: state.oblast,
-  state_rayon: state.rayon
+  state_rayon: state.rayon,
 });
 
 export default connect(mapStateToProps, {
@@ -736,5 +826,5 @@ export default connect(mapStateToProps, {
   getAll_STREETS,
 
   getAll_OBLASTS,
-  getAll_RAYONS
+  getAll_RAYONS,
 })(Worker_Edit);

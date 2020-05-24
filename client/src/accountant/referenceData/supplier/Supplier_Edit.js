@@ -4,6 +4,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import IMask from 'imask';
 
+import Oblast_Add from '../oblast/Oblast_Add';
+import Rayon_Add from '../rayon/Rayon_Add';
+import TypeOf_Settlement_Add from '../typeOf_Settlement/TypeOf_Settlement_Add';
+import City_Add from '../city/City_Add';
+import TypeOf_Street_Add from '../typeOf_Street/TypeOf_Street_Add';
+import Street_Add from '../street/Street_Add';
+
+import TypeOf_Firm_Add from '../typeOf_Firm/TypeOf_Firm_Add';
+import FirstPersonPosition_Add from '../firstPersonPosition/FirstPersonPosition_Add';
+import TypeOf_ActsOnBasisOf_Add from '../typeOf_ActsOnBasisOf/TypeOf_ActsOnBasisOf_Add';
+import TypeOf_TaxPayerOn_Add from '../typeOf_TaxPayerOn/TypeOf_TaxPayerOn_Add';
+import GroupOf_Product_Add from '../groupOf_Product/GroupOf_Product_Add';
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
@@ -14,12 +27,13 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getOne_SUPPLIER,
-  update_SUPPLIER
+  update_SUPPLIER,
 } from '../../../store/actions/accountant/referenceData/supplier';
 
 import { getAll_TYPE_OF_FIRMS } from '../../../store/actions/accountant/referenceData/typeOf_Firm';
@@ -37,33 +51,33 @@ import { getAll_RAYONS } from '../../../store/actions/accountant/referenceData/r
 
 import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0
+  // },
   displayNone: {
-    display: 'none'
+    display: 'none',
   },
   displayFlex: {
     display: 'flex',
     position: 'absolute',
     top: 22,
-    left: 7
+    left: 7,
     // zIndex: 555
   },
   wrapSelect: {
-    position: 'relative'
+    position: 'relative',
   },
   select: {
-    height: 55
+    height: 55,
     // border: '1px solid red'
-  }
+  },
 }));
 
 const Supplier_Edit = ({
@@ -96,15 +110,15 @@ const Supplier_Edit = ({
   state_supplier: { one_SUPPLIER },
 
   state_oblast: { arr_OBLASTS },
-  state_rayon: { arr_RAYONS }
+  state_rayon: { arr_RAYONS },
 }) => {
   const classes = useStyles();
   const history = useHistory();
   const { id } = useParams();
 
-  const buttonBackHandler = () => {
-    history.push('/accountant/supplier');
-  };
+  // const buttonBackHandler = () => {
+  //   history.push('/accountant/supplier');
+  // };
 
   const [pageForm, setPageForm] = useState({
     supplierName: '',
@@ -134,10 +148,34 @@ const Supplier_Edit = ({
     taxPayerOn: '',
     email: '',
     phoneNumber: '',
-    groupOf_product: []
+    groupOf_product: [],
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
+
+  const [openOblast_Add, setOpenOblast_Add] = useState(false);
+  const [openRayon_Add, setOpenRayon_Add] = useState(false);
+  const [openTypeOf_Settlement_Add, setOpenTypeOf_Settlement_Add] = useState(
+    false
+  );
+  const [openCity_Add, setOpenCity_Add] = useState(false);
+  const [openTypeOf_Street_Add, setOpenTypeOf_Street_Add] = useState(false);
+  const [openStreet_Add, setOpenStreet_Add] = useState(false);
+
+  const [openTypeOf_Firm_Add, setOpenTypeOf_Firm_Add] = useState(false);
+  const [
+    openFirstPersonPosition_Add,
+    setOpenFirstPersonPosition_Add,
+  ] = useState(false);
+  const [
+    openTypeOf_ActsOnBasisOf_Add,
+    setOpenTypeOf_ActsOnBasisOf_Add,
+  ] = useState(false);
+  const [openTypeOf_TaxPayerOn_Add, setOpenTypeOf_TaxPayerOn_Add] = useState(
+    false
+  );
+  const [openGroupOf_Product_Add, setOpenGroupOf_Product_Add] = useState(false);
+
   const {
     supplierName,
     typeOfFirm,
@@ -166,7 +204,7 @@ const Supplier_Edit = ({
     taxPayerOn,
     email,
     phoneNumber,
-    groupOf_product
+    groupOf_product,
   } = pageForm;
 
   useEffect(() => {
@@ -199,7 +237,7 @@ const Supplier_Edit = ({
     getOne_SUPPLIER,
     getAll_OBLASTS,
     getAll_RAYONS,
-    id
+    id,
   ]);
 
   useLayoutEffect(() => {
@@ -237,12 +275,12 @@ const Supplier_Edit = ({
         taxPayerOn: one_SUPPLIER.taxPayerOn,
         email: one_SUPPLIER.email,
         phoneNumber: one_SUPPLIER.phoneNumber,
-        groupOf_product: one_SUPPLIER.groupOf_product
+        groupOf_product: one_SUPPLIER.groupOf_product,
       });
     }
   }, [one_SUPPLIER]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
     setDisabledForm(
       !(
@@ -274,9 +312,9 @@ const Supplier_Edit = ({
       )
     );
   };
-  const onInputPhoneHandler = e => {
+  const onInputPhoneHandler = (e) => {
     const inputMaskOptions = {
-      mask: '+{38}(000)000-00-00'
+      mask: '+{38}(000)000-00-00',
     };
     IMask(e.target, inputMaskOptions);
   };
@@ -318,16 +356,139 @@ const Supplier_Edit = ({
     history.push('/accountant/supplier');
   };
 
+  const handleOpen_Oblast_Add = () => {
+    setOpenOblast_Add(true);
+  };
+  const handleOpen_Rayon_Add = () => {
+    setOpenRayon_Add(true);
+  };
+  const handleOpen_TypeOf_Settlement_Add = () => {
+    setOpenTypeOf_Settlement_Add(true);
+  };
+  const handleOpen_City_Add = () => {
+    setOpenCity_Add(true);
+  };
+  const handleOpen_TypeOf_Street_Add = () => {
+    setOpenTypeOf_Street_Add(true);
+  };
+  const handleOpen_Street_Add = () => {
+    setOpenStreet_Add(true);
+  };
+
+  const handleOpen_TypeOf_Firm_Add = () => {
+    setOpenTypeOf_Firm_Add(true);
+  };
+  const handleOpen_FirstPersonPosition_Add = () => {
+    setOpenFirstPersonPosition_Add(true);
+  };
+  const handleOpen_TypeOf_ActsOnBasisOf_Add = () => {
+    setOpenTypeOf_ActsOnBasisOf_Add(true);
+  };
+  const handleOpen_TypeOf_TaxPayerOn_Add = () => {
+    setOpenTypeOf_TaxPayerOn_Add(true);
+  };
+  const handleOpen_GroupOf_Product_Add = () => {
+    setOpenGroupOf_Product_Add(true);
+  };
+
+  const handleClose_Oblast_Add = () => {
+    setOpenOblast_Add(false);
+  };
+  const handleClose_Rayon_Add = () => {
+    setOpenRayon_Add(false);
+  };
+  const handleClose_TypeOf_Settlement_Add = () => {
+    setOpenTypeOf_Settlement_Add(false);
+  };
+  const handleClose_City_Add = () => {
+    setOpenCity_Add(false);
+  };
+  const handleClose_TypeOf_Street_Add = () => {
+    setOpenTypeOf_Street_Add(false);
+  };
+  const handleClose_Street_Add = () => {
+    setOpenStreet_Add(false);
+  };
+
+  const handleClose_TypeOf_Firm_Add = () => {
+    setOpenTypeOf_Firm_Add(false);
+  };
+  const handleClose_FirstPersonPosition_Add = () => {
+    setOpenFirstPersonPosition_Add(false);
+  };
+  const handleClose_TypeOf_ActsOnBasisOf_Add = () => {
+    setOpenTypeOf_ActsOnBasisOf_Add(false);
+  };
+  const handleClose_TypeOf_TaxPayerOn_Add = () => {
+    setOpenTypeOf_TaxPayerOn_Add(false);
+  };
+  const handleClose_GroupOf_Product_Add = () => {
+    setOpenGroupOf_Product_Add(false);
+  };
+
   return (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      <Modal open={openOblast_Add} onClose={handleClose_Oblast_Add}>
+        <Oblast_Add />
+      </Modal>
+      <Modal open={openRayon_Add} onClose={handleClose_Rayon_Add}>
+        <Rayon_Add />
+      </Modal>
+      <Modal
+        open={openTypeOf_Settlement_Add}
+        onClose={handleClose_TypeOf_Settlement_Add}
+      >
+        <TypeOf_Settlement_Add />
+      </Modal>
+      <Modal open={openCity_Add} onClose={handleClose_City_Add}>
+        <City_Add />
+      </Modal>
+      <Modal
+        open={openTypeOf_Street_Add}
+        onClose={handleClose_TypeOf_Street_Add}
+      >
+        <TypeOf_Street_Add />
+      </Modal>
+      <Modal open={openStreet_Add} onClose={handleClose_Street_Add}>
+        <Street_Add />
+      </Modal>
+
+      <Modal open={openTypeOf_Firm_Add} onClose={handleClose_TypeOf_Firm_Add}>
+        <TypeOf_Firm_Add />
+      </Modal>
+      <Modal
+        open={openFirstPersonPosition_Add}
+        onClose={handleClose_FirstPersonPosition_Add}
+      >
+        <FirstPersonPosition_Add />
+      </Modal>
+      <Modal
+        open={openTypeOf_ActsOnBasisOf_Add}
+        onClose={handleClose_TypeOf_ActsOnBasisOf_Add}
+      >
+        <TypeOf_ActsOnBasisOf_Add />
+      </Modal>
+      <Modal
+        open={openTypeOf_TaxPayerOn_Add}
+        onClose={handleClose_TypeOf_TaxPayerOn_Add}
+      >
+        <TypeOf_TaxPayerOn_Add />
+      </Modal>
+      <Modal
+        open={openGroupOf_Product_Add}
+        onClose={handleClose_GroupOf_Product_Add}
+      >
+        <GroupOf_Product_Add />
+      </Modal>
+
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
@@ -352,10 +513,10 @@ const Supplier_Edit = ({
                 fullWidth
                 value={typeOfFirm ? typeOfFirm : ''}
                 name='typeOfFirm'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_TYPE_OF_FIRMS.map(item => (
+                {arr_TYPE_OF_FIRMS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.TypeOf_FirmShort}
                   </MenuItem>
@@ -368,7 +529,8 @@ const Supplier_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/type-of-firm/add');
+              handleOpen_TypeOf_Firm_Add();
+              // history.push('/accountant/type-of-firm/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -388,7 +550,7 @@ const Supplier_Edit = ({
             placeholder='название фирмы'
             type='text'
             value={supplierName ? supplierName : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -405,7 +567,7 @@ const Supplier_Edit = ({
             placeholder='Введите индекс'
             type='text'
             value={postCode ? postCode : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -431,10 +593,10 @@ const Supplier_Edit = ({
                 fullWidth
                 value={oblast ? oblast : ''}
                 name='oblast'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_OBLASTS.map(item => (
+                {arr_OBLASTS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.oblastName}
                   </MenuItem>
@@ -447,7 +609,8 @@ const Supplier_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/oblast/add');
+              handleOpen_Oblast_Add();
+              // history.push('/accountant/oblast/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -476,10 +639,10 @@ const Supplier_Edit = ({
                 fullWidth
                 value={rayon ? rayon : ''}
                 name='rayon'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_RAYONS.map(item => (
+                {arr_RAYONS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.rayonName}
                   </MenuItem>
@@ -492,7 +655,8 @@ const Supplier_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/rayon/add');
+              handleOpen_Rayon_Add();
+              // history.push('/accountant/rayon/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -523,10 +687,10 @@ const Supplier_Edit = ({
                 fullWidth
                 value={typeOf_settlement ? typeOf_settlement : ''}
                 name='typeOf_settlement'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_TYPE_OF_SETTLEMENTS.map(item => (
+                {arr_TYPE_OF_SETTLEMENTS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.typeOf_SettlementShort}
                   </MenuItem>
@@ -539,7 +703,8 @@ const Supplier_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/type-of-settlement/add');
+              handleOpen_TypeOf_Settlement_Add();
+              // history.push('/accountant/type-of-settlement/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -568,10 +733,10 @@ const Supplier_Edit = ({
                 fullWidth
                 value={city ? city : ''}
                 name='city'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_CITYS.map(item => (
+                {arr_CITYS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.cityName}
                   </MenuItem>
@@ -584,7 +749,8 @@ const Supplier_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/city/add');
+              handleOpen_City_Add();
+              // history.push('/accountant/city/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -615,10 +781,10 @@ const Supplier_Edit = ({
                 fullWidth
                 value={typeOf_street ? typeOf_street : ''}
                 name='typeOf_street'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_TYPE_OF_STREETS.map(item => (
+                {arr_TYPE_OF_STREETS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.typeOf_StreetShort}
                   </MenuItem>
@@ -631,7 +797,8 @@ const Supplier_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/type-of-street/add');
+              handleOpen_TypeOf_Street_Add();
+              // history.push('/accountant/type-of-street/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -660,10 +827,10 @@ const Supplier_Edit = ({
                 fullWidth
                 value={street ? street : ''}
                 name='street'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_STREETS.map(item => (
+                {arr_STREETS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.streetName}
                   </MenuItem>
@@ -676,7 +843,8 @@ const Supplier_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/street/add');
+              handleOpen_Street_Add();
+              // history.push('/accountant/street/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -696,7 +864,7 @@ const Supplier_Edit = ({
             placeholder='Дом№_'
             type='text'
             value={numberOf_house ? numberOf_house : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -713,7 +881,7 @@ const Supplier_Edit = ({
             placeholder='Кв.№_'
             type='text'
             value={numberOf_app ? numberOf_app : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -730,7 +898,7 @@ const Supplier_Edit = ({
             placeholder='ЄДРПОУ'
             type='text'
             value={EDRPOU ? EDRPOU : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -747,7 +915,7 @@ const Supplier_Edit = ({
             placeholder='IBAN'
             type='text'
             value={iban ? iban : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -777,10 +945,10 @@ const Supplier_Edit = ({
                 fullWidth
                 value={firstPersonPosition ? firstPersonPosition : ''}
                 name='firstPersonPosition'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_FIRST_PERSON_POSITIONS.map(item => (
+                {arr_FIRST_PERSON_POSITIONS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.position}
                   </MenuItem>
@@ -793,7 +961,8 @@ const Supplier_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/personposition/add');
+              handleOpen_FirstPersonPosition_Add();
+              // history.push('/accountant/personposition/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -813,7 +982,7 @@ const Supplier_Edit = ({
             placeholder='Введите фамилию'
             type='text'
             value={firstPersonSurname ? firstPersonSurname : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -830,7 +999,7 @@ const Supplier_Edit = ({
             placeholder='Введите имя'
             type='text'
             value={firstPersonName ? firstPersonName : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -847,7 +1016,7 @@ const Supplier_Edit = ({
             placeholder='Введите Отчество'
             type='text'
             value={firstPersonMiddleName ? firstPersonMiddleName : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -870,7 +1039,7 @@ const Supplier_Edit = ({
                 ? firstPersonSurnameRoditelPadej
                 : ''
             }
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -891,7 +1060,7 @@ const Supplier_Edit = ({
             value={
               firstPersonNameRoditelPadej ? firstPersonNameRoditelPadej : ''
             }
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -914,7 +1083,7 @@ const Supplier_Edit = ({
                 ? firstPersonMiddleNameRoditelPadej
                 : ''
             }
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -931,7 +1100,7 @@ const Supplier_Edit = ({
             placeholder='Введите имя'
             type='text'
             value={shortName ? shortName : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -961,10 +1130,10 @@ const Supplier_Edit = ({
                 fullWidth
                 value={actsOnBasisOf ? actsOnBasisOf : ''}
                 name='actsOnBasisOf'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_TYPE_OF_ACTS_ON_BASIS_OFS.map(item => (
+                {arr_TYPE_OF_ACTS_ON_BASIS_OFS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.actOnBasisOf}
                   </MenuItem>
@@ -977,7 +1146,8 @@ const Supplier_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/type-of-acts-on-basis-of/add');
+              handleOpen_TypeOf_ActsOnBasisOf_Add();
+              // history.push('/accountant/type-of-acts-on-basis-of/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -997,7 +1167,7 @@ const Supplier_Edit = ({
             placeholder='Номер свидоства'
             type='text'
             value={actsOnBasisOf_Number ? actsOnBasisOf_Number : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -1014,7 +1184,7 @@ const Supplier_Edit = ({
             placeholder='Выдан кем и когда'
             type='text'
             value={issuedBy ? issuedBy : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -1042,10 +1212,10 @@ const Supplier_Edit = ({
                 fullWidth
                 value={taxPayerOn ? taxPayerOn : ''}
                 name='taxPayerOn'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_TYPE_OF_TAX_PAYER_ONS.map(item => (
+                {arr_TYPE_OF_TAX_PAYER_ONS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.typeOf_TaxPayerOn}
                   </MenuItem>
@@ -1058,7 +1228,8 @@ const Supplier_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/type-of-tax-payer-on/add');
+              handleOpen_TypeOf_TaxPayerOn_Add();
+              // history.push('/accountant/type-of-tax-payer-on/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -1078,7 +1249,7 @@ const Supplier_Edit = ({
             placeholder='email'
             type='email'
             value={email ? email : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -1095,8 +1266,8 @@ const Supplier_Edit = ({
             placeholder='телефон'
             type='tel'
             value={phoneNumber ? phoneNumber : ''}
-            onInput={e => onInputPhoneHandler(e)}
-            onChange={e => onChangeHandler(e)}
+            onInput={(e) => onInputPhoneHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -1125,10 +1296,10 @@ const Supplier_Edit = ({
                 multiple
                 value={groupOf_product ? groupOf_product : []}
                 name='groupOf_product'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_GROUP_OF_PRODUCTS.map(item => (
+                {arr_GROUP_OF_PRODUCTS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.productGroup}
                   </MenuItem>
@@ -1141,7 +1312,8 @@ const Supplier_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/group-of-product/add');
+              handleOpen_GroupOf_Product_Add();
+              // history.push('/accountant/group-of-product/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -1184,10 +1356,10 @@ Supplier_Edit.propTypes = {
   state_supplier: PropTypes.object.isRequired,
 
   state_oblast: PropTypes.object.isRequired,
-  state_rayon: PropTypes.object.isRequired
+  state_rayon: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   state_typeOf_Settlement: state.typeOf_Settlement,
   state_city: state.city,
   state_typeOf_Street: state.typeOf_Street,
@@ -1202,7 +1374,7 @@ const mapStateToProps = state => ({
   state_groupOf_Product: state.groupOf_Product,
 
   state_oblast: state.oblast,
-  state_rayon: state.rayon
+  state_rayon: state.rayon,
 });
 
 export default connect(mapStateToProps, {
@@ -1221,5 +1393,5 @@ export default connect(mapStateToProps, {
   getAll_GROUP_OF_PRODUCTS,
 
   getAll_OBLASTS,
-  getAll_RAYONS
+  getAll_RAYONS,
 })(Supplier_Edit);

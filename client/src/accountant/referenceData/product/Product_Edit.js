@@ -3,6 +3,9 @@ import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Unit_Add from '../unit/Unit_Add';
+import GroupOf_Product_Add from '../groupOf_Product/GroupOf_Product_Add';
+
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -13,12 +16,13 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getOne_PRODUCT,
-  update_PRODUCT
+  update_PRODUCT,
 } from '../../../store/actions/accountant/referenceData/product';
 
 import { getAll_UNITS } from '../../../store/actions/accountant/referenceData/unit';
@@ -26,33 +30,33 @@ import { getAll_GROUP_OF_PRODUCTS } from '../../../store/actions/accountant/refe
 
 import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0
+  // },
   displayNone: {
-    display: 'none'
+    display: 'none',
   },
   displayFlex: {
     display: 'flex',
     position: 'absolute',
     top: 22,
-    left: 7
+    left: 7,
     // zIndex: 555
   },
   wrapSelect: {
-    position: 'relative'
+    position: 'relative',
   },
   select: {
-    height: 55
+    height: 55,
     // border: '1px solid red'
-  }
+  },
 }));
 
 const Product_Edit = ({
@@ -66,15 +70,15 @@ const Product_Edit = ({
   state_unit: { arr_UNITS },
   state_groupOf_Product: { arr_GROUP_OF_PRODUCTS },
 
-  state_product: { one_PRODUCT, loading }
+  state_product: { one_PRODUCT, loading },
 }) => {
   const classes = useStyles();
   const history = useHistory();
   const { id } = useParams();
 
-  const buttonBackHandler = () => {
-    history.push('/accountant/product');
-  };
+  // const buttonBackHandler = () => {
+  //   history.push('/accountant/product');
+  // };
 
   const [pageForm, setPageForm] = useState({
     productName: '',
@@ -85,10 +89,14 @@ const Product_Edit = ({
     length: '',
     width: '',
     height: '',
-    weight: ''
+    weight: '',
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
+
+  const [openUnit_Add, setOpenUnit_Add] = useState(false);
+  const [openGroupOf_Product_Add, setOpenGroupOf_Product_Add] = useState(false);
+
   const {
     productName,
     unit,
@@ -98,7 +106,7 @@ const Product_Edit = ({
     length,
     width,
     height,
-    weight
+    weight,
   } = pageForm;
 
   useEffect(() => {
@@ -111,7 +119,7 @@ const Product_Edit = ({
     getAll_UNITS,
     getAll_GROUP_OF_PRODUCTS,
     getOne_PRODUCT,
-    id
+    id,
   ]);
 
   useLayoutEffect(() => {
@@ -126,12 +134,12 @@ const Product_Edit = ({
         length: one_PRODUCT.length,
         width: one_PRODUCT.width,
         height: one_PRODUCT.height,
-        weight: one_PRODUCT.weight
+        weight: one_PRODUCT.weight,
       });
     }
   }, [one_PRODUCT]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
     setDisabledForm(
       !(
@@ -164,18 +172,42 @@ const Product_Edit = ({
     history.push('/accountant/product');
   };
 
+  const handleOpen_Unit_Add = () => {
+    setOpenUnit_Add(true);
+  };
+  const handleOpen_GroupOf_Product_Add = () => {
+    setOpenGroupOf_Product_Add(true);
+  };
+
+  const handleClose_Unit_Add = () => {
+    setOpenUnit_Add(false);
+  };
+  const handleClose_GroupOf_Product_Add = () => {
+    setOpenGroupOf_Product_Add(false);
+  };
+
   return loading ? (
     <Spinner />
   ) : (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      <Modal open={openUnit_Add} onClose={handleClose_Unit_Add}>
+        <Unit_Add />
+      </Modal>
+      <Modal
+        open={openGroupOf_Product_Add}
+        onClose={handleClose_GroupOf_Product_Add}
+      >
+        <GroupOf_Product_Add />
+      </Modal>
+
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
@@ -189,7 +221,7 @@ const Product_Edit = ({
             placeholder='название товара'
             type='text'
             value={productName ? productName : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -215,10 +247,10 @@ const Product_Edit = ({
                 fullWidth
                 value={unit ? unit : ''}
                 name='unit'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_UNITS.map(item => (
+                {arr_UNITS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.unitNameShort}
                   </MenuItem>
@@ -230,7 +262,8 @@ const Product_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/unit/add');
+              handleOpen_Unit_Add();
+              // history.push('/accountant/unit/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -261,10 +294,10 @@ const Product_Edit = ({
                 fullWidth
                 value={productGroup ? productGroup : ''}
                 name='productGroup'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_GROUP_OF_PRODUCTS.map(item => (
+                {arr_GROUP_OF_PRODUCTS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.productGroup}
                   </MenuItem>
@@ -277,7 +310,8 @@ const Product_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/group-of-product/add');
+              handleOpen_GroupOf_Product_Add();
+              // history.push('/accountant/group-of-product/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -297,7 +331,7 @@ const Product_Edit = ({
             placeholder='Количество в упаковке'
             type='number'
             value={amountInPackage ? amountInPackage : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -314,7 +348,7 @@ const Product_Edit = ({
             placeholder='Расход на ед'
             type='number'
             value={ratePerUnit ? ratePerUnit : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -331,7 +365,7 @@ const Product_Edit = ({
             placeholder='Длина упаковки'
             type='number'
             value={length ? length : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -348,7 +382,7 @@ const Product_Edit = ({
             placeholder='Длина упаковки'
             type='number'
             value={width ? width : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -365,7 +399,7 @@ const Product_Edit = ({
             placeholder='Высота упаковки'
             type='number'
             value={height ? height : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -382,7 +416,7 @@ const Product_Edit = ({
             placeholder='Вес упаковки'
             type='number'
             value={weight ? weight : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -415,14 +449,14 @@ Product_Edit.propTypes = {
   state_unit: PropTypes.object.isRequired,
   state_groupOf_Product: PropTypes.object.isRequired,
 
-  state_product: PropTypes.object.isRequired
+  state_product: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   state_unit: state.unit,
   state_groupOf_Product: state.groupOf_Product,
 
-  state_product: state.product
+  state_product: state.product,
 });
 
 export default connect(mapStateToProps, {
@@ -430,5 +464,5 @@ export default connect(mapStateToProps, {
   getOne_PRODUCT,
   update_PRODUCT,
   getAll_UNITS,
-  getAll_GROUP_OF_PRODUCTS
+  getAll_GROUP_OF_PRODUCTS,
 })(Product_Edit);

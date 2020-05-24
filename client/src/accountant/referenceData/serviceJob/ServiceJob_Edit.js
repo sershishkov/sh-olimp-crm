@@ -3,6 +3,9 @@ import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Unit_Add from '../unit/Unit_Add';
+import GroupOf_ServiceJob_Add from '../groupOf_ServiceJob/GroupOf_ServiceJob_Add';
+
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -13,12 +16,13 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getOne_SERVICE_JOB,
-  update_SERVICE_JOB
+  update_SERVICE_JOB,
 } from '../../../store/actions/accountant/referenceData/serviceJob';
 
 import { getAll_UNITS } from '../../../store/actions/accountant/referenceData/unit';
@@ -26,33 +30,33 @@ import { getAll_GROUP_OF_SERVICE_JOBS } from '../../../store/actions/accountant/
 
 import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0
+  // },
   displayNone: {
-    display: 'none'
+    display: 'none',
   },
   displayFlex: {
     display: 'flex',
     position: 'absolute',
     top: 22,
-    left: 7
+    left: 7,
     // zIndex: 555
   },
   wrapSelect: {
-    position: 'relative'
+    position: 'relative',
   },
   select: {
-    height: 55
+    height: 55,
     // border: '1px solid red'
-  }
+  },
 }));
 
 const ServiceJob_Edit = ({
@@ -63,23 +67,29 @@ const ServiceJob_Edit = ({
   getAll_GROUP_OF_SERVICE_JOBS,
   serviceJob: { one_SERVICE_JOB, loading },
   unit,
-  groupOf_ServiceJob
+  groupOf_ServiceJob,
 }) => {
   const classes = useStyles();
   const history = useHistory();
   const { id } = useParams();
 
-  const buttonBackHandler = () => {
-    history.push('/accountant/service-job');
-  };
+  // const buttonBackHandler = () => {
+  //   history.push('/accountant/service-job');
+  // };
 
   const [pageForm, setPageForm] = useState({
     serviceName: '',
     thisUnit: '',
-    serviceJobGroup: ''
+    serviceJobGroup: '',
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
+
+  const [openUnit_Add, setOpenUnit_Add] = useState(false);
+  const [openGroupOf_ServiceJob_Add, setOpenGroupOf_ServiceJob_Add] = useState(
+    false
+  );
+
   const { serviceName, thisUnit, serviceJobGroup } = pageForm;
 
   useEffect(() => {
@@ -92,7 +102,7 @@ const ServiceJob_Edit = ({
     getAll_UNITS,
     getAll_GROUP_OF_SERVICE_JOBS,
     getOne_SERVICE_JOB,
-    id
+    id,
   ]);
 
   useLayoutEffect(() => {
@@ -101,12 +111,12 @@ const ServiceJob_Edit = ({
         ...pageForm,
         serviceName: one_SERVICE_JOB.serviceName,
         thisUnit: one_SERVICE_JOB.unit,
-        serviceJobGroup: one_SERVICE_JOB.serviceJobGroup
+        serviceJobGroup: one_SERVICE_JOB.serviceJobGroup,
       });
     }
   }, [one_SERVICE_JOB]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setPageForm({ ...pageForm, [e.target.name]: e.target.value });
     setDisabledForm(!(serviceName || thisUnit || serviceJobGroup));
   };
@@ -116,18 +126,42 @@ const ServiceJob_Edit = ({
     history.push('/accountant/service-job');
   };
 
+  const handleOpen_Unit_Add = () => {
+    setOpenUnit_Add(true);
+  };
+  const handleOpen_GroupOf_ServiceJob_Add = () => {
+    setOpenGroupOf_ServiceJob_Add(true);
+  };
+
+  const handleClose_Unit_Add = () => {
+    setOpenUnit_Add(false);
+  };
+  const handleClose_GroupOf_ServiceJob_Add = () => {
+    setOpenGroupOf_ServiceJob_Add(false);
+  };
+
   return loading ? (
     <Spinner />
   ) : (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      <Modal open={openUnit_Add} onClose={handleClose_Unit_Add}>
+        <Unit_Add />
+      </Modal>
+      <Modal
+        open={openGroupOf_ServiceJob_Add}
+        onClose={handleClose_GroupOf_ServiceJob_Add}
+      >
+        <GroupOf_ServiceJob_Add />
+      </Modal>
+
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
@@ -141,7 +175,7 @@ const ServiceJob_Edit = ({
             placeholder='Введите полное название'
             type='text'
             value={serviceName ? serviceName : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -167,10 +201,10 @@ const ServiceJob_Edit = ({
                 fullWidth
                 value={thisUnit ? thisUnit : ''}
                 name='thisUnit'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {unit.arr_UNITS.map(item => (
+                {unit.arr_UNITS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.unitNameShort}
                   </MenuItem>
@@ -182,7 +216,8 @@ const ServiceJob_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/unit/add');
+              handleOpen_Unit_Add();
+              // history.push('/accountant/unit/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -213,10 +248,10 @@ const ServiceJob_Edit = ({
                 fullWidth
                 value={serviceJobGroup ? serviceJobGroup : ''}
                 name='serviceJobGroup'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {groupOf_ServiceJob.arr_GROUP_OF_SERVICE_JOBS.map(item => (
+                {groupOf_ServiceJob.arr_GROUP_OF_SERVICE_JOBS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.serviceJobGroup}
                   </MenuItem>
@@ -228,7 +263,8 @@ const ServiceJob_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/group-of-servicejob/add');
+              handleOpen_GroupOf_ServiceJob_Add();
+              // history.push('/accountant/group-of-servicejob/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -262,13 +298,13 @@ ServiceJob_Edit.propTypes = {
 
   groupOf_ServiceJob: PropTypes.object.isRequired,
   unit: PropTypes.object.isRequired,
-  serviceJob: PropTypes.object.isRequired
+  serviceJob: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   groupOf_ServiceJob: state.groupOf_ServiceJob,
   unit: state.unit,
-  serviceJob: state.serviceJob
+  serviceJob: state.serviceJob,
 });
 
 export default connect(mapStateToProps, {
@@ -276,5 +312,5 @@ export default connect(mapStateToProps, {
   getOne_SERVICE_JOB,
   update_SERVICE_JOB,
   getAll_UNITS,
-  getAll_GROUP_OF_SERVICE_JOBS
+  getAll_GROUP_OF_SERVICE_JOBS,
 })(ServiceJob_Edit);
