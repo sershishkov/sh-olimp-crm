@@ -7,7 +7,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_SUPPLIERS,
-  delete_SUPPLIER
+  delete_SUPPLIER,
 } from '../../../store/actions/accountant/referenceData/supplier';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -19,38 +19,38 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
+    height: 50,
   },
   rowItem: {
     // border: '1px solid red',
     justifyItems: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   rowItemDate: {
     fontSize: '0.85rem',
     [theme.breakpoints.down('sm')]: {
-      display: 'none'
-    }
-  }
+      display: 'none',
+    },
+  },
 }));
 
 const Supplier_List = ({
   setNameOfPage,
   getAll_SUPPLIERS,
   delete_SUPPLIER,
-  supplier: { arr_SUPPLIERS, loading }
+  supplier: { arr_SUPPLIERS, loading },
 }) => {
   const classes = useStyles();
 
@@ -59,7 +59,7 @@ const Supplier_List = ({
     getAll_SUPPLIERS();
   }, [setNameOfPage, getAll_SUPPLIERS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_SUPPLIER(itemId);
     window.location.reload();
   };
@@ -73,9 +73,9 @@ const Supplier_List = ({
         { title: 'Должность', field: 'field_firstPersonPosition' },
         { title: 'Фамилия', field: 'field_shortName' },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_SUPPLIERS.map(item => {
+      data={arr_SUPPLIERS.map((item) => {
         return {
           field_TypeOf_FirmShort: item.typeOfFirm.TypeOf_FirmShort,
           field_supplierName: item.supplierName,
@@ -100,12 +100,13 @@ const Supplier_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -133,15 +134,15 @@ Supplier_List.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAll_SUPPLIERS: PropTypes.func.isRequired,
   delete_SUPPLIER: PropTypes.func.isRequired,
-  supplier: PropTypes.object.isRequired
+  supplier: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  supplier: state.supplier
+const mapStateToProps = (state) => ({
+  supplier: state.supplier,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_SUPPLIERS,
-  delete_SUPPLIER
+  delete_SUPPLIER,
 })(Supplier_List);

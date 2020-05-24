@@ -7,7 +7,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_GROUP_OF_PRODUCTS,
-  delete_GROUP_OF_PRODUCT
+  delete_GROUP_OF_PRODUCT,
 } from '../../../store/actions/accountant/referenceData/groupOf_Product';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -19,27 +19,27 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
-  }
+    height: 50,
+  },
 }));
 
 const GroupOf_Product_List = ({
   setNameOfPage,
   getAll_GROUP_OF_PRODUCTS,
   delete_GROUP_OF_PRODUCT,
-  groupOf_Product: { arr_GROUP_OF_PRODUCTS, loading }
+  groupOf_Product: { arr_GROUP_OF_PRODUCTS, loading },
 }) => {
   const classes = useStyles();
 
@@ -48,7 +48,7 @@ const GroupOf_Product_List = ({
     getAll_GROUP_OF_PRODUCTS();
   }, [setNameOfPage, getAll_GROUP_OF_PRODUCTS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_GROUP_OF_PRODUCT(itemId);
     window.location.reload();
   };
@@ -59,9 +59,9 @@ const GroupOf_Product_List = ({
       columns={[
         { title: 'Группа товаров', field: 'field_productGroup' },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_GROUP_OF_PRODUCTS.map(item => {
+      data={arr_GROUP_OF_PRODUCTS.map((item) => {
         return {
           field_productGroup: item.productGroup,
           btnDel: (
@@ -83,12 +83,13 @@ const GroupOf_Product_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -116,15 +117,15 @@ GroupOf_Product_List.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAll_GROUP_OF_PRODUCTS: PropTypes.func.isRequired,
   delete_GROUP_OF_PRODUCT: PropTypes.func.isRequired,
-  groupOf_Product: PropTypes.object.isRequired
+  groupOf_Product: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  groupOf_Product: state.groupOf_Product
+const mapStateToProps = (state) => ({
+  groupOf_Product: state.groupOf_Product,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_GROUP_OF_PRODUCTS,
-  delete_GROUP_OF_PRODUCT
+  delete_GROUP_OF_PRODUCT,
 })(GroupOf_Product_List);

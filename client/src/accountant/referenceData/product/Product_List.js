@@ -7,7 +7,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_PRODUCTS,
-  delete_PRODUCT
+  delete_PRODUCT,
 } from '../../../store/actions/accountant/referenceData/product';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -19,27 +19,27 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
-  }
+    height: 50,
+  },
 }));
 
 const Product_List = ({
   setNameOfPage,
   getAll_PRODUCTS,
   delete_PRODUCT,
-  product: { arr_PRODUCTS, loading }
+  product: { arr_PRODUCTS, loading },
 }) => {
   const classes = useStyles();
 
@@ -48,7 +48,7 @@ const Product_List = ({
     getAll_PRODUCTS();
   }, [setNameOfPage, getAll_PRODUCTS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_PRODUCT(itemId);
     window.location.reload();
   };
@@ -61,9 +61,9 @@ const Product_List = ({
         { title: 'ед.изм', field: 'field_unit' },
         { title: 'Группа товара', field: 'field_productGroup' },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_PRODUCTS.map(item => {
+      data={arr_PRODUCTS.map((item) => {
         return {
           field_productName: item.productName,
           field_unit: item.unit.unitNameShort,
@@ -87,12 +87,13 @@ const Product_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -120,15 +121,15 @@ Product_List.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAll_PRODUCTS: PropTypes.func.isRequired,
   delete_PRODUCT: PropTypes.func.isRequired,
-  product: PropTypes.object.isRequired
+  product: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  product: state.product
+const mapStateToProps = (state) => ({
+  product: state.product,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_PRODUCTS,
-  delete_PRODUCT
+  delete_PRODUCT,
 })(Product_List);

@@ -7,7 +7,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_CLIENTS,
-  delete_CLIENT
+  delete_CLIENT,
 } from '../../../store/actions/accountant/referenceData/client';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -19,38 +19,38 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
+    height: 50,
   },
   rowItem: {
     // border: '1px solid red',
     justifyItems: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   rowItemDate: {
     fontSize: '0.85rem',
     [theme.breakpoints.down('sm')]: {
-      display: 'none'
-    }
-  }
+      display: 'none',
+    },
+  },
 }));
 
 const OurFirm_List = ({
   setNameOfPage,
   getAll_CLIENTS,
   delete_CLIENT,
-  state_client: { arr_CLIENTS, loading }
+  state_client: { arr_CLIENTS, loading },
 }) => {
   const classes = useStyles();
 
@@ -59,7 +59,7 @@ const OurFirm_List = ({
     getAll_CLIENTS();
   }, [setNameOfPage, getAll_CLIENTS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_CLIENT(itemId);
     window.location.reload();
   };
@@ -73,9 +73,9 @@ const OurFirm_List = ({
         { title: 'Должность руководителя', field: 'field_firstPersonPosition' },
         { title: 'ФИО', field: 'field_shortName' },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_CLIENTS.map(item => {
+      data={arr_CLIENTS.map((item) => {
         return {
           field_typeOfFirm: item.typeOfFirm.TypeOf_FirmShort,
           field_firmName: item.firmName,
@@ -100,12 +100,13 @@ const OurFirm_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -134,15 +135,15 @@ OurFirm_List.propTypes = {
   getAll_CLIENTS: PropTypes.func.isRequired,
   delete_CLIENT: PropTypes.func.isRequired,
 
-  state_client: PropTypes.object.isRequired
+  state_client: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  state_client: state.client
+const mapStateToProps = (state) => ({
+  state_client: state.client,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_CLIENTS,
-  delete_CLIENT
+  delete_CLIENT,
 })(OurFirm_List);

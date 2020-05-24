@@ -8,7 +8,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_OUR_SALES_INVOICE_NAKLADNAYAS,
-  delete_OUR_SALES_INVOICE_NAKLADNAYA
+  delete_OUR_SALES_INVOICE_NAKLADNAYA,
 } from '../../../store/actions/accountant/ourMainData/our_SalesInvoiceNakladnaya';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -20,20 +20,20 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
-  }
+    height: 50,
+  },
 }));
 
 const Our_SalesInvoiceNakladnaya_List = ({
@@ -42,8 +42,8 @@ const Our_SalesInvoiceNakladnaya_List = ({
   delete_OUR_SALES_INVOICE_NAKLADNAYA,
   state_our_SalesInvoiceNakladnaya: {
     arr_OUR_SALES_INVOICE_NAKLADNAYAS,
-    loading
-  }
+    loading,
+  },
 }) => {
   const classes = useStyles();
 
@@ -52,7 +52,7 @@ const Our_SalesInvoiceNakladnaya_List = ({
     getAll_OUR_SALES_INVOICE_NAKLADNAYAS();
   }, [setNameOfPage, getAll_OUR_SALES_INVOICE_NAKLADNAYAS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_OUR_SALES_INVOICE_NAKLADNAYA(itemId);
     window.location.reload();
   };
@@ -67,9 +67,9 @@ const Our_SalesInvoiceNakladnaya_List = ({
         { title: 'Клиент', field: 'client' },
         { title: 'Сумма', field: 'sum' },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_OUR_SALES_INVOICE_NAKLADNAYAS.map(item => {
+      data={arr_OUR_SALES_INVOICE_NAKLADNAYAS.map((item) => {
         return {
           naklNumber: item.naklNumber,
           naclDate: <Moment format='DD-MM-YYYY'>{item.naclDate}</Moment>,
@@ -95,12 +95,13 @@ const Our_SalesInvoiceNakladnaya_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -130,15 +131,15 @@ Our_SalesInvoiceNakladnaya_List.propTypes = {
   getAll_OUR_SALES_INVOICE_NAKLADNAYAS: PropTypes.func.isRequired,
   delete_OUR_SALES_INVOICE_NAKLADNAYA: PropTypes.func.isRequired,
 
-  state_our_SalesInvoiceNakladnaya: PropTypes.object.isRequired
+  state_our_SalesInvoiceNakladnaya: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  state_our_SalesInvoiceNakladnaya: state.our_SalesInvoiceNakladnaya
+const mapStateToProps = (state) => ({
+  state_our_SalesInvoiceNakladnaya: state.our_SalesInvoiceNakladnaya,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_OUR_SALES_INVOICE_NAKLADNAYAS,
-  delete_OUR_SALES_INVOICE_NAKLADNAYA
+  delete_OUR_SALES_INVOICE_NAKLADNAYA,
 })(Our_SalesInvoiceNakladnaya_List);

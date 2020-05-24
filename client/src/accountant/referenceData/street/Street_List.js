@@ -7,7 +7,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_STREETS,
-  delete_STREET
+  delete_STREET,
 } from '../../../store/actions/accountant/referenceData/street';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -19,27 +19,27 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
-  }
+    height: 50,
+  },
 }));
 
 const Street_List = ({
   setNameOfPage,
   getAll_STREETS,
   delete_STREET,
-  street: { arr_STREETS, loading }
+  street: { arr_STREETS, loading },
 }) => {
   const classes = useStyles();
 
@@ -48,7 +48,7 @@ const Street_List = ({
     getAll_STREETS();
   }, [setNameOfPage, getAll_STREETS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_STREET(itemId);
     window.location.reload();
   };
@@ -59,9 +59,9 @@ const Street_List = ({
       columns={[
         { title: 'Название улицы', field: 'field_streetName' },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_STREETS.map(item => {
+      data={arr_STREETS.map((item) => {
         return {
           field_streetName: item.streetName,
           btnDel: (
@@ -83,12 +83,13 @@ const Street_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -116,15 +117,15 @@ Street_List.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAll_STREETS: PropTypes.func.isRequired,
   delete_STREET: PropTypes.func.isRequired,
-  street: PropTypes.object.isRequired
+  street: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  street: state.street
+const mapStateToProps = (state) => ({
+  street: state.street,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_STREETS,
-  delete_STREET
+  delete_STREET,
 })(Street_List);

@@ -7,7 +7,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_TYPE_OF_FIRMS,
-  delete_TYPE_OF_FIRM
+  delete_TYPE_OF_FIRM,
 } from '../../../store/actions/accountant/referenceData/typeOf_Firm';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -19,27 +19,27 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
-  }
+    height: 50,
+  },
 }));
 
 const TypeOf_Firm_List = ({
   setNameOfPage,
   getAll_TYPE_OF_FIRMS,
   delete_TYPE_OF_FIRM,
-  typeOf_Firm: { arr_TYPE_OF_FIRMS, loading }
+  typeOf_Firm: { arr_TYPE_OF_FIRMS, loading },
 }) => {
   const classes = useStyles();
 
@@ -48,7 +48,7 @@ const TypeOf_Firm_List = ({
     getAll_TYPE_OF_FIRMS();
   }, [setNameOfPage, getAll_TYPE_OF_FIRMS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_TYPE_OF_FIRM(itemId);
     window.location.reload();
   };
@@ -60,12 +60,12 @@ const TypeOf_Firm_List = ({
         { title: 'Полное название', field: 'field_TypeOf_FirmLong' },
         {
           title: 'Сокращенное название',
-          field: 'field_TypeOf_FirmShort'
+          field: 'field_TypeOf_FirmShort',
         },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_TYPE_OF_FIRMS.map(item => {
+      data={arr_TYPE_OF_FIRMS.map((item) => {
         return {
           field_TypeOf_FirmLong: item.TypeOf_FirmLong,
           field_TypeOf_FirmShort: item.TypeOf_FirmShort,
@@ -88,12 +88,13 @@ const TypeOf_Firm_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -121,15 +122,15 @@ TypeOf_Firm_List.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAll_TYPE_OF_FIRMS: PropTypes.func.isRequired,
   delete_TYPE_OF_FIRM: PropTypes.func.isRequired,
-  typeOf_Firm: PropTypes.object.isRequired
+  typeOf_Firm: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  typeOf_Firm: state.typeOf_Firm
+const mapStateToProps = (state) => ({
+  typeOf_Firm: state.typeOf_Firm,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_TYPE_OF_FIRMS,
-  delete_TYPE_OF_FIRM
+  delete_TYPE_OF_FIRM,
 })(TypeOf_Firm_List);

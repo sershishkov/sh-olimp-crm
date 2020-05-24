@@ -7,7 +7,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_FIRST_PERSON_POSITIONS,
-  delete_FIRST_PERSON_POSITION
+  delete_FIRST_PERSON_POSITION,
 } from '../../../store/actions/accountant/referenceData/firstPersonPosition';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -19,27 +19,27 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
-  }
+    height: 50,
+  },
 }));
 
 const FirstPersonPosition_List = ({
   setNameOfPage,
   getAll_FIRST_PERSON_POSITIONS,
   delete_FIRST_PERSON_POSITION,
-  firstPersonPosition: { arr_FIRST_PERSON_POSITIONS, loading }
+  firstPersonPosition: { arr_FIRST_PERSON_POSITIONS, loading },
 }) => {
   const classes = useStyles();
 
@@ -48,7 +48,7 @@ const FirstPersonPosition_List = ({
     getAll_FIRST_PERSON_POSITIONS();
   }, [setNameOfPage, getAll_FIRST_PERSON_POSITIONS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_FIRST_PERSON_POSITION(itemId);
     window.location.reload();
   };
@@ -60,12 +60,12 @@ const FirstPersonPosition_List = ({
         { title: 'Должность', field: 'field_position' },
         {
           title: 'Должность в родительном падеже',
-          field: 'field_positionRoditPadej'
+          field: 'field_positionRoditPadej',
         },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_FIRST_PERSON_POSITIONS.map(item => {
+      data={arr_FIRST_PERSON_POSITIONS.map((item) => {
         return {
           field_position: item.position,
           field_positionRoditPadej: item.positionRoditPadej,
@@ -88,12 +88,13 @@ const FirstPersonPosition_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -121,15 +122,15 @@ FirstPersonPosition_List.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAll_FIRST_PERSON_POSITIONS: PropTypes.func.isRequired,
   delete_FIRST_PERSON_POSITION: PropTypes.func.isRequired,
-  firstPersonPosition: PropTypes.object.isRequired
+  firstPersonPosition: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  firstPersonPosition: state.firstPersonPosition
+const mapStateToProps = (state) => ({
+  firstPersonPosition: state.firstPersonPosition,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_FIRST_PERSON_POSITIONS,
-  delete_FIRST_PERSON_POSITION
+  delete_FIRST_PERSON_POSITION,
 })(FirstPersonPosition_List);

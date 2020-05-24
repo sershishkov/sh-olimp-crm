@@ -7,7 +7,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_CITYS,
-  delete_CITY
+  delete_CITY,
 } from '../../../store/actions/accountant/referenceData/city';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -19,27 +19,27 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
-  }
+    height: 50,
+  },
 }));
 
 const City_List = ({
   setNameOfPage,
   getAll_CITYS,
   delete_CITY,
-  city: { arr_CITYS, loading }
+  city: { arr_CITYS, loading },
 }) => {
   const classes = useStyles();
 
@@ -48,7 +48,7 @@ const City_List = ({
     getAll_CITYS();
   }, [setNameOfPage, getAll_CITYS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_CITY(itemId);
     window.location.reload();
   };
@@ -59,9 +59,9 @@ const City_List = ({
       columns={[
         { title: 'Название города', field: 'field_cityName' },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_CITYS.map(item => {
+      data={arr_CITYS.map((item) => {
         return {
           field_cityName: item.cityName,
           btnDel: (
@@ -83,12 +83,13 @@ const City_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -116,15 +117,15 @@ City_List.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAll_CITYS: PropTypes.func.isRequired,
   delete_CITY: PropTypes.func.isRequired,
-  city: PropTypes.object.isRequired
+  city: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  city: state.city
+const mapStateToProps = (state) => ({
+  city: state.city,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_CITYS,
-  delete_CITY
+  delete_CITY,
 })(City_List);

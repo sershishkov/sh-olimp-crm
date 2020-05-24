@@ -7,7 +7,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_RAYONS,
-  delete_RAYON
+  delete_RAYON,
 } from '../../../store/actions/accountant/referenceData/rayon';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -19,27 +19,27 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
-  }
+    height: 50,
+  },
 }));
 
 const Rayon_List = ({
   setNameOfPage,
   getAll_RAYONS,
   delete_RAYON,
-  state_rayon: { arr_RAYONS, loading }
+  state_rayon: { arr_RAYONS, loading },
 }) => {
   const classes = useStyles();
 
@@ -48,7 +48,7 @@ const Rayon_List = ({
     getAll_RAYONS();
   }, [setNameOfPage, getAll_RAYONS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_RAYON(itemId);
     window.location.reload();
   };
@@ -59,9 +59,9 @@ const Rayon_List = ({
       columns={[
         { title: 'Название района', field: 'field_rayonName' },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_RAYONS.map(item => {
+      data={arr_RAYONS.map((item) => {
         return {
           field_rayonName: item.rayonName,
           btnDel: (
@@ -83,12 +83,13 @@ const Rayon_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -116,15 +117,15 @@ Rayon_List.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAll_RAYONS: PropTypes.func.isRequired,
   delete_RAYON: PropTypes.func.isRequired,
-  state_rayon: PropTypes.object.isRequired
+  state_rayon: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  state_rayon: state.rayon
+const mapStateToProps = (state) => ({
+  state_rayon: state.rayon,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_RAYONS,
-  delete_RAYON
+  delete_RAYON,
 })(Rayon_List);

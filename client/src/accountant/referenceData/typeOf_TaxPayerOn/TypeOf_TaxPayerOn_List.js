@@ -7,7 +7,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_TYPE_OF_TAX_PAYER_ONS,
-  delete_TYPE_OF_TAX_PAYER_ON
+  delete_TYPE_OF_TAX_PAYER_ON,
 } from '../../../store/actions/accountant/referenceData/typeOf_TaxPayerOn';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -19,27 +19,27 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
-  }
+    height: 50,
+  },
 }));
 
 const TypeOf_TaxPayerOn_List = ({
   setNameOfPage,
   getAll_TYPE_OF_TAX_PAYER_ONS,
   delete_TYPE_OF_TAX_PAYER_ON,
-  typeOf_TaxPayerOn: { arr_TYPE_OF_TAX_PAYER_ONS, loading }
+  typeOf_TaxPayerOn: { arr_TYPE_OF_TAX_PAYER_ONS, loading },
 }) => {
   const classes = useStyles();
 
@@ -48,7 +48,7 @@ const TypeOf_TaxPayerOn_List = ({
     getAll_TYPE_OF_TAX_PAYER_ONS();
   }, [setNameOfPage, getAll_TYPE_OF_TAX_PAYER_ONS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_TYPE_OF_TAX_PAYER_ON(itemId);
     window.location.reload();
   };
@@ -59,9 +59,9 @@ const TypeOf_TaxPayerOn_List = ({
       columns={[
         { title: 'Вид налогообложения', field: 'field_typeOf_TaxPayerOn' },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_TYPE_OF_TAX_PAYER_ONS.map(item => {
+      data={arr_TYPE_OF_TAX_PAYER_ONS.map((item) => {
         return {
           field_typeOf_TaxPayerOn: item.typeOf_TaxPayerOn,
           btnDel: (
@@ -83,12 +83,13 @@ const TypeOf_TaxPayerOn_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -116,15 +117,15 @@ TypeOf_TaxPayerOn_List.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAll_TYPE_OF_TAX_PAYER_ONS: PropTypes.func.isRequired,
   delete_TYPE_OF_TAX_PAYER_ON: PropTypes.func.isRequired,
-  typeOf_TaxPayerOn: PropTypes.object.isRequired
+  typeOf_TaxPayerOn: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  typeOf_TaxPayerOn: state.typeOf_TaxPayerOn
+const mapStateToProps = (state) => ({
+  typeOf_TaxPayerOn: state.typeOf_TaxPayerOn,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_TYPE_OF_TAX_PAYER_ONS,
-  delete_TYPE_OF_TAX_PAYER_ON
+  delete_TYPE_OF_TAX_PAYER_ON,
 })(TypeOf_TaxPayerOn_List);

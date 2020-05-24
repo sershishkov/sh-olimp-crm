@@ -7,7 +7,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_OUR_FIRMS,
-  delete_OUR_FIRM
+  delete_OUR_FIRM,
 } from '../../../store/actions/accountant/referenceData/ourFirm';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -19,38 +19,38 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
+    height: 50,
   },
   rowItem: {
     // border: '1px solid red',
     justifyItems: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   rowItemDate: {
     fontSize: '0.85rem',
     [theme.breakpoints.down('sm')]: {
-      display: 'none'
-    }
-  }
+      display: 'none',
+    },
+  },
 }));
 
 const OurFirm_List = ({
   setNameOfPage,
   getAll_OUR_FIRMS,
   delete_OUR_FIRM,
-  ourFirm: { arr_OUR_FIRMS, loading }
+  ourFirm: { arr_OUR_FIRMS, loading },
 }) => {
   const classes = useStyles();
 
@@ -59,7 +59,7 @@ const OurFirm_List = ({
     getAll_OUR_FIRMS();
   }, [setNameOfPage, getAll_OUR_FIRMS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_OUR_FIRM(itemId);
     window.location.reload();
   };
@@ -73,9 +73,9 @@ const OurFirm_List = ({
         { title: 'Должность', field: 'field_firstPersonPosition' },
         { title: 'ФИО', field: 'field_shortName' },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_OUR_FIRMS.map(item => {
+      data={arr_OUR_FIRMS.map((item) => {
         return {
           field_TypeOf_FirmShort: item.typeOfFirm.TypeOf_FirmShort,
           field_firmName: item.firmName,
@@ -100,12 +100,13 @@ const OurFirm_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -133,15 +134,15 @@ OurFirm_List.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAll_OUR_FIRMS: PropTypes.func.isRequired,
   delete_OUR_FIRM: PropTypes.func.isRequired,
-  ourFirm: PropTypes.object.isRequired
+  ourFirm: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  ourFirm: state.ourFirm
+const mapStateToProps = (state) => ({
+  ourFirm: state.ourFirm,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_OUR_FIRMS,
-  delete_OUR_FIRM
+  delete_OUR_FIRM,
 })(OurFirm_List);

@@ -7,7 +7,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_TYPE_OF_STREETS,
-  delete_TYPE_OF_STREET
+  delete_TYPE_OF_STREET,
 } from '../../../store/actions/accountant/referenceData/typeOf_Street';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -19,27 +19,27 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
-  }
+    height: 50,
+  },
 }));
 
 const TypeOf_Street_List = ({
   setNameOfPage,
   getAll_TYPE_OF_STREETS,
   delete_TYPE_OF_STREET,
-  typeOf_Street: { arr_TYPE_OF_STREETS, loading }
+  typeOf_Street: { arr_TYPE_OF_STREETS, loading },
 }) => {
   const classes = useStyles();
 
@@ -48,7 +48,7 @@ const TypeOf_Street_List = ({
     getAll_TYPE_OF_STREETS();
   }, [setNameOfPage, getAll_TYPE_OF_STREETS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_TYPE_OF_STREET(itemId);
     window.location.reload();
   };
@@ -60,9 +60,9 @@ const TypeOf_Street_List = ({
         { title: 'Полное название', field: 'field_typeOf_StreetLong' },
         { title: 'Сокращенное название', field: 'field_typeOf_StreetShort' },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_TYPE_OF_STREETS.map(item => {
+      data={arr_TYPE_OF_STREETS.map((item) => {
         return {
           field_typeOf_StreetLong: item.typeOf_StreetLong,
           field_typeOf_StreetShort: item.typeOf_StreetShort,
@@ -85,12 +85,13 @@ const TypeOf_Street_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -118,15 +119,15 @@ TypeOf_Street_List.propTypes = {
   setNameOfPage: PropTypes.func.isRequired,
   getAll_TYPE_OF_STREETS: PropTypes.func.isRequired,
   delete_TYPE_OF_STREET: PropTypes.func.isRequired,
-  typeOf_Street: PropTypes.object.isRequired
+  typeOf_Street: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  typeOf_Street: state.typeOf_Street
+const mapStateToProps = (state) => ({
+  typeOf_Street: state.typeOf_Street,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_TYPE_OF_STREETS,
-  delete_TYPE_OF_STREET
+  delete_TYPE_OF_STREET,
 })(TypeOf_Street_List);
