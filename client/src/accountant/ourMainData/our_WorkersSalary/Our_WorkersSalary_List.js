@@ -8,7 +8,7 @@ import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getAll_OUR_WORKERS_SALARYS,
-  delete_OUR_WORKERS_SALARY
+  delete_OUR_WORKERS_SALARY,
 } from '../../../store/actions/accountant/ourMainData/our_WorkersSalary';
 
 import Spinner from '../../../shared/spinner/Spinner';
@@ -20,27 +20,27 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   btnAdd: {
     position: 'fixed',
     top: 50,
     left: 50,
-    zIndex: 5
+    zIndex: 5,
   },
   btnAddIcon: {
     width: 50,
-    height: 50
-  }
+    height: 50,
+  },
 }));
 
 const Our_WorkersSalary_List = ({
   setNameOfPage,
   getAll_OUR_WORKERS_SALARYS,
   delete_OUR_WORKERS_SALARY,
-  state_our_WorkersSalary: { arr_OUR_WORKERS_SALARYS, loading }
+  state_our_WorkersSalary: { arr_OUR_WORKERS_SALARYS, loading },
 }) => {
   const classes = useStyles();
 
@@ -49,7 +49,7 @@ const Our_WorkersSalary_List = ({
     getAll_OUR_WORKERS_SALARYS();
   }, [setNameOfPage, getAll_OUR_WORKERS_SALARYS]);
 
-  const deleteItem = itemId => {
+  const deleteItem = (itemId) => {
     delete_OUR_WORKERS_SALARY(itemId);
     window.location.reload();
   };
@@ -65,9 +65,9 @@ const Our_WorkersSalary_List = ({
         { title: 'Клиент', field: 'client' },
         { title: 'Сумма', field: 'sum' },
         { title: 'Удалить', field: 'btnDel', sorting: false },
-        { title: 'редактировать', field: 'btnEdit', sorting: false }
+        { title: 'редактировать', field: 'btnEdit', sorting: false },
       ]}
-      data={arr_OUR_WORKERS_SALARYS.map(item => {
+      data={arr_OUR_WORKERS_SALARYS.map((item) => {
         return {
           paymentNumber: item.paymentNumber,
           datePayment: <Moment format='DD-MM-YYYY'>{item.datePayment}</Moment>,
@@ -94,12 +94,13 @@ const Our_WorkersSalary_List = ({
             >
               <EditIcon />
             </IconButton>
-          )
+          ),
         };
       })}
       options={{
         sorting: true,
-        search: false
+        search: false,
+        pageSize: 10,
       }}
     />
   );
@@ -129,15 +130,15 @@ Our_WorkersSalary_List.propTypes = {
   getAll_OUR_WORKERS_SALARYS: PropTypes.func.isRequired,
   delete_OUR_WORKERS_SALARY: PropTypes.func.isRequired,
 
-  state_our_WorkersSalary: PropTypes.object.isRequired
+  state_our_WorkersSalary: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  state_our_WorkersSalary: state.our_WorkersSalary
+const mapStateToProps = (state) => ({
+  state_our_WorkersSalary: state.our_WorkersSalary,
 });
 
 export default connect(mapStateToProps, {
   setNameOfPage,
   getAll_OUR_WORKERS_SALARYS,
-  delete_OUR_WORKERS_SALARY
+  delete_OUR_WORKERS_SALARY,
 })(Our_WorkersSalary_List);

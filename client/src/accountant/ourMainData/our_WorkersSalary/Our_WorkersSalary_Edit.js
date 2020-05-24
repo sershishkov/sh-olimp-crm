@@ -3,6 +3,10 @@ import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Worker_Add from '../../referenceData/worker/Worker_Add';
+import OurFirm_Add from '../../referenceData/ourFirm/OurFirm_Add';
+import Client_Add from '../../referenceData/client/Client_Add';
+
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -14,14 +18,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-
 import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
 
 import { setNameOfPage } from '../../../store/actions/nameOfPage';
 
 import {
   getOne_OUR_WORKERS_SALARY,
-  update_OUR_WORKERS_SALARY
+  update_OUR_WORKERS_SALARY,
 } from '../../../store/actions/accountant/ourMainData/our_WorkersSalary';
 
 import { getAll_OUR_FIRMS } from '../../../store/actions/accountant/referenceData/ourFirm';
@@ -30,19 +34,26 @@ import { getAll_WORKERS } from '../../../store/actions/accountant/referenceData/
 
 import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
+    backgroundColor: 'white',
   },
-  buttonBack: {
-    position: 'fixed',
-    top: '5rem',
-    left: 0
-  },
+  // buttonBack: {
+  //   position: 'fixed',
+  //   top: '5rem',
+  //   left: 0
+  // },
   displayNone: {
-    display: 'none'
-  }
+    display: 'none',
+  },
+  modalScroll: {
+    margin: 'auto',
+    width: '90%',
+    scrollBehavior: 'smooth',
+    overflowY: 'scroll',
+  },
 }));
 
 const Our_WorkersSalary_Edit = ({
@@ -58,15 +69,15 @@ const Our_WorkersSalary_Edit = ({
   state_ourFirm: { arr_OUR_FIRMS },
   state_worker: { arr_WORKERS },
 
-  state_our_WorkersSalary: { one_OUR_WORKERS_SALARY, loading }
+  state_our_WorkersSalary: { one_OUR_WORKERS_SALARY, loading },
 }) => {
   const classes = useStyles();
   const history = useHistory();
   const { id } = useParams();
 
-  const buttonBackHandler = () => {
-    history.push('/accountant/our-workers-salary');
-  };
+  // const buttonBackHandler = () => {
+  //   history.push('/accountant/our-workers-salary');
+  // };
 
   const [formData, setFormData] = useState({
     paymentNumber: '',
@@ -75,15 +86,18 @@ const Our_WorkersSalary_Edit = ({
     ourFirm: '',
     client: '',
     description: '',
-    sum: ''
+    sum: '',
   });
 
   const [checkedData, setCheckedData] = useState({
     active: true,
-    cashPayment: true
+    cashPayment: true,
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
+  const [openWorker_Add, setOpenWorker_Add] = useState(false);
+  const [openOurFirm_Add, setOpenOurFirm_Add] = useState(false);
+  const [openClient_Add, setOpenClient_Add] = useState(false);
 
   const {
     paymentNumber,
@@ -92,7 +106,7 @@ const Our_WorkersSalary_Edit = ({
     ourFirm,
     client,
     description,
-    sum
+    sum,
   } = formData;
   const { active, cashPayment } = checkedData;
 
@@ -109,7 +123,7 @@ const Our_WorkersSalary_Edit = ({
     id,
     getAll_OUR_FIRMS,
     getAll_CLIENTS,
-    getAll_WORKERS
+    getAll_WORKERS,
   ]);
 
   useLayoutEffect(() => {
@@ -130,22 +144,22 @@ const Our_WorkersSalary_Edit = ({
         ourFirm: one_OUR_WORKERS_SALARY.ourFirm,
         client: one_OUR_WORKERS_SALARY.client,
         description: one_OUR_WORKERS_SALARY.description,
-        sum: one_OUR_WORKERS_SALARY.sum
+        sum: one_OUR_WORKERS_SALARY.sum,
       });
       setCheckedData({
         ...checkedData,
         active: one_OUR_WORKERS_SALARY.active,
-        cashPayment: one_OUR_WORKERS_SALARY.cashPayment
+        cashPayment: one_OUR_WORKERS_SALARY.cashPayment,
       });
     }
   }, [one_OUR_WORKERS_SALARY]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setDisabledForm(!(worker || ourFirm || client || description || sum));
   };
 
-  const onCheckHandler = e => {
+  const onCheckHandler = (e) => {
     setCheckedData({ ...checkedData, [e.target.name]: e.target.checked });
   };
 
@@ -165,18 +179,62 @@ const Our_WorkersSalary_Edit = ({
     history.push('/accountant/our-workers-salary');
   };
 
+  const handleOpen_Worker_Add = () => {
+    setOpenWorker_Add(true);
+  };
+  const handleOpen_OurFirm_Add = () => {
+    setOpenOurFirm_Add(true);
+  };
+  const handleOpen_Client_Add = () => {
+    setOpenClient_Add(true);
+  };
+
+  const handleClose_Worker_Add = () => {
+    setOpenWorker_Add(false);
+  };
+  const handleClose_OurFirm_Add = () => {
+    setOpenOurFirm_Add(false);
+  };
+  const handleClose_Client_Add = () => {
+    setOpenClient_Add(false);
+  };
+
   return loading ? (
     <Spinner />
   ) : (
     <Grid container className={classes.root} spacing={1}>
-      <Button
+      <Modal
+        className={classes.modalScroll}
+        open={openWorker_Add}
+        onClose={handleClose_Worker_Add}
+      >
+        <Worker_Add />
+      </Modal>
+
+      <Modal
+        className={classes.modalScroll}
+        open={openOurFirm_Add}
+        onClose={handleClose_OurFirm_Add}
+      >
+        <OurFirm_Add />
+      </Modal>
+
+      <Modal
+        className={classes.modalScroll}
+        open={openClient_Add}
+        onClose={handleClose_Client_Add}
+      >
+        <Client_Add />
+      </Modal>
+
+      {/* <Button
         onClick={buttonBackHandler}
         variant='contained'
         className={classes.buttonBack}
         color='primary'
       >
         назад
-      </Button>
+      </Button> */}
 
       <Grid item xs={12} container>
         <Grid item xs={4} container>
@@ -190,7 +248,7 @@ const Our_WorkersSalary_Edit = ({
             placeholder='Номер документа'
             type='text'
             value={paymentNumber ? paymentNumber : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -206,7 +264,7 @@ const Our_WorkersSalary_Edit = ({
             name='datePayment'
             fullWidth
             value={datePayment ? datePayment : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
             className={classes.dateField}
           />
         </Grid>
@@ -233,10 +291,10 @@ const Our_WorkersSalary_Edit = ({
                 fullWidth
                 value={worker ? worker : ''}
                 name='worker'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_WORKERS.map(item => (
+                {arr_WORKERS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.surname}
                   </MenuItem>
@@ -249,7 +307,8 @@ const Our_WorkersSalary_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/worker/add');
+              handleOpen_Worker_Add();
+              // history.push('/accountant/worker/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -278,10 +337,10 @@ const Our_WorkersSalary_Edit = ({
                 fullWidth
                 value={ourFirm ? ourFirm : ''}
                 name='ourFirm'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_OUR_FIRMS.map(item => (
+                {arr_OUR_FIRMS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.firmName}
                   </MenuItem>
@@ -294,7 +353,8 @@ const Our_WorkersSalary_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/our-firm/add');
+              handleOpen_OurFirm_Add();
+              // history.push('/accountant/our-firm/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -323,10 +383,10 @@ const Our_WorkersSalary_Edit = ({
                 fullWidth
                 value={client ? client : ''}
                 name='client'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_CLIENTS.map(item => (
+                {arr_CLIENTS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.firmName}
                   </MenuItem>
@@ -339,7 +399,8 @@ const Our_WorkersSalary_Edit = ({
         <Grid item xs={1} container alignItems='center' justify='center'>
           <IconButton
             onClick={() => {
-              history.push('/accountant/client/add');
+              handleOpen_Client_Add();
+              // history.push('/accountant/client/add');
             }}
           >
             <AddCircleIcon color='primary' />
@@ -360,7 +421,7 @@ const Our_WorkersSalary_Edit = ({
             placeholder='Описание'
             type='text'
             value={description ? description : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -377,7 +438,7 @@ const Our_WorkersSalary_Edit = ({
             placeholder='Сумма'
             type='number'
             value={sum ? sum : ''}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
       </Grid>
@@ -392,7 +453,7 @@ const Our_WorkersSalary_Edit = ({
             control={
               <Checkbox
                 checked={active ? active : ''}
-                onChange={e => onCheckHandler(e)}
+                onChange={(e) => onCheckHandler(e)}
                 name='active'
                 color='primary'
               />
@@ -407,7 +468,7 @@ const Our_WorkersSalary_Edit = ({
             control={
               <Checkbox
                 checked={cashPayment ? cashPayment : ''}
-                onChange={e => onCheckHandler(e)}
+                onChange={(e) => onCheckHandler(e)}
                 name='cashPayment'
                 color='primary'
               />
@@ -447,14 +508,14 @@ Our_WorkersSalary_Edit.propTypes = {
   state_ourFirm: PropTypes.object.isRequired,
   state_worker: PropTypes.object.isRequired,
 
-  state_our_WorkersSalary: PropTypes.object.isRequired
+  state_our_WorkersSalary: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   state_client: state.client,
   state_ourFirm: state.ourFirm,
   state_worker: state.worker,
-  state_our_WorkersSalary: state.our_WorkersSalary
+  state_our_WorkersSalary: state.our_WorkersSalary,
 });
 
 export default connect(mapStateToProps, {
@@ -464,5 +525,5 @@ export default connect(mapStateToProps, {
 
   getAll_OUR_FIRMS,
   getAll_CLIENTS,
-  getAll_WORKERS
+  getAll_WORKERS,
 })(Our_WorkersSalary_Edit);
