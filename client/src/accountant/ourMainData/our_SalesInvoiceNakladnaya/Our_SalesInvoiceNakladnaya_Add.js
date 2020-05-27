@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
+import IMask from 'imask';
+
+import TableForNakl from '../../components/tableForNakl/TableForNakl';
 
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -18,6 +21,15 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MaterialTable from 'material-table';
 import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+
+import StarBorder from '@material-ui/icons/StarBorder';
 
 import Spinner from '../../../shared/spinner/Spinner';
 
@@ -28,43 +40,65 @@ import { add_OUR_SALES_INVOICE_NAKLADNAYA } from '../../../store/actions/account
 import { getAll_OUR_FIRMS } from '../../../store/actions/accountant/referenceData/ourFirm';
 import { getAll_CLIENTS } from '../../../store/actions/accountant/referenceData/client';
 import { getAll_PRODUCTS } from '../../../store/actions/accountant/referenceData/product';
+import { getAll_GROUP_OF_PRODUCTS } from '../../../store/actions/accountant/referenceData/groupOf_Product';
 import { getAll_UNITS } from '../../../store/actions/accountant/referenceData/unit';
 
 // import Spinner from '../../../shared/spinner/Spinner';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     // display: 'flex',
-    marginTop: '7rem'
+    marginTop: '7rem',
+    backgroundColor: 'white',
   },
   buttonBack: {
     position: 'fixed',
     top: '5rem',
-    left: 0
+    left: 0,
   },
   displayNone: {
-    display: 'none'
+    display: 'none',
+    backgroundColor: 'green',
   },
   displayFlex: {
     display: 'flex',
     position: 'absolute',
     top: 22,
-    left: 7
+    left: 7,
     // zIndex: 555
   },
   wrapSelect: {
-    position: 'relative'
+    position: 'relative',
   },
   select: {
-    height: 55
+    height: 55,
     // border: '1px solid red'
   },
   formControlLabel: {
     // border: '1px solid red',
     height: 22,
     fontSize: '0.4rem',
-    marginLeft: 5
-  }
+    marginLeft: 5,
+  },
+  modalScroll: {
+    margin: 'auto',
+    width: '90%',
+    scrollBehavior: 'smooth',
+    overflowY: 'scroll',
+    padding: '4rem',
+  },
+  listOfGroups: {
+    backgroundColor: 'white',
+  },
+  listOfGroups_ListItem: {
+    // backgroundColor: 'yellow',
+  },
+  listOfProducts: {
+    display: 'none',
+  },
+  listOfProducts_ListItem: {
+    marginLeft: 30,
+  },
 }));
 
 const Our_SalesInvoiceNakladnaya_Add = ({
@@ -74,65 +108,72 @@ const Our_SalesInvoiceNakladnaya_Add = ({
   getAll_OUR_FIRMS,
   getAll_CLIENTS,
   getAll_PRODUCTS,
+  getAll_GROUP_OF_PRODUCTS,
   getAll_UNITS,
 
   state_client: { arr_CLIENTS },
   state_ourFirm: { arr_OUR_FIRMS },
   state_product: { arr_PRODUCTS },
-  state_unit: { arr_UNITS }
+  state_groupOf_Product: { arr_GROUP_OF_PRODUCTS },
+  state_unit: { arr_UNITS },
 }) => {
   const classes = useStyles();
   const history = useHistory();
-
-  const buttonBackHandler = () => {
-    history.push('/accountant/our-service-invoice-nakl');
-  };
 
   const [formData, setFormData] = useState({
     naklNumber: '',
     naclDate: '',
     ourFirm: '',
     client: '',
-    products: []
+    products: [],
   });
 
   const [checkedData, setCheckedData] = useState({
     active: true,
-    cashPayment: false
+    cashPayment: false,
   });
 
-  // const [dataForTable, setDataForTable] = useState([]);
   const [totalPriceForTable, setTotalPriceForTable] = useState(0);
 
-  const [selectedData, setSelectedData] = useState({
-    thisProductName: '',
-    thisProductName_Name: '',
-    thisProductUnit: '',
-    thisProductUnit_Name: '',
-    thisProductAmount: '',
-    thisProductPrice: '',
-    thisSum: 0
+  const [rowData, setRowData] = useState({
+    rowProductNameId: '',
+    rowProductName: '',
+    rowProductUnitNameId: '',
+    rowProductUnitName: '',
+    rowProductAmount: '',
+    rowProductPrice: '',
+    rowProductSum: 0,
   });
 
   const [disabledForm, setDisabledForm] = useState(true);
+  const [disabledButtonAddRow, setDisabledButtonAddRow] = useState(true);
+
+  const [openModal_ProductList, setOpenModal_ProductList] = useState(false);
+
+  const handleGroupOfProductCollapse = (id) => {
+    const productList = document.getElementById(`${id}nextProductList`);
+    productList.classList.toggle(`${classes.listOfProducts}`);
+  };
 
   const { naklNumber, naclDate, ourFirm, client, products } = formData;
   const { active, cashPayment } = checkedData;
+
   const {
-    thisProductName,
-    thisProductName_Name,
-    thisProductUnit,
-    thisProductUnit_Name,
-    thisProductAmount,
-    thisProductPrice,
-    thisSum
-  } = selectedData;
+    rowProductNameId,
+    rowProductName,
+    rowProductUnitNameId,
+    rowProductUnitName,
+    rowProductAmount,
+    rowProductPrice,
+    rowProductSum,
+  } = rowData;
 
   useEffect(() => {
     setNameOfPage('Добавить накладную');
     getAll_OUR_FIRMS();
     getAll_CLIENTS();
     getAll_PRODUCTS();
+    getAll_GROUP_OF_PRODUCTS();
     getAll_UNITS();
 
     const newDate = new Date();
@@ -150,111 +191,131 @@ const Our_SalesInvoiceNakladnaya_Add = ({
         ? `0${newDate.getMinutes()}`
         : newDate.getMinutes();
 
-    const thisNaklNumber = `ВН-${fullYear -
-      2000}.${month}.${day}.${hours}.${minutes}`;
+    const thisNaklNumber = `ВН-${
+      fullYear - 2000
+    }.${month}.${day}.${hours}.${minutes}`;
 
     const thisNaclDate = `${fullYear}-${month}-${day}`;
 
     setFormData({
       ...formData,
       naklNumber: thisNaklNumber,
-      naclDate: thisNaclDate
+      naclDate: thisNaclDate,
     });
   }, [
     setNameOfPage,
     setFormData,
     getAll_PRODUCTS,
+    getAll_GROUP_OF_PRODUCTS,
     getAll_OUR_FIRMS,
     getAll_CLIENTS,
-    getAll_UNITS
+    getAll_UNITS,
   ]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setDisabledForm(!(ourFirm && client && products));
+    setDisabledForm(!(ourFirm && client && products.length > 0));
   };
 
-  const onCheckHandler = e => {
+  const onCheckHandler = (e) => {
     setCheckedData({ ...checkedData, [e.target.name]: e.target.checked });
   };
 
-  const onChangeProductHandler = e => {
-    if (e.target.name === 'thisProductName') {
-      const selectedProduct = arr_PRODUCTS.find(item => {
+  const onChangeProductHandler = (e) => {
+    if (e.target.name === 'rowProductNameId') {
+      const selectedProduct = arr_PRODUCTS.find((item) => {
         return item._id === e.target.value;
       });
 
-      setSelectedData({
-        ...selectedData,
-        thisProductName: e.target.value,
-        thisProductUnit: selectedProduct.unit._id,
-        thisProductUnit_Name: selectedProduct.unit.unitNameShort,
-        thisProductName_Name: selectedProduct.productName
+      setRowData({
+        ...rowData,
+        rowProductNameId: e.target.value,
+        rowProductUnitNameId: selectedProduct.unit._id,
+        rowProductUnitName: selectedProduct.unit.unitNameShort,
+        rowProductName: selectedProduct.productName,
       });
     } else {
-      setSelectedData({
-        ...selectedData,
-        [e.target.name]: e.target.value
+      setRowData({
+        ...rowData,
+        [e.target.name]: e.target.value,
       });
     }
   };
 
-  const addProductHandler = () => {
-    const thisId = uuid.v4();
+  const handleSelectProduct = (id) => {
+    const selectedProduct = arr_PRODUCTS.find((item) => {
+      return item._id === id;
+    });
+
+    setRowData({
+      ...rowData,
+      rowProductNameId: id,
+      rowProductUnitNameId: selectedProduct.unit._id,
+      rowProductUnitName: selectedProduct.unit.unitNameShort,
+      rowProductName: selectedProduct.productName,
+    });
+    setOpenModal_ProductList(false);
+  };
+
+  const addRowProductHandler = () => {
+    const rowProductId = uuid.v4();
 
     const newRow = {
-      thisId,
-      thisProductName,
-      thisProductName_Name,
-      thisProductUnit_Name,
-      thisProductAmount,
-      thisProductPrice,
-      thisSum
+      rowProductId,
+      rowProductNameId,
+      rowProductName,
+      rowProductUnitName,
+      rowProductAmount,
+      rowProductPrice,
+      rowProductSum,
+      deleteRow: onDeleteRow,
     };
 
     setFormData({
       ...formData,
-      products: [...products, newRow]
+      products: [...products, newRow],
     });
 
-    setTotalPriceForTable(totalPriceForTable + thisSum);
+    // setTotalPriceForTable(
+    //   parseFloat(totalPriceForTable) + parseFloat(rowProductSum)
+    // );
 
-    setSelectedData({
-      ...selectedData,
-      thisProductName: '',
-      thisProductName_Name: '',
-      thisProductUnit: '',
-      thisProductUnit_Name: '',
-      thisProductAmount: '',
-      thisProductPrice: '',
-      thisSum: 0
+    setRowData({
+      ...rowData,
+      rowProductNameId: '',
+      rowProductName: '',
+      rowProductUnitNameId: '',
+      rowProductUnitName: '',
+      rowProductAmount: '',
+      rowProductPrice: '',
+      rowProductSum: 0,
     });
   };
 
   const onBlurHandler = () => {
-    setSelectedData({
-      ...selectedData,
-      thisSum: (thisProductAmount * thisProductPrice).toFixed(2)
+    setRowData({
+      ...rowData,
+      rowProductSum: (rowProductAmount * rowProductPrice).toFixed(2),
     });
   };
 
-  const deleteRowHandler = rowId => {
-    const newProducts = products.filter(item => {
+  const onDeleteRow = (rowId) => {
+    const newProducts = products.filter((item) => {
       return item.thisId !== rowId;
     });
 
     setFormData({
       ...formData,
-      products: newProducts
+      products: newProducts,
     });
   };
 
   const addItemHandler = () => {
-    const poductsSaveToDataBase = products.map(item => {
+    const poductsSaveToDataBase = products.map((item) => {
       return {
-        product: item.thisProductName,
-        amount: item.thisProductAmount,
-        price: item.thisProductPrice
+        product: item.rowProductNameId,
+        amount: item.rowProductAmount,
+        price: item.rowProductPrice,
       };
     });
 
@@ -267,57 +328,109 @@ const Our_SalesInvoiceNakladnaya_Add = ({
       active,
       cashPayment
     );
-    history.goBack();
+    // history.goBack();
   };
 
-  const listOf_OUR_SALES_INVOICE_NAKLADNAYAS = (
-    <MaterialTable
-      title='Накладные'
-      columns={[
-        { title: 'Будматеріал', field: 'tableProductName' },
-        { title: 'Од. Вимиру', field: 'tableProductUnit' },
-        { title: 'Кількість', field: 'tableProductAmount' },
-        { title: 'Ціна без ПДВ,грн. ', field: 'tableProductPrice' },
-        { title: 'Сума без ПДВ,грн', field: 'tableSum' },
-        { title: 'Удалить строку', field: 'btnDelete' }
-      ]}
-      data={products.map(item => {
-        return {
-          tableProductName: item.thisProductName_Name,
-          tableProductUnit: item.thisProductUnit_Name,
-          tableProductAmount: item.thisProductAmount,
-          tableProductPrice: item.thisProductPrice,
-          tableSum: item.thisSum,
-          btnDelete: (
-            <IconButton
-              color='secondary'
-              variant='contained'
-              onClick={() => deleteRowHandler(item.thisId)}
-              className={classes.buttonDelete}
+  const ProductList = (
+    <List className={classes.listOfGroups}>
+      {arr_GROUP_OF_PRODUCTS.map((group) => {
+        const nestedArrayOfProducts = arr_PRODUCTS.filter((product) => {
+          return product.productGroup._id === group._id;
+        });
+
+        return (
+          <Fragment key={group._id}>
+            <ListItem
+              id={group._id}
+              button
+              className={classes.listOfGroups_ListItem}
+              onClick={() => handleGroupOfProductCollapse(group._id)}
             >
-              <DeleteIcon />
-            </IconButton>
-          )
-        };
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText>{group.productGroup}</ListItemText>
+            </ListItem>
+
+            <List
+              id={`${group._id}nextProductList`}
+              className={classes.listOfProducts}
+            >
+              {nestedArrayOfProducts.map((product) => (
+                <ListItem
+                  key={product._id}
+                  button
+                  className={classes.listOfProducts_ListItem}
+                  onClick={() => handleSelectProduct(product._id)}
+                >
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText>{product.productName}</ListItemText>
+                </ListItem>
+              ))}
+            </List>
+          </Fragment>
+        );
       })}
-      options={{
-        sorting: true,
-        search: false
-      }}
-    />
+    </List>
   );
+
+  // const listOf_OUR_SALES_INVOICE_NAKLADNAYAS = (
+  //   <MaterialTable
+  //     title='Накладные'
+  //     columns={[
+  //       { title: 'Будматеріал', field: 'tableProductName' },
+  //       { title: 'Од. Вимиру', field: 'tableProductUnit' },
+  //       { title: 'Кількість', field: 'tableProductAmount' },
+  //       { title: 'Ціна без ПДВ,грн. ', field: 'tableProductPrice' },
+  //       { title: 'Сума без ПДВ,грн', field: 'tableSum' },
+  //       { title: 'Удалить строку', field: 'btnDelete' },
+  //     ]}
+  //     data={products.map((item) => {
+  //       return {
+  //         tableProductName: item.rowProductName,
+  //         tableProductUnit: item.rowProductUnitName,
+  //         tableProductAmount: item.rowProductAmount,
+  //         tableProductPrice: item.rowProductPrice,
+  //         tableSum: item.rowProductSum,
+  //         btnDelete: (
+  //           <IconButton
+  //             color='secondary'
+  //             variant='contained'
+  //             onClick={() => deleteRowHandler(item.thisId)}
+  //             className={classes.buttonDelete}
+  //           >
+  //             <DeleteIcon />
+  //           </IconButton>
+  //         ),
+  //       };
+  //     })}
+  //     options={{
+  //       sorting: true,
+  //       search: false,
+  //     }}
+  //   />
+  // );
+
+  const handleOpen_Product_List = () => {
+    setOpenModal_ProductList(true);
+  };
+  const handleClose_Product_List = () => {
+    setOpenModal_ProductList(false);
+  };
+
+  const onInputPhoneHandler = (e) => {
+    const inputMaskOptions = {
+      // pattern='^\d*(\.\d{0,2})?$'
+      mask: /^\d*(\.\d{0,2})?$/,
+    };
+
+    IMask(e.target, inputMaskOptions);
+  };
 
   return (
     <Grid container className={classes.root} spacing={2}>
-      <Button
-        onClick={buttonBackHandler}
-        variant='contained'
-        className={classes.buttonBack}
-        color='primary'
-      >
-        назад
-      </Button>
-
       <Grid item xs={12} container>
         <Grid item xs={2} container>
           <TextField
@@ -327,7 +440,7 @@ const Our_SalesInvoiceNakladnaya_Add = ({
             placeholder='номер накладной'
             type='text'
             value={naklNumber}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
           />
         </Grid>
         <Grid item xs={2} container>
@@ -337,7 +450,7 @@ const Our_SalesInvoiceNakladnaya_Add = ({
             name='naclDate'
             fullWidth
             value={naclDate}
-            onChange={e => onChangeHandler(e)}
+            onChange={(e) => onChangeHandler(e)}
             className={classes.dateField}
           />
         </Grid>
@@ -350,18 +463,19 @@ const Our_SalesInvoiceNakladnaya_Add = ({
                 id='select-our-firm'
                 className={ourFirm ? classes.displayNone : classes.displayFlex}
               >
-                фирма
+                наша фирма
               </InputLabel>
               <Select
                 variant='outlined'
                 labelId='select-our-firm'
                 fullWidth
+                autoFocus
                 value={ourFirm}
                 name='ourFirm'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_OUR_FIRMS.map(item => (
+                {arr_OUR_FIRMS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.firmName}
                   </MenuItem>
@@ -387,10 +501,10 @@ const Our_SalesInvoiceNakladnaya_Add = ({
                 fullWidth
                 value={client}
                 name='client'
-                onChange={e => onChangeHandler(e)}
+                onChange={(e) => onChangeHandler(e)}
                 className={classes.select}
               >
-                {arr_CLIENTS.map(item => (
+                {arr_CLIENTS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.firmName}
                   </MenuItem>
@@ -407,7 +521,7 @@ const Our_SalesInvoiceNakladnaya_Add = ({
               control={
                 <Checkbox
                   checked={active}
-                  onChange={e => onCheckHandler(e)}
+                  onChange={(e) => onCheckHandler(e)}
                   name='active'
                   color='primary'
                 />
@@ -421,7 +535,7 @@ const Our_SalesInvoiceNakladnaya_Add = ({
               control={
                 <Checkbox
                   checked={cashPayment}
-                  onChange={e => onCheckHandler(e)}
+                  onChange={(e) => onCheckHandler(e)}
                   name='cashPayment'
                   color='primary'
                 />
@@ -439,23 +553,23 @@ const Our_SalesInvoiceNakladnaya_Add = ({
           ) : (
             <Grid item xs={12} className={classes.wrapSelect}>
               <InputLabel
-                id='select-thisProductName'
+                id='select-rowProductNameId'
                 className={
-                  thisProductName ? classes.displayNone : classes.displayFlex
+                  rowProductNameId ? classes.displayNone : classes.displayFlex
                 }
               >
                 товар
               </InputLabel>
               <Select
                 variant='outlined'
-                labelId='select-thisProductName'
+                labelId='select-rowProductNameId'
                 fullWidth
-                value={thisProductName ? thisProductName : ''}
-                name='thisProductName'
-                onChange={e => onChangeProductHandler(e)}
+                value={rowProductNameId ? rowProductNameId : ''}
+                name='rowProductNameId'
+                onChange={(e) => onChangeProductHandler(e)}
                 className={classes.select}
               >
-                {arr_PRODUCTS.map(item => (
+                {arr_PRODUCTS.map((item) => (
                   <MenuItem key={item._id} value={item._id}>
                     {item.productName}
                   </MenuItem>
@@ -465,14 +579,31 @@ const Our_SalesInvoiceNakladnaya_Add = ({
           )}
         </Grid>
         <Grid item xs={2} container>
-          {!arr_UNITS ? (
+          <Modal
+            className={classes.modalScroll}
+            open={openModal_ProductList}
+            onClose={handleClose_Product_List}
+          >
+            {ProductList}
+          </Modal>
+
+          <IconButton
+            onClick={() => {
+              handleOpen_Product_List();
+            }}
+          >
+            <AddCircleIcon color='primary' />
+          </IconButton>
+
+          {/* /////////////////////////////////////////////////////////////////////////// */}
+          {/* {!arr_UNITS ? (
             <Spinner />
           ) : (
             <Grid item xs={12} className={classes.wrapSelect}>
               <InputLabel
-                id='select-type-thisProductUnit'
+                id='select-type-rowProductUnitNameId'
                 className={
-                  thisProductUnit ? classes.displayNone : classes.displayFlex
+                  rowProductUnitNameId ? classes.displayNone : classes.displayFlex
                 }
               >
                 ед.изм
@@ -480,10 +611,10 @@ const Our_SalesInvoiceNakladnaya_Add = ({
               <Select
                 disabled
                 variant='outlined'
-                labelId='select-type-thisProductUnit'
+                labelId='select-type-rowProductUnitNameId'
                 fullWidth
-                value={thisProductUnit ? thisProductUnit : ''}
-                name='thisProductUnit'
+                value={rowProductUnitNameId ? rowProductUnitNameId : ''}
+                name='rowProductUnitNameId'
                 onChange={e => onChangeProductHandler(e)}
                 className={classes.select}
               >
@@ -494,46 +625,59 @@ const Our_SalesInvoiceNakladnaya_Add = ({
                 ))}
               </Select>
             </Grid>
-          )}
+          )} */}
+          {/* /////////////////////////////////////////////////////////////////////////// */}
         </Grid>
         <Grid item xs={2} container>
           <TextField
             variant='outlined'
-            name='thisProductAmount'
+            name='rowProductAmount'
             fullWidth
             placeholder='Количество'
             type='number'
-            value={thisProductAmount}
-            onChange={e => onChangeProductHandler(e)}
+            value={rowProductAmount}
+            onChange={(e) => onChangeProductHandler(e)}
             onBlur={onBlurHandler}
           />
         </Grid>
         <Grid item xs={2} container>
           <TextField
             variant='outlined'
-            name='thisProductPrice'
+            name='rowProductPrice'
             fullWidth
             placeholder='Цена'
             type='number'
-            value={thisProductPrice}
-            onChange={e => onChangeProductHandler(e)}
+            onInput={(e) => onInputPhoneHandler(e)}
+            value={rowProductPrice}
+            onChange={(e) => onChangeProductHandler(e)}
             onBlur={onBlurHandler}
           />
         </Grid>
-        <Grid item xs={2} container>
+        {/* <Grid item xs={2} container>
           <Typography variant='h3' align='center'>
-            {thisSum}
+            {rowProductSum}
           </Typography>
-        </Grid>
+        </Grid> */}
         <Grid item xs={1} container>
-          <IconButton onClick={addProductHandler}>
-            <AddCircleIcon />
+          <IconButton onClick={addRowProductHandler}>
+            <AddCircleIcon color='primary' />
           </IconButton>
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        {listOf_OUR_SALES_INVOICE_NAKLADNAYAS}
+        <TableForNakl fieldName='Будматеріал' arrOfRows={products} />
+        {/* {listOf_OUR_SALES_INVOICE_NAKLADNAYAS} */}
       </Grid>
+
+      {/* <Grid item xs={12} container>
+        <Grid item xs={6}></Grid>
+        <Grid item xs={3}>
+          <Typography>Итого:</Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography>{totalPriceForTable.toFixed(2)}</Typography>
+        </Grid>
+      </Grid> */}
 
       <Grid item xs={12}>
         <Button
@@ -558,18 +702,22 @@ Our_SalesInvoiceNakladnaya_Add.propTypes = {
   getAll_OUR_FIRMS: PropTypes.func.isRequired,
   getAll_CLIENTS: PropTypes.func.isRequired,
   getAll_PRODUCTS: PropTypes.func.isRequired,
+  getAll_GROUP_OF_PRODUCTS: PropTypes.func.isRequired,
   getAll_UNITS: PropTypes.func.isRequired,
 
   state_client: PropTypes.object.isRequired,
   state_ourFirm: PropTypes.object.isRequired,
-  state_product: PropTypes.object.isRequired
+  state_product: PropTypes.object.isRequired,
+  state_groupOf_Product: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   state_client: state.client,
   state_ourFirm: state.ourFirm,
   state_product: state.product,
-  state_unit: state.unit
+  state_groupOf_Product: state.groupOf_Product,
+
+  state_unit: state.unit,
 });
 
 export default connect(mapStateToProps, {
@@ -578,5 +726,6 @@ export default connect(mapStateToProps, {
   getAll_OUR_FIRMS,
   getAll_CLIENTS,
   getAll_PRODUCTS,
-  getAll_UNITS
+  getAll_GROUP_OF_PRODUCTS,
+  getAll_UNITS,
 })(Our_SalesInvoiceNakladnaya_Add);
